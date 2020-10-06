@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <content th:replace="fragments/init :: header"></content>
+    <link rel="stylesheet" th:href="@{css/login.css}">
+
+</head>
+<body>
+<div id="logreg-forms">
+    <form class="form-signin">
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Đăng nhập</h1>
+        <div class="social-login">
+            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</span> </button>
+            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</span> </button>
+        </div>
+        <p style="text-align:center"> OR  </p>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i>Đăng nhập</button>
+        <a href="#" id="forgot_pswd">Quên mật khẩu?</a>
+        <hr>
+        <!-- <p>Don't have an account!</p>  -->
+        <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Đăng kí tài khoản.</button>
+    </form>
+
+    <form action="/reset/password/" class="form-reset">
+        <input type="email" id="resetEmail" class="form-control" placeholder="Email" required="" autofocus="">
+        <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+        <a href="#" id="cancel_reset"><i class="fa fa-angle-left"></i> Trở lại</a>
+    </form>
+
+    <form action="/signup/" class="form-signup">
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Đăng kí</h1>
+        <div class="social-login">
+            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng kí bằng Facebook</span> </button>
+            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng kí bằng Google+</span> </button>
+        </div>
+
+        <p style="text-align:center">OR</p>
+
+        <input type="text" id="user-name" class="form-control" placeholder="Họ và tên" required="" autofocus="">
+        <input type="email" id="user-email" class="form-control" placeholder="Email" required autofocus="">
+        <input type="password" id="user-pass" class="form-control" placeholder="Password" required autofocus="">
+        <input type="text" id="" class="form-control" placeholder="Số điện thoại" required autofocus="">
+        <span>Giới tính:</span>
+        <input th:type="radio" th:name="gender" th:value="nam" style="margin-left: 15px"><label>Nam</label>
+        <input th:type="radio" th:name="gender" th:value="nu" style="margin-left: 10px"><label> Nữ</label>
+        <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
+        <a href="#" id="cancel_signup"><i class="fa fa-angle-left"></i>Trở lại</a>
+    </form>
+    <br>
+
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script th:src="@{js/login.js}"></script>
+</body>
+</html>

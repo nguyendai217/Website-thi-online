@@ -1,7 +1,5 @@
 package com.wru.onthi.entity;
 
-import org.hibernate.annotations.CollectionId;
-
 import javax.persistence.*;
 
 @Entity

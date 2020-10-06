@@ -1,7 +1,5 @@
 package com.wru.onthi.entity;
 
-import org.hibernate.annotations.CollectionId;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +11,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @Column(name="username")
+    private String username;
     @Column(name = "fullname")
     private String fullname;
     @Column(name = "password")
@@ -48,6 +48,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFullname() {

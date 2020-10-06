@@ -14,8 +14,6 @@ public class Role {
     private Integer id;
     @Column(name = "name")
     private String role;
-    @Column(name = "code")
-    private String code;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "roles")
     private List<User> users;
@@ -34,14 +32,6 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public List<User> getUsers() {
