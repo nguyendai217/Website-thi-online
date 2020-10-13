@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <content th:replace="fragments/init :: header"></content>
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
+</head>
+<body>
+<div id="logreg-forms">
+    <form class="form-signin" th:action="@{/login}" method="post">
+<!--        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Đăng nhập</h1>-->
+        <img class="logo" th:src="@{/image/logo_main.png}">
+
+        <div class="social-login">
+            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</span> </button>
+            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</span> </button>
+        </div>
+        <p style="text-align:center"> OR  </p>
+        <div align="center" th:if="${param.error}">
+            <p style="font-size: 14px; color: #FF1C19;">Email hoặc Password không đúng.</p>
+        </div>
+        <div align="center" th:if="${not #strings.isEmpty(error)}" >
+            <p style="font-size: 14px; color: #FF1C19;" th:text="${error}"></p>
+        </div>
+        <div align="center" th:if="${not #strings.isEmpty(success)}" >
+            <p style="font-size: 14px; color: #0837a2;" th:text="${success}"></p>
+        </div>
+        <input type="email" id="inputEmail" class="form-control"
+               placeholder="Email" name="email" required="" th:value="${email}" autofocus="">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required="">
+        <label>
+            <input type="checkbox"  name="remember">  Ghi nhớ mật khẩu.
+        </label>
+
+        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i>Đăng nhập</button>
+        <a href="#" id="forgot_pswd">Quên mật khẩu?</a>
+        <hr>
+        <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Đăng kí tài khoản.</button>
+    </form>
+
+    <form action="/reset/password" class="form-reset">
+        <h1 class="h5 mb-3 ">Nhập email để lấy lại mật khẩu</h1>
+        <input type="email" id="resetEmail" name="email" class="form-control" placeholder="Email" required="" autofocus="">
+        <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+        <a href="#" id="cancel_reset"><i class="fa fa-angle-left"></i> Trở lại</a>
+    </form>
+
+    <form th:action="@{/signin}" class="form-signup" method="post">
+        <img class="logo" th:src="@{/image/logo_main.png}">
+        <div class="social-login">
+            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng kí bằng Facebook</span> </button>
+            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng kí bằng Google+</span> </button>
+        </div>
+
+        <p style="text-align:center">OR</p>
+
+        <input type="text" id="user-name" class="form-control" placeholder="Họ và tên" name="fullname" required="" autofocus="">
+        <input type="email" id="user-email" class="form-control" placeholder="Email" name="email" required autofocus="">
+        <input type="password" id="user-pass" class="form-control" placeholder="Password" name="password" required autofocus="">
+        <input type="text" id="" class="form-control" placeholder="Số điện thoại" name="phone" required autofocus="">
+        <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
+        <a href="#" id="cancel_signup"><i class="fa fa-angle-left"></i>Trở lại</a>
+    </form>
+    <br>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script type="text/javascript" th:src="@{/js/login.js}"></script>
+</body>
+</html>

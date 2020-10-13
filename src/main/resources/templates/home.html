@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <content th:replace="fragments/init :: header"></content>
 </head>
 <body>
-<p><a th:href="@{/login}"></a></p>
+<h2>Home</h2>
+<div sec:authorize="isAuthenticated()">
+    <i><span sec:authentication="principal.authorities">Roles</span></i>
+</div>
+<div sec:authorize="isAuthenticated()">
+    Authenticated as :<span sec:authentication="principal.username"></span></div>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout" />
+</form>
+
 <content th:replace="fragments/init :: script"></content>
 </body>
 </html>

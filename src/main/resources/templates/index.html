@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <content th:replace="fragments/init :: header"></content>
+</head>
+<body>
+<h2>Index</h2>
+<p><a th:href="@{/login}">Login</a></p>
+<content th:replace="fragments/init :: script"></content>
+</body>
+</html>

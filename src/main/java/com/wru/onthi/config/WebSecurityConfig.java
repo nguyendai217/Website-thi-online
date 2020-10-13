@@ -1,19 +1,24 @@
 package com.wru.onthi.config;
 
 import com.wru.onthi.services.serviceImpl.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -40,14 +45,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**","/**").permitAll()
-                .antMatchers("/admin/**","/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/**").hasAnyAuthority("USER")
+                .antMatchers("/","/login").permitAll()
+                .antMatchers("/home/**").hasAnyAuthority("USER")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login/login.html") .failureUrl("/login?error").permitAll()
-                .and().logout().logoutUrl("/logout.html").logoutSuccessUrl("/").permitAll()
-        .and().exceptionHandling().accessDeniedPage("/403");
+                //login
+                .and().formLogin().loginPage("/login").usernameParameter("email")
+                .passwordParameter("password").defaultSuccessUrl("/home")
+                .and().logout().deleteCookies("JSESSIONID").permitAll()
+                .and().exceptionHandling().accessDeniedPage("/403");
+
+                //remember me configuration
+                http.rememberMe().
+                key("remember-key").
+                rememberMeParameter("remember").
+                rememberMeCookieName("my-remember-me").
+                tokenValiditySeconds(1296000);
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**", "/image/**"
+                ,"/css/**","/js/**","/static/**","/templates/**");
+    }
+//
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+//        tokenRepository.setDataSource(dataSource);
+//        return tokenRepository;
+//    }
+
 
 
 }

@@ -2,7 +2,6 @@ package com.wru.onthi.utils;
 
 import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

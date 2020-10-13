@@ -1,19 +1,27 @@
 package com.wru.onthi.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
+
 
 @Controller
 public class HomeController {
-    @GetMapping(value = {"/","/home"})
-    public String home(){
+    @GetMapping(value = {"/"})
+    public String index(){
+        return "index";
+    }
+    @GetMapping(value = {"/home"})
+    public String home(Principal principal, Model model){
+        String name= principal.getName();
+        model.addAttribute("username",name);
         return "home";
     }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login/login";
+    @GetMapping(value = {"/home/404"})
+    public String error404(){
+        return "404";
     }
 
 }
