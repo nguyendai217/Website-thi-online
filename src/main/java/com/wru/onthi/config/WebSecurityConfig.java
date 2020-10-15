@@ -45,12 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/login").permitAll()
-                .antMatchers("/home/**").hasAnyAuthority("USER")
+                .antMatchers("/","/login","/reset_password").permitAll()
+                .antMatchers("/home/**","/contact").hasAnyAuthority("USER","ADMIN")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email")
-                .passwordParameter("password").defaultSuccessUrl("/home")
+                .passwordParameter("password").defaultSuccessUrl("/")
                 .and().logout().deleteCookies("JSESSIONID").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Liên hệ</title>
+    <content th:replace="fragments/init :: header"></content>
+    <link rel="stylesheet" th:href="@{/css/contact.css}" type="text/css">
+</head>
+<body>
+<div class="container">
+    <form id="contact" th:action="@{/contact}" method="post">
+        <h3> Contact Form</h3>
+        <h4>Contact us for custom quote</h4>
+        <fieldset>
+            <input placeholder="Your name" type="text" tabindex="1"  name="fullname" required autofocus>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Your Email Address" type="email" tabindex="2" name="email" required>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Your Phone Number (optional)" type="tel" tabindex="3" name="phone" required>
+        </fieldset>
+        <fieldset>
+            <textarea placeholder="Type your message here...." tabindex="5" name="content" required></textarea>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+        </fieldset>
+    </form>
+    <content th:replace="fragments/init :: script"></content>
+</div>
+</body>
+</html>

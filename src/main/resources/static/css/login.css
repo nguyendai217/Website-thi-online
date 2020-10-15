@@ -5,7 +5,10 @@ body{
     -o-background-size: cover;
     background-size: cover;
 }
-.logo{
+a{
+    text-decoration: none;
+}
+.logo-login{
     width: 180px;
     height: 110px;
     margin-left: 96px;
@@ -57,6 +60,10 @@ body{
     display: block;
     padding-top:10px;
     color:lightseagreen;
+    text-decoration: none;
+}
+#logreg-forms a:hover{
+    color: #005cbf;
 }
 
 #logreg-form .lines{
@@ -130,7 +137,7 @@ body{
     #logreg-forms  .google-btn:after{
         content:'Google+';
     }
-    .logo{
+    .logo-login{
         width: 145px;
         height: 81px;
         margin-left: 69px;

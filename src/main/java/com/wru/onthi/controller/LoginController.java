@@ -20,8 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Controller
-public class LoginController
-{
+public class LoginController {
     private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     UserRepository userRepository;
@@ -36,7 +35,7 @@ public class LoginController
     BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
@@ -45,13 +44,12 @@ public class LoginController
                          @RequestParam(value = "fullname") String fullname,
                          @RequestParam(value = "email") String email,
                          @RequestParam(value = "password") String password,
-                         @RequestParam(value = "phone") String phone){
-        if(!Strings.isNullOrEmpty(fullname)&& !Strings.isNullOrEmpty(email)
-            && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(phone))
-        {
-            if(userRepository.findByEmail(email)== null){
-                User user= new User();
-                Role role= roleRepository.findByRole("USER");
+                         @RequestParam(value = "phone") String phone) {
+        if (!Strings.isNullOrEmpty(fullname) && !Strings.isNullOrEmpty(email)
+                && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(phone)) {
+            if (userRepository.findByEmail(email) == null) {
+                User user = new User();
+                Role role = roleRepository.findByRole("USER");
                 user.setEmail(email);
                 user.setPassword(passwordEncoder.encode(password));
                 user.setFullname(fullname);
@@ -60,14 +58,15 @@ public class LoginController
                 user.setStatus(1);
                 user.setRoles(Arrays.asList(role));
                 userService.createUser(user);
-                model.addAttribute("success","Đăng kí thành công, vui lòng đăng nhập lại!");
-                model.addAttribute("email",email);
-            }
-            else {
+                model.addAttribute("success", "Đăng kí thành công, vui lòng đăng nhập lại!");
+                model.addAttribute("email", email);
+            } else {
                 LOG.error("email is exist !");
-                model.addAttribute("error","Email đã tồn tại, vui lòng đăng kí email khác!");
+                model.addAttribute("error", "Email đã tồn tại, vui lòng đăng kí email khác!");
             }
         }
         return "login";
     }
+
+
 }

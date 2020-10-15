@@ -1,0 +1,139 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<content th:replace="fragments/init :: header"></content>
+
+<content th:fragment="content" th:remove="tag">
+<header>
+    <div class="container-header">
+        <input type="checkbox" name="" id="check">
+
+        <div class="logo-container-header">
+            <h3 class="logo">LUYỆNTHI365.COM</h3>
+        </div>
+        <div class="nav-btn-header">
+            <div class="nav-links-header">
+                <ul>
+                    <li class="nav-link-header " style="--i: 0.5s">
+                        <a href="#" class="" style="color: rgb(201, 96, 35);">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-link-header" style="--i: 0.7s">
+                        <a href="#">LUYỆN TẬP<i class="fas fa-caret-down"></i></a>
+                        <div class="dropdownn">
+                            <ul>
+                                <li class="dropdownn-links">
+                                    <a href="#">TIỂU HỌC</a>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">THCS</a>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">THPT<i class="fas fa-caret-down"></i></a>
+                                    <div class="dropdownn second">
+                                        <ul>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 1</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 2</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 3</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">More<i class="fas fa-caret-down"></i></a>
+                                                <div class="dropdownn second">
+                                                    <ul>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 1</a>
+                                                        </li>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 2</a>
+                                                        </li>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 3</a>
+                                                        </li>
+                                                        <div class="arrow"></div>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <div class="arrow"></div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">Link 4</a>
+                                </li>
+                                <div class="arrow"></div>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-link-header" style="--i: 0.9s">
+                        <a href="#">LUYỆN THI<i class="fas fa-caret-down"></i></a>
+                        <div class="dropdownn">
+                            <ul>
+                                <li class="dropdownn-links">
+                                    <a href="#">TIỂU HỌC</a>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">THCS</a>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">THPT<i class="fas fa-caret-down"></i></a>
+                                    <div class="dropdownn second">
+                                        <ul>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 1</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 2</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">Link 3</a>
+                                            </li>
+                                            <li class="dropdownn-links">
+                                                <a href="#">More<i class="fas fa-caret-down"></i></a>
+                                                <div class="dropdownn second">
+                                                    <ul>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 1</a>
+                                                        </li>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 2</a>
+                                                        </li>
+                                                        <li class="dropdownn-links">
+                                                            <a href="#">Link 3</a>
+                                                        </li>
+                                                        <div class="arrow"></div>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <div class="arrow"></div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="dropdownn-links">
+                                    <a href="#">Link 4</a>
+                                </li>
+                                <div class="arrow"></div>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-link-header" style="--i: 1.2s">
+                        <a href="#">LIÊN HỆ</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="log-sign" style="--i: 1.4s" >
+                <a th:href="@{/login}" class="button transparent" ><i class="fa fa-user" aria-hidden="true"></i> Đăng nhập</a>
+            </div>
+        </div>
+
+        <div class="hamburger-menu-container">
+            <div class="hamburger-menu">
+                <div></div>
+            </div>
+        </div>
+    </div>
+</header>
+</content>
+<script th:src="@{https://kit.fontawesome.com/64d58efce2.js}" ></script>

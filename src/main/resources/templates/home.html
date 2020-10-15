@@ -7,12 +7,12 @@
     <content th:replace="fragments/init :: header"></content>
 </head>
 <body>
-<h2>Home</h2>
+<content th:replace="fragments/header :: content"></content>
 <div sec:authorize="isAuthenticated()">
     <i><span sec:authentication="principal.authorities">Roles</span></i>
 </div>
-<div sec:authorize="isAuthenticated()">
-    Authenticated as :<span sec:authentication="principal.username"></span></div>
+
+<!--    Authenticated as :<span sec:authentication="principal.username"></span>-->
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout" />

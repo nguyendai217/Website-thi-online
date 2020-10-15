@@ -10,15 +10,24 @@ import java.security.Principal;
 @Controller
 public class HomeController {
     @GetMapping(value = {"/"})
-    public String index(){
+    public String index(Principal principal, Model model){
+
+        if(principal != null){
+            String name= principal.getName();
+            model.addAttribute("username",name);
+            return "fragments/header";
+        }
+
         return "index";
     }
+
     @GetMapping(value = {"/home"})
     public String home(Principal principal, Model model){
         String name= principal.getName();
         model.addAttribute("username",name);
         return "home";
     }
+
     @GetMapping(value = {"/home/404"})
     public String error404(){
         return "404";
