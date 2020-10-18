@@ -1,5 +1,6 @@
 package com.wru.onthi.config;
 
+import com.wru.onthi.oauth.CustomOAuth2UserService;
 import com.wru.onthi.services.serviceImpl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -45,12 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/login","/reset_password").permitAll()
+                .antMatchers("/","/login/**","/reset_password","/oauth2/**").permitAll()
                 .antMatchers("/home/**","/contact").hasAnyAuthority("USER","ADMIN")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email")
-                .passwordParameter("password").defaultSuccessUrl("/")
+                .passwordParameter("password").defaultSuccessUrl("/").and().oauth2Login().loginPage("/login")
+                .userInfoEndpoint().userService(oAuth2UserService).and()
                 .and().logout().deleteCookies("JSESSIONID").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
 
@@ -75,6 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return tokenRepository;
 //    }
 
-
-
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
 }

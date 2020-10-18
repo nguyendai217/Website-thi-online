@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vali Admin</title>
+    <content th:replace="admin/init_admin :: header"></content>
+</head>
+<body class="app sidebar-mini">
+<content th:replace="admin/header :: content"></content>
+<content th:replace="admin/sidebar :: content"></content>
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1 style="color: #0b2f12" ><i class="fa fa-user"></i> Danh sách người dùng</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
+            <li class="breadcrumb-item"><a href="#">Danh sách user</a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top: -18px">
+        <div class="col-md-12">
+            <div class="x_title">
+                <h5>Tùy chọn tìm kiếm</h5>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <form role="form" th:action="@{/}" method="GET">
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                            <label>Username</label>
+                            <div>
+                                <input class="form-control" id="strName" name="username" type="text"
+                                       th:value="${name}">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                            <label>Email</label>
+                            <div>
+                                <input class="form-control" id="strCode" name="email" type="text"
+                                       th:value="${email}">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                            <label>Quyền</label>
+                            <div>
+                                <select class="form-control selectpicker" name="strStt">
+                                    <option value="">Tất cả</option>
+                                    <option value="1">Admin</option>
+                                    <option value="0">User</option>
+                                    <option value="0">Manager</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                            <label>&nbsp;</label>
+                            <div>
+                                <button type="submit" id="btnSearch" class="btn btn-primary">Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Donna Snider</td>
+                                <td>Customer Support</td>
+                                <td>New York</td>
+                                <td>27</td>
+                                <td>2011/01/25</td>
+                                <td>$112,000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="float-right">
+                            <ul class="pagination ">
+                                <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item"><a class="page-link" href="#">»</a></li>
+                            </ul>
+                        </div>
+
+<!--                        <div class="card-footer clearfix">-->
+<!--                            <ul class="pagination pagination-sm m-0 float-right">-->
+<!--                                <li class="page-item" th:if="${pageInfor.number + 1} != 1">-->
+<!--                                    <a class="page-link" th:href="@{|/student/?page=${pageInfor.number}|}">&laquo;</a>-->
+<!--                                </li>-->
+
+<!--                                <th:block  th:each="itemPage : ${#numbers.sequence((pageInfor.number - 5), (pageInfor.number + 5))}" >-->
+<!--                                    <li th:classappend="${itemPage} == ${pageInfor.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfor.totalPages}">-->
+<!--                                        <a-->
+<!--                                                th:if="${itemPage} != ${pageInfor.number + 1}"-->
+<!--                                                class="page-link"-->
+<!--                                                th:href="@{|/student/?page=${itemPage}|}"-->
+<!--                                                th:text="${itemPage}"-->
+<!--                                        >1</a>-->
+<!--                                        <p th:unless="${itemPage} != ${pageInfor.number + 1}" th:text="${itemPage}" class="page-link">1</p>-->
+<!--                                    </li>-->
+<!--                                </th:block>-->
+
+<!--                                <li class="page-item" th:if="${pageInfor.number + 1} != ${pageInfor.totalPages}">-->
+<!--                                    <a class="page-link" th:href="@{|/student/?page=${pageInfor.number + 2}|}">&raquo;</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<content th:replace="admin/init_admin :: script"></content>
+<script>
+    $("#list_user").addClass("active");
+</script>
+</body>
+</html>

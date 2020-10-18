@@ -8,11 +8,17 @@
 </head>
 <body>
 <content th:replace="fragments/header :: content"></content>
+<br>
+<br>
+<br>
+<br>
 <div sec:authorize="isAuthenticated()">
     <i><span sec:authentication="principal.authorities">Roles</span></i>
 </div>
 
-<!--    Authenticated as :<span sec:authentication="principal.username"></span>-->
+<div sec:authorize="isAuthenticated()">
+    Authenticated as :<span sec:authentication="principal.username"></span>
+</div>
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout" />

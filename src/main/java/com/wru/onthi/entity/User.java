@@ -36,6 +36,11 @@ public class User {
     @Column(name = "update_date")
     private Date updateDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authProvider;
+
+
     @ManyToMany(cascade = CascadeType.ALL,fetch =FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",nullable = false)},
@@ -152,5 +157,13 @@ public class User {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
     }
 }

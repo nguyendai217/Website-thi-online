@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vali Admin</title>
+    <content th:replace="admin/init_admin :: header"></content>
+</head>
+<body class="app sidebar-mini">
+<content th:replace="admin/header :: content"></content>
+<content th:replace="admin/sidebar :: content"></content>
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Chào mừng bạn đến với trang quản lí của Admin</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-3">
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                <div class="info">
+                    <h5>Số thành viên</h5>
+                    <p><b>5</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+                <div class="info">
+                    <h5>Số bài học</h5>
+                    <p><b>25</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+                <div class="info">
+                    <h5>Số bài kiểm tra</h5>
+                    <p><b>10</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+                <div class="info">
+                    <h5>Tin tức</h5>
+                    <p><b>500</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<content th:replace="admin/init_admin :: script"></content>
+<script>
+    $("#dashboard").addClass("active");
+</script>
+</body>
+</html>

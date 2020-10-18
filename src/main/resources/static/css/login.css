@@ -52,18 +52,16 @@ a{
 #logreg-forms .social-btn{
     font-weight: 100;
     color:white;
-    width:190px;
+    width:180px;
     font-size: 0.9rem;
 }
 
 #logreg-forms a{
     display: block;
-    padding-top:10px;
-    color:lightseagreen;
-    text-decoration: none;
+    color: white;
 }
 #logreg-forms a:hover{
-    color: #005cbf;
+    color: #92bdef;
 }
 
 #logreg-form .lines{

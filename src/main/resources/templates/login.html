@@ -15,8 +15,8 @@
         <img class="logo-login" th:src="@{/image/logo_main.png}">
 
         <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</span> </button>
-            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</span> </button>
+            <button class="btn facebook-btn social-btn" type="button" ><a th:href="@{/oauth2/authorization/google}"><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</a> </button>
+            <button class="btn google-btn social-btn" type="button"><a th:href="@{/logindd}"><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</a></button>
         </div>
         <p style="text-align:center">  OR  </p>
         <div align="center" th:if="${param.error}">
@@ -36,7 +36,7 @@
         </label>
 
         <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i>Đăng nhập</button>
-        <a th:href="@{/reset_password}" >Quên mật khẩu?</a>
+        <a th:href="@{/reset_password}" style="color: #005cbf;margin-top: 10px" >Quên mật khẩu?</a>
         <hr>
         <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Đăng kí tài khoản.</button>
     </form>
@@ -44,8 +44,8 @@
     <form th:action="@{/signin}" class="form-signup" method="post">
         <img class="logo-login" th:src="@{/image/logo_main.png}">
         <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> Đăng kí bằng Facebook</span> </button>
-            <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus-official"></i> Đăng kí bằng Google+</span> </button>
+            <button class="btn facebook-btn social-btn" type="button"><a><i class="fa fa-facebook-f"></i> Đăng kí bằng Facebook</a> </button>
+            <button class="btn google-btn social-btn" type="button"><a><i class="fa fa-google-plus-official"></i> Đăng kí bằng Google+</a> </button>
         </div>
 
         <p style="text-align:center">OR</p>
@@ -55,7 +55,7 @@
         <input type="password" id="user-pass" class="form-control" placeholder="Password" name="password" required autofocus="">
         <input type="text" id="" class="form-control" placeholder="Số điện thoại" name="phone" required autofocus="">
         <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
-        <a href="#" id="cancel_signup"><i class="fa fa-angle-left"></i>Trở lại</a>
+        <a href="#" id="cancel_signup" style="color: #005cbf"><i class="fa fa-angle-left"></i>Trở lại</a>
     </form>
     <br>
 </div>
