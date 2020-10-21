@@ -20,9 +20,9 @@
 <div sec:authorize="isAuthenticated()">
     Authenticated as :<span sec:authentication="principal.username"></span>
 </div>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout" />
-</form>
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <input type="submit" value="Logout" />-->
+<!--</form>-->
 <content th:replace="fragments/init :: script"></content>
 </body>
 </html>

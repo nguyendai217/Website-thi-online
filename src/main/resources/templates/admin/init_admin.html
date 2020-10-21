@@ -1,14 +1,14 @@
 <!-- int header -->
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<content th:fragment="header" th:remove="tag">
+<div th:fragment="header" th:remove="tag">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}" >
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/main_admin.css}"/>
 
-</content>
+</div>
 
 <!-- init script-->
-<content th:fragment="script" th:remove="tag">
+<div th:fragment="script" th:remove="tag">
 
     <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" ></script>
@@ -20,5 +20,5 @@
     <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
     <script type="text/javascript" th:src="@{/js/pace.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/chart.js}"></script>
-</content>
+</div>
 

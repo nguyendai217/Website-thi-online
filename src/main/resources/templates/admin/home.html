@@ -2,19 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Vali Admin</title>
-    <content th:replace="admin/init_admin :: header"></content>
+    <div th:replace="admin/init_admin :: header"></div>
 </head>
 <body class="app sidebar-mini">
-<content th:replace="admin/header :: content"></content>
-<content th:replace="admin/sidebar :: content"></content>
+<div th:replace="admin/header :: content"></div>
+<div th:replace="admin/sidebar :: content"></div>
 <main class="app-content">
     <div class="app-title">
-        <div>
-            <h1><i class="fa fa-dashboard"></i> Chào mừng bạn đến với trang quản lí của Admin</h1>
-        </div>
+        <h5 style="padding-top: 10px"><i class="fa fa-home"></i> Wellcome to Admin Dashboard </h5>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
         </ul>
     </div>
     <div class="row">
@@ -52,9 +50,9 @@
         </div>
     </div>
 </main>
-<content th:replace="admin/init_admin :: script"></content>
+<div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#dashboard").addClass("active");
+    $("#home").addClass("active");
 </script>
 </body>
 </html>

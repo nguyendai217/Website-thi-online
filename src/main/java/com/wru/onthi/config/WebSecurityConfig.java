@@ -14,12 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -39,6 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
+    @Autowired
+    AuthenticationSuccessHandler authSuccessHandler;
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -48,12 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/","/login/**","/reset_password","/oauth2/**").permitAll()
                 .antMatchers("/home/**","/contact").hasAnyAuthority("USER","ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email")
-                .passwordParameter("password").defaultSuccessUrl("/").and().oauth2Login().loginPage("/login")
+                .passwordParameter("password").successHandler(authSuccessHandler).and().oauth2Login().loginPage("/login")
                 .userInfoEndpoint().userService(oAuth2UserService).and()
-                .and().logout().deleteCookies("JSESSIONID").permitAll()
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
 
                 //remember me configuration

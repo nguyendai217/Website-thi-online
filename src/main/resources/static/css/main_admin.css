@@ -70,7 +70,13 @@ body {
     text-align: left;
     background-color: #FFF;
 }
+table, thead, tr, tbody, th, td {
+    text-align: center;
+}
 
+.table td {
+    text-align: center;
+}
 [tabindex="-1"]:focus {
     outline: 0 !important;
 }
@@ -15244,7 +15250,7 @@ be a descendant of the grid when it is being dragged.
     -ms-flex-align: center;
     align-items: center;
     padding: 12px 15px;
-    font-size: 1.08em;
+    font-size: 1.1em;
     border-left: 3px solid transparent;
     -webkit-transition: border-left-color 0.3s ease,
     background-color 0.3s ease;
@@ -15279,6 +15285,7 @@ be a descendant of the grid when it is being dragged.
 .treeview.is-expanded [data-toggle='treeview'] {
     border-left-color: #009688;
     background: #0d1214;
+    transition: 0.4s;
 }
 
 .treeview.is-expanded .treeview-menu {
@@ -15307,8 +15314,8 @@ be a descendant of the grid when it is being dragged.
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 5px 5px 5px 20px;
-    font-size: 1em;
+    padding: 6px 5px 5px 20px;
+    font-size: 1.1em;
     color: #fff;
 }
 
@@ -15469,7 +15476,7 @@ be a descendant of the grid when it is being dragged.
     flex-direction: row;
     background-color: #FFF;
     margin: -30px -30px 30px;
-    padding: 20px 30px;
+    padding: 20px 20px;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -15515,7 +15522,7 @@ be a descendant of the grid when it is being dragged.
     margin-bottom: 0;
     text-align: right;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: capitalize;
     padding: 0;
     text-align: left;
@@ -15839,6 +15846,7 @@ be a descendant of the grid when it is being dragged.
     color: #fff;
     -webkit-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
+    transition: 0.4s;
 }
 
 .toggle-flip input[type="checkbox"]:checked + .flip-indecator:before {

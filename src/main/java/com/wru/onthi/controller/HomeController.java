@@ -11,16 +11,20 @@ import java.security.Principal;
 public class HomeController {
     @GetMapping(value = {"/"})
     public String index(Principal principal, Model model){
-        if(principal != null){
-            String name= principal.getName();
-            model.addAttribute("username",name);
-        }
-        return "admin/user/list_user";
+//        if(principal != null){
+//            String name= principal.getName();
+//            model.addAttribute("username",name);
+//        }
+        return "index";
     }
     @GetMapping(value = {"/home"})
-    public String home(Principal principal, Model model){
-        String name= principal.getName();
-        model.addAttribute("username",name);
+    public String home(Principal principal, Model model) {
+        String name = principal.getName();
+        model.addAttribute("username", name);
         return "home";
     }
+
+
+
+
 }
