@@ -20,4 +20,10 @@ $(document).ready(function () {
 
 //Activate bootstrip tooltips
 //    $("[data-toggle='tooltip']").tooltip();
+
+
+    // // date picker calendar
+    // $(function () {
+    //
+    // });
 });

@@ -3,7 +3,8 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+        <div class="app-sidebar__user">
+            <img class="app-sidebar__user-avatar" th:src="@{'/image/user/'+ ${image}}">
             <div th:if="${not #strings.isEmpty(username)}">
                 <p class="app-sidebar__user-name" th:text="${username}"></p>
                 <p class="app-sidebar__user-designation" th:text="${email}"></p>
@@ -26,8 +27,8 @@
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="form-components.html"><i class="icon fa fa-book"></i> Danh sách môn học</a></li>
-                    <li><a class="treeview-item" href="form-custom.html"><i class="icon fa fa-book"></i><i class=" icon fa fa-plus "></i> Thêm mới môn học</a></li>
+                    <li><a class="treeview-item" th:href="@{/subject/list-subject}"><i class="icon fa fa-book"></i> Danh sách môn học</a></li>
+                    <li><a class="treeview-item" th:href="@{/subject/add-subject}"><i class="icon fa fa-book"></i><i class=" icon fa fa-plus "></i> Thêm mới môn học</a></li>
                 </ul>
             </li>
             <li class="treeview">

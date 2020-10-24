@@ -3,7 +3,6 @@ package com.wru.onthi.config;
 import com.wru.onthi.oauth.CustomOAuth2UserService;
 import com.wru.onthi.services.serviceImpl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -54,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 //login
-                .and().formLogin().loginPage("/login").usernameParameter("email")
-                .passwordParameter("password").successHandler(authSuccessHandler).and().oauth2Login().loginPage("/login")
+                .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")
+                .successHandler(authSuccessHandler).and().oauth2Login().loginPage("/login")
                 .userInfoEndpoint().userService(oAuth2UserService).and()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").invalidateHttpSession(true)

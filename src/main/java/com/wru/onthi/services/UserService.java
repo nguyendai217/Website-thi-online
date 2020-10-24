@@ -15,4 +15,6 @@ public interface UserService {
     Optional<User> findById(Integer id);
     User findUserByName(String name);
     Page<User> getAllUser(Pageable pageable);
+    Page<User> searchUser(String username, String email, String phone,Pageable pageable);
+    User findByUsernameOrEmail(String username , String email);
 }

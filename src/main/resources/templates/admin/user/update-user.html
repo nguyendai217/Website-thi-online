@@ -57,11 +57,11 @@
 <div th:replace="admin/sidebar :: content"></div>
 <main class="app-content">
     <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i> Thông tin user </h5>
+        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i>Update thông tin</h5>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
-            <li class="breadcrumb-item"><a href="#">Thông tin user</a></li>
+            <li class="breadcrumb-item"><a href="#">Update thông tin</a></li>
         </ul>
     </div>
         <div class="container rounded bg-white">
@@ -79,31 +79,49 @@
                 </div>
                 <div class="col-md-5 border-right">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Thông tin tài khoản</h4>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Username</label><input type="text" class="form-control" th:value="${user.username}" ></div>
-                            <div class="col-md-6"><label class="labels">Fullname</label><input type="text" class="form-control" th:value="${user.fullname}" ></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" th:value="${user.email}" ></div>
-                            <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" class="form-control" th:value="${user.phone}" ></div>
-                            <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" class="form-control" th:value="${user.address}" ></div>
-                            <div class="col-md-12"><label class="labels">Giới tính</label><input type="text" class="form-control" th:value="${user.gender}" ></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6"><label class="labels">Sinh nhật</label><input type="text" class="form-control" th:value="${user.birthday}"></div>
-                            <div class="col-md-6">
-                                <label class="labels">Quyền</label>
-                                <br>
-                                <select class="form-control" name="role">
-                                <option value="1">Admin</option>
-                                <option value="0">User</option>
-                                <option value="0">Manager</option>
-                            </select></div>
-                        </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Lưu thông tin</button></div>
+                        <form th:action="@{/admin/user/update-user}" method="post"  >
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Thông tin tài khoản</h4>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label class="labels">Username</label>
+                                    <input type="text" class="form-control" th:value="${user.username}" >
+                                </div>
+                                <div class="col-md-6"><label class="labels">Fullname</label><input type="text" class="form-control" th:value="${user.fullname}" ></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" th:value="${user.email}" ></div>
+                                <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" class="form-control" th:value="${user.phone}" ></div>
+                                <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" class="form-control" th:value="${user.address}" ></div>
+                                <div class="col-md-12">
+                                    <label class="labels">Giới tính</label>
+                                    <select class="col-md-12 p-2" name="gender" >
+                                        <option value="" th:selected="${user.gender==null}">Tùy chọn</option>
+                                        <option value="1" th:selected="${user.gender==1}">Nam</option>
+                                        <option value="0" th:selected="${user.gender==0}">Nữ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+
+                                    <label class="labels">Sinh nhật</label>
+                                    <input id="datepicker" class="form-control" name="birthday" th:value="${#dates.format(user.birthday, 'dd/MM/yyy')}" />
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Quyền</label>
+                                    <br>
+                                    <select class="form-control" name="role">
+                                        <option value="1">Admin</option>
+                                        <option value="0">User</option>
+                                        <option value="0">Manager</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Lưu thông tin</button></div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -130,6 +148,11 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $("#userManager").addClass("active");
+    $('#datepicker').datepicker({
+        iconsLibrary: 'fontawesome',
+        uiLibrary: 'bootstrap4',
+        format: 'dd-mm-yyyy'
+    });
 </script>
 </body>
 </html>

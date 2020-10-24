@@ -4,6 +4,8 @@ import com.wru.onthi.entity.Subject;
 import com.wru.onthi.repository.SubjectRepository;
 import com.wru.onthi.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Optional;
 public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
-    SubjectRepository subjectRepo;
+    private SubjectRepository subjectRepo;
 
     @Override
     public void createSubject(Subject subject) {
@@ -38,5 +40,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Subject> getlistSubject() {
         return subjectRepo.findAll();
+    }
+
+    @Override
+    public Page<Subject> getAllSubject(Pageable pageable) {
+        return subjectRepo.findAllSubject(pageable);
     }
 }

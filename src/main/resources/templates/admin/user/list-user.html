@@ -9,6 +9,9 @@
             height: 45px;
             border-radius: 40px;
         }
+        #success{
+            padding: 10px;
+        }
     </style>
 </head>
 <body class="app sidebar-mini">
@@ -30,29 +33,24 @@
                 <div class="clearfix"></div>
             </div>
             <div>
-                <form role="form" th:action="@{/search-list-user}" method="get">
+                <form th:action="@{/admin/user/search-user}" method="get">
                     <div class="row">
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                             <label>Username</label>
                             <div>
-                                <input class="form-control" id="strName" name="username" type="text" th:text="${strName}">
+                                <input class="form-control" name="username" type="text" th:text="${strUser}">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                             <label>Email</label>
                             <div>
-                                <input class="form-control" id="strCode" name="email" type="text" th:text="${strEmail}">
+                                <input class="form-control" name="email" type="text" th:text="${strEmail}">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Quyền</label>
+                            <label>Phone</label>
                             <div>
-                                <select class="form-control selectpicker" name="role">
-                                    <option value="">Tất cả</option>
-                                    <option value="1">Admin</option>
-                                    <option value="0">User</option>
-                                    <option value="0">Manager</option>
-                                </select>
+                                <input class="form-control" name="phone" type="text" th:text="${strPhone}">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -70,6 +68,9 @@
 
     <br>
     <div class="row">
+        <div class="bg-success col-md-12" id="success"
+             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white">
+        </div>
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
@@ -85,38 +86,38 @@
                                 <th>Phone</th>
                                 <th>Sex</th>
                                 <th>Birthday</th>
-                                <th>Status</th>
                                 <th>Role</th>
-                                <th>Chi tiet</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Tùy chọn</th>
                             </tr>
                             </thead>
                             <tbody th:if="${pageInfo.content != null}">
                             <tr th:each=" row,iterStat: ${pageInfo.content}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td><img id="img_user" th:src="@{'/image/'+ ${row.image}}"></td>
+                                <td><img id="img_user" th:src="@{'/image/user/'+ ${row.image}}"></td>
                                 <td th:text="${row.username}"></td>
                                 <td th:text="${row.fullname}"></td>
                                 <td th:text="${row.email}"></td>
                                 <td th:text="${row.phone}"></td>
-                                <td th:text="${row.sex}"></td>
-                                <td th:text="${row.birthday}"></td>
-                                <td th:text="${row.status}"></td>
+                                <td th:if="${row.gender == null}"></td>
+                                <td th:if="${row.gender==1}">Nam</td>
+                                <td th:if="${row.gender==0}">Nữ</td>
+                                <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
                                 <td th:text="${row.getRoles().get(0).getRole()}"></td>
-                                <td><a th:href="@{/admin/user/detail/{id}(id=${row.id})}"><i class="fa fa-info-circle fa-lg" ></i></a></td>
-                                <td ><a th:href="@{/admin/user/update/{id}(id=${row.id})}"><i class="fa fa-edit fa-lg" style="color: #005cbf"></i></a></td>
-                                <td><a th:href="@{/admin/user/delete/{id}(id=${row.id})}"><i  class="fa fa-trash-o fa-lg " style="color: #c82333"></i></a></td>
+                                <td>
+                                    <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="p-1"><i class="fa fa-info-circle fa-lg" ></i></a>
+                                    <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="p-1"><i class="fa fa-edit fa-lg" style="color: #005cbf"></i></a>
+                                    <a th:href="@{/admin/user/delete/{id}(id=${row.id})}" class="p-1"><i  class="fa fa-trash-o fa-lg " style="color: #c82333"></i></a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="float-left">
-                            <span>Tổng số bản ghi : 40</span>
+                            <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
                         </div>
                         <div class="float-right">
                             <ul class="pagination ">
                                 <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                    <a class="page-link" th:href="@{|/admin/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
                                 </li>
 
                                 <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
@@ -124,7 +125,7 @@
                                         <a
                                                 th:if="${itemPage} != ${pageInfo.number + 1}"
                                                 class="page-link"
-                                                th:href="@{|/admin/list-user?page=${itemPage}|}"
+                                                th:href="@{|/admin/user/list-user?page=${itemPage}|}"
                                                 th:text="${itemPage}"
                                         >1</a>
                                         <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
@@ -132,7 +133,7 @@
                                 </th:block>
 
                                 <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                    <a class="page-link" th:href="@{|/admin/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
                                 </li>
                             </ul>
                         </div>

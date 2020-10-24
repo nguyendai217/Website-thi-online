@@ -18,8 +18,10 @@ public class HomeControllerAdmin {
     public String homeAdmin(Model model, Principal principal){
         String username= principal.getName();
         if(username != null){
-            User user1= userService.findUserByName(username);
-            String email= user1.getEmail();
+            User user= userService.findUserByName(username);
+            String email= user.getEmail();
+            String image= user.getImage();
+            model.addAttribute("image",image);
             model.addAttribute("username", username);
             model.addAttribute("email", email);
         }

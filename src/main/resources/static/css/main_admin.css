@@ -97,6 +97,12 @@ p {
     margin-top: 0;
     margin-bottom: 1rem;
 }
+/*#datepicker{*/
+/*    margin: 0 20px 20px 20px;*/
+/*}*/
+/*#datepicker > span:hover{*/
+/*    !*cursor: pointer;*!*/
+/*}*/
 
 abbr[title],
 abbr[data-original-title] {
@@ -7169,9 +7175,13 @@ button.bg-dark:focus {
 }
 
 .rounded-circle, .app-sidebar__user-avatar {
+
     border-radius: 50% !important;
 }
-
+.app-sidebar__user-avatar{
+    width: 45px;
+    height: 45px;
+}
 .rounded-pill {
     border-radius: 50rem !important;
 }

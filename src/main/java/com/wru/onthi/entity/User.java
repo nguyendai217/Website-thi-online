@@ -23,8 +23,8 @@ public class User {
     private String address;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "sex")
-    private String sex;
+    @Column(name = "gender")
+    private Integer gender;
     @Column(name = "birthday")
     private Date birthday;
     @Column(name = "image")
@@ -35,6 +35,8 @@ public class User {
     private Date createDate;
     @Column(name = "update_date")
     private Date updateDate;
+    @Column(name = "update_by")
+    private String updateBy;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
@@ -103,12 +105,12 @@ public class User {
         this.phone = phone;
     }
 
-    public String getSex() {
-        return sex;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public Date getBirthday() {
@@ -165,5 +167,13 @@ public class User {
 
     public void setAuthProvider(AuthenticationProvider authProvider) {
         this.authProvider = authProvider;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

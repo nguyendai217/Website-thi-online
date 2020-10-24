@@ -23,4 +23,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM user ",nativeQuery = true)
     Page<User> findAllUser(Pageable pageable);
+
+    @Query(value = "SELECT u from User u "
+                    +"WHERE (u.username like :username) "
+                    + "OR (u.email like :email) "
+                    + "OR (u.phone like :phone) ", nativeQuery = false)
+    Page<User> searchUser(@Param("username") String username,
+                          @Param("email") String email,
+                          @Param("phone") String phone, Pageable pageable);
+    User findByUsernameOrEmail(String username,String email);
+
 }

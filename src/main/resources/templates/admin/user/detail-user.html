@@ -88,21 +88,20 @@
                         <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" class="form-control" th:value="${us.address}" readonly ></div>
                         <div class="col-md-6">
                             <label class="labels">Giới tính</label>
-                            <input type="text" class="form-control" th:value="${us.gender}" readonly >
+                            <input type="text" class="form-control" th:if="${us.gender== null}" th:value="" readonly >
+                            <input type="text" class="form-control" th:if="${us.gender==1}" th:value="Nam" readonly >
+                            <input type="text" class="form-control" th:if="${us.gender==0}" th:value="Nữ" readonly >
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Sinh nhật</label>
+                            <input type="text" class="form-control" th:value="${#dates.format(us.birthday, 'dd/MM/yyy')}" readonly >
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label class="labels">Sinh nhật</label>
-                            <input type="text" class="form-control" th:value="${us.birthday}" readonly >
+
                         <div class="col-md-6">
                             <label class="labels">Quyền</label>
-                            <select class="form-control" name="role">
-                                <option value="">Tùy chọn</option>
-                                <option value="1">Admin</option>
-                                <option value="0">User</option>
-                                <option value="0">Manager</option>
-                            </select>
+                            <input type="text" class="form-control" th:value="${us.getRoles().get(0).getRole()}" readonly >
                         </div>
                     </div>
                 </div>
