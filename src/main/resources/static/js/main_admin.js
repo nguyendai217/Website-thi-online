@@ -22,8 +22,12 @@ $(document).ready(function () {
 //    $("[data-toggle='tooltip']").tooltip();
 
 
-    // // date picker calendar
-    // $(function () {
-    //
-    // });
+    $('#success').delay(5000).fadeOut(1000);
+    $('#error').delay(5000).fadeOut(1000);
+
+    $('#datepicker').datepicker({
+        iconsLibrary: 'fontawesome',
+        uiLibrary: 'bootstrap4',
+        format: 'dd-mm-yyyy'
+    });
 });

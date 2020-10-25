@@ -3,54 +3,6 @@
 <head>
     <title>Vali Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style>
-        body {
-            background: #083a5b;
-        }
-
-        .form-control:focus {
-            box-shadow: none;
-            border-color: #083a5b;
-        }
-
-        .profile-button {
-            background: #007d71;
-            box-shadow: none;
-            border: none
-        }
-
-        .profile-button:hover {
-            background: #16374c
-        }
-
-        .profile-button:focus {
-            background: #007d71;
-            box-shadow: none
-        }
-
-        .profile-button:active {
-            background: #083c38;
-            box-shadow: none
-        }
-
-        .back:hover {
-            color:#083a5b;
-            cursor: pointer
-        }
-
-        .labels {
-            font-size: 14px;
-            font-family: sans-serif;
-
-        }
-
-        .add-experience:hover {
-            background: #182f85;
-            color: #fff;
-            cursor: pointer;
-            border: solid 1px #182f85
-        }
-    </style>
 </head>
 <body class="app sidebar-mini">
 <div th:replace="admin/header :: content"></div>
@@ -79,13 +31,28 @@
                         <h4 class="text-right">Thông tin tài khoản</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Username</label><input type="text" class="form-control" th:value="${us.username}"  ></div>
-                        <div class="col-md-6"><label class="labels">Fullname</label><input type="text" class="form-control" th:value="${us.fullname}" readonly ></div>
+                        <div class="col-md-6">
+                            <label class="labels">Username</label>
+                            <input type="text" class="form-control" th:value="${us.username}" readonly  >
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Fullname</label>
+                            <input type="text" class="form-control" th:value="${us.fullname}" readonly >
+                        </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" th:value="${us.email}" readonly ></div>
-                        <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="number" class="form-control" th:value="${us.phone}" readonly ></div>
-                        <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" class="form-control" th:value="${us.address}" readonly ></div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" th:value="${us.email}" readonly >
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Số điện thoại</label>
+                            <input type="number" class="form-control" th:value="${us.phone}" readonly >
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Địa chỉ</label>
+                            <input type="text" class="form-control" th:value="${us.address}" readonly >
+                        </div>
                         <div class="col-md-6">
                             <label class="labels">Giới tính</label>
                             <input type="text" class="form-control" th:if="${us.gender== null}" th:value="" readonly >
@@ -94,7 +61,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Sinh nhật</label>
-                            <input type="text" class="form-control" th:value="${#dates.format(us.birthday, 'dd/MM/yyy')}" readonly >
+                            <input type="text" class="form-control" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" readonly >
                         </div>
                     </div>
                     <div class="row mt-3">

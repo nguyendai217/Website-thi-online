@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User getUserByEmail(@Param("email") String email);
 
     User findByEmail(String email);
+
     User findByUsername(String username);
 
     @Query(value = "SELECT * FROM user ",nativeQuery = true)
@@ -28,9 +29,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                     +"WHERE (u.username like :username) "
                     + "OR (u.email like :email) "
                     + "OR (u.phone like :phone) ", nativeQuery = false)
+
     Page<User> searchUser(@Param("username") String username,
                           @Param("email") String email,
                           @Param("phone") String phone, Pageable pageable);
-    User findByUsernameOrEmail(String username,String email);
 
 }

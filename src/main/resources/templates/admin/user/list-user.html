@@ -9,9 +9,6 @@
             height: 45px;
             border-radius: 40px;
         }
-        #success{
-            padding: 10px;
-        }
     </style>
 </head>
 <body class="app sidebar-mini">
@@ -68,10 +65,11 @@
 
     <br>
     <div class="row">
-        <div class="bg-success col-md-12" id="success"
-             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white">
-        </div>
+
         <div class="col-md-12">
+            <div class="bg-success col-md-12" id="success"
+                 th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+            </div>
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
@@ -145,7 +143,10 @@
 </main>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#userManager").addClass("active");
+    $(document).ready(function (){
+        $("#userManager").addClass("active");
+        $('#success').delay(5000).fadeOut(1000);
+    })
 </script>
 </body>
 </html>

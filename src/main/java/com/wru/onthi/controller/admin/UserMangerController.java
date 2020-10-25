@@ -18,9 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -35,6 +33,7 @@ public class UserMangerController {
     @Autowired
     RoleRepository roleRepository;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable){
@@ -66,9 +65,7 @@ public class UserMangerController {
                              @RequestParam(value = "email",defaultValue = "") String email,
                              @RequestParam(value = "phone", defaultValue = "") String phone){
         getInfoUser(model,principal);
-        //get list user-search
-//        List<User> listUser= new ArrayList<>();
-//        listUser= userService.searchUser(username,email,phone);
+
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
@@ -97,23 +94,34 @@ public class UserMangerController {
         return "admin/user/detail-user";
     }
 
+    @GetMapping("/user/add-user")
+    public String addUserPost(Model model, Principal principal){
+        getInfoUser(model,principal);
+        return "admin/user/add-user";
+    }
+
     @PostMapping("/user/add-user")
     public String addUserGet(Model model, Principal principal, RedirectAttributes redir,
-                             @RequestParam(value = "username") String username,
-                             @RequestParam(value = "fullname") String fullname,
-                             @RequestParam(value = "email") String email,
-                             @RequestParam(value = "password") String password,
-                             @RequestParam(value = "phone") String phone,
-                             @RequestParam(value = "address") String address,
-                             @RequestParam(value = "gender") Integer gender,
-                             @RequestParam(value = "birthday") String birthday,
-                             @RequestParam(value = "role") Integer role){
+                             @RequestParam(value = "username",defaultValue = "") String username,
+                             @RequestParam(value = "fullname",defaultValue = "") String fullname,
+                             @RequestParam(value = "email",defaultValue = "") String email,
+                             @RequestParam(value = "password",defaultValue = "") String password,
+                             @RequestParam(value = "phone",defaultValue = "") String phone,
+                             @RequestParam(value = "address",defaultValue = "") String address,
+                             @RequestParam(value = "gender",defaultValue = "") Integer gender,
+                             @RequestParam(value = "birthday",defaultValue = "") String birthday,
+                             @RequestParam(value = "role",defaultValue = "") Integer role){
         getInfoUser(model,principal);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
         //check email is exist
-        User checkUser= userService.findByUsernameOrEmail(username,email);
+        User checkUser= userService.findByEmail(email);
         if(checkUser != null){
-            model.addAttribute("error","Username hoặc email đã tồn tại.");
+            model.addAttribute("error","Email đã tồn tại, vui lòng sử dụng email khác.");
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("us",username);
+            model.addAttribute("ph",phone);
+            model.addAttribute("add",address);
+            model.addAttribute("full",fullname);
             return "admin/user/add-user";
         }
         else {
@@ -142,13 +150,15 @@ public class UserMangerController {
             }
             if(role==1){
                roleName = "ADMIN";
-            }else if(role==0){
-                roleName="USER";
             }else if(role==2){
+                roleName="USER";
+            }else if(role==3){
                 roleName="MANAGER";
             }
+
             Role roleUser = roleRepository.findByRole(roleName);
             user.setRoles(Arrays.asList(roleUser));
+
             userService.createUser(user);
 
             redir.addFlashAttribute("success","Thêm user thành công.");
@@ -156,11 +166,7 @@ public class UserMangerController {
         }
     }
 
-    @GetMapping("/user/add-user")
-    public String addUserPost(Model model, Principal principal){
-        getInfoUser(model,principal);
-        return "admin/user/add-user";
-    }
+
 
     @GetMapping("/user/update/{id}")
     public String updateUserGet(Model model,Principal principal, @PathVariable("id") Integer id){
@@ -172,15 +178,73 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/update-user")
-    public String updateUserPost(Model model,Principal principal){
+    public String updateUserPost(Model model,Principal principal,RedirectAttributes redir,
+                                 @RequestParam(value = "userId",defaultValue = "" ) Integer id,
+                                 @RequestParam(value = "username",defaultValue = "") String username,
+                                 @RequestParam(value = "fullname",defaultValue = "") String fullname,
+                                 @RequestParam(value = "phone",defaultValue = "") String phone,
+                                 @RequestParam(value = "address",defaultValue = "") String address,
+                                 @RequestParam(value = "gender",defaultValue = "") Integer gender,
+                                 @RequestParam(value = "birthday",defaultValue = "") String birthday,
+                                 @RequestParam(value = "role",defaultValue = "") Integer role){
         getInfoUser(model,principal);
 
-        return "admin/user/update-user";
+        Optional<User> optionalUser= userService.findById(id);
+        User user = optionalUser.get();
+
+        user.setUsername(username);
+        user.setFullname(fullname);
+        user.setAddress(address);
+        user.setPhone(phone);
+        user.setGender(gender);
+        user.setUpdateDate(new Date());
+        user.setUpdateBy(principal.getName());
+        String roleName="";
+        try {
+            if(birthday!= null){
+                Date dateBirthday= sdf.parse(birthday);
+                user.setBirthday(dateBirthday);
+            }
+            else {
+                user.setBirthday(null);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(role==1){
+            roleName = "ADMIN";
+        }else if(role==2){
+            roleName="USER";
+        }else if(role==3){
+            roleName="MANAGER";
+        }
+
+        Role roleUser = roleRepository.findByRole(roleName);
+        List<Role> roles= new ArrayList<>(Arrays.asList(roleUser));
+        user.setRoles(roles);
+        userService.updateUser(user);
+        redir.addFlashAttribute("success","Update user thành công.");
+        return "redirect:/admin/user/list-user";
     }
+
+//    @GetMapping("/profile")
+//    public String profileGet(Model model, Principal principal){
+//        getInfoUser(model,principal);
+//        String us= principal.getName();
+//        User user= userService.findUserByName(us);
+//        model.addAttribute("user",us);
+//        return "admin/profile-admin";
+//    }
+
+
+
+
+
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){
         String username= principal.getName();
+
         if(username != null){
             User user= userService.findUserByName(username);
             String email= user.getEmail();

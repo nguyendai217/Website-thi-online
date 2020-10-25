@@ -74,6 +74,42 @@ table, thead, tr, tbody, th, td {
     text-align: center;
 }
 
+.form-control:focus {
+    box-shadow: none;
+    border-color: #083a5b;
+}
+
+.profile-button {
+    background: #007d71;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #16374c
+}
+
+.profile-button:focus {
+    background: #007d71;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #083c38;
+    box-shadow: none
+}
+.labels {
+    font-size: 14px;
+    font-family: sans-serif;
+}
+#error{
+    padding: 10px;
+    color: white;
+}
+#success{
+    padding: 10px;
+    color: white;
+}
 .table td {
     text-align: center;
 }
