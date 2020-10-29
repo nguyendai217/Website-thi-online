@@ -45,11 +45,13 @@ public class LoginController {
                          @RequestParam(value = "email") String email,
                          @RequestParam(value = "password") String password,
                          @RequestParam(value = "phone") String phone) {
+
         if (!Strings.isNullOrEmpty(fullname) && !Strings.isNullOrEmpty(email)
                 && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(phone)) {
+
             if (userRepository.findByEmail(email) == null) {
                 User user = new User();
-                Role role = roleRepository.findByRole("USER");
+                Role role = roleRepository.findByRole("ADMIN");
                 user.setEmail(email);
                 user.setPassword(passwordEncoder.encode(password));
                 user.setFullname(fullname);

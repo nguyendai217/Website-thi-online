@@ -43,11 +43,22 @@ public class User {
     private AuthenticationProvider authProvider;
 
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch =FetchType.EAGER)
+    @ManyToMany(fetch =FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",nullable = false)},
             inverseJoinColumns ={@JoinColumn(name = "role_id",nullable = false)})
     private List<Role> roles;
+
+    @OneToMany(mappedBy ="userNews")
+    private List<News>listNews;
+
+    public List<News> getListNews() {
+        return listNews;
+    }
+
+    public void setListNews(List<News> listNews) {
+        this.listNews = listNews;
+    }
 
     public Integer getId() {
         return id;

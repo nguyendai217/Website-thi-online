@@ -16,9 +16,13 @@ public class News {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryNews categoryNews;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userNews;
 
     public Integer getId() {
         return id;
@@ -50,5 +54,13 @@ public class News {
 
     public void setCategoryNews(CategoryNews categoryNews) {
         this.categoryNews = categoryNews;
+    }
+
+    public User getUserNews() {
+        return userNews;
+    }
+
+    public void setUserNews(User userNews) {
+        this.userNews = userNews;
     }
 }

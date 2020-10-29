@@ -11,13 +11,13 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "classname")
-    private String className;
+    private String classname;
     @Column(name = "image")
     private String image;
     @Column(name = "status")
     private Integer status;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "classrooms")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "classrooms")
     private List<Subject> subjects;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,12 +32,20 @@ public class Classroom {
         this.id = id;
     }
 
-    public String getClassName() {
-        return className;
+    public String getClassname() {
+        return classname;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassname(String classname) {
+        this.classname = classname;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public String getImage() {

@@ -15,7 +15,7 @@ public class Role {
     @Column(name = "name")
     private String role;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "roles")
     private List<User> users;
 
     public Integer getId() {

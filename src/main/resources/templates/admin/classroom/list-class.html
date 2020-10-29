@@ -3,24 +3,17 @@
 <head>
     <title>Vali Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style >
-        #img_user{
-            width: 45px;
-            height: 45px;
-            border-radius: 40px;
-        }
-    </style>
 </head>
 <body class="app sidebar-mini">
 <div th:replace="admin/header :: content"></div>
 <div th:replace="admin/sidebar :: content"></div>
 <main class="app-content">
     <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-dashboard"></i> Danh sách user </h5>
+        <h5 style="padding-top: 10px"><i class="fa fa-dashboard"></i> Danh sách lớp học</h5>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
-            <li class="breadcrumb-item"><a href="#">Danh sách user</a></li>
+            <li class="breadcrumb-item"><a href="#">Quản lí lớp học</a></li>
+            <li class="breadcrumb-item"><a href="#">Danh sách lớp học</a></li>
         </ul>
     </div>
     <div class="row" style="margin-top: -18px">
@@ -30,29 +23,12 @@
                 <div class="clearfix"></div>
             </div>
             <div>
-                <form role="form" th:action="@{/search-list-user}" method="get">
+                <form role="form" th:action="@{/search-list-class}" method="get">
                     <div class="row">
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Username</label>
+                            <label>Tên lớp học</label>
                             <div>
                                 <input class="form-control" id="strName" name="username" type="text" th:text="${strName}">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Email</label>
-                            <div>
-                                <input class="form-control" id="strCode" name="email" type="text" th:text="${strEmail}">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Quyền</label>
-                            <div>
-                                <select class="form-control selectpicker" name="role">
-                                    <option value="">Tất cả</option>
-                                    <option value="1">Admin</option>
-                                    <option value="0">User</option>
-                                    <option value="0">Manager</option>
-                                </select>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -67,7 +43,6 @@
             </div>
         </div>
     </div>
-
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -79,57 +54,50 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Image</th>
-                                <th>Username</th>
-                                <th>Fullname</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Sex</th>
-                                <th>Birthday</th>
+                                <th>Lớp học</th>
                                 <th>Status</th>
-                                <th>Role</th>
-                                <th>Chi tiet</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody th:if="${pageInfo.content != null}">
-                            <tr th:each=" row,iterStat: ${pageInfo.content}">
+                            <tr th:each="row,iterStat: ${pageInfo.content}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td><img id="img_user" th:src="@{'/image/'+ ${row.image}}"></td>
-                                <td th:text="${row.username}"></td>
-                                <td th:text="${row.fullname}"></td>
-                                <td th:text="${row.email}"></td>
-                                <td th:text="${row.phone}"></td>
-                                <td th:text="${row.sex}"></td>
-                                <td th:text="${row.birthday}"></td>
-                                <td th:text="${row.status}"></td>
-                                <td th:text="${row.getRoles().get(0).getRole()}"></td>
-                                <td data-title="Chi tiet"><a th:href="@{/admin/user/detail/{id}(id=${row.id})}"><i class="fa fa-info-circle fa-lg " ></i></a></td>
-                                <td ><a th:href="@{/admin/user/edit/{id}(id=${row.id})}"><i class="fa fa-edit fa-lg" style="color: #005cbf"></i></a></td>
-                                <td><a th:href="@{/admin/user/delete/{id}(id=${row.id})}"><i  class="fa fa-trash-o fa-lg " style="color: #c82333"></i></a></td>
+                                <td><img id="img_user" th:src="@{'/class/'+ ${row.image}}"></td>
+                                <td th:text="${row.classname}"></td>
+                                <td th:if="${row.status==1}">Active</td>
+                                <td th:if="${row.status==0}">Disable</td>
+                                <td >
+                                    <a th:href="@{/admin/class/edit/{id}(id=${row.id})}">
+                                        <i class="fa fa-edit fa-2x" style="color: #005cbf"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/class/delete/{id}(id=${row.id})}">
+                                        <i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i>
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="float-right">
                             <ul class="pagination ">
                                 <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                    <a class="page-link" th:href="@{|/admin/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                    <a class="page-link" th:href="@{|/admin/class/list-class?page=${pageInfo.number}|}">&laquo;</a>
                                 </li>
 
                                 <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
-                                    <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
-                                        <a
-                                                th:if="${itemPage} != ${pageInfo.number + 1}"
-                                                class="page-link"
-                                                th:href="@{|/admin/list-user?page=${itemPage}|}"
-                                                th:text="${itemPage}"
-                                        >1</a>
+                                    <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                                        class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                        <a th:if="${itemPage} != ${pageInfo.number + 1}"
+                                           class="page-link" th:href="@{|/admin/class/list-class?page=${itemPage}|}"
+                                           th:text="${itemPage}">1</a>
                                         <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
                                     </li>
                                 </th:block>
 
                                 <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                    <a class="page-link" th:href="@{|/admin/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    <a class="page-link" th:href="@{|/admin/class/list-class?page=${pageInfo.number + 2}|}">&raquo;</a>
                                 </li>
                             </ul>
                         </div>
@@ -141,7 +109,7 @@
 </main>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#userManager").addClass("active");
+    $("#classManager").addClass("active");
 </script>
 </body>
 </html>

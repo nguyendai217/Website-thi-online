@@ -3,6 +3,14 @@
 <head>
     <title>Vali Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
+    <style>
+        .hidden{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+    </style>
 </head>
 <body class="app sidebar-mini">
 <div th:replace="admin/header :: content"></div>
@@ -91,19 +99,28 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <form th:action="@{admin/user/resetpassword}" method="post">
+                <form th:action="@{/profile/changepass}" method="post">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="text-right">Reset mật khẩu</h4>
+                            <h4 class="text-right">Thay đổi mật khẩu</h4>
                         </div>
                         <br>
                         <div class="col-md-12">
-                            <label class="labels">Mật khẩu </label>
-                            <input type="text" class="form-control" placeholder="123456" name="password" readonly>
+                            <label class="labels">Nhập mật khẩu cũ</label>
+                            <input type="password" class="form-control"  name="password_old" >
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Nhập mật khẩu mới</label>
+                            <input type="password" class="form-control"  name="password1" id="pass1">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Nhập lại mật khẩu mới</label>
+                            <input type="password" class="form-control"  name="password2" id="pass2" >
+                            <p class="hidden" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
                         </div>
                         <br>
                         <div class="col-md-12">
-                            <input type="submit" value="Reset password" class="btn btn-primary profile-button mt-3 ml-5">
+                            <input type="submit" id="btnSubmit" value="Thay đổi password" class="btn btn-primary profile-button mt-3 ml-5">
                         </div>
                     </div>
                 </form>
@@ -117,12 +134,30 @@
         $("#userManager").addClass("active");
         $('#error').delay(5000).fadeOut(1000);
         $('#success').delay(5000).fadeOut(1000);
+
         $('#datepicker').datepicker({
             iconsLibrary: 'fontawesome',
             uiLibrary: 'bootstrap4',
             format: 'dd-mm-yyyy'
         });
+
     });
+
+
+    $("#btnSubmit").click(function (){
+        var pass1= $("#pass1").val();
+        var pass2= $("#pass2").val();
+        console.log("xxx");
+        console.log("xx"+ pass1,pass2);
+        if(pass1=== pass2){
+            $('#err').addClass("hidden");
+            return true;
+        }
+        else {
+            $('#err').removeClass("hidden");
+            return false;
+        }
+    })
 </script>
 </body>
 </html>

@@ -1,9 +1,12 @@
 package com.wru.onthi.controller.admin;
 
+import com.google.common.base.Strings;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,9 @@ import java.util.*;
 public class HomeControllerAdmin {
     @Autowired
     UserService userService;
+
+    @Autowired
+    BCryptPasswordEncoder encoder;
 
     @GetMapping("/admin/home")
     public String homeAdmin(Model model, Principal principal){
@@ -85,6 +91,39 @@ public class HomeControllerAdmin {
         }
         red.addFlashAttribute("success","Cập nhật thông tin thành công.");
         return "redirect:/profile";
+    }
+
+    @PostMapping("/profile/changepass")
+    public String changePass(Model model, Principal principal,
+                             @RequestParam(value = "password_old") String oldPassword,
+                             @RequestParam(value = "password1") String pass,
+                             @RequestParam(value = "password2") String pass2){
+        getInfoUser(model,principal);
+        String username= principal.getName();
+        User user = userService.findUserByName(username);
+        if(!Strings.isNullOrEmpty(pass) && !Strings.isNullOrEmpty(pass2)){
+            if(pass.equals(pass2)){
+                String userPass= user.getPassword();
+                boolean checkpass= encoder.matches(oldPassword,userPass);
+                if(checkpass== true){
+                    String encodePass= encoder.encode(pass);
+                    user.setPassword(encodePass);
+                    try {
+                        userService.updateUser(user);
+                        model.addAttribute("success","Thay đổi mật khẩu thành công.");
+                    }catch (Exception e){
+                        model.addAttribute("error","Thay đổi mật khẩu thất bại");
+                    }
+                }else {
+                    model.addAttribute("error","Mật khẩu cũ không đúng, vui lòng nhập lại");
+                }
+            } else {
+                model.addAttribute("error","Mật khẩu không trùng nhau, vui lòng nhập lại");
+                
+            }
+        }
+        model.addAttribute("us",user);
+        return "admin/profile";
     }
 
     // get info user login

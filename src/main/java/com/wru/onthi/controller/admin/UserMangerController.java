@@ -67,7 +67,7 @@ public class UserMangerController {
         getInfoUser(model,principal);
 
         int pageNumber = pageable.getPageNumber();
-        int pageSize= 5;
+        int pageSize= 1;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable newPageAble = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "username"));
         Page<User> pageUser = userService.searchUser(username,email,phone,newPageAble);
@@ -227,18 +227,19 @@ public class UserMangerController {
         return "redirect:/admin/user/list-user";
     }
 
-//    @GetMapping("/profile")
-//    public String profileGet(Model model, Principal principal){
-//        getInfoUser(model,principal);
-//        String us= principal.getName();
-//        User user= userService.findUserByName(us);
-//        model.addAttribute("user",us);
-//        return "admin/profile-admin";
-//    }
-
-
-
-
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(Model model,RedirectAttributes redirectAttributes, Principal principal,@PathVariable(value = "id") Integer id){
+        getInfoUser(model,principal);
+        Optional<User> optionalUser= userService.findById(id);
+        User user= optionalUser.get();
+        try {
+            userService.deleteUser(user);
+            redirectAttributes.addFlashAttribute("success","Xóa user thành công.");
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("error","Delete user thất bại");
+        }
+        return "redirect:/admin/user/list-user";
+    }
 
 
     // get info user login

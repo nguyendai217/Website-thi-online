@@ -15295,8 +15295,8 @@ be a descendant of the grid when it is being dragged.
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 12px 15px;
-    font-size: 1.1em;
+    padding: 14px 15px;
+    font-size: 1.2em;
     border-left: 3px solid transparent;
     -webkit-transition: border-left-color 0.3s ease,
     background-color 0.3s ease;
@@ -15360,7 +15360,7 @@ be a descendant of the grid when it is being dragged.
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 6px 5px 5px 20px;
+    padding: 6px 5px 5px 40px;
     font-size: 1.1em;
     color: #fff;
 }
