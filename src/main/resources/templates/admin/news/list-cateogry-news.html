@@ -3,24 +3,17 @@
 <head>
     <title>Vali Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style >
-        #img_user{
-            width: 45px;
-            height: 45px;
-            border-radius: 40px;
-        }
-    </style>
 </head>
 <body class="app sidebar-mini">
 <div th:replace="admin/header :: content"></div>
 <div th:replace="admin/sidebar :: content"></div>
 <main class="app-content">
     <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-user fa-lg mr-3"></i> Danh sách tin tức </h5>
+        <h5 style="padding-top: 10px"><i class="fa fa-user fa-lg mr-3"></i> Danh sách thể loại</h5>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg">Trang chủ</i></li>
             <li class="breadcrumb-item"><a href="#">Quản lí tin tức</a></li>
-            <li class="breadcrumb-item"><a href="#">Danh tin tức</a></li>
+            <li class="breadcrumb-item"><a href="#">Danh sách thể loại</a></li>
         </ul>
     </div>
     <div class="row" style="margin-top: -18px">
@@ -30,22 +23,12 @@
                 <div class="clearfix"></div>
             </div>
             <div>
-                <form th:action="@{/admin/search-news}" method="get">
+                <form th:action="@{/admin/search-category-news}" method="get">
                     <div class="row">
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Mã tin tức</label>
+                            <label>Tên thể loại</label>
                             <div>
                                 <input class="form-control" name="newscode" type="text" th:text="${strCode}">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Thể loại</label>
-                            <div>
-                                <select>
-                                    <option value="1">Tuyền sinh</option>
-                                    <option value="2">Giáo dục</option>
-                                    <option value="3">Luyện thi</option>
-                                </select>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -84,40 +67,25 @@
                             <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Image</th>
-                                <th>Title</th>
-                                <th>Nội dung</th>
-                                <th></th>
-                                <th>Phone</th>
-                                <th>Sex</th>
-                                <th>Birthday</th>
-                                <!--                                <th>Role</th>-->
+                                <th>Tên thể loại</th>
                                 <th>Tùy chọn</th>
                             </tr>
                             </thead>
                             <tbody th:if="${pageInfo.content != null}">
                             <tr th:each=" row,iterStat: ${pageInfo.content}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td><img id="img_user" th:src="@{'/image/user/'+ ${row.image}}"></td>
-                                <td th:text="${row.username}"></td>
-                                <td th:text="${row.fullname}"></td>
-                                <td th:text="${row.email}"></td>
-                                <td th:text="${row.phone}"></td>
-                                <td th:if="${row.gender == null}"></td>
-                                <td th:if="${row.gender==1}">Nam</td>
-                                <td th:if="${row.gender==0}">Nữ</td>
-                                <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
-                                <!--                                <td th:text="${row.getRoles().get(0).getRole()}"></td>-->
+                                <td th:text="${row.categoryName}"></td>
                                 <td>
-                                    <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="p-1"><i class="fa fa-info-circle fa-2x" ></i></a>
-                                    <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="p-1"><i class="fa fa-edit fa-2x" style="color: #005cbf"></i></a>
-                                    <a th:href="@{/admin/user/delete1/{id}(id=${row.id})}" class="p-1" id="confirmDelete" ><i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i></a>
-
+                                    <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="p-1">
+                                        <i class="fa fa-edit fa-2x" style="color: #005cbf"></i>
+                                    </a>
+                                    <a th:href="@{/admin/user/delete1/{id}(id=${row.id})}" class="p-1" id="confirmDelete" >
+                                        <i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
                         <div class="float-left">
                             <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
                         </div>
