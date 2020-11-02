@@ -28,6 +28,9 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<Lesson> lessons;
 
+    @OneToMany(mappedBy = "exam_subject")
+    private List<Exam> exams;
+
     public Integer getId() {
         return id;
     }

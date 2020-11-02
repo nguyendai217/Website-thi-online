@@ -11,7 +11,7 @@
     <div class="app-title">
         <h5 style="padding-top: 10px"><i class="fa fa-user fa-lg mr-3"></i> Danh sách thể loại</h5>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg">Trang chủ</i></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
             <li class="breadcrumb-item"><a href="#">Quản lí tin tức</a></li>
             <li class="breadcrumb-item"><a href="#">Danh sách thể loại</a></li>
         </ul>
@@ -34,7 +34,7 @@
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                             <label>Trạng thái</label>
                             <div>
-                                <select>
+                                <select class="col-md-12 p-2" >
                                     <option value="1">Active</option>
                                     <option value="0">InActive</option>
                                 </select>
@@ -55,10 +55,12 @@
 
     <br>
     <div class="row">
-
         <div class="col-md-12">
             <div class="bg-success col-md-12" id="success"
                  th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+            </div>
+            <div class="bg-success col-md-12" id="error"
+                 th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
             </div>
             <div class="tile">
                 <div class="tile-body">
@@ -76,10 +78,10 @@
                                 <td th:text="${iterStat.count}"></td>
                                 <td th:text="${row.categoryName}"></td>
                                 <td>
-                                    <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="p-1">
+                                    <a th:href="@{/news/update-category/{id}(id=${row.id})}" class="p-1">
                                         <i class="fa fa-edit fa-2x" style="color: #005cbf"></i>
                                     </a>
-                                    <a th:href="@{/admin/user/delete1/{id}(id=${row.id})}" class="p-1" id="confirmDelete" >
+                                    <a th:href="@{/news/delete-category/{id}(id=${row.id})}" class="p-1" id="confirmDelete" >
                                         <i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i>
                                     </a>
                                 </td>
@@ -92,7 +94,7 @@
                         <div class="float-right">
                             <ul class="pagination ">
                                 <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                    <a class="page-link" th:href="@{|/news/list-category?page=${pageInfo.number}|}">&laquo;</a>
                                 </li>
 
                                 <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
@@ -100,7 +102,7 @@
                                         <a
                                                 th:if="${itemPage} != ${pageInfo.number + 1}"
                                                 class="page-link"
-                                                th:href="@{|/admin/user/list-user?page=${itemPage}|}"
+                                                th:href="@{|/news/list-category?page=${itemPage}|}"
                                                 th:text="${itemPage}"
                                         >1</a>
                                         <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
@@ -108,7 +110,7 @@
                                 </th:block>
 
                                 <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    <a class="page-link" th:href="@{|/news/list-category?page=${pageInfo.number + 2}|}">&raquo;</a>
                                 </li>
                             </ul>
                         </div>
@@ -130,7 +132,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5>Bạn có chắc chắn muốn xóa user ?</h5>
+                    <h5>Bạn có chắc chắn muốn xóa thể loại hay không ?</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -144,8 +146,9 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $(document).ready(function (){
-        $("#userManager").addClass("active");
+        $("#newsManager").addClass("active");
         $('#success').delay(5000).fadeOut(1000);
+        $('#eror').delay(5000).fadeOut(1000);
     })
 
     //for delete user

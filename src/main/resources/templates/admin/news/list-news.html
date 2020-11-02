@@ -18,7 +18,7 @@
     <div class="app-title">
         <h5 style="padding-top: 10px"><i class="fa fa-user fa-lg mr-3"></i> Danh sách tin tức </h5>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg">Trang chủ</i></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
             <li class="breadcrumb-item"><a href="#">Quản lí tin tức</a></li>
             <li class="breadcrumb-item"><a href="#">Danh tin tức</a></li>
         </ul>
@@ -41,7 +41,7 @@
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                             <label>Thể loại</label>
                             <div>
-                                <select>
+                                <select class="col-md-12 p-2">
                                     <option value="1">Tuyền sinh</option>
                                     <option value="2">Giáo dục</option>
                                     <option value="3">Luyện thi</option>
@@ -51,7 +51,7 @@
                         <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                             <label>Trạng thái</label>
                             <div>
-                                <select>
+                                <select class="col-md-12 p-2">
                                     <option value="1">Active</option>
                                     <option value="0">InActive</option>
                                 </select>
@@ -77,6 +77,9 @@
             <div class="bg-success col-md-12" id="success"
                  th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
             </div>
+            <div class="bg-danger col-md-12" id="error"
+                 th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+            </div>
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
@@ -87,32 +90,27 @@
                                 <th>Image</th>
                                 <th>Title</th>
                                 <th>Nội dung</th>
-                                <th></th>
-                                <th>Phone</th>
-                                <th>Sex</th>
-                                <th>Birthday</th>
-                                <!--                                <th>Role</th>-->
+                                <th>Người đăng</th>
+                                <th>Thời gian đăng</th>
+                                <th>Thể loại</th>
+                                <th>Số lượt xem</th>
                                 <th>Tùy chọn</th>
                             </tr>
                             </thead>
                             <tbody th:if="${pageInfo.content != null}">
                             <tr th:each=" row,iterStat: ${pageInfo.content}">
                                 <td th:text="${iterStat.count}"></td>
-                                <td><img id="img_user" th:src="@{'/image/user/'+ ${row.image}}"></td>
-                                <td th:text="${row.username}"></td>
-                                <td th:text="${row.fullname}"></td>
-                                <td th:text="${row.email}"></td>
-                                <td th:text="${row.phone}"></td>
-                                <td th:if="${row.gender == null}"></td>
-                                <td th:if="${row.gender==1}">Nam</td>
-                                <td th:if="${row.gender==0}">Nữ</td>
-                                <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
-                                <!--                                <td th:text="${row.getRoles().get(0).getRole()}"></td>-->
+                                <td><img th:src="@{'/image/news/'+ ${row.image}}"></td>
+                                <td th:text="${#strings.substring(row.title,0,20)+'...'}"></td>
+                                <td th:text="${#strings.substring(row.content,0,20)+'...'}"></td>
+                                <td th:text="${row.insertBy}"></td>
+                                <td th:text="${#dates.format(row.insertDate, 'dd-MM-yyyy')}"></td>
+                                <td th:text="${row.categoryNews.categoryName}"></td>
+                                <td th:text="${row.views}"></td>
                                 <td>
-                                    <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="p-1"><i class="fa fa-info-circle fa-2x" ></i></a>
-                                    <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="p-1"><i class="fa fa-edit fa-2x" style="color: #005cbf"></i></a>
-                                    <a th:href="@{/admin/user/delete1/{id}(id=${row.id})}" class="p-1" id="confirmDelete" ><i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i></a>
-
+                                    <a th:href="@{/news/detail-news/{id}(id=${row.id})}" class="p-1"><i class="fa fa-info-circle fa-2x" ></i></a>
+                                    <a th:href="@{/news/update-news/{id}(id=${row.id})}" class="p-1"><i class="fa fa-edit fa-2x" style="color: #005cbf"></i></a>
+                                    <a th:href="@{/news/delete-news/{id}(id=${row.id})}" class="p-1" id="confirmDelete" ><i  class="fa fa-trash-o fa-2x " style="color: #c82333"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -124,7 +122,7 @@
                         <div class="float-right">
                             <ul class="pagination ">
                                 <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                    <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number}|}">&laquo;</a>
                                 </li>
 
                                 <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
@@ -132,7 +130,7 @@
                                         <a
                                                 th:if="${itemPage} != ${pageInfo.number + 1}"
                                                 class="page-link"
-                                                th:href="@{|/admin/user/list-user?page=${itemPage}|}"
+                                                th:href="@{|/news/list-news?page=${itemPage}|}"
                                                 th:text="${itemPage}"
                                         >1</a>
                                         <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
@@ -140,7 +138,7 @@
                                 </th:block>
 
                                 <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                    <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number + 2}|}">&raquo;</a>
                                 </li>
                             </ul>
                         </div>
@@ -162,7 +160,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5>Bạn có chắc chắn muốn xóa user ?</h5>
+                    <h5>Bạn có chắc chắn muốn xóa tin tức hay không ?</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -176,8 +174,9 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $(document).ready(function (){
-        $("#userManager").addClass("active");
+        $("#newsManager").addClass("active");
         $('#success').delay(5000).fadeOut(1000);
+        $('#error').delay(5000).fadeOut(1000);
     })
 
     //for delete user

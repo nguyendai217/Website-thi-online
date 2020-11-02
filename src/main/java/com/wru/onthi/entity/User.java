@@ -52,6 +52,10 @@ public class User {
     @OneToMany(mappedBy ="userNews")
     private List<News>listNews;
 
+    @OneToMany(mappedBy = "userResult")
+    private List<Result> results;
+
+
     public List<News> getListNews() {
         return listNews;
     }

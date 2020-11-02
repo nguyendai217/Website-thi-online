@@ -3,43 +3,6 @@
 <head>
     <title>Vali Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style>
-        body {
-            background: #083a5b;
-        }
-
-        .form-control:focus {
-            box-shadow: none;
-            border-color: #083a5b;
-        }
-
-        .profile-button {
-            background: #007d71;
-            box-shadow: none;
-            border: none
-        }
-
-        .profile-button:hover {
-            background: #16374c
-        }
-
-        .profile-button:focus {
-            background: #007d71;
-            box-shadow: none
-        }
-
-        .profile-button:active {
-            background: #083c38;
-            box-shadow: none
-        }
-
-        .labels {
-            font-size: 14px;
-            font-family: sans-serif;
-
-        }
-
-    </style>
 </head>
 <body class="app sidebar-mini">
 <div th:replace="admin/header :: content"></div>
@@ -48,7 +11,7 @@
     <div class="app-title">
         <h5 style="padding-top: 10px"><i class="fa fa-book mr-2 fa-lg"></i> Thông tin môn học</h5>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
             <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
             <li class="breadcrumb-item"><a href="#">Thêm môn học</a></li>
         </ul>

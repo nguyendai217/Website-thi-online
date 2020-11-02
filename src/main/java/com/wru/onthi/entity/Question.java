@@ -30,6 +30,10 @@ public class Question {
     @Column(name = "ans_correct")
     private String ansCorrect;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id")
+    private Exam examQuestion;
+
     public Integer getId() {
         return id;
     }
