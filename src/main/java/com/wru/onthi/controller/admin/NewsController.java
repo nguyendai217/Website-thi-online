@@ -1,5 +1,6 @@
 package com.wru.onthi.controller.admin;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.CategoryNews;
 import com.wru.onthi.entity.News;
 import com.wru.onthi.entity.User;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.jws.WebParam;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -52,13 +54,13 @@ public class NewsController {
     }
 
     // add category
-    @GetMapping("/add-category-news")
+    @GetMapping("/add-category")
     public String addCategoryGet(Model model, Principal principal){
         getInfoUser(model,principal);
         return "admin/news/add-category-news";
     }
 
-    @PostMapping("/add-category-news")
+    @PostMapping("/add-category")
     public String addCategoryPost(Model model, Principal principal, RedirectAttributes redir,
                                   @RequestParam(value = "categoryName",defaultValue = "") String categoryName){
         getInfoUser(model,principal);
@@ -122,10 +124,10 @@ public class NewsController {
         }catch (Exception e){
             redir.addFlashAttribute("error","Cập nhật thể loại thất bại");
         }
-
         return "redirect:/news/list-category";
+
     }
-    //news
+    //list news
     @GetMapping("/list-news")
     public String listNews(Model model,Principal principal,Pageable pageable){
         getInfoUser(model,principal);
@@ -152,6 +154,31 @@ public class NewsController {
             return "admin/news/list-news";
         }
     }
+
+    // add new
+    @GetMapping("/add-news")
+    public String addNewsGet(Model model, Principal principal){
+        getInfoUser(model,principal);
+        return "admin/news/add-news";
+    }
+
+    @PostMapping("/add-news")
+    public String addNewsPost(Model model,Principal principal){
+
+
+        return "";
+    }
+
+    // detail news
+    @GetMapping("/detail-news/{id}")
+    public String detailNews(Model model, Principal principal, @PathVariable(value = "id") Integer id){
+        getInfoUser(model,principal);
+        Optional<News> optional = newsService.findByNewsId(id);
+        News news= optional.get();
+        model.addAttribute("news",news);
+        return "admin/news/detail-news";
+    }
+
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){
