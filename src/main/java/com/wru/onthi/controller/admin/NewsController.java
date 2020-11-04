@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.WebParam;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -159,13 +160,14 @@ public class NewsController {
     @GetMapping("/add-news")
     public String addNewsGet(Model model, Principal principal){
         getInfoUser(model,principal);
+        List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
+        model.addAttribute("listCategory",listCategory);
         return "admin/news/add-news";
     }
 
     @PostMapping("/add-news")
     public String addNewsPost(Model model,Principal principal){
-
-
+        getInfoUser(model,principal);
         return "";
     }
 

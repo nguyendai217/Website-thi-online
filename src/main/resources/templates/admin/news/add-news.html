@@ -9,7 +9,7 @@
 <div th:replace="admin/sidebar :: content"></div>
 <main class="app-content">
     <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i> Thông tin tin tức</h5>
+        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i> Quản lí tin tức</h5>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
             <li class="breadcrumb-item"><a href="#">Quản lí tin tức</a></li>
@@ -27,42 +27,37 @@
             <div class="col-md-9">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Chi tiết tin tức</h4>
+                        <h4 class="text-right">Thêm mới tin tức</h4>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <label class="labels">Tiêu đề</label>
-                            <input type="text" class="form-control" th:value="${news.title}"   >
+                            <input type="text" class="form-control"  name="title"  >
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Thể loại</label>
-                            <input type="text" class="form-control" th:value="${news.categoryNews.getCategoryName()}" readonly >
+                            <select class="form-control" name="category">
+                                <option value="">Tùy chọn</option>
+                                <option th:each="item : ${listCategory}"
+                                        th:value="${item.id}" th:text="${item.categoryName}">
+                                </option>
+                            </select>
                         </div>
-
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label class="labels">Ngày tạo</label>
-                            <input type="text" class="form-control" th:value="${news.insertDate}" readonly >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Người tạo</label>
-                            <input type="text" class="form-control" th:value="${news.insertBy}" readonly >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Số lượt xem</label>
-                            <input type="text" class="form-control" th:value="${news.views}" readonly >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Tag</label>
-                            <input type="text" class="form-control" th:value="${news.tag}" readonly >
-                        </div>
                         <div class="col-md-12">
+                            <label class="labels">Tag</label>
+                            <input type="text" class="form-control" name="tags">
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+                            <br>
                             <label class="labels">Nội dung</label>
                             <br>
-                            <textarea type="text" name="content" id="content"  class="form-control" th:field="${news.content}" rows="10" cols="50"></textarea>
+                            <textarea type="text" name="content" id="content"  class="form-control" rows="10" cols="50"></textarea>
                         </div>
                     </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Thêm tin mới</button></div>
                 </div>
             </div>
 
@@ -80,6 +75,10 @@
     $(document).ready(function (){
         editor= CKEDITOR.replace('content')
     })
+    var content= editor.getData();
+
+
+
 </script>
 </body>
 </html>
