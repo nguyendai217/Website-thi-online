@@ -1,50 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Vali Admin</title>
+    <title>Admin Home</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
-<body class="app sidebar-mini">
-<div th:replace="admin/header :: content"></div>
-<div th:replace="admin/sidebar :: content"></div>
-<main class="app-content">
-    <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-book mr-2 fa-lg"></i> Thông tin môn học</h5>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
-            <li class="breadcrumb-item"><a href="#">Thêm môn học</a></li>
-        </ul>
-    </div>
-    <div class="container rounded bg-white">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Thêm môn học</h4>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Quản lí môn học</small></h3>
                     </div>
-                    <form action="#" method="post">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="labels">Mã môn học</label>
-                            <input type="text" class="form-control" name="codeSubject" >
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            <label class="labels">Tên môn học</label>
-                            <input type="text" class="form-control" name="nameSubject">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Thêm môn học</button></div>
-                    </form>
+                    <div class="bg-danger col-md-6" id="error"
+                         th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Thêm môn học</h4>
+                            </div>
+                            <form th:action="@{/subject/add-subject}" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-12">
+                                            <label class="labels">Mã môn học</label>
+                                            <input type="text" class="form-control" name="codeSubject" >
+                                        </div>
+                                        <div class="col-md-12">
+                                            <br>
+                                            <label class="labels">Tên môn học</label>
+                                            <input type="text" class="form-control" name="nameSubject"
+                                                   accept="image/jpeg, image/png, image/jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 ">
+                                        <div class="col-md-12 col-sm-12">
+                                            <label class="label">Hình ảnh môn học</label>
+                                            <input type="file" name="image" id="fileImage" >
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mt-3">
+                                            <img id="imgPreview" style="width: 150px;height: 150px">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-success" type="submit">Thêm môn học</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- page content -->
     </div>
-</main>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#subjectManager").addClass("active");
+    $('#userManager').addClass("active");
+   
+    $(document).ready(function () {
+        $('#fileImage').change(function() {
+            showPreview(this);
+        });
+
+        $('#error').delay(5000).fadeOut(1000);
+    });
+    function showPreview(fileImage){
+         file = fileImage.files[0];
+         render = new FileReader();
+
+        render.onload = function(e) {
+            $('#imgPreview').attr('src',e.target.result);
+        }
+        render.readAsDataURL(file);
+    }
+
 </script>
 </body>
 </html>

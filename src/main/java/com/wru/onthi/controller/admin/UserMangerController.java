@@ -67,9 +67,9 @@ public class UserMangerController {
         getInfoUser(model,principal);
 
         int pageNumber = pageable.getPageNumber();
-        int pageSize= 1;
+        int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable newPageAble = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "username"));
+        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
         Page<User> pageUser = userService.searchUser(username,email,phone,newPageAble);
 
         int totalItem = (int) pageUser.getTotalElements();
@@ -110,23 +110,29 @@ public class UserMangerController {
                              @RequestParam(value = "address",defaultValue = "") String address,
                              @RequestParam(value = "gender",defaultValue = "") Integer gender,
                              @RequestParam(value = "birthday",defaultValue = "") String birthday,
-                             @RequestParam(value = "role",defaultValue = "") Integer role){
-        getInfoUser(model,principal);
+                             @RequestParam(value = "role",defaultValue = "") Integer role) {
+        getInfoUser(model, principal);
 
         //check email is exist
-        User checkUser= userService.findByEmail(email);
-        if(checkUser != null){
-            model.addAttribute("error","Email đã tồn tại, vui lòng sử dụng email khác.");
-            model.addAttribute("emailAdd",email);
-            model.addAttribute("us",username);
-            model.addAttribute("ph",phone);
-            model.addAttribute("add",address);
-            model.addAttribute("full",fullname);
+        User checkEmailExist = userService.findByEmail(email);
+        User checkUsernameExist = userService.findByUsername(username);
+        if (checkEmailExist != null ||checkUsernameExist != null ) {
+            if(checkEmailExist != null){
+                model.addAttribute("error", "Email đã tồn tại, vui lòng sử dụng email khác.");
+            }
+            else if(checkUsernameExist != null){
+                model.addAttribute("error", "Username đã tồn tại, vui lòng sử dụng usename khác.");
+            }
+            model.addAttribute("emailAdd", email);
+            model.addAttribute("us", username);
+            model.addAttribute("ph", phone);
+            model.addAttribute("add", address);
+            model.addAttribute("full", fullname);
             return "admin/user/add-user";
         }
-        else {
-            User user= new User();
-            String roleName="";
+        else{
+            User user = new User();
+            String roleName = "";
             user.setUsername(username);
             user.setFullname(fullname);
             user.setEmail(email);
@@ -138,22 +144,21 @@ public class UserMangerController {
             user.setGender(gender);
             //user.setBirthday(birthday);
             try {
-                if(birthday!= null){
-                    Date dateBirthday= sdf.parse(birthday);
+                if (birthday != null) {
+                    Date dateBirthday = sdf.parse(birthday);
                     user.setBirthday(dateBirthday);
-                }
-                else {
+                } else {
                     user.setBirthday(null);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(role==1){
-               roleName = "ADMIN";
-            }else if(role==2){
-                roleName="USER";
-            }else if(role==3){
-                roleName="MANAGER";
+            if (role == 1) {
+                roleName = "ADMIN";
+            } else if (role == 2) {
+                roleName = "USER";
+            } else if (role == 3) {
+                roleName = "MANAGER";
             }
 
             Role roleUser = roleRepository.findByRole(roleName);
@@ -161,12 +166,10 @@ public class UserMangerController {
 
             userService.createUser(user);
 
-            redir.addFlashAttribute("success","Thêm user thành công.");
+            redir.addFlashAttribute("success", "Thêm user thành công.");
             return "redirect:/admin/user/list-user";
         }
     }
-
-
 
     @GetMapping("/user/update/{id}")
     public String updateUserGet(Model model,Principal principal, @PathVariable("id") Integer id){
@@ -241,6 +244,10 @@ public class UserMangerController {
         return "redirect:/admin/user/list-user";
     }
 
+    @PostMapping("/user/updateImage")
+    public String updateImage(){
+        return "";
+    }
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

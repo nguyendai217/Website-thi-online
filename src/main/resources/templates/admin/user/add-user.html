@@ -1,109 +1,126 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Vali Admin</title>
+    <title>Admin Home</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
-<body class="app sidebar-mini">
-<div th:replace="admin/header :: content"></div>
-<div th:replace="admin/sidebar :: content"></div>
-<main class="app-content">
-    <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i> Thông tin user </h5>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
-            <li class="breadcrumb-item"><a href="#">Thông tin user</a></li>
-        </ul>
-    </div>
-    <div class="container rounded bg-white">
-        <div class="row">
-            <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center">
-                    <img class=" mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU">
-                    <span class="font-weight-bold mt-2">Username</span>
-                    <span class="text-black-50">Email</span>
-                    <form method="POST" th:action="@{/uploadFile}" enctype="multipart/form-data">
-                        <input type="file" class="ml-5 pl-5 mt-3"  />
-                        <input type="submit" value="Change Avatar" class="btn btn-primary profile-button mt-3">
-                    </form>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Thêm mới người dùng</small></h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4 border-right">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img class=" mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU">
+                            <span class="font-weight-bold mt-2">Username</span>
+                            <span class="text-black-50">Email</span>
+                            <form method="POST" th:action="@{/uploadFile}" enctype="multipart/form-data">
+                                <input type="file" class="ml-5 pl-5 mt-3"  />
+                                <input type="submit" value="Change Avatar" class="btn btn-success mt-3">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-8 border-right">
+                        <form th:action="@{/admin/user/add-user}" method="post">
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Thông tin tài khoản</h4>
+                                </div>
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Username</label>
+                                        <input type="text" class="form-control" name="username" th:value="${us}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Fullname</label>
+                                        <input type="text" class="form-control" name="fullname" th:value="${full}">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Email</label>
+                                        <input type="text" class="form-control" name="email" th:value="${emailAdd}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Password</label>
+                                        <input type="password" class="form-control" name="password" >
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Số điện thoại</label>
+                                        <input type="number" class="form-control" name="phone" th:value="${ph}" >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Địa chỉ</label>
+                                        <input type="text" class="form-control" name="address" th:value="${add}" >
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Giới tính</label>
+                                        <select class="col-md-12 p-2" name="gender" >
+                                            <option value="1" th:text="Nam"></option>`
+                                            <option value="0" th:text="Nữ"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Sinh nhật</label>
+                                        <input id="datepicker" class="form-control" name="birthday" />
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Quyền</label>
+                                        <select class="form-control" name="role">
+                                            <option value="">Tùy chọn</option>
+                                            <option value="1">Admin</option>
+                                            <option value="0">User</option>
+                                            <option value="2">Manager</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-success" type="submit">Thêm User</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-8 border-right">
-                <form th:action="@{/admin/user/add-user}" method="post">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Thông tin tài khoản</h4>
-                        </div>
-                        <div class="bg-danger" id="error"
-                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label class="labels">Username</label>
-                                <input type="text" class="form-control" name="username" th:value="${us}">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Fullname</label>
-                                <input type="text" class="form-control" name="fullname" th:value="${full}">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <label class="labels">Email</label>
-                                <input type="text" class="form-control" name="email" th:value="${emailAdd}">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="labels">Password</label>
-                                <input type="password" class="form-control" name="password" >
-                            </div>
-                            <div class="col-md-12">
-                                <label class="labels">Số điện thoại</label>
-                                <input type="number" class="form-control" name="phone" th:value="${ph}" >
-                            </div>
-                            <div class="col-md-12">
-                                <label class="labels">Địa chỉ</label>
-                                <input type="text" class="form-control" name="address" th:value="${add}" >
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Giới tính</label>
-                                <select class="col-md-12 p-2" name="gender" >
-                                    <option value="1" th:text="Nam"></option>`
-                                    <option value="0" th:text="Nữ"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class="labels">Sinh nhật</label>
-                                <input id="datepicker" class="form-control" name="birthday" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Quyền</label>
-                                <select class="form-control" name="role">
-                                    <option value="">Tùy chọn</option>
-                                    <option value="1">Admin</option>
-                                    <option value="0">User</option>
-                                    <option value="2">Manager</option>
-                                </select></div>
-                        </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Thêm User</button></div>
-                    </div>
-                </form>
-            </div>
         </div>
+        <!-- page content -->
     </div>
-</main>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
 <div th:replace="admin/init_admin :: script"></div>
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
-        $("#userManager").addClass("active");
-        $('#error').delay(5000).fadeOut(1000);
-        $('#datepicker').datepicker({
-            iconsLibrary: 'fontawesome',
-            uiLibrary: 'bootstrap4',
-            format: 'dd-mm-yyyy'
-        });
+        $('#userManager').addClass("active");
     });
 </script>
 </body>

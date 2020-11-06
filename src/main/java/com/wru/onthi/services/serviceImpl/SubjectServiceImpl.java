@@ -46,4 +46,14 @@ public class SubjectServiceImpl implements SubjectService {
     public Page<Subject> getAllSubject(Pageable pageable) {
         return subjectRepo.findAllSubject(pageable);
     }
+
+    @Override
+    public Page<Subject> searchSubject(String subject, Pageable pageable) {
+        return subjectRepo.searchSubject(subject,pageable);
+    }
+
+    @Override
+    public Subject findBySubjectCode(String code) {
+        return subjectRepo.findByCode(code);
+    }
 }

@@ -14,4 +14,6 @@ public interface SubjectService {
     Optional<Subject> findBySubjectId(Integer id);
     List<Subject> getlistSubject();
     Page<Subject> getAllSubject(Pageable pageable);
+    Page<Subject> searchSubject(String subject,Pageable pageable);
+    Subject findBySubjectCode(String code);
 }

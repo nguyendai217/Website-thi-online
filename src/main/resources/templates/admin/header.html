@@ -1,25 +1,25 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<!-- Navbar-->
 <div th:fragment="content" th:remove="tag">
-    <header class="app-header"><a class="app-header__logo" href="index.html">Luyenthi365.com</a>
-        <!-- Sidebar toggle button-->
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-        <!-- Navbar Right Menu-->
-        <ul class="app-nav">
-            <li class="app-search">
-                <form>
-                    <input class="app-search__input" type="search" placeholder="Search">
-                    <button class="app-search__button"><i class="fa fa-search"></i></button>
-                </form>
-            </li>
-            <!-- User Menu-->
-            <li class="dropdown">
-                <a class="app-nav__item" href="#" style="text-decoration: none" data-toggle="dropdown"><i class="fa fa-user-circle-o fa-lg"></i><i class="fa fa-caret-down"></i></a>
-                <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                    <li><a class="dropdown-item" th:href="@{/profile}"><i class="fa fa-user fa-lg"></i> Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa fa-sign-out fa-lg"></i> Đăng xuất</a></li>
-                </ul>
-            </li>
-        </ul>
-    </header>
+<div class="top_nav">
+    <div class="nav_menu">
+        <div class="nav toggle">
+            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+        </div>
+        <nav class="nav navbar-nav">
+            <ul class=" navbar-right">
+                <li  class="nav-item dropdown open" style="padding-left: 15px;">
+                    <a  href="javascript:;" class="user-profile dropdown-toggle"
+                        aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" >
+                        <img th:src="@{'/image/user/'+ ${image}}"  alt=""><span th:text="${username}" ></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item"  th:href="@{/profile}"> Profile</a>
+                        <a class="dropdown-item"  th:href="@{/logout}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
+</div>
+<!-- /top navigation -->

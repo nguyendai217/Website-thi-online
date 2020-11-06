@@ -1,110 +1,182 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Danh sách môn học</title>
+    <title>Admin Home</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style >
-    </style>
 </head>
-<body class="app sidebar-mini">
-<div th:replace="admin/header :: content"></div>
-<div th:replace="admin/sidebar :: content"></div>
-<main class="app-content">
-    <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-book"></i> Danh sách môn học </h5>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Quản lí môn học</a></li>
-            <li class="breadcrumb-item"><a href="#">Danh sách môn học</a></li>
-        </ul>
-    </div>
-    <div class="row" style="margin-top: -18px">
-        <div class="col-md-12">
-            <div class="x_title">
-                <h5>Tùy chọn tìm kiếm</h5>
-                <div class="clearfix"></div>
-            </div>
-            <div>
-                <form role="form" th:action="@{/search-subject}" method="get">
-                    <div class="row">
-                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>Môn học</label>
-                            <div>
-                                <input class="form-control" id="strName" name="subject" type="text" th:text="${strName}">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                            <label>&nbsp;</label>
-                            <div>
-                                <button type="submit" id="btnSearch" class="btn btn-primary">Tìm kiếm</button>
-                            </div>
-                        </div>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Danh sách môn học</small></h3>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="tile">
-                <div class="tile-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Mã môn học</th>
-                                <th>Tên môn học</th>
-                                <th>Hình ảnh</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                            </thead>
-                            <tbody th:if="${pageInfo.content != null}">
-                            <tr th:each=" row,iterStat: ${pageInfo.content}">
-                                <td th:text="${iterStat.count}"></td>
-                                <td th:text="${row.code}"></td>
-                                <td th:text="${row.name}"></td>
-                                <td><img id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
-                                <td ><a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit fa-lg" style="color: #005cbf"></i></a></td>
-                                <td><a th:href="@{/subject/delete/{id}(id=${row.id})}"><i  class="fa fa-trash-o fa-lg " style="color: #c82333"></i></a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="float-right">
-                            <ul class="pagination ">
-                                <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                    <a class="page-link" th:href="@{|/subject/list-subject?page=${pageInfo.number}|}">&laquo;</a>
-                                </li>
-
-                                <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
-                                    <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
-                                        <a
-                                                th:if="${itemPage} != ${pageInfo.number + 1}"
-                                                class="page-link"
-                                                th:href="@{|/subject/list-subject?page=${itemPage}|}"
-                                                th:text="${itemPage}"
-                                        >1</a>
-                                        <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
-                                    </li>
-                                </th:block>
-
-                                <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                    <a class="page-link" th:href="@{|/subject/list-subject?page=${pageInfo.number + 2}|}">&raquo;</a>
-                                </li>
-                            </ul>
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h5>Tùy chọn tìm kiếm</h5>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <form th:action="@{/subject/search-subject}" method="get">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-12">
+                                        <label>Tên môn học</label>
+                                        <div>
+                                            <input class="form-control" name="subject" type="text" th:text="${sbj}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12 ">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <a th:href="@{/subject/add-subject}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm môn học</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-success col-md-12" id="success"
+                             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="bg-danger col-md-12" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="tile-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="sampleTable">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã môn học</th>
+                                        <th>Tên môn học</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${pageInfo.content != null}">
+                                    <tr th:each=" row,iterStat: ${pageInfo.content}">
+                                        <td th:text="${iterStat.count}"></td>
+                                        <td th:text="${row.code}"></td>
+                                        <td th:text="${row.name}"></td>
+                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
+                                        <td ><a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a></td>
+                                        <td><a th:href="@{/subject/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="float-left">
+                                    <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
+                                </div>
+                                <div class="float-right">
+                                    <ul class="pagination ">
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                            <a class="page-link" th:href="@{|/subject/list-subject?page=${pageInfo.number}|}">&laquo;</a>
+                                        </li>
+
+                                        <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
+                                            <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                                <a
+                                                        th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                        class="page-link"
+                                                        th:href="@{|/subject/list-subject?page=${itemPage}|}"
+                                                        th:text="${itemPage}"
+                                                >1</a>
+                                                <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
+                                            </li>
+                                        </th:block>
+
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                            <a class="page-link" th:href="@{|/subject/list-subject?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="removeModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeModalCenterTitle">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Bạn có chắc chắn muốn xóa môn học hay không ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>Hủy bỏ</button>
+                <a href="" class="btn btn-danger" id="delRef"><i class="fa fa-check"></i>Đồng ý</a>
             </div>
         </div>
     </div>
-</main>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $("#subjectManager").addClass("active");
+    $('#success').delay(5000).fadeOut(1000);
+    $('#error').delay(5000).fadeOut(1000);
+
+    //for delete user
+    $(document).ready(function () {
+        $('.table #confirmDelete').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#removeModalCenter #delRef').attr('href', href);
+            $('#removeModalCenter').modal();
+        });
+    });
 </script>
 </body>
 </html>

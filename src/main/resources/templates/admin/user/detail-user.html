@@ -1,85 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Vali Admin</title>
+    <title>Admin Home</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
-<body class="app sidebar-mini">
-<div th:replace="admin/header :: content"></div>
-<div th:replace="admin/sidebar :: content"></div>
-<main class="app-content">
-    <div class="app-title">
-        <h5 style="padding-top: 10px"><i class="fa fa-user mr-2 fa-lg"></i> Thông tin user </h5>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg mt-1 mr-1" ></i><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Quản lí user</a></li>
-            <li class="breadcrumb-item"><a href="#">Thông tin user</a></li>
-        </ul>
-    </div>
-    <div class="container rounded bg-white">
-        <div class="row">
-            <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center">
-                    <img class=" mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU">
-                    <span class="font-weight-bold mt-2">Username</span>
-                    <span class="text-black-50">Email</span>
-                </div>
-            </div>
-            <div class="col-md-8 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Thông tin tài khoản</h4>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <label class="labels">Username</label>
-                            <input type="text" class="form-control" th:value="${us.username}" readonly  >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Fullname</label>
-                            <input type="text" class="form-control" th:value="${us.fullname}" readonly >
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label class="labels">Email</label>
-                            <input type="text" class="form-control" th:value="${us.email}" readonly >
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Số điện thoại</label>
-                            <input type="number" class="form-control" th:value="${us.phone}" readonly >
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Địa chỉ</label>
-                            <input type="text" class="form-control" th:value="${us.address}" readonly >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Giới tính</label>
-                            <input type="text" class="form-control" th:if="${us.gender== null}" th:value="" readonly >
-                            <input type="text" class="form-control" th:if="${us.gender==1}" th:value="Nam" readonly >
-                            <input type="text" class="form-control" th:if="${us.gender==0}" th:value="Nữ" readonly >
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Sinh nhật</label>
-                            <input type="text" class="form-control" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" readonly >
-                        </div>
-                    </div>
-                    <div class="row mt-3">
 
-                        <div class="col-md-6">
-                            <label class="labels">Quyền</label>
-                            <input type="text" class="form-control" th:value="${us.getRoles().get(0).getRole()}" readonly >
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Thông tin người dùng</small></h3>
+                    </div>
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                        <div class="col-md-4 border-right">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img style="width:40%;height: 40%" class="mt-5" th:src="@{'/image/user/'+ ${us.image}}">
+                                <span class="font-weight-bold mt-3">Ảnh đại diện</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 border-right">
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Thông tin tài khoản</h4>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Username</label>
+                                        <input type="text" class="form-control" th:value="${us.username}" readonly  >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Fullname</label>
+                                        <input type="text" class="form-control" th:value="${us.fullname}" readonly >
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label class="labels">Email</label>
+                                        <input type="text" class="form-control" th:value="${us.email}" readonly >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Số điện thoại</label>
+                                        <input type="number" class="form-control" th:value="${us.phone}" readonly >
+                                    </div>
+                                </div>
+                                <div class="row mt-3" >
+                                    <div class="col-md-6">
+                                        <label class="labels">Địa chỉ</label>
+                                        <input type="text" class="form-control" th:value="${us.address}" readonly >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Giới tính</label>
+                                        <input type="text" class="form-control" th:if="${us.gender== ''}" th:value="NULL" readonly >
+                                        <input type="text" class="form-control" th:if="${us.gender==1}" th:value="Nam" readonly >
+                                        <input type="text" class="form-control" th:if="${us.gender==0}" th:value="Nữ" readonly >
+                                    </div>
+                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label class="labels">Sinh nhật</label>
+                                        <input type="text" class="form-control" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" readonly >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Quyền</label>
+                                        <input type="text" class="form-control" th:value="${us.getRoles().get(0).getRole()}" readonly >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+
             </div>
         </div>
-        </div>
+        <!-- page content -->
     </div>
-</main>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#userManager").addClass("active");
+    $(document).ready(function () {
+        $('#userManager').addClass("active");
+    });
 </script>
 </body>
 </html>

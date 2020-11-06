@@ -10,11 +10,7 @@ import java.security.Principal;
 @Controller
 public class HomeController {
     @GetMapping(value = {"/"})
-    public String index(Principal principal, Model model){
-//        if(principal != null){
-//            String name= principal.getName();
-//            model.addAttribute("username",name);
-//        }
+    public String index(){
         return "index";
     }
     @GetMapping(value = {"/home"})
