@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -43,28 +46,39 @@ public class LoginController {
     public String signIn(Model model,
                          @RequestParam(value = "fullname") String fullname,
                          @RequestParam(value = "email") String email,
+                         @RequestParam(value = "username") String username,
                          @RequestParam(value = "password") String password,
                          @RequestParam(value = "phone") String phone) {
 
         if (!Strings.isNullOrEmpty(fullname) && !Strings.isNullOrEmpty(email)
                 && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(phone)) {
 
-            if (userRepository.findByEmail(email) == null) {
+            User checkEmailExist= userRepository.findByEmail(email);
+            User checkUsernameExist= userRepository.findByUsername(username);
+
+            if (checkEmailExist == null && checkUsernameExist == null) {
                 User user = new User();
-                Role role = roleRepository.findByRole("ADMIN");
+                Role role = roleRepository.findByRole("USER");
                 user.setEmail(email);
+                user.setUsername(username);
                 user.setPassword(passwordEncoder.encode(password));
                 user.setFullname(fullname);
                 user.setPhone(phone);
-                user.setCreateDate(new Date());
+                Date date= new Date();
+                System.out.println("time"+ date+ "datetostring"+ date.toString());
+                user.setCreateDate(date);
                 user.setStatus(1);
                 user.setRoles(Arrays.asList(role));
                 userService.createUser(user);
                 model.addAttribute("success", "Đăng kí thành công, vui lòng đăng nhập lại!");
                 model.addAttribute("email", email);
             } else {
-                LOG.error("email is exist !");
-                model.addAttribute("error", "Email đã tồn tại, vui lòng đăng kí email khác!");
+                if(checkEmailExist != null){
+                    model.addAttribute("error", "Email đã tồn tại, vui lòng đăng kí email khác!");
+                }
+                else if(checkUsernameExist != null){
+                    model.addAttribute("error", "Username đã tồn tại, vui lòng đăng kí username khác!");
+                }
             }
         }
         return "login";

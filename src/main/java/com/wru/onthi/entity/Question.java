@@ -89,4 +89,12 @@ public class Question {
     public void setAnsCorrect(String ansCorrect) {
         this.ansCorrect = ansCorrect;
     }
+
+    public Exam getExamQuestion() {
+        return examQuestion;
+    }
+
+    public void setExamQuestion(Exam examQuestion) {
+        this.examQuestion = examQuestion;
+    }
 }

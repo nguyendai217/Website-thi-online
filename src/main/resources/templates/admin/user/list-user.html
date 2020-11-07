@@ -118,7 +118,7 @@
                                             <td th:text="${row.fullname}"></td>
                                             <td th:text="${row.email}"></td>
                                             <td th:text="${row.phone}"></td>
-                                            <td th:if="${row.gender == ''}">NULL</td>
+                                            <td th:if="${row.gender == null}">NULL</td>
                                             <td th:if="${row.gender==1}">Nam</td>
                                             <td th:if="${row.gender==0}">Nữ</td>
                                             <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
@@ -204,6 +204,12 @@
             var href = $(this).attr('href');
             $('#removeModalCenter #delRef').attr('href', href);
             $('#removeModalCenter').modal();
+        });
+
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy'
         });
     });
 </script>

@@ -1,8 +1,6 @@
 package com.wru.onthi.controller.admin;
 
 import com.google.common.base.Strings;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +50,8 @@ public class HomeControllerAdmin {
     }
 
     @PostMapping("/profile")
-    public String profilePost(Model model, Principal principal, RedirectAttributes red,
+    public String profilePost(Model model, Principal principal,
                               @RequestParam(value = "userId",defaultValue = "") Integer id,
-                              @RequestParam(value = "username",defaultValue = "") String username,
                               @RequestParam(value = "fullname",defaultValue = "") String fullname,
                               @RequestParam(value = "phone",defaultValue = "") String phone,
                               @RequestParam(value = "address",defaultValue = "") String address,
@@ -63,14 +60,16 @@ public class HomeControllerAdmin {
 
         getInfoUser(model,principal);
 
-//        Optional<User> optionalUser= userService.findById(id);
-//        User user = optionalUser.get();
-        User user= userService.findUserByName(username);
+        Optional<User> optionalUser= userService.findById(id);
+        User user = optionalUser.get();
+        //User us= userService.findUserByName(username);
+
         user.setFullname(fullname);
         user.setAddress(address);
         user.setPhone(phone);
         user.setGender(gender);
         user.setUpdateDate(new Date());
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         try {
             if(birthday!= ""){
@@ -85,12 +84,13 @@ public class HomeControllerAdmin {
         }
         try {
             userService.updateUser(user);
+
         }
         catch (Exception e){
-            red.addFlashAttribute("error","Cập nhật thông tin thất bại");
+            model.addAttribute("error","Cập nhật thông tin thất bại");
         }
-        red.addFlashAttribute("success","Cập nhật thông tin thành công.");
-        return "redirect:/profile";
+        model.addAttribute("success","Cập nhật thông tin thành công.");
+        return "admin/profile";
     }
 
     @PostMapping("/profile/changepass")

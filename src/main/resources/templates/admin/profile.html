@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin Profile</title>
+    <div th:replace="admin/init_admin :: header"></div>
+    <style>
+        .hidden{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3><small>Thông tin cá nhân</small></h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 border-right">
+                        <div class="d-flex flex-column align-items-center text-center">
+
+                            <form method="POST" th:action="@{/profile/updateImage}" enctype="multipart/form-data">
+                                <img class="mt-5" id="imgPreview" style="width: 40%;height: 50%" th:src="@{'/image/user/'+${us.image}}" >
+                                <input type="file" name="fileImage" class="ml-5 pl-5 mt-3" />
+                                <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-5 border-right">
+                        <div class="p-3 py-5">
+                            <form th:action="@{/profile}" method="post"  >
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Thông tin tài khoản</h4>
+                                </div>
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <div class="bg-success" id="success"
+                                     th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                                </div>
+                                <input type="text" hidden="true" name="userId" th:value="${us.id}">
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="labels">Username</label>
+                                        <input type="text" class="form-control" name="username" th:value="${us.username}" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Fullname</label>
+                                        <input type="text" class="form-control" name="fullname"  th:value="${us.fullname}" >
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="labels">Email</label>
+                                        <input type="text" class="form-control" name="email" th:value="${us.email}" readonly >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Số điện thoại</label>
+                                        <input type="text" class="form-control" name="phone" th:value="${us.phone}" >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Địa chỉ</label>
+                                        <input type="text" class="form-control" name="address" th:value="${us.address}" >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Giới tính</label>
+                                        <select class="col-md-12 p-2" name="gender" >
+                                            <option value="" th:selected="${us.gender==null}">Tùy chọn</option>
+                                            <option value="1" th:selected="${us.gender==1}">Nam</option>
+                                            <option value="0" th:selected="${us.gender==0}">Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label class="labels">Sinh nhật</label>
+                                        <input id="datepicker" class="form-control" name="birthday" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Quyền</label>
+                                        <input type="text" class="form-control" name="role" th:value="${us.getRoles().get(0).getRole()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-success" type="submit">Lưu thông tin</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <form th:action="@{/profile/changepass}" method="post">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="text-right">Thay đổi mật khẩu</h4>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label class="labels">Nhập mật khẩu cũ</label>
+                                    <input type="password" class="form-control"  name="password_old" >
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Nhập mật khẩu mới</label>
+                                    <input type="password" class="form-control"  name="password1" id="pass1">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Nhập lại mật khẩu mới</label>
+                                    <input type="password" class="form-control"  name="password2" id="pass2" >
+                                    <p class="hidden" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <input type="submit" id="btnSubmit" value="Thay đổi password" class="btn btn-success mt-3 ml-5">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $('#success').delay(5000).fadeOut(1000);
+    $('#error').delay(5000).fadeOut(1000);
+    $('#userManager').addClass("active");
+    $(document).ready(function () {
+        $('#fileImage').change(function() {
+            showPreview(this);
+        });
+
+        $('#error').delay(5000).fadeOut(1000);
+    });
+    function showPreview(fileImage){
+        file = fileImage.files[0];
+        render = new FileReader();
+
+        render.onload = function(e) {
+            $('#imgPreview').attr('src',e.target.result);
+        }
+        render.readAsDataURL(file);
+    }
+
+    $(document).ready(function () {
+        $("#userManager").addClass("active");
+        $('#error').delay(5000).fadeOut(1000);
+        $('#success').delay(5000).fadeOut(1000);
+
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy'
+        });
+
+    });
+
+
+    $("#btnSubmit").click(function (){
+        var pass1= $("#pass1").val();
+        var pass2= $("#pass2").val();
+        console.log("xxx");
+        console.log("xx"+ pass1,pass2);
+        if(pass1=== pass2){
+            $('#err').addClass("hidden");
+            return true;
+        }
+        else {
+            $('#err').removeClass("hidden");
+            return false;
+        }
+    })
+</script>
+</body>
+</html>

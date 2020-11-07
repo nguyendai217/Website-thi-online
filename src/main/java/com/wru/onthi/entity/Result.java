@@ -20,4 +20,9 @@ public class Result {
     @JoinColumn(name = "user_id")
     private User userResult;
 
+    @OneToOne
+    @JoinColumn(name = "exam_id")
+    private Exam exam;
+
+
 }

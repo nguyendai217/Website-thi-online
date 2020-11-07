@@ -16,8 +16,13 @@ public class Exam {
     @Column(name = "id")
     private Integer id;
 
+    // mã đề thi
     @Column(name = "code_exam")
     private String codeExam;
+
+    // noi dung de thi
+    @Column(name = "title")
+    private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
@@ -28,5 +33,7 @@ public class Exam {
 
     @Column(name = "time_out")
     private String timeOut;
+
+
 
 }

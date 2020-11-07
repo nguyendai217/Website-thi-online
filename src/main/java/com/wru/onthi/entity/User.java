@@ -25,23 +25,30 @@ public class User {
     private String phone;
     @Column(name = "gender")
     private Integer gender;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "birthday")
     private Date birthday;
+
     @Column(name = "image")
     private String image;
     @Column(name = "status")
     private Integer status;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
     private Date createDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
+
     @Column(name = "update_by")
     private String updateBy;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
     private AuthenticationProvider authProvider;
-
 
     @ManyToMany(fetch =FetchType.EAGER)
     @JoinTable(name = "user_role",
