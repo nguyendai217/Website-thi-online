@@ -4,6 +4,8 @@ import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.repository.LessonRepository;
 import com.wru.onthi.services.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,5 +44,10 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<Lesson> findByName(String name) {
         return lessonRepository.findByLessonName(name);
+    }
+
+    @Override
+    public Page<Lesson> getAllLesson(Pageable pageable) {
+        return lessonRepository.findAll(pageable);
     }
 }

@@ -1,5 +1,7 @@
 package com.wru.onthi.entity;
 
+import org.hibernate.annotations.CollectionId;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class Classroom {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "code")
+    private String code;
     @Column(name = "classname")
     private String classname;
     @Column(name = "image")
@@ -23,6 +27,14 @@ public class Classroom {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
     private School school;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Integer getId() {
         return id;

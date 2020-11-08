@@ -18,27 +18,32 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     public void createClass(Classroom classroom) {
-
+        classRoomRepository.save(classroom);
     }
 
     @Override
     public Classroom updateClass(Classroom classroom) {
-        return null;
+        return classRoomRepository.save(classroom);
     }
 
     @Override
     public void deleteClass(Classroom classroom) {
-
+        classRoomRepository.delete(classroom);
     }
 
     @Override
     public Optional<Classroom> findById(Integer id) {
-        return Optional.empty();
+        return classRoomRepository.findById(id);
     }
 
     @Override
     public Classroom findByClassName(String name) {
-        return null;
+        return classRoomRepository.findByClassname(name);
+    }
+
+    @Override
+    public Classroom findByClassCode(String code) {
+        return classRoomRepository.findByCode(code);
     }
 
     @Override

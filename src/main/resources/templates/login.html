@@ -12,7 +12,7 @@
 <div id="logreg-forms">
     <form class="form-signin" th:action="@{/login}" method="post">
 <!--        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Đăng nhập</h1>-->
-        <img class="logo-login" th:src="@{/image/logo_main.png}">
+        <img class="logo-login" th:src="@{/image/logo-login.png}">
 
         <div class="social-login">
             <button class="btn facebook-btn social-btn" type="button" ><a th:href="@{/oauth2/authorization/google}"><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</a> </button>
@@ -42,10 +42,10 @@
     </form>
 
     <form th:action="@{/signin}" class="form-signup" method="post">
-        <img class="logo-login" th:src="@{/image/logo_main.png}">
+        <img class="logo-login" th:src="@{/image/logo-login.png}">
         <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button"><a><i class="fa fa-facebook-f"></i> Đăng kí bằng Facebook</a> </button>
-            <button class="btn google-btn social-btn" type="button"><a><i class="fa fa-google-plus-official"></i> Đăng kí bằng Google+</a> </button>
+            <button class="btn facebook-btn social-btn" type="button"><a><i class="fa fa-facebook-f"></i> Đăng kí Facebook</a> </button>
+            <button class="btn google-btn social-btn" type="button"><a><i class="fa fa-google-plus-official"></i> Đăng kí Google+</a> </button>
         </div>
 
         <p style="text-align:center">OR</p>

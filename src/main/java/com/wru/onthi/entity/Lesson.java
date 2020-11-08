@@ -14,6 +14,8 @@ public class Lesson {
     private String lessonName;
     @Column(name = "lessoncontent")
     private String lessonContent;
+    @Column(name = "image")
+    private String image;
     @Column(name = "views")
     private Integer views;
     @Column(name = "create_date")
@@ -47,6 +49,14 @@ public class Lesson {
 
     public void setLessonContent(String lessonContent) {
         this.lessonContent = lessonContent;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getViews() {

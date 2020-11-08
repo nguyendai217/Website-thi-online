@@ -12,6 +12,7 @@ public interface ClassroomService {
     void deleteClass(Classroom classroom);
     Optional<Classroom> findById(Integer id);
     Classroom findByClassName(String name);
+    Classroom findByClassCode(String code);
     Page<Classroom> getAllClass(Pageable pageable);
 
 }

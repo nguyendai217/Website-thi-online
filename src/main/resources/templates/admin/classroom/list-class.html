@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin Home</title>
+    <div th:replace="admin/init_admin :: header"></div>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Danh sách lớp học</small></h3>
+                    </div>
+
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h5>Tùy chọn tìm kiếm</h5>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <form th:action="@{/class/search-class}" method="get">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-12">
+                                        <label>Mã lớp / tên lớp học</label>
+                                        <div>
+                                            <input class="form-control" name="classroom" type="text" th:text="${cl}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12 ">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <a th:href="@{/class/add-class}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm lớp học</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-success col-md-12" id="success"
+                             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="bg-danger col-md-12" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="tile-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="sampleTable">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã lớp</th>
+                                        <th>Tên lớp</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Chỉnh sửa</th>
+                                        <th>Xóa</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${pageInfo.content != null}">
+                                    <tr th:each=" row,iterStat: ${pageInfo.content}">
+                                        <td th:text="${iterStat.count}"></td>
+                                        <td th:text="${row.code}"></td>
+                                        <td th:text="${row.classname}"></td>
+                                        <td th:if="${row.status==1}">Đang hoạt động</td>
+                                        <td th:if="${row.status==0}">Không hoạt động</td>
+                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/classroom/'+ ${row.image}}"></td>
+                                        <td ><a th:href="@{/class/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a></td>
+                                        <td><a th:href="@{/class/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="float-left">
+                                    <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
+                                </div>
+                                <div class="float-right">
+                                    <ul class="pagination ">
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                            <a class="page-link" th:href="@{|/class/list-class?page=${pageInfo.number}|}">&laquo;</a>
+                                        </li>
+
+                                        <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
+                                            <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                                <a
+                                                        th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                        class="page-link"
+                                                        th:href="@{|/class/list-class?page=${itemPage}|}"
+                                                        th:text="${itemPage}"
+                                                >1</a>
+                                                <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
+                                            </li>
+                                        </th:block>
+
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                            <a class="page-link" th:href="@{|/class/list-class?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="removeModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeModalCenterTitle">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Bạn có chắc chắn muốn xóa lớp học hay không ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>Hủy bỏ</button>
+                <a href="" class="btn btn-danger" id="delRef"><i class="fa fa-check"></i>Đồng ý</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $("#classManager").addClass("active");
+    $('#success').delay(5000).fadeOut(1000);
+    $('#error').delay(5000).fadeOut(1000);
+
+    //for delete user
+    $(document).ready(function () {
+        $('.table #confirmDelete').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#removeModalCenter #delRef').attr('href', href);
+            $('#removeModalCenter').modal();
+        });
+    });
+</script>
+</body>
+</html>
