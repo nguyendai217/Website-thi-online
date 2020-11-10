@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.Optional;
 
-@Controller
+
 @RequestMapping("/lesson")
 public class LessonController {
 
@@ -30,7 +30,7 @@ public class LessonController {
     @Autowired
     LessonService lessonService;
 
-    @GetMapping("/list-lesson")
+    @GetMapping("/list-lesson-manager")
     public String getAllLesson(Model model, Principal principal,Pageable pageable){
         getInfoUser(model,principal);
 
@@ -57,13 +57,13 @@ public class LessonController {
         }
     }
 
-    @GetMapping("/add-lesson")
+    @GetMapping("/add-lesson-manager")
     public String addLessonGet(Model model,Principal principal){
         getInfoUser(model,principal);
         return "admin/lesson/add-lesson";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/update-lesson/{id}")
     public String updateLessonGet(Model model, Principal principal, @PathVariable("id") Integer id){
         getInfoUser(model,principal);
         Optional<Lesson> optional= lessonService.findByLessonId(id);
@@ -72,7 +72,7 @@ public class LessonController {
         return "admin/lesson/update-lesson";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/delete-lesson/{id}")
     public String deleteLesson(Model model, Principal principal, RedirectAttributes redr,
                                @PathVariable("id") Integer id){
         getInfoUser(model,principal);
@@ -84,7 +84,7 @@ public class LessonController {
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa bài học thất bại");
         }
-        return "redirect:/lesson/list-lesson";
+        return "redirect:/lesson/list-lesson-manager";
     }
 
     // get info user login

@@ -1,21 +1,778 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
+<html xmlns:th="http://www.thymeleaf.org"  lang="en"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <content th:replace="fragments/init :: header"></content>
-
+    <title>Home</title>
+    <div th:replace="fragments/init_lib :: header"></div>
 </head>
-<body>
 
-<a th:href="@{login}">Login</a>
-<div sec:authorize="isAuthenticated()">
-    Authenticated as :<span sec:authentication="principal.username"></span>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-4">
+                <div class="header-left">
+                    <a class="header-logo" th:href="@{/}">
+                        <img th:src="@{/image/logo-ltt.png}" alt="logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 col-8 d-sm-none d-md-block">
+                <div class="header-right">
+                    <div class="searchBox d-none d-lg-flex">
+                        <input type="text" placeholder="Mời bạn nhập thông tin...">
+                        <button class="btn-search"><i class="fas fa-search"></i></button>
+                    </div>
+                    <button class="btn-showMenu d-lg-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <nav class="menu d-none d-lg-block">
+        <div class="row">
+            <div class="col-md-8 col-12">
+                <ul class="menu-left">
+                    <li><a href="#">Trang chủ</a></li>
+                    <li>
+                        <a href="#">Học tập</a>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Lớp 1
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 2
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 3
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 4
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 5
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 6
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 7
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 8
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 9
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 10
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 11
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Lớp 12
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">kiểm tra</a></li>
+                    <li><a href="#">Tin tưc</a></li>
+                    <li><a href="#">liên hệ</a></li>
+                </ul>
+
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="menu-right" >
+                    <button class="btn-login" id="link-login">
+                        <i class="fas fa-user"></i><a th:href="@{/login}"> Đăng nhập</a>
+                    </button>
+                    <div class="dropdown d-none" id="div-account" sec:authorize="isAuthenticated()">
+                        <button class="dropdown-toggle btn-login"
+                                type="button" id="account" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" sec:authentication="principal.username">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" th:href="@{/profile}">Profile</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}" id="msg-logout"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="lg-menu d-lg-none">
+        <div class="searchBox">
+            <input type="text" placeholder="Mời bạn nhập thông tin...">
+            <button class="btn-search"><i class="fas fa-search"></i></button>
+        </div>
+        <ul>
+            <button class="btn-showMenu d-lg-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            <li><a href="#">Trang chủ</a></li>
+            <li hasSubMenu="true">
+                <a href="#">Học tập</a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            Lớp 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 2
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 3
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 4
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 5
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 6
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 7
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 8
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 9
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 10
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 11
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lớp 12
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#">kiểm tra</a></li>
+            <li><a href="#">Tin tưc</a></li>
+            <li><a href="#">liên hệ</a></li>
+        </ul>
+    </nav>
 </div>
-<!--<form th:action="@{/logout}" method="post">-->
-<!--    <input type="submit" value="Logout" />-->
-<!--</form>-->
-<content th:replace="fragments/init :: script"></content>
+
+<main class="home">
+    <div class="container">
+        <!-- banner -->
+        <div class="banner">
+            <div class="row">
+                <div class="col-md-7 col-12">
+                    <div class="banner-left">
+                        <div class="banner-slider">
+                            <div class="banner-sliderItem">
+                                <img th:src="@{/image/slider.png}" alt="">
+                            </div>
+                            <div class="banner-sliderItem">
+                                <img th:src="@{/image/slider1.png}" alt="">
+                            </div>
+                            <div class="banner-sliderItem">
+                                <img th:src="@{/image/slider2.png}" alt="">
+                            </div>
+                            <div class="banner-sliderItem">
+                                <img th:src="@{/image/slider3.png}" alt="">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-12">
+                    <div class="banner-right">
+                        <div class="banner-rightImage">
+                            <div class="item">
+                                <a href="#"><img th:src="@{/image/img-right1.png}" alt=""></a>
+                                <div class="news-right">
+                                    <a href="#">Bí kíp học tập đạt kết quả cao.</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-rightImage">
+                            <div class="item">
+                                <img th:src="@{/image/img-right2.png}" alt="">
+                                <div class="news-right">
+                                    <a href="#">Học trực tuyến cần kĩ năng gì ?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-rightImage">
+                            <div class="item">
+                                <img th:src="@{/image/img-right3.png}" alt="">
+                                <div class="news-right">
+                                    <a href="#">Học trực tuyến tốt hay không?</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="banner-rightImage">
+                            <div class="item">
+                                <img th:src="@{/image/img-right4.png}" alt="">
+                                <div class="news-right">
+                                    <a href="#">Nên học trực tuyến ở đâu ?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- study -->
+        <section class="study">
+            <div class="section-header">
+                <h2 class="section-title">Học tập</h2>
+                <div class="section-img">
+                    <img th:src="@{/image/study.png}" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="news-leftTitle">
+                        <span>Danh sách lớp học</span>
+                    </div>
+                    <div class="study-left">
+                        <ul class="nav study-tabHeader" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="study-tabBtn active" id="pills-home-tab" data-toggle="pill"
+                                   href="#pills-home" role="tab" aria-controls="pills-home"
+                                   aria-selected="true">Tiểu học</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="study-tabBtn" id="pills-profile-tab" data-toggle="pill"
+                                   href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                   aria-selected="false">THCS </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="study-tabBtn" id="pills-contact-tab" data-toggle="pill"
+                                   href="#pills-contact" role="tab" aria-controls="pills-contact"
+                                   aria-selected="false">THPT</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content study-tabContent" id="pills-tabContent">
+                            <div class="tab-pane  fade active show" id="pills-home" role="tabpanel"
+                                 aria-labelledby="pills-home-tab">
+                                <div class="study-slider">
+                                    <div class="study-sliderItem">1</div>
+                                    <div class="study-sliderItem">2</div>
+                                    <div class="study-sliderItem">3</div>
+                                    <div class="study-sliderItem">4</div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade " id="pills-profile" role="tabpanel"
+                                 aria-labelledby="pills-profile-tab">
+                                <div class="study-slider">
+                                    <div class="study-sliderItem">6</div>
+                                    <div class="study-sliderItem">7</div>
+                                    <div class="study-sliderItem">8</div>
+                                    <div class="study-sliderItem">9</div>
+                                </div>
+                            </div>
+                            <div class="tab-pane  fade " id="pills-contact" role="tabpanel"
+                                 aria-labelledby="pills-contact-tab">
+                                <div class="study-slider">
+                                    <div class="study-sliderItem">10</div>
+                                    <div class="study-sliderItem">11</div>
+                                    <div class="study-sliderItem">12</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="study-right">
+                        <div class="study-rightTitle">
+                            <span>Danh sách bài học mới</span>
+                        </div>
+                        <div class="study-listChemistry">
+                            <a href="#">
+                                <div class="study-chemistryItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="study-chemistryItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="study-chemistryItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right2.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-12">
+                <div class="study-banner">
+                    <div class="study-banner--1">
+                        <p>Luyện thi nhanh kết quả chính xác</p>
+                    </div>
+                    <div class="study-banner--2">
+                        <p>Ôn tập dầy đủ các môn học</p>
+                    </div>
+                    <div class="study-banner--3">
+                        <p>Học tập dễ dang hiệu quả</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- test -->
+        <section class="test">
+            <div class="section-header">
+                <h2 class="section-title">Kiểm tra</h2>
+                <div class="section-img">
+                    <img th:src="@{/image/test.png}" alt="">
+                </div>
+            </div>
+
+            <div class="test-slider">
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Toán
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Lý
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Hóa
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Văn
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Sinh
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Sử
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Địa
+                    </div>
+                </div>
+                <div class="test-sliderItem">
+                    <div class="subject">
+                        Tiếng Anh
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- news -->
+        <section class="news">
+            <div class="section-header">
+                <h2 class="section-title">Tin tức</h2>
+                <div class="section-img">
+                    <img th:src="@{/image/newspaper.png}" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="news-left">
+                        <div class="news-leftTitle">
+                            <span>Danh sách bài học mới</span>
+                        </div>
+                        <div class="news-list">
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right2.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right2.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right2.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="news-right">
+                        <div class="news-rightTitle">
+                            <span>Danh sách thành viên mới</span>
+                        </div>
+                        <div class="news-list">
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Khóa học 1
+                                        </h3>
+                                        <p class="description">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                            itaque!
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- feel of student -->
+        <section class="feel">
+            <div class="section-header">
+                <h2 class="section-title">Cảm nhận của học viên</h2>
+                <div class="section-img">
+                    <img th:src="@{/image/feelings.png}" alt="">
+                </div>
+            </div>
+
+            <div class="feel-slider">
+                <div class="feel-sliderItem">
+                    <div class="feel-content">
+                        <div class="avatar">
+                            <img th:src="@{/image/img-right1.png}" alt="">
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
+                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
+                            doloremque provident, ea sed, optio alias minus molestiae.
+                        </p>
+                    </div>
+                </div>
+                <div class="feel-sliderItem">
+                    <div class="feel-content">
+                        <div class="avatar">
+                            <img th:src="@{/image/img-right2.png}" alt="">
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
+                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
+                            doloremque provident, ea sed, optio alias minus molestiae.
+                        </p>
+                    </div>
+                </div>
+                <div class="feel-sliderItem">
+                    <div class="feel-content">
+                        <div class="avatar">
+                            <img th:src="@{/image/img-right3.png}" alt="">
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
+                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
+                            doloremque provident, ea sed, optio alias minus molestiae.
+                        </p>
+                    </div>
+                </div>
+                <div class="feel-sliderItem">
+                    <div class="feel-content">
+                        <div class="avatar">
+                            <img th:src="@{/image/img-right4.png}" alt="">
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
+                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
+                            doloremque provident, ea sed, optio alias minus molestiae.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-12 footer-col">
+                <a class="logo" href="#">
+                    <img th:src="@{/image/logo-ltt.png}" alt="logo">
+                </a>
+                <a href="#">Luyện thi 365</a>
+                <p>Học là giỏi</p>
+            </div>
+            <div class="col-md-4 col-12 footer-col">
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Học Tập</a></li>
+                    <li><a href="#">Luyện Thi</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                </ul>
+                <span>Contact : <a href="tel:033651959">033651959</a></span>
+            </div>
+            <div class="col-md-4 col-12 footer-col">
+                <span>Phản hồi</span>
+                <form action="">
+                    <input type="text" placeholder="email" id="txt_mail">
+                    <input type="text" placeholder="Nội dung" id="txt_content">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            coppy right
+        </div>
+    </div>
+</footer>
+<div th:replace="fragments/init_lib :: script"></div>
+<script>
+    $(document).ready(function (){
+        var acc =$('#account').val();
+        if(acc != null || acc != undefined){
+            $('#div-account').removeClass('d-none');
+            $('#link-login').addClass('d-none');
+        }else {
+            $('#div-account').addClass('d-none');
+            $('#link-login').removeClass('d-none');
+        }
+
+        var logout= $('#msg-logout').val();
+        if(logout != null){
+            alert("Đăng xuất thành công.");
+        }
+    });
+
+</script>
 </body>
 </html>

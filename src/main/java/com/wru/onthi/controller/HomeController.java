@@ -9,16 +9,16 @@ import java.security.Principal;
 
 @Controller
 public class HomeController {
-    @GetMapping(value = {"/"})
+    @GetMapping(value = {"/","/home"})
     public String index(){
         return "index";
     }
-    @GetMapping(value = {"/home"})
-    public String home(Principal principal, Model model) {
-        String name = principal.getName();
-        model.addAttribute("username", name);
-        return "home";
-    }
+//    @GetMapping(value = {"/home"})
+//    public String home(Principal principal, Model model) {
+//        String name = principal.getName();
+//        model.addAttribute("username", name);
+//        return "home";
+//    }
 
 
 

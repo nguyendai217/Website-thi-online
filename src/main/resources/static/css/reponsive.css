@@ -6,7 +6,7 @@
     --xl: 1200px;
 }
 
-@media screen and (max-width: var(--sm)) {
+@media screen and (max-width:576px) {
     .study .study-banner {
         flex-direction: column;
         height: auto;
@@ -20,5 +20,8 @@
     .study .study-banner .study-banner--1 p, .study .study-banner .study-banner--3 p {
         width: 100%;
         padding-left: 0;
+    }
+    .class-left .list-subject {
+        grid-template-columns: auto auto;
     }
 }

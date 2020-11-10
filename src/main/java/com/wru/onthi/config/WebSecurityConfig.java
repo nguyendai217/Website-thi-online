@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(authSuccessHandler).and().oauth2Login().loginPage("/login")
                 .userInfoEndpoint().userService(oAuth2UserService).and()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").invalidateHttpSession(true)
+                .logoutSuccessUrl("/?logout=true").invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
 

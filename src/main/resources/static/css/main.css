@@ -1,17 +1,101 @@
 @import "./base.css";
 @import "./color.css";
 @import "./reponsive.css";
+.list-item {
+    position: relative;
+}
+
+.list-item:hover {
+    background-color: var(--primary-color);
+}
+
+.list-item:hover a {
+    color: var(--white);
+}
+
+.list-item::before {
+    content: "";
+    background-image: url("../images/arrow.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    transform: rotate(40deg);
+    right: 100%;
+}
+
+/*-------------lg-menu-------------*/
+
+.lg-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: calc(100%);
+    height: 100%;
+    overflow: hidden;
+    background-color: Var(--primary-color);
+    z-index: 120;
+    overflow-y: scroll;
+    transition: 1.5s ease-in-out;
+    padding: 30px 20px;
+}
+
+.lg-menu.show {
+    right: 0;
+}
+
+.lg-menu .searchBox {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.lg-menu ul {
+    margin: 0;
+    /* overflow-y: scroll; */
+}
+
+.lg-menu ul li {
+    list-style-type: none;
+    width: 100%;
+}
+
+.lg-menu ul li a {
+    color: var(--white);
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.lg-menu ul li {
+    border-bottom: 1px solid var(--white);
+}
+
+.lg-menu ul li ul {
+    height: 0;
+    width: 100%;
+    overflow-y: hidden;
+    transition: 1s ease-in-out;
+}
+
+.lg-menu ul li.show ul {
+    height: calc(45px *12);
+}
+
 /*-------------header--------------*/
 
 .header {
-    height: 70px;
+    height: 77px;
     margin-bottom: 30px;
     background: var(--primary-color);
 }
 
 .header-left {
     height: 100%;
-    height: 70px;
+    height: 77px;
 }
 
 .header-logo {
@@ -21,7 +105,7 @@
 }
 
 .header-logo img {
-    height: 60%;
+    height: 70%;
     width: auto;
 }
 
@@ -32,28 +116,37 @@
     justify-content: flex-end;
 }
 
-.header-right .searchBox {
+.searchBox {
     display: flex;
-    width: 100%;
+    width: 80%;
     max-width: 300px;
-    background: var(--primary-color);
-    border: 3px solid var(--white);
+    background: #ffffff;
+    border: 1px solid #b4b5b5;
     border-radius: 50px;
     overflow: hidden;
 }
 
-.header-right .searchBox input {
-    border: none;
+.searchBox input {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
     background: none;
     padding: 10px;
     flex: 2;
 }
 
-.header-right .searchBox .btn-search {
+.searchBox .btn-search {
     border: none;
-    background: var(--white);
     width: 50px;
     outline: none;
+}
+
+button.btn-showMenu {
+    background-color: var(--primary-color);
+    box-shadow: none;
+    border: 1px solid var(--white);
+    padding: 10px;
+    color: var(--white);
+    border-radius: 5px;
 }
 
 /*------------menu----------------*/
@@ -90,11 +183,11 @@
     width: 100%;
     text-align: center;
     padding: 15px 20px;
+    color: var(--white);
 }
 
 .menu-left li:hover {
-    background-color: var(--orange-soda);
-    color: var(--white);
+    background-color: var(--secondary-color);
 }
 
 .menu-left li::after {
@@ -156,7 +249,7 @@
 }
 
 .menu-left li>ul>li:hover {
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
 }
 
 .menu-right {
@@ -167,12 +260,16 @@
     padding: 0 10px;
 }
 
+.dropdown-menu{
+    min-width: 8rem !important;
+}
+
 .btn-login, .btn-logout {
     border: none;
     background: none;
     text-transform: uppercase;
     font-weight: bold;
-    color: var(--orange-soda);
+    color: var(--secondary-color);
 }
 
 /*------------banner--------------*/
@@ -217,7 +314,7 @@
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    width: 50%;
+    width: 10%;
     justify-content: space-between;
     margin: 0;
     z-index: 100;
@@ -249,6 +346,7 @@
     height: 100%;
 }
 
+/* 
 .banner-rightImage a {
     width: 100%;
     height: 100%;
@@ -257,6 +355,42 @@
 .banner-rightImage a img {
     width: 100%;
     height: 100%;
+} */
+
+.banner-rightImage .item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.banner-rightImage .item img {
+    width: 100%;
+    height: 100%;
+}
+
+.banner-rightImage .item img:hover {
+    transform: scale(0.96, 0.96);
+    transition: 1s;
+    cursor: pointer;
+}
+
+.banner-rightImage .item .news-right {
+    background-color: #9c9a9a7e;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 10px;
+}
+
+.banner-rightImage .item .news-right a {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.banner-rightImage .item .news-right a:hover {
+    color: #186958;
 }
 
 .banner-rightImage {
@@ -279,7 +413,7 @@
 
 .section-title {
     text-transform: uppercase;
-    color: var(--orange-soda);
+    color: var(--secondary-color);
     margin-bottom: .5rem;
 }
 
@@ -313,14 +447,17 @@
 
 /*-----------study--------------*/
 
+.study-left {
+    margin-top: 10px;
+}
+
 .study-tabHeader {
-    margin: 0;
+    margin: 0px 0px;
     display: flex;
     font-size: 1.2rem;
     text-transform: uppercase;
     justify-content: space-between;
-    font-weight: bold;
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
 }
 
 .study-tabHeader .nav-item {
@@ -330,7 +467,7 @@
 }
 
 .study-tabHeader .nav-item {
-    border-right: 1px solid var(--white);
+    border-right: 3px solid var(--white);
 }
 
 .study-tabHeader .nav-item .study-tabBtn {
@@ -343,12 +480,12 @@
 }
 
 .study-tabHeader .nav-item .study-tabBtn.active {
-    background-color: var(--white);
-    color: var(--primary-color);
+    background-color: #8997b6;
+    color: white;
 }
 
 .study-tabHeader .nav-item:hover {
-    background-color: var(--white);
+    background-color: #a7a5a5;
 }
 
 .study-tabHeader .nav-item:hover .study-tabBtn {
@@ -358,15 +495,16 @@
 .study-sliderItem {
     height: 200px;
     background-color: var(--primary-color);
-    padding: 10px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-left: 7px;
+    margin-bottom: 10px;
 }
 
 /*--------------study and new list ----------------*/
 
 .study-rightTitle, .news-leftTitle, .news-rightTitle, .class-sectionTitle {
     clip-path: polygon(100% 0, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
     color: var(--white);
     padding: 10px 0;
     padding-left: 10%;
@@ -375,7 +513,7 @@
 }
 
 .study-listChemistry, .news-list, .test-list {
-    height: 200px;
+    height: 258px;
     padding: 10px;
     margin-top: 10px;
     overflow-y: auto;
@@ -385,12 +523,14 @@
 .study-chemistryItem, .news-listItem, .test-listItem {
     display: flex;
     position: relative;
+    background: #186958;
     z-index: 1;
+    color: var(--white);
     width: 100%;
-    height: 70%;
+    height: 31%;
     overflow: hidden;
     transition: 1s ease-in-out;
-    margin-bottom: 1rem;
+    margin-bottom: 5px;
 }
 
 .study-chemistryItem::after, .news-listItem::after, .test-listItem::after {
@@ -401,7 +541,7 @@
     left: 0;
     width: 0;
     height: 100%;
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
     z-index: -1;
     clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
 }
@@ -415,14 +555,12 @@
 }
 
 .study-chemistryItem .content, .news-listItem .content, .test-listItem .content {
-    flex: 2;
     margin-left: 10px;
 }
 
 .study-chemistryItem .content .description, .news-listItem .content .description, .test-listItem .content .description {
-    width: 100%;
-    height: calc(1.4*5*13px);
-    -webkit-line-clamp: 5;
+    width: 95%;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -437,13 +575,14 @@
 }
 
 .img img {
+    width: 100%;
     height: 100%;
 }
 
 .study-banner {
     display: flex;
     margin-top: 2rem;
-    height: 200px;
+    height: 150px;
     background-color: #ff4b3e;
 }
 
@@ -483,7 +622,7 @@
 /*---------------test---------------*/
 
 .test-sliderItem {
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
     padding: 10px;
     margin: 10px;
     min-height: 200px;
@@ -509,18 +648,17 @@
 }
 
 .news .news-left .news-list .news-listItem {
-    max-height: 150px;
+    max-height: 90px;
 }
 
 .news .news-right .news-list .news-listItem {
-    max-height: 125px;
+    max-height: 90px;
 }
 
 .news .news-right .news-list .news-listItem .content .title {
-    font-size: 189%;
+    font-size: 100%;
     text-transform: uppercase;
     width: 100%;
-    height: 2rem;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
@@ -545,14 +683,14 @@
 .news-right .news-list .news-listItem .img img {
     border-radius: 50%;
     overflow: hidden;
-    width: 100px;
-    height: 100px;
+    width: 80%;
+    height: 80%;
 }
 
 /*---------------feel-----------------*/
 
 .feel-sliderItem {
-    background-image: url("../images/feelbg.jpg");
+    background-image: url("../image/feelbg.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -608,10 +746,10 @@
 
 .arrow--big {
     width: 30px;
-    height: 20%;
-    border-radius: 10px;
+    height: 12%;
+    border-radius: 8px;
     font-size: 1.3rem;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.315);
 }
 
 /*--------------footer-----------------*/
@@ -656,7 +794,7 @@
     padding: 10px 15px;
     border-radius: 5px;
     border: none;
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
     color: var(--white);
     font-weight: bold;
 }
@@ -784,14 +922,8 @@
     list-style-type: none;
 }
 
-.sidebar-content ul li::before {}
-
 .sidebar-content ul li a {
     transition: 0.5s ease-in-out;
-}
-
-.sidebar-content ul li a:hover {
-    color: var(--orange-soda);
 }
 
 /*-------------------Subject knowledge-----------------*/
@@ -818,12 +950,12 @@
 
 .knowledge-item p {
     margin: 0;
-    color: var(--orange-soda);
+    color: var(--secondary-color);
 }
 
 .knowledge-item a {
     padding: 10px 15px;
-    background-color: var(--orange-soda);
+    background-color: var(--secondary-color);
     border-radius: 4px;
     color: var(--white)
 }

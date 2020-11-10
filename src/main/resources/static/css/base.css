@@ -26,6 +26,7 @@
 body {
     font: 13px/1.231 arial, helvetica, clean, sans-serif;
     font-size: small;
+    font: x-small;
     height: 100%;
     background: #fff;
     color: var(--black);
@@ -33,6 +34,8 @@ body {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 select, input, button, textarea, button {
@@ -41,6 +44,7 @@ select, input, button, textarea, button {
 
 table {
     font-size: inherit;
+    font: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }
@@ -257,7 +261,7 @@ button, input[type="submit"], input[type="reset"], input[type="button"], .inputB
  */
 
 a:link, a:visited {
-    color: #000;
+    color: var(--primary-color);
 }
 
 a:focus, :focus {
@@ -331,7 +335,7 @@ select {
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
-    border: 2px solid #2c2c2c;
+    /*border: 2px solid #2c2c2c;*/
 }
 
 input[type="text"], input[type="password"], input[type="file"], input[type="email"], textarea, select {
