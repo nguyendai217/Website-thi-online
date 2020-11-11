@@ -56,4 +56,11 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<Classroom> getAllClassroom() {
         return classRoomRepository.findAll();
     }
+
+    @Override
+    public List<Classroom> listClassBySchool(Integer idSchool) {
+        return classRoomRepository.getListClassBySchool(idSchool);
+    }
+
+
 }

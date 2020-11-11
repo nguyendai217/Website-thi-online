@@ -17,4 +17,5 @@ public interface LessonService {
     List<Lesson> findByName(String name);
     Page<Lesson> getAllLesson(Pageable pageable);
     List<LessonNew> getLessonNew();
+    List<Lesson> getListLessonOrderById();
 }

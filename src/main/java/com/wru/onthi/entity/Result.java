@@ -24,5 +24,35 @@ public class Result {
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public User getUserResult() {
+        return userResult;
+    }
+
+    public void setUserResult(User userResult) {
+        this.userResult = userResult;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
 }

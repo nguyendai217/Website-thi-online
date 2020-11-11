@@ -16,4 +16,5 @@ public interface ClassroomService {
     Classroom findByClassCode(String code);
     Page<Classroom> getAllClass(Pageable pageable);
     List<Classroom> getAllClassroom();
+    List<Classroom> listClassBySchool(Integer idSchool);
 }
