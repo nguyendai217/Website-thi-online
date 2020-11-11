@@ -11,7 +11,7 @@
                             <a href="#">Học tập</a>
                             <ul>
                                 <li th:each="item:${listClass}">
-                                    <a th:href="@{'/class?id=' +${item.id}}" th:text="${item.classname}"></a>
+                                    <a th:href="@{'/monhoc?class_id=' +${item.id}}" th:text="${item.classname}"></a>
                                 </li>
                             </ul>
                         </li>
@@ -55,7 +55,7 @@
                     <a href="#">Học tập</a>
                     <ul>
                         <li th:each="item:${listClass}">
-                            <a th:href="@{'/class?id='+ ${item.id}}" th:text="${item.classname}"></a>
+                            <a th:href="@{'/monhoc?class_id='+ ${item.id}}" th:text="${item.classname}"></a>
                         </li>
                     </ul>
                 </li>

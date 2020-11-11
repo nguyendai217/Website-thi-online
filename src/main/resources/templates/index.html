@@ -109,7 +109,7 @@
                                  aria-labelledby="pills-home-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTH}">
-                                        <a href="#"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
                                     </div>
                                 </div>
 
@@ -148,9 +148,9 @@
                                     <div class="content">
                                         <h3 class="title">
                                             Môn học: <span style="color: #65d258" th:text="${item.getExam_subject().name}"></span>
-                                            -- <i class="fa fa-clock-o" ></i> Thời gian: <span th:text="${item.timeOut}"> phút</span>
+                                            &nbsp;&nbsp; <i class="fa fa-clock-o" ></i> Thời gian: <span th:text="${item.timeOut} +' phút'"> </span>
                                         </h3>
-                                        <span>Mã đề :<span th:text="${item.codeExam}"></span> -- <span class="description" th:text="${item.title}"></span></span>
+                                        <span>Mã đề :<span th:text="${item.codeExam}"></span> - <span class="description" th:text="${item.title}"></span></span>
                                     </div>
                                 </div>
                             </a>
@@ -158,21 +158,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-12">
-                <div class="study-banner">
-                    <div class="study-banner--1">
-                        <p>Luyện thi nhanh kết quả chính xác</p>
-                    </div>
-                    <div class="study-banner--2">
-                        <p>Ôn tập dầy đủ các môn học</p>
-                    </div>
-                    <div class="study-banner--3">
-                        <p>Học tập dễ dang hiệu quả</p>
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="study-banner">
+                        <div class="study-banner--1">
+                            <div class="item-banner">
+                                <img th:src="@{/image/learn1.png}">
+                                <p>Học tập mọi lúc, mọi nơi</p>
+                            </div>
+
+                        </div>
+                        <div class="study-banner--2">
+                            <div class="item-banner">
+                                <img th:src="@{/image/learn2.png}">
+                                <p>Ôn tập đầy đủ các môn học</p>
+                            </div>
+                        </div>
+                        <div class="study-banner--3">
+                            <div class="item-banner">
+                                <img th:src="@{/image/learn3.jpg}">
+                                <p>Học tập dễ dàng, hiệu quả</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </section>
 
         <!-- test -->
@@ -232,28 +242,26 @@
                             <span>Danh sách tin tức mới</span>
                         </div>
                         <div class="news-list">
-                            <a href="#">
+                            <a th:href="@{'/tintuc?id='+${item.id}}" th:each="item:${listNews}">
                                 <div class="news-listItem">
                                     <div class="img">
                                         <img th:src="@{/image/img-right1.png}" alt="">
                                     </div>
                                     <div class="content">
-                                        <h3 class="title" >
+                                        <h3 class="title" th:text="${item.title}">
 
                                         </h3>
                                         <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
+                                            <i class="fa fa-angle-double-right"></i> Thể loại: <span th:text="${item.getCategoryNews().categoryName}" ></span>
+                                            &nbsp; Thời gian:<span th:text="${#dates.format(item.insertDate, 'dd/MM/yyy HH:mm')}"></span>
                                         </p>
                                     </div>
                                 </div>
                             </a>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- feel of student -->

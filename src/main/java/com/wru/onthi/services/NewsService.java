@@ -14,4 +14,5 @@ public interface NewsService {
     Optional<News> findByNewsId(Integer id);
     List<News> getlistNews();
     Page<News> getAllNews(Pageable pageable);
+    List<News> getListNewsOrderByTime();
 }

@@ -1,15 +1,9 @@
 package com.wru.onthi.controller;
 
-import com.wru.onthi.entity.Classroom;
-import com.wru.onthi.entity.Exam;
-import com.wru.onthi.entity.Lesson;
-import com.wru.onthi.entity.Subject;
+import com.wru.onthi.entity.*;
 import com.wru.onthi.model.LessonNew;
 import com.wru.onthi.repository.ExamRepository;
-import com.wru.onthi.services.ClassroomService;
-import com.wru.onthi.services.ExamService;
-import com.wru.onthi.services.LessonService;
-import com.wru.onthi.services.SubjectService;
+import com.wru.onthi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,17 +29,26 @@ public class HomeController {
     @Autowired
     ExamService examService;
 
+    @Autowired
+    NewsService newsService;
+
 
     @GetMapping(value = {"/","/home"})
     public String index(Model model){
 
-        // get list class
+        // get list class menu
         List<Classroom> listClass= new ArrayList<>();
         listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
-
+        //get list-subject
+        List<Subject> listSubject= new ArrayList<>();
+        listSubject= subjectService.getlistSubject().subList(0,8);
+        if(!listSubject.isEmpty()){
+            model.addAttribute("listSubject",listSubject);
+        }
+        // list class -slicker
         List<Classroom> listClassTH= classroomService.listClassBySchool(1);
         model.addAttribute("listClassTH",listClassTH);
         List<Classroom> listClassTHCS= classroomService.listClassBySchool(2);
@@ -53,18 +56,6 @@ public class HomeController {
         List<Classroom> listClassTHPT= classroomService.listClassBySchool(3);
         model.addAttribute("listClassTHPT",listClassTHPT);
 
-        //get list lesson new
-//        List<LessonNew> listLesson = lessonService.getLessonNew();
-//        if(!listLesson.isEmpty()){
-//            model.addAttribute("listLesson",listLesson);
-//        }
-
-        //get list-subject
-        List<Subject> listSubject= new ArrayList<>();
-        listSubject= subjectService.getlistSubject().subList(0,8);
-        if(!listSubject.isEmpty()){
-            model.addAttribute("listSubject",listSubject);
-        }
 
         // get list-exam
         List<Exam> listExam= new ArrayList<>();
@@ -79,6 +70,12 @@ public class HomeController {
         if(!lessonList.isEmpty()){
             model.addAttribute("lessonList",lessonList);
         }
+
+        // get news service
+        List<News> listNews= new ArrayList<>();
+        listNews= newsService.getListNewsOrderByTime().subList(0,5);
+        model.addAttribute("listNews",listNews);
+
         return "index";
     }
 }

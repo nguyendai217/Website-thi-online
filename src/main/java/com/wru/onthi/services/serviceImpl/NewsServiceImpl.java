@@ -45,4 +45,9 @@ public class NewsServiceImpl implements NewsService {
     public Page<News> getAllNews(Pageable pageable) {
         return newsRepository.findAll(pageable);
     }
+
+    @Override
+    public List<News> getListNewsOrderByTime() {
+        return newsRepository.getListNewsOrderByTime();
+    }
 }

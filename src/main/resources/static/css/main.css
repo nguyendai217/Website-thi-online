@@ -375,7 +375,7 @@ button.btn-showMenu {
 }
 
 .banner-rightImage .item .news-right {
-    background-color: #9c9a9a7e;
+    background-color: #477d86;
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -390,7 +390,7 @@ button.btn-showMenu {
 }
 
 .banner-rightImage .item .news-right a:hover {
-    color: #186958;
+    color: #47d444;
 }
 
 .banner-rightImage {
@@ -556,7 +556,7 @@ button.btn-showMenu {
 
 .study-chemistryItem .content, .news-listItem .content, .test-listItem .content {
     margin-left: 10px;
-    line-height: 100%;
+    /*line-height: 100%;*/
     flex: 5;
 }
 
@@ -584,40 +584,46 @@ button.btn-showMenu {
 .study-banner {
     display: flex;
     margin-top: 2rem;
-    height: 150px;
+    height: 180px;
     background-color: #ff4b3e;
 }
 
 .study-banner--1, .study-banner--2, .study-banner--3 {
-    flex: 1;
+    flex: 2;
     display: flex;
     padding: 10px;
     justify-content: center;
     align-items: center;
     color: var(--white);
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-transform: uppercase;
     font-weight: bold;
     position: relative;
 }
 
+.study-banner .item-banner{
+    text-align: center;
+    width: 100%;
+    margin: 0px auto;
+}
+.item-banner img{
+    width: 75px;
+    height: 75px;
+    border-radius: 30px;
+}
+.item-banner p{
+    margin: 0px auto;
+    padding: 15px;
+}
 .study-banner--1 {
     flex: 2;
-    background-color: #ffc600;
-    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-}
-
-.study-banner--1 p, .study-banner--3 p {
-    width: 70%;
-}
-
-.study-banner--3 p {
-    padding-left: 10%;
+    background-color: #7d95d8;
+    /*clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);*/
 }
 
 .study-banner--3 {
     flex: 2;
-    clip-path: polygon(100% 0, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
+    /*clip-path: polygon(100% 0, 100% 100%, 0% 100%, 25% 50%, 0% 0%);*/
     background-color: #00c49a;
 }
 
@@ -652,16 +658,24 @@ button.btn-showMenu {
 .news .news-left .news-list .news-listItem {
     max-height: 90px;
 }
-
+.news .news-left .news-list .news-listItem  .img img{
+    border-radius: 50%;
+    width: 80%;
+    height: 80%;
+}
 .news .news-right .news-list .news-listItem {
     max-height: 90px;
 }
+.news .news-left .news-list .news-listItem .img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .news .news-right .news-list .news-listItem .content .title {
-    font-size: 100%;
-    text-transform: uppercase;
+    /*font-size: 100%;*/
+    /*text-transform: uppercase;*/
     width: 100%;
-    overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
     font-weight: bold;
@@ -813,33 +827,40 @@ button.btn-showMenu {
 /*------------------------------class----------------------------*/
 
 .class-banner {
-    background-image: url("../images/student1.jpg");
+    background-image: url("../image/banner-study.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
-    height: 400px;
+    height: 350px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
 }
-
-.class-banner::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--black);
-    opacity: 0.3;
-    z-index: 0;
+.slick-slide img{
+    height: 100% !important;
 }
+
+/*.class-banner::before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-color: var(--black);*/
+/*    opacity: 0.3;*/
+/*    z-index: 0;*/
+/*}*/
 
 .class-banner .title {
     font-size: 4rem;
+    padding-left: 10px;
     color: #ff9b42;
     z-index: 1;
+    position: absolute;
+    right: 126px;
+    top: 45px;
     text-transform: uppercase;
 }
 
