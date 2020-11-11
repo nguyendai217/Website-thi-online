@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,5 +50,10 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     public Page<Classroom> getAllClass(Pageable pageable) {
         return classRoomRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Classroom> getAllClassroom() {
+        return classRoomRepository.findAll();
     }
 }

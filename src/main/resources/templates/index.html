@@ -1,216 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
     <title>Home</title>
     <div th:replace="fragments/init_lib :: header"></div>
 </head>
 
 <body>
-<header class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-4">
-                <div class="header-left">
-                    <a class="header-logo" th:href="@{/}">
-                        <img th:src="@{/image/logo-ltt.png}" alt="logo">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4 col-8 d-sm-none d-md-block">
-                <div class="header-right">
-                    <div class="searchBox d-none d-lg-flex">
-                        <input type="text" placeholder="Mời bạn nhập thông tin...">
-                        <button class="btn-search"><i class="fas fa-search"></i></button>
-                    </div>
-                    <button class="btn-showMenu d-lg-none">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<div class="container">
-    <nav class="menu d-none d-lg-block">
-        <div class="row">
-            <div class="col-md-8 col-12">
-                <ul class="menu-left">
-                    <li><a href="#">Trang chủ</a></li>
-                    <li>
-                        <a href="#">Học tập</a>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Lớp 1
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 2
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 3
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 4
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 5
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 6
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 7
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 8
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 9
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 10
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 11
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Lớp 12
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">kiểm tra</a></li>
-                    <li><a href="#">Tin tưc</a></li>
-                    <li><a href="#">liên hệ</a></li>
-                </ul>
-
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="menu-right" >
-                    <button class="btn-login" id="link-login">
-                        <i class="fas fa-user"></i><a th:href="@{/login}"> Đăng nhập</a>
-                    </button>
-                    <div class="dropdown d-none" id="div-account" sec:authorize="isAuthenticated()">
-                        <button class="dropdown-toggle btn-login"
-                                type="button" id="account" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" sec:authentication="principal.username">
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" th:href="@{/profile}">Profile</a>
-                            <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
-                        </div>
-                    </div>
-                    <div th:if="${param.logout}" id="msg-logout"></div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <nav class="lg-menu d-lg-none">
-        <div class="searchBox">
-            <input type="text" placeholder="Mời bạn nhập thông tin...">
-            <button class="btn-search"><i class="fas fa-search"></i></button>
-        </div>
-        <ul>
-            <button class="btn-showMenu d-lg-none">
-                <i class="fas fa-bars"></i>
-            </button>
-            <li><a href="#">Trang chủ</a></li>
-            <li hasSubMenu="true">
-                <a href="#">Học tập</a>
-                <ul>
-                    <li>
-                        <a href="#">
-                            Lớp 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 2
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 3
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 4
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 5
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 6
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 7
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 8
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 9
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 10
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 11
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Lớp 12
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="#">kiểm tra</a></li>
-            <li><a href="#">Tin tưc</a></li>
-            <li><a href="#">liên hệ</a></li>
-        </ul>
-    </nav>
-</div>
-
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
 <main class="home">
     <div class="container">
         <!-- banner -->
@@ -345,51 +142,16 @@
                             <span>Danh sách bài học mới</span>
                         </div>
                         <div class="study-listChemistry">
-                            <a href="#">
-                                <div class="study-chemistryItem">
+                            <a href="#" th:each="item:${listLesson}">
+                                <div class="study-chemistryItem" >
                                     <div class="img">
                                         <img th:src="@{/image/img-right1.png}" alt="">
                                     </div>
                                     <div class="content">
                                         <h3 class="title">
-                                            Khóa học 1
+                                            Môn học:<span th:text="${item.subjectName}"></span>
                                         </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="study-chemistryItem">
-                                    <div class="img">
-                                        <img th:src="@{/image/img-right1.png}" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="title">
-                                            Khóa học 1
-                                        </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="study-chemistryItem">
-                                    <div class="img">
-                                        <img th:src="@{/image/img-right2.png}" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="title">
-                                            Khóa học 1
-                                        </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
-                                        </p>
+                                        <p class="description" th:text="${item.lessonName}"></p>
                                     </div>
                                 </div>
                             </a>

@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="content" th:remove="tag">
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-4">
+                    <div class="header-left">
+                        <a class="header-logo" th:href="@{/}">
+                            <img th:src="@{/image/logo-ltt.png}" alt="logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-8 d-sm-none d-md-block">
+                    <div class="header-right">
+                        <div class="searchBox d-none d-lg-flex">
+                            <input type="text" placeholder="Mời bạn nhập thông tin...">
+                            <button class="btn-search"><i class="fas fa-search"></i></button>
+                        </div>
+                        <button class="btn-showMenu d-lg-none">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

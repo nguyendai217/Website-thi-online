@@ -1,6 +1,7 @@
 package com.wru.onthi.services;
 
 import com.wru.onthi.entity.Lesson;
+import com.wru.onthi.model.LessonNew;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +16,5 @@ public interface LessonService {
     Optional<Lesson> findByLessonId(Integer id);
     List<Lesson> findByName(String name);
     Page<Lesson> getAllLesson(Pageable pageable);
+    List<LessonNew> getLessonNew();
 }

@@ -556,6 +556,8 @@ button.btn-showMenu {
 
 .study-chemistryItem .content, .news-listItem .content, .test-listItem .content {
     margin-left: 10px;
+    line-height: 100%;
+    flex: 5;
 }
 
 .study-chemistryItem .content .description, .news-listItem .content .description, .test-listItem .content .description {

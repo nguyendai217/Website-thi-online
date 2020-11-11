@@ -4,6 +4,7 @@ import com.wru.onthi.entity.Classroom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ClassroomService {
@@ -14,5 +15,5 @@ public interface ClassroomService {
     Classroom findByClassName(String name);
     Classroom findByClassCode(String code);
     Page<Classroom> getAllClass(Pageable pageable);
-
+    List<Classroom> getAllClassroom();
 }
