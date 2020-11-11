@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
@@ -21,4 +23,10 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
             "WHERE (sb.name LIKE :subject) " +
             "OR (sb.code LIKE :subject)",nativeQuery = true)
     Page<Subject> searchSubject(@Param("subject") String subject, Pageable pageable);
+
+    @Query(value = "SELECT sb.* FROM subject sb ,classroom cl, subject_class sl " +
+            "where sb.id= sl.subject_id " +
+            "and sl.class_id= cl.id " +
+            "and cl.id=?1 ",nativeQuery = true)
+    List<Subject> getListSubjectByClass(Integer id);
 }

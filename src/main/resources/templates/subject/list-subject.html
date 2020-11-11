@@ -11,7 +11,7 @@
     <div class="container">
         <!-- banner -->
         <div class="banner class-banner">
-            <h2 class="title">Lớp 10</h2>
+            <h2 class="title" th:text="${className}"></h2>
         </div>
         <!-- class content-->
         <section class="class-content">
@@ -23,44 +23,9 @@
                             <span>Danh sách môn học</span>
                         </div>
                         <div class="list-subject">
-                            <a href="#">
+                            <a href="#" th:each="item:${listSubject}">
                                 <div class="subject-item">
-                                    <p>Toán</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>lý</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>Hóa</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>Văn</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>Anh</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>Sinh</p>
-                                </div>
-                            </a>
-                            <a href="#">
-                            <div class="subject-item">
-                                <p>Sử</p>
-                            </div>
-                            </a>
-                            <a href="#">
-                                <div class="subject-item">
-                                    <p>Địa lý</p>
+                                    <img th:src="@{'/image/subject/'+${item.image}}">
                                 </div>
                             </a>
                         </div>

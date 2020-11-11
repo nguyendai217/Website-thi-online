@@ -118,7 +118,7 @@
                                  aria-labelledby="pills-profile-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTHCS}">
-                                        <a href="#"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                                  aria-labelledby="pills-contact-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTHPT}">
-                                        <a href="#"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,9 @@
             <div class="test-slider">
                 <div class="test-sliderItem" th:each="item:${listSubject}">
                     <div class="subject" >
-                        <img th:src="@{'/image/subject/'+ ${item.image}}">
+                        <a href="#">
+                            <img th:src="@{'/image/subject/'+ ${item.image}}">
+                        </a>
                     </div>
                 </div>
 

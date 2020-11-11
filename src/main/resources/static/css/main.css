@@ -6,7 +6,7 @@
 }
 
 .list-item:hover {
-    background-color: var(--primary-color);
+    /*background-color: var(--primary-color);*/
 }
 
 .list-item:hover a {
@@ -15,7 +15,7 @@
 
 .list-item::before {
     content: "";
-    background-image: url("../images/arrow.png");
+    background-image: url("../image/arrow.png");
     background-size: cover;
     width: 20px;
     height: 20px;
@@ -631,22 +631,9 @@ button.btn-showMenu {
 
 .test-sliderItem {
     background-color: var(--secondary-color);
-    padding: 10px;
-    margin: 10px;
-    min-height: 200px;
-    display: flex;
+    margin: 7px;
     justify-content: center;
     align-items: center;
-}
-
-.subject {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 30px;
-    color: var(--white);
-    font-weight: bold;
 }
 
 /*-----------------new -----------------*/
@@ -946,7 +933,12 @@ button.btn-showMenu {
 }
 
 .sidebar-content ul li a {
+
+    font-weight: bold;
     transition: 0.5s ease-in-out;
+}
+.sidebar-content ul li a:hover{
+    color: #dd4636;
 }
 
 /*-------------------Subject knowledge-----------------*/
