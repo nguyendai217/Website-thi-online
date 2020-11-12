@@ -88,7 +88,7 @@
 /*-------------header--------------*/
 
 .header {
-    height: 77px;
+    height: 80px;
     margin-bottom: 30px;
     background: var(--primary-color);
 }
@@ -585,7 +585,7 @@ button.btn-showMenu {
     display: flex;
     margin-top: 2rem;
     height: 180px;
-    background-color: #ff4b3e;
+    background-color: #4e8790;
 }
 
 .study-banner--1, .study-banner--2, .study-banner--3 {
@@ -599,6 +599,8 @@ button.btn-showMenu {
     text-transform: uppercase;
     font-weight: bold;
     position: relative;
+    border: 2px solid white;
+    box-shadow: 1px 0px 1px 1px rgba(95, 94, 94, 0.5);
 }
 
 .study-banner .item-banner{
@@ -617,14 +619,14 @@ button.btn-showMenu {
 }
 .study-banner--1 {
     flex: 2;
-    background-color: #7d95d8;
+    /*background-color: #7d95d8;*/
     /*clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);*/
 }
 
 .study-banner--3 {
     flex: 2;
     /*clip-path: polygon(100% 0, 100% 100%, 0% 100%, 25% 50%, 0% 0%);*/
-    background-color: #00c49a;
+    /*background-color: #00c49a;*/
 }
 
 /*---------------test---------------*/

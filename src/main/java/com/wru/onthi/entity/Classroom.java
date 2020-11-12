@@ -28,6 +28,17 @@ public class Classroom {
     @JoinColumn(name = "school_id")
     private School school;
 
+    @OneToMany(mappedBy = "classroom")
+    private List<Lesson> listLessons;
+
+    public List<Lesson> getListLessons() {
+        return listLessons;
+    }
+
+    public void setListLessons(List<Lesson> listLessons) {
+        this.listLessons = listLessons;
+    }
+
     public String getCode() {
         return code;
     }

@@ -223,7 +223,7 @@
                             <a href="#" th:each="item:${lessonList}">
                                 <div class="news-listItem">
                                     <div class="img">
-                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                        <img th:src="@{'/image/subject/'+ ${item.image}}" alt="">
                                     </div>
                                     <div class="content">
                                         <h3 class="title">
