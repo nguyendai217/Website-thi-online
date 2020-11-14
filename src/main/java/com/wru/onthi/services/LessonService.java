@@ -18,4 +18,6 @@ public interface LessonService {
     Page<Lesson> getAllLesson(Pageable pageable);
     List<LessonNew> getLessonNew();
     List<Lesson> getListLessonOrderById();
+    List<Lesson> getListLessonOrderByViews();
+    List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId);
 }

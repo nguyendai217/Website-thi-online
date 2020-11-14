@@ -1,8 +1,12 @@
 package com.wru.onthi.controller;
 
 import com.wru.onthi.entity.Classroom;
+import com.wru.onthi.entity.Exam;
+import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Subject;
 import com.wru.onthi.services.ClassroomService;
+import com.wru.onthi.services.ExamService;
+import com.wru.onthi.services.LessonService;
 import com.wru.onthi.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +28,16 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
+    @Autowired
+    LessonService lessonService;
+
+    @Autowired
+    ExamService examService;
+
     @GetMapping("/monhoc")
     public String listSubject(Model model, @RequestParam("class_id") Integer id){
         // get list class menu
-        List<Classroom> listClass= new ArrayList<>();
-        listClass = classroomService.getAllClassroom();
+        List<Classroom> listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
@@ -39,6 +48,18 @@ public class SubjectController {
         Classroom classroom= optional.get();
         String className= classroom.getClassname();
         model.addAttribute("className",className);
+        model.addAttribute("classId",id);
+
+        // list lesson views
+        List<Lesson> listLesson =lessonService.getListLessonOrderByViews().subList(0,5);
+        model.addAttribute("listLesson",listLesson);
+
+        //list exam views
+        List<Exam> listExam =examService.getListExamOrderByViews().subList(0,5);
+        model.addAttribute("listExam",listExam);
+
         return "subject/list-subject";
     }
+
+
 }

@@ -1,7 +1,9 @@
 package com.wru.onthi.controller;
 
 import com.google.common.base.Strings;
+import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Lesson;
+import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,52 +18,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/lesson")
 public class LessonController {
     @Autowired
     LessonService lessonService;
 
-    @GetMapping("/list-lesson")
-    public String getListLesson(Model model) {
-        // Get List Lesson
-        List<Lesson> listLesson = new ArrayList<>();
-        listLesson = lessonService.getListLesson();
-        return "";
-    }
+    @Autowired
+    ClassroomService classroomService;
 
-    @PostMapping("/list-lesson")
-    public String postLesson(Model model, @RequestParam(value = "name") String name) {
-        if (!Strings.isNullOrEmpty(name)) {
-            List<Lesson> listLesson = new ArrayList<>();
-            listLesson = lessonService.findByName(name);
+
+    @GetMapping("/baihoc")
+    public String getListLesson(Model model,
+                                @RequestParam("class_id") Integer class_id,
+                                @RequestParam("subject_id") Integer subject_id){
+        // get list class menu
+        List<Classroom> listClass = classroomService.getAllClassroom();
+        if(!listClass.isEmpty()){
+            model.addAttribute("listClass",listClass);
         }
-        return "";
-    }
+        List<Lesson> getListlessonByClassAndSubject= lessonService.getListLessonByClassAndSubject(class_id,subject_id);
 
-    @GetMapping("/add-lesson")
-    public String addLesson(){
-        return "";
-    }
+        model.addAttribute("listLessonByClass",getListlessonByClassAndSubject);
+        return "lesson/list-lesson";
 
-//    @PostMapping("/add-lesson")
-//    public String addLessionPost(Model model)
 
-    @PostMapping("/delete-lesson")
-    public String deleteLesson(@RequestParam(value = "id") Integer id){
-        if(id != null){
-            Optional<Lesson> lesson= lessonService.findByLessonId(id);
-            if(lesson != null){
-                // delete lesson
-                lessonService.deleteLesson(lesson.get());
-            }
-            else {
-                return "Lesson not exist!";
-            }
-        }
-        else{
-            return "ID not exist";
-        }
-        return "";
+
     }
 
 

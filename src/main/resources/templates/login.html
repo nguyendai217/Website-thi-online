@@ -11,9 +11,7 @@
 <body>
 <div id="logreg-forms">
     <form class="form-signin" th:action="@{/login}" method="post">
-<!--        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Đăng nhập</h1>-->
-        <img class="logo-login" th:src="@{/image/logo-login.png}">
-
+        <h3 class="mb-4" style="text-align: center"> Đăng nhập</h3>
         <div class="social-login">
             <button class="btn facebook-btn social-btn" type="button" ><a th:href="@{/oauth2/authorization/google}"><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</a> </button>
             <button class="btn google-btn social-btn" type="button"><a th:href="@{/logindd}"><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</a></button>
@@ -35,14 +33,14 @@
             <input type="checkbox"  name="remember">  Ghi nhớ mật khẩu.
         </label>
 
-        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i>Đăng nhập</button>
+        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i>  Đăng nhập</button>
         <a th:href="@{/reset_password}" style="color: #005cbf;margin-top: 10px" >Quên mật khẩu?</a>
         <hr>
         <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Đăng kí tài khoản.</button>
     </form>
 
     <form th:action="@{/signin}" class="form-signup" method="post">
-        <img class="logo-login" th:src="@{/image/logo-login.png}">
+        <h3 class="mb-4" style="text-align: center"> Đăng kí</h3>
         <div class="social-login">
             <button class="btn facebook-btn social-btn" type="button"><a><i class="fa fa-facebook-f"></i> Đăng kí Facebook</a> </button>
             <button class="btn google-btn social-btn" type="button"><a><i class="fa fa-google-plus-official"></i> Đăng kí Google+</a> </button>
@@ -55,11 +53,11 @@
         <input type="password" id="user-pass" class="form-control" placeholder="Password" name="password" required autofocus="">
         <input type="text" id="" class="form-control" placeholder="Số điện thoại" name="phone" required autofocus="">
         <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
-        <a href="#" id="cancel_signup" style="color: #005cbf"><i class="fa fa-angle-left"></i>Trở lại</a>
+        <a href="#" class="mt-2" id="cancel_signup" style="color: #005cbf"><i class="fa fa-angle-left"></i>Trở lại</a>
     </form>
     <br>
 </div>
-<content th:replace="fragments/init :: script"></content>
+<div th:replace="fragments/init :: script"></div>
 <script type="text/javascript" th:src="@{/js/login.js}"></script>
 </body>
 </html>

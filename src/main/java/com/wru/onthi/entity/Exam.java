@@ -38,6 +38,9 @@ public class Exam {
     @Column(name = "time_out")
     private String timeOut;
 
+    @Column(name = "views")
+    private Integer views;
+
     public Integer getId() {
         return id;
     }

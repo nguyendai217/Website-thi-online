@@ -23,8 +23,8 @@
                             <span>Kiến thức môn học</span>
                         </div>
                         <div class="list-knowledge">
-                            <div class="knowledge-item">
-                                <p>Bài 1 :Toán</p>
+                            <div class="knowledge-item" th:each="item:${listLessonByClass}">
+                                <p th:text="${item.lessonName}"></p>
                                 <a href="#">Học ngay</a>
                             </div>
 

@@ -269,58 +269,50 @@
         <!-- feel of student -->
         <section class="feel">
             <div class="section-header">
-                <h2 class="section-title">Cảm nhận của học viên</h2>
+                <h2 class="section-title">Cảm nhận của học sinh</h2>
                 <div class="section-img">
                     <img th:src="@{/image/feelings.png}" alt="">
                 </div>
             </div>
-
             <div class="feel-slider">
                 <div class="feel-sliderItem">
                     <div class="feel-content">
                         <div class="avatar">
-                            <img th:src="@{/image/img-right1.png}" alt="">
+                            <img th:src="@{/images/img-right1.png}" alt="">
                         </div>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
-                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
-                            doloremque provident, ea sed, optio alias minus molestiae.
                         </p>
                     </div>
                 </div>
                 <div class="feel-sliderItem">
                     <div class="feel-content">
                         <div class="avatar">
-                            <img th:src="@{/image/img-right2.png}" alt="">
+                            <img th:src="@{/images/img-right2.png}" alt="">
                         </div>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
-                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
-                            doloremque provident, ea sed, optio alias minus molestiae.
+
                         </p>
                     </div>
                 </div>
                 <div class="feel-sliderItem">
                     <div class="feel-content">
                         <div class="avatar">
-                            <img th:src="@{/image/img-right3.png}" alt="">
+                            <img th:src="@{/images/img-right3.png}" alt="">
                         </div>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
-                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
-                            doloremque provident, ea sed, optio alias minus molestiae.
                         </p>
                     </div>
                 </div>
                 <div class="feel-sliderItem">
                     <div class="feel-content">
                         <div class="avatar">
-                            <img th:src="@{/image/img-right4.png}" alt="">
+                            <img th:src="@{/images/img-right4.png}" alt="">
                         </div>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium qui excepturi
-                            temporibus. Dolorum qui incidunt, corporis consequatur eligendi laborum quas est
-                            doloremque provident, ea sed, optio alias minus molestiae.
                         </p>
                     </div>
                 </div>
@@ -328,39 +320,7 @@
         </section>
     </div>
 </main>
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-12 footer-col">
-                <a class="logo" href="#">
-                    <img th:src="@{/image/logo-ltt.png}" alt="logo">
-                </a>
-                <a href="#">Luyện thi 365</a>
-                <p>Học là giỏi</p>
-            </div>
-            <div class="col-md-4 col-12 footer-col">
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Học Tập</a></li>
-                    <li><a href="#">Luyện Thi</a></li>
-                    <li><a href="#">Liên Hệ</a></li>
-                </ul>
-                <span>Contact : <a href="tel:033651959">033651959</a></span>
-            </div>
-            <div class="col-md-4 col-12 footer-col">
-                <span>Phản hồi</span>
-                <form action="">
-                    <input type="text" placeholder="email" id="txt_mail">
-                    <input type="text" placeholder="Nội dung" id="txt_content">
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            coppy right
-        </div>
-    </div>
-</footer>
+
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
     $(document).ready(function (){

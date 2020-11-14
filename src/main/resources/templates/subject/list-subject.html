@@ -23,7 +23,7 @@
                             <span>Danh sách môn học</span>
                         </div>
                         <div class="list-subject">
-                            <a th:each="item:${listSubject}">
+                            <a th:href="@{/baihoc(class_id=${classId},subject_id=${item.id})}" th:each="item:${listSubject}">
                                 <div class="subject-item">
                                     <img th:src="@{'/image/subject/'+${item.image}}">
                                 </div>
@@ -92,11 +92,9 @@
                         </div>
                         <div class="sidebar-content">
                             <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                                <li class="list-item" th:each="item:${listLesson}">
+                                    <a href="#" th:text="${item.lessonName}"></a>
+                                </li>
                             </ul>
                         </div>
 
@@ -105,23 +103,16 @@
                         </div>
                         <div class="sidebar-content">
                             <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                                <li class="list-item" th:each="item:${listExam}">
+                                    <a href="#" th:text="${item.title}"></a>
+                                </li>
                             </ul>
                         </div>
                         <div class="class-sectionTitle">
                             <span>Bí kíp học tập</span>
                         </div>
-
                         <div class="sidebar-content">
                             <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
                                 <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
                             </ul>
                         </div>

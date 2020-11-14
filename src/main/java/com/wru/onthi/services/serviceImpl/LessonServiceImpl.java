@@ -86,4 +86,14 @@ public class LessonServiceImpl implements LessonService {
     public List<Lesson> getListLessonOrderById() {
         return lessonRepository.getlistLessonOrderByID();
     }
+
+    @Override
+    public List<Lesson> getListLessonOrderByViews() {
+        return lessonRepository.getlistLessonOrderByViews();
+    }
+
+    @Override
+    public List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId) {
+        return lessonRepository.getListLessonByClassAndSubject(classId,subjectId) ;
+    }
 }

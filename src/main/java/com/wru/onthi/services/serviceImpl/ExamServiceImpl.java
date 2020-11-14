@@ -18,4 +18,9 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> getListExam() {
         return examRepository.findAll();
     }
+
+    @Override
+    public List<Exam> getListExamOrderByViews() {
+        return examRepository.getlistExamOrderByViews();
+    }
 }
