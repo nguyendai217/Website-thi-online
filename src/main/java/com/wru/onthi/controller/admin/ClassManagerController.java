@@ -133,11 +133,6 @@ public class ClassManagerController {
             classroom.setCode(code);
             classroom.setClassname(name);
             classroom.setStatus(status);
-//            Classroom checkClassExist= classroomService.findByClassCode(code);
-//            if(checkClassExist != null && !code.equals(classCode)  ){
-//                model.addAttribute("error","Lớp học đã tồn tại");
-//                return "admin/classroom/update-class";
-//            }
             try {
                 classroomService.updateClass(classroom);
                 if(!multipartFile.isEmpty()){

@@ -20,7 +20,7 @@
     width: 20px;
     height: 20px;
     position: absolute;
-    transform: rotate(40deg);
+    transform: rotate(45deg);
     right: 100%;
 }
 
@@ -503,11 +503,11 @@ button.btn-showMenu {
 /*--------------study and new list ----------------*/
 
 .study-rightTitle, .news-leftTitle, .news-rightTitle, .class-sectionTitle {
-    clip-path: polygon(100% 0, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
+
     background-color: var(--secondary-color);
     color: var(--white);
     padding: 10px 0;
-    padding-left: 10%;
+    padding-left: 3%;
     text-transform: uppercase;
     font-size: 1.2rem;
 }
@@ -527,10 +527,11 @@ button.btn-showMenu {
     z-index: 1;
     color: var(--white);
     width: 100%;
-    height: 31%;
+    height: 30%;
     overflow: hidden;
     transition: 1s ease-in-out;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
+    border-radius: 5px;
 }
 
 .study-chemistryItem::after, .news-listItem::after, .test-listItem::after {
@@ -543,7 +544,7 @@ button.btn-showMenu {
     height: 100%;
     background-color: var(--secondary-color);
     z-index: -1;
-    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+
 }
 
 .study-chemistryItem:hover, .news-listItem:hover, .test-listItem:hover {
@@ -555,9 +556,9 @@ button.btn-showMenu {
 }
 
 .study-chemistryItem .content, .news-listItem .content, .test-listItem .content {
-    margin-left: 10px;
+    margin-left: 5px;
     /*line-height: 100%;*/
-    flex: 5;
+    flex: 3;
 }
 
 .study-chemistryItem .content .description, .news-listItem .content .description, .test-listItem .content .description {
@@ -584,7 +585,7 @@ button.btn-showMenu {
 .study-banner {
     display: flex;
     margin-top: 2rem;
-    height: 180px;
+    height: 200px;
     background-color: #4e8790;
 }
 
@@ -641,14 +642,14 @@ button.btn-showMenu {
 /*-----------------new -----------------*/
 
 .news .news-left .news-list, .news .news-right .news-list {
-    height: 500px;
+    height: 490px;
 }
 
 .news .news-left .news-list .news-listItem {
     max-height: 90px;
 }
 .news .news-left .news-list .news-listItem  .img img{
-    border-radius: 50%;
+
     width: 80%;
     height: 80%;
 }
@@ -662,11 +663,9 @@ button.btn-showMenu {
 }
 
 .news .news-right .news-list .news-listItem .content .title {
-    /*font-size: 100%;*/
+    font-size: 100%;
     /*text-transform: uppercase;*/
     width: 100%;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
     font-weight: bold;
 }
 
@@ -686,7 +685,6 @@ button.btn-showMenu {
 }
 
 .news-right .news-list .news-listItem .img img {
-    border-radius: 50%;
     overflow: hidden;
     width: 80%;
     height: 80%;
@@ -759,66 +757,31 @@ button.btn-showMenu {
 
 /*--------------footer-----------------*/
 
-/*.footer {*/
-/*    background-color: var(--primary-color);*/
-/*    padding-top: 30px;*/
-/*    margin-top: 30px;*/
-/*}*/
-/*.footer .image-logo{*/
-/*    width: 50%;*/
-/*}*/
-/*.footer-links {*/
-/*    font-size: 16px;*/
-/*}*/
-
-/*.footer-col {*/
-/*    font-size: 1.2rem;*/
-/*    font-weight: bold;*/
-/*    color: var(--white);*/
-/*}*/
-
-/*.footer-col a {*/
-/*    color: var(--white);*/
-/*}*/
-
-/*.footer-col ul {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    margin: 0;*/
-/*}*/
-
-/*.footer-col ul li {*/
-/*    list-style-type: none;*/
-/*    flex-basis: 50%;*/
-/*    margin: 1rem 0;*/
-/*}*/
-
-/*.footer-col span {*/
-/*    font-size: 1.5rem;*/
-/*}*/
-
-/*.footer-col form input {*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.footer-col form button {*/
-/*    padding: 10px 15px;*/
-/*    border-radius: 5px;*/
-/*    border: none;*/
-/*    background-color: var(--secondary-color);*/
-/*    color: var(--white);*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.footer-bottom {*/
-/*    text-align: center;*/
-/*    font-size: 1.5rem;*/
-/*    padding: 1rem 0;*/
-/*    text-transform: uppercase;*/
-/*    font-weight: bold;*/
-/*    color: var(--white);*/
-/*}*/
-
+.footer {
+    background-color: var(--primary-color);
+    padding-top: 20px;
+    margin-top: 30px;
+}
+.footer .footer-main .item h3,h6{
+    color: white;
+}
+.footer .footer-main .item p a{
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;;
+}
+.footer .footer-main .item p{
+    color: white;
+    font-size: 14px;
+}
+.footer .footer-main .item p a:hover{
+    color: rgb(80, 207, 108);
+}
+.footer-copyright{
+    color: white;
+    font-size: 14px;
+}
 /*------------------------------class----------------------------*/
 
 .class-banner {

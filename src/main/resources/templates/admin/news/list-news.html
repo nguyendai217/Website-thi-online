@@ -16,7 +16,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3> <small>Danh sách người dùng</small></h3>
+                        <h3> <small>Danh sách tin tức</small></h3>
                     </div>
 
                     <div class="title_right">
@@ -31,6 +31,113 @@
                     </div>
                 </div>
 
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h5>Tùy chọn tìm kiếm</h5>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <form th:action="@{/news/search-news}" method="get">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>Tiêu đề</label>
+                                        <div>
+                                            <input class="form-control" name="username" type="text" th:text="${strUser}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <a th:href="@{/news/add-news}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm tin tức</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-success col-md-12" id="success"
+                             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="tile-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="sampleTable">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Ảnh</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Nội dung</th>
+                                        <th>Thể loại</th>
+                                        <th>CreateBy</th>
+                                        <th>Views</th>
+                                        <th>Tùy chọn</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${pageInfo.content != null}">
+                                    <tr th:each=" row,iterStat: ${pageInfo.content}">
+                                        <td th:text="${iterStat.count}"></td>
+                                        <td><img id="img_user" th:src="@{'/image/news/'+ ${row.image}}"></td>
+                                        <td th:text="${row.title}"></td>
+                                        <td th:text="${row.content}"></td>
+                                        <td th:text="${row.phone}"></td>
+                                        <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
+                                        <td>
+                                            <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
+                                            <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
+                                            <a th:href="@{/admin/user/delete/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="float-left">
+                                    <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
+                                </div>
+                                <div class="float-right">
+                                    <ul class="pagination ">
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                            <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                        </li>
+
+                                        <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
+                                            <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                                <a
+                                                        th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                        class="page-link"
+                                                        th:href="@{|/admin/user/list-user?page=${itemPage}|}"
+                                                        th:text="${itemPage}"
+                                                >1</a>
+                                                <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
+                                            </li>
+                                        </th:block>
+
+                                        <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                            <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
 
             </div>
         </div>

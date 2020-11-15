@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="news-leftTitle">
-                        <span>Danh sách lớp học</span>
+                        <span><i class="fa fa-graduation-cap" ></i> Danh sách lớp học</span>
                     </div>
                     <div class="study-left">
                         <ul class="nav study-tabHeader" id="pills-tab" role="tablist">
@@ -137,7 +137,7 @@
                 <div class="col-md-6 col-12">
                     <div class="study-right">
                         <div class="study-rightTitle">
-                            <span>Danh sách bài kiểm tra mới</span>
+                            <span><i class="fa fa-file-text" ></i> Danh sách bài kiểm tra mới</span>
                         </div>
                         <div class="study-listChemistry">
                             <a href="#" th:each="item:${listExam}">
@@ -166,7 +166,6 @@
                                 <img th:src="@{/image/learn1.png}">
                                 <p>Học tập mọi lúc, mọi nơi</p>
                             </div>
-
                         </div>
                         <div class="study-banner--2">
                             <div class="item-banner">
@@ -193,7 +192,6 @@
                     <img th:src="@{/image/test.png}" alt="">
                 </div>
             </div>
-
             <div class="test-slider">
                 <div class="test-sliderItem" th:each="item:${listSubject}">
                     <div class="subject" >
@@ -202,7 +200,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </section>
         <!-- news -->
@@ -214,10 +211,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
                     <div class="news-left">
                         <div class="news-leftTitle">
-                            <span>Danh sách bài học mới</span>
+                            <span><i class="fa fa-book" aria-hidden="true"></i> Danh sách bài học mới</span>
                         </div>
                         <div class="news-list">
                             <a href="#" th:each="item:${lessonList}">
@@ -238,10 +235,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
+                    <div class="news-left">
+                        <div class="news-leftTitle">
+                            <span><i class="fa fa-book" aria-hidden="true"></i> Danh sách điểm cao</span>
+                        </div>
+                        <div class="news-list">
+                            <a href="#" th:each="item:${lessonList}">
+                                <div class="news-listItem">
+                                    <div class="img">
+                                        <img th:src="@{'/image/subject/'+ ${item.image}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3 class="title">
+                                            Môn học: <span th:text="${item.getSubject().name}"></span>
+                                        </h3>
+                                        <span class="description">
+                                           Thành viên : <span> Nguyễn Văn A</span><br>Số điểm: 9
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
                     <div class="news-right">
                         <div class="news-rightTitle">
-                            <span>Danh sách tin tức mới</span>
+                            <span><i class="fa fa-newspaper-o" ></i> Danh sách tin tức mới</span>
                         </div>
                         <div class="news-list">
                             <a th:href="@{'/tintuc?id='+${item.id}}" th:each="item:${listNews}">
@@ -250,13 +271,11 @@
                                         <img th:src="@{/image/img-right1.png}" alt="">
                                     </div>
                                     <div class="content">
-                                        <h3 class="title" th:text="${item.title}">
-
-                                        </h3>
-                                        <p class="description">
-                                            <i class="fa fa-angle-double-right"></i> Thể loại: <span th:text="${item.getCategoryNews().categoryName}" ></span>
-                                            &nbsp; Thời gian:<span th:text="${#dates.format(item.insertDate, 'dd/MM/yyy HH:mm')}"></span>
-                                        </p>
+                                        <h4 class="title" th:text="${item.title}">
+                                        </h4>
+                                        <span class="description">
+                                            <i class="fa fa-angle-double-right"></i>Thời gian:<span th:text="${#dates.format(item.insertDate, 'dd/MM/yyy HH:mm')}"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </a>
@@ -320,7 +339,7 @@
         </section>
     </div>
 </main>
-
+<div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
     $(document).ready(function (){
