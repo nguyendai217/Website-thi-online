@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/login/**","/reset_password",
                         "/oauth2/**","/signin","/class","/tintuc","/monhoc/**","/baihoc/**").permitAll()
                 .antMatchers("/home/**","/contact").hasAnyAuthority("USER","ADMIN","MANAGER")
-                .antMatchers("/admin/**","/profile").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers("/admin/**","/profile","/lesson/**","/exam/**").hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")

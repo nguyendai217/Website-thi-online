@@ -133,6 +133,10 @@ public class NewsController {
     public String listNews(Model model,Principal principal,Pageable pageable){
         getInfoUser(model,principal);
 
+        //get list category
+        List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
+        model.addAttribute("listCategory",listCategory);
+
         // pageable list news
         int pageNumber = pageable.getPageNumber();
         int pageSize=5;

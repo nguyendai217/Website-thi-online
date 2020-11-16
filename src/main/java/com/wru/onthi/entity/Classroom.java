@@ -31,6 +31,9 @@ public class Classroom {
     @OneToMany(mappedBy = "classroom")
     private List<Lesson> listLessons;
 
+    @OneToMany(mappedBy = "exam_classroom")
+    private List<Exam> listExam;
+
     public List<Lesson> getListLessons() {
         return listLessons;
     }
@@ -93,5 +96,13 @@ public class Classroom {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public List<Exam> getListExam() {
+        return listExam;
+    }
+
+    public void setListExam(List<Exam> listExam) {
+        this.listExam = listExam;
     }
 }

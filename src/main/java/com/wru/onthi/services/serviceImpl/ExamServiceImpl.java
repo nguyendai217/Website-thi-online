@@ -4,6 +4,8 @@ import com.wru.onthi.entity.Exam;
 import com.wru.onthi.repository.ExamRepository;
 import com.wru.onthi.services.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,5 +24,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<Exam> getListExamOrderByViews() {
         return examRepository.getlistExamOrderByViews();
+    }
+
+    @Override
+    public Page<Exam> getAllListExam(Pageable pageable) {
+        return examRepository.findAll(pageable);
     }
 }

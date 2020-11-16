@@ -23,11 +23,14 @@
                             <span>Kiến thức môn học</span>
                         </div>
                         <div class="list-knowledge">
-                            <div class="knowledge-item" th:each="item:${listLessonByClass}">
+                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listLessonByClass)}"
+                                 th:each="item:${listLessonByClass}">
                                 <p th:text="${item.lessonName}"></p>
                                 <a href="#">Học ngay</a>
                             </div>
-
+                            <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
+                                <h3>Xin lỗi, môn học này chưa có bài học, vui lòng quay lại sau.</h3>
+                            </div>
                         </div>
                         <!-- test-list -->
                         <div class="class-sectionTitle">
@@ -85,86 +88,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-12">
-                    <div class="subject-knowledgeRight">
-                        <div class="class-sectionTitle">
-                            <span>Các bài học xem nhiều</span>
-                        </div>
-                        <div class="sidebar-content">
-                            <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="class-sectionTitle">
-                            <span>Đề thi làm nhiều</span>
-                        </div>
-                        <div class="sidebar-content">
-                            <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                            </ul>
-                        </div>
-                        <div class="class-sectionTitle">
-                            <span>Bí kíp học tập</span>
-                        </div>
-
-                        <div class="sidebar-content">
-                            <ul>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="fragments/sidebar :: content"></div>
             </div>
         </section>
-
     </div>
 </main>
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-12 footer-col">
-                <a class="logo" href="#">
-                    <img src="./images/logo.png" alt="">
-                </a>
-                <a href="#">Luyện thi 365</a>
-                <p>Học là giỏi</p>
-            </div>
-            <div class="col-md-4 col-12 footer-col">
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Học Tập</a></li>
-                    <li><a href="#">Luyện Thi</a></li>
-                    <li><a href="#">Liên Hệ</a></li>
-                </ul>
-                <span>Contact : <a href="tel:033651959">033651959</a></span>
-            </div>
-            <div class="col-md-4 col-12 footer-col">
-                <span>Phản hồi</span>
-                <form action="">
-                    <input type="text" placeholder="email" id="txt_mail">
-                    <input type="text" placeholder="Nội dung" id="txt_content">
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            coppy right
-        </div>
-    </div>
-</footer>
+<div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
 

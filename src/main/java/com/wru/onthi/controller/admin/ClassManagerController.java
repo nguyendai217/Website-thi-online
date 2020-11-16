@@ -74,7 +74,7 @@ public class ClassManagerController {
         return "admin/classroom/add-class";
     }
 
-    @PostMapping("class/add-class")
+    @PostMapping("/class/add-class")
     public String addSubjectPost(Model model, Principal principal, RedirectAttributes redir,
                                  @RequestParam("classCode") String classcode,
                                  @RequestParam("className") String classname,
@@ -104,7 +104,7 @@ public class ClassManagerController {
         return "redirect:/class/list-class";
     }
 
-    @GetMapping("class/update/{id}")
+    @GetMapping("class/update-class/{id}")
     public String updateGet(Model model, Principal principal, @PathVariable("id") Integer id){
         getInfoUser(model,principal);
         Optional<Classroom> optional= classroomService.findById(id);
@@ -113,7 +113,7 @@ public class ClassManagerController {
         return "admin/classroom/update-class";
     }
 //
-    @PostMapping("class/update-class")
+    @PostMapping("/class/update-class")
     public String updateClassroomPost(Model model, Principal principal, RedirectAttributes redir,
                                     @RequestParam(value = "idClass") Integer id,
                                     @RequestParam(value = "classCode") String code,
@@ -150,7 +150,7 @@ public class ClassManagerController {
         }
     }
 
-    @GetMapping("class/delete/{id}")
+    @GetMapping("/class/delete-class/{id}")
     public String deleteClass(Model model, Principal principal,RedirectAttributes redr,
                                 @PathVariable("id") Integer id) {
         getInfoUser(model,principal);

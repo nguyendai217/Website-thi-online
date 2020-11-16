@@ -1,16 +1,12 @@
 package com.wru.onthi.controller;
 
 import com.wru.onthi.entity.*;
-import com.wru.onthi.model.LessonNew;
-import com.wru.onthi.repository.ExamRepository;
 import com.wru.onthi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.rmi.dgc.Lease;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,18 +29,16 @@ public class HomeController {
     NewsService newsService;
 
 
-    @GetMapping(value = {"/","/home"})
+    @GetMapping(value = {"/"})
     public String index(Model model){
 
         // get list class menu
-        List<Classroom> listClass= new ArrayList<>();
-        listClass = classroomService.getAllClassroom();
+        List<Classroom> listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
         //get list-subject
-        List<Subject> listSubject= new ArrayList<>();
-        listSubject= subjectService.getlistSubject().subList(0,8);
+        List<Subject> listSubject = subjectService.getlistSubject().subList(0,8);
         if(!listSubject.isEmpty()){
             model.addAttribute("listSubject",listSubject);
         }
@@ -58,22 +52,18 @@ public class HomeController {
 
 
         // get list-exam
-        List<Exam> listExam= new ArrayList<>();
-        listExam= examService.getListExam().subList(0,3);
+        List<Exam> listExam= examService.getListExam().subList(0,3);
         if(!listExam.isEmpty()){
             model.addAttribute("listExam",listExam);
         }
 
         // get list-lesson
-        List<Lesson> lessonList= new ArrayList<>();
-        lessonList= lessonService.getListLessonOrderById().subList(0,5);
+        List<Lesson> lessonList = lessonService.getListLessonOrderById().subList(0,5);
         if(!lessonList.isEmpty()){
             model.addAttribute("lessonList",lessonList);
         }
-
         // get news service
-        List<News> listNews= new ArrayList<>();
-        listNews= newsService.getListNewsOrderByTime().subList(0,5);
+        List<News> listNews = newsService.getListNewsOrderByTime().subList(0,5);
         model.addAttribute("listNews",listNews);
 
         return "index";

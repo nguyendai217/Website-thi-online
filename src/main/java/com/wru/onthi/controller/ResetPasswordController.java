@@ -52,11 +52,11 @@ public class ResetPasswordController {
             String mailSubject = "Cập nhật mật khẩu luyenthi365.com";
             String mailContent = "Password đăng nhập mới của bạn là : " + newpass + "\n";
             mailContent += "Vui lòng đổi mật khẩu khi đăng nhập thành công." +"\n";
-            mailContent+="Đăng nhập ngay : luyenthi365.com/login";
+            mailContent+="Đăng nhập ngay : luyenthi365.info/login";
             mailMessage.setSubject(mailSubject);
             mailMessage.setText(mailContent);
             mailSender.send(mailMessage);
-            String success= "Thay đổi mật khẩu thành công, vui lòng vào email để lấy thông tin.";
+            String success= "Thay đổi mật khẩu thành công, vui lòng truy cập vào email để lấy thông tin.";
             model.addAttribute("success",success);
         }
         return "resetpassword";

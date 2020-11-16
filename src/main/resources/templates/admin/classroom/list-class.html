@@ -86,8 +86,7 @@
                                         <th>Tên lớp</th>
                                         <th>Trạng thái</th>
                                         <th>Hình ảnh</th>
-                                        <th>Chỉnh sửa</th>
-                                        <th>Xóa</th>
+                                        <th>Tuỳ chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody th:if="${pageInfo.content != null}">
@@ -97,9 +96,11 @@
                                         <td th:text="${row.classname}"></td>
                                         <td th:if="${row.status==1}">Đang hoạt động</td>
                                         <td th:if="${row.status==0}">Không hoạt động</td>
-                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/classroom/'+ ${row.image}}"></td>
-                                        <td ><a th:href="@{/class/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a></td>
-                                        <td><a th:href="@{/class/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a></td>
+                                        <td><img style="height: 50px;width: 50px" th:src="@{'/image/classroom/'+ ${row.image}}"></td>
+                                        <td>
+                                            <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
+                                            <a th:href="@{/class/delete-class/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

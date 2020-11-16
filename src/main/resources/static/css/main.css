@@ -916,7 +916,7 @@ button.btn-showMenu {
 
 .list-knowledge {
     box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, 0.5);
-    height: 500px;
+    height: 250px;
     padding: 1rem;
     margin: 1rem 0;
     overflow-y: auto;
@@ -928,8 +928,8 @@ button.btn-showMenu {
     justify-content: space-between;
     align-items: center;
     padding: 15px 15px;
-    margin: 10px;
     font-size: 1rem;
+    margin-top: 5px;
     min-height: 40px;
     background-color: var(--lavender-web);
     border-radius: 4px;

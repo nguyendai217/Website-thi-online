@@ -1,10 +1,12 @@
 package com.wru.onthi.controller.admin;
 
-import com.wru.onthi.entity.CategoryNews;
+import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Subject;
 import com.wru.onthi.entity.User;
+import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.LessonService;
+import com.wru.onthi.services.SubjectService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,21 +20,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
-
+@Controller
 @RequestMapping("/lesson")
-public class LessonController {
+public class LessonControllerAdmin {
 
     @Autowired
     UserService userService;
 
     @Autowired
     LessonService lessonService;
+    @Autowired
+    ClassroomService classroomService;
 
-    @GetMapping("/list-lesson-manager")
+    @Autowired
+    SubjectService subjectService;
+
+    @GetMapping("/list-lesson")
     public String getAllLesson(Model model, Principal principal,Pageable pageable){
         getInfoUser(model,principal);
+
+
+        //get AllClassroom
+        List<Classroom> lístClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",lístClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+
+
 
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;

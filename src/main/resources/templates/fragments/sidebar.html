@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="content" th:remove="tag">
+<div class="col-md-4 col-12">
+    <div class="class-right">
+        <div class="class-sectionTitle">
+            <span>Các bài học xem nhiều</span>
+        </div>
+        <div class="sidebar-content">
+            <ul>
+                <li class="list-item" th:each="item:${listLesson}">
+                    <a href="#" th:text="${item.lessonName}"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="class-sectionTitle">
+            <span>Đề thi làm nhiều</span>
+        </div>
+        <div class="sidebar-content">
+            <ul>
+                <li class="list-item" th:each="item:${listExam}">
+                    <a href="#" th:text="${item.title}"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="class-sectionTitle">
+            <span>Bí kíp học tập</span>
+        </div>
+        <div class="sidebar-content">
+            <ul>
+                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                <li class="list-item"><a href="#">Lorem ipsum dolor sit amet.</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

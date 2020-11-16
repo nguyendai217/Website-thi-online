@@ -32,8 +32,15 @@ public class Exam {
     @JoinColumn(name = "subject_id")
     private Subject exam_subject;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id")
+    private Classroom exam_classroom;
+
     @OneToMany(mappedBy = "examQuestion")
     private List<Question> listQuestion;
+
+    @Column(name = "total_question")
+    private Integer totalQuestion;
 
     @Column(name = "time_out")
     private String timeOut;
@@ -87,5 +94,37 @@ public class Exam {
 
     public void setTimeOut(String timeOut) {
         this.timeOut = timeOut;
+    }
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getTotalQuestion() {
+        return totalQuestion;
+    }
+
+    public void setTotalQuestion(Integer totalQuestion) {
+        this.totalQuestion = totalQuestion;
+    }
+
+    public Classroom getExam_classroom() {
+        return exam_classroom;
+    }
+
+    public void setExam_classroom(Classroom exam_classroom) {
+        this.exam_classroom = exam_classroom;
     }
 }

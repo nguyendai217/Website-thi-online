@@ -65,7 +65,7 @@ public class LoginController {
                 user.setFullname(fullname);
                 user.setPhone(phone);
                 Date date= new Date();
-                System.out.println("time"+ date+ "datetostring"+ date.toString());
+              //  System.out.println("time"+ date+ "datetostring"+ date.toString());
                 user.setCreateDate(date);
                 user.setStatus(1);
                 user.setRoles(Arrays.asList(role));

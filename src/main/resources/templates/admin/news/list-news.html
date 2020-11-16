@@ -49,6 +49,15 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>Thể loại</label>
+                                        <select class="form-control" name="categoryId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listCategory}"
+                                                    th:value="${item.id}" th:text="${item.categoryName}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                                         <label>&nbsp;</label>
                                         <div>
                                             <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
@@ -86,6 +95,7 @@
                                         <th>Nội dung</th>
                                         <th>Thể loại</th>
                                         <th>CreateBy</th>
+                                        <th>Thời gian</th>
                                         <th>Views</th>
                                         <th>Tùy chọn</th>
                                     </tr>
@@ -93,15 +103,17 @@
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td><img id="img_user" th:src="@{'/image/news/'+ ${row.image}}"></td>
-                                        <td th:text="${row.title}"></td>
-                                        <td th:text="${row.content}"></td>
-                                        <td th:text="${row.phone}"></td>
-                                        <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
+                                        <td><img id="img-news" th:src="@{'/image/news/'+ ${row.image}}"></td>
+                                        <td th:text="${#strings.substring(row.title,0,20)+'...'}"></td>
+                                        <td th:text="${#strings.substring(row.content,0,30)+'...'}"></td>
+                                        <td th:text="${row.categoryNews.categoryName}"></td>
+                                        <td th:text="${row.insertBy}"></td>
+                                        <td th:text="${#dates.format(row.insertDate, 'dd/MM/yyyy')}"></td>
+                                        <td th:text="${row.views}"></td>
                                         <td>
-                                            <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
-                                            <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/admin/user/delete/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/news/detail-news/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
+                                            <a th:href="@{/news/update-news/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
+                                            <a th:href="@{/news/delete-news/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -113,7 +125,7 @@
                                 <div class="float-right">
                                     <ul class="pagination ">
                                         <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                            <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
+                                            <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number}|}">&laquo;</a>
                                         </li>
 
                                         <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
@@ -121,7 +133,7 @@
                                                 <a
                                                         th:if="${itemPage} != ${pageInfo.number + 1}"
                                                         class="page-link"
-                                                        th:href="@{|/admin/user/list-user?page=${itemPage}|}"
+                                                        th:href="@{|/news/list-news?page=${itemPage}|}"
                                                         th:text="${itemPage}"
                                                 >1</a>
                                                 <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
@@ -129,7 +141,7 @@
                                         </th:block>
 
                                         <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                            <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                            <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number + 2}|}">&raquo;</a>
                                         </li>
                                     </ul>
                                 </div>

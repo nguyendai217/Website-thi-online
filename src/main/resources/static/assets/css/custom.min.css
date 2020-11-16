@@ -30,4 +30,8 @@ th,td{
 .dropdown-menu.dropdown-usermenu.pull-right.show{
 	top:20px !important;
 }
+#img-news,#img-lesson{
+	width: 60px;
+	height: 60px;
+}
 
