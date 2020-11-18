@@ -42,7 +42,6 @@ public class LessonControllerAdmin {
     public String getAllLesson(Model model, Principal principal,Pageable pageable){
         getInfoUser(model,principal);
 
-
         //get AllClassroom
         List<Classroom> lístClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",lístClass);
@@ -50,8 +49,6 @@ public class LessonControllerAdmin {
         //get list Subject
         List<Subject> listSubject= subjectService.getlistSubject();
         model.addAttribute("listSubject", listSubject);
-
-
 
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
@@ -72,6 +69,7 @@ public class LessonControllerAdmin {
             model.addAttribute("pageInfo", pageLesson);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
+            model.addAttribute("path","/lesson/list-lesson");
             return "admin/lesson/list-lesson";
         }
     }

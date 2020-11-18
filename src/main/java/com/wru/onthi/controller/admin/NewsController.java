@@ -1,6 +1,5 @@
 package com.wru.onthi.controller.admin;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.CategoryNews;
 import com.wru.onthi.entity.News;
 import com.wru.onthi.entity.User;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.WebParam;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -39,43 +37,50 @@ public class NewsController {
     public String listCategoryNews(Model model, Principal principal, Pageable pageable){
         getInfoUser(model,principal);
 
-        // pageable list user
         int pageNumber = pageable.getPageNumber();
+        int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, 5);
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Page<CategoryNews> categoryNews = categoryNewsService.getAllCategoryNews(pageItem);
+
+        int totalItem = (int) categoryNews.getTotalElements();
+        int itemPerPage= pageSize * (pageNumber+1);
+        if(itemPerPage > totalItem){
+            itemPerPage= totalItem;
+        }
 
         Page<CategoryNews> pageCategoryNews = categoryNewsService.getAllCategoryNews(pageItem);
         if(pageCategoryNews == null){
             model.addAttribute("error","Danh sách thể loại trống.");
-            return "admin/news/list-category-news";
+            return "admin/news/list-category";
         } else {
             model.addAttribute("pageInfo", pageCategoryNews);
-            return "admin/news/list-category-news";
+            model.addAttribute("pageInfo", categoryNews);
+            model.addAttribute("total",totalItem);
+            model.addAttribute("itemPerPage",itemPerPage);
+            model.addAttribute("path","/news/list-category");
+            return "admin/news/list-category";
         }
-    }
-
-    // add category
-    @GetMapping("/add-category")
-    public String addCategoryGet(Model model, Principal principal){
-        getInfoUser(model,principal);
-        return "admin/news/add-category-news";
     }
 
     @PostMapping("/add-category")
-    public String addCategoryPost(Model model, Principal principal, RedirectAttributes redir,
-                                  @RequestParam(value = "categoryName",defaultValue = "") String categoryName){
-        getInfoUser(model,principal);
-        CategoryNews categoryNews= new CategoryNews();
-        categoryNews.setCategoryName(categoryName);
-        categoryNews.setStatus(1);
-        try {
-            categoryNewsService.createCategory(categoryNews);
-            redir.addFlashAttribute("success","Thêm thể loại thành công");
-            return "redirect:/news/list-category";
-        }catch (Exception e){
-            model.addAttribute("error","Thêm thể loại thất bại");
-            return "admin/news/add-category-news";
+    public String addCategoryPost(RedirectAttributes redir,@RequestParam(value = "categoryname") String categoryName) {
+        CategoryNews categoryNews = new CategoryNews();
+
+        if(!categoryName.isEmpty()){
+            categoryNews.setCategoryName(categoryName);
+            categoryNews.setStatus(1);
+            try {
+                categoryNewsService.createCategory(categoryNews);
+                redir.addFlashAttribute("success","Thêm thể loại tin tức thành công");
+            }catch (Exception e){
+                redir.addFlashAttribute("error","Thêm thể loại tin tức thất bại");
+            }
+        }else {
+            redir.addFlashAttribute("error","Thêm thể loại tin tức thất bại");
         }
+
+        return "redirect:/news/list-category";
     }
 
     // delete category
@@ -112,13 +117,15 @@ public class NewsController {
     @PostMapping("/update-category")
     public String updateCategoryPost(Model model,Principal principal,RedirectAttributes redir,
                                      @RequestParam("categoryId") Integer id,
-                                     @RequestParam("categoryName") String name){
+                                     @RequestParam("categoryName") String name,
+                                     @RequestParam("status") Integer status){
         getInfoUser(model,principal);
 
         Optional<CategoryNews> optionalCategoryNews= categoryNewsService.findByCategoryNewsId(id);
         CategoryNews categoryNews = optionalCategoryNews.get();
 
         try {
+            categoryNews.setStatus(status);
             categoryNews.setCategoryName(name);
             categoryNewsService.updateCategory(categoryNews);
             redir.addFlashAttribute("success","Cập nhật thể loại thành công");
@@ -156,6 +163,7 @@ public class NewsController {
             model.addAttribute("pageInfo", pageNews);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
+            model.addAttribute("path","/news/list-news");
             return "admin/news/list-news";
         }
     }
@@ -167,6 +175,20 @@ public class NewsController {
         List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
         model.addAttribute("listCategory",listCategory);
         return "admin/news/add-news";
+    }
+
+    // add new
+    @GetMapping("/update-news/{newsId}")
+    public String updateNewsGet(Model model, Principal principal,
+                                @PathVariable("newsId") Integer newsID){
+        getInfoUser(model,principal);
+        List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
+        model.addAttribute("listCategory",listCategory);
+
+        Optional<News> optionalNews= newsService.findByNewsId(newsID);
+        News news= optionalNews.get();
+        model.addAttribute("news",news);
+        return "admin/news/update-news";
     }
 
     @PostMapping("/add-news")
@@ -185,6 +207,24 @@ public class NewsController {
         return "admin/news/detail-news";
     }
 
+    // delete news
+    @GetMapping("/delete-news/{id}")
+    public String deleteNews(Model model, RedirectAttributes redir,
+                             Principal principal,
+                             @PathVariable(value = "id") Integer id){
+        getInfoUser(model,principal);
+
+        Optional<News> optional = newsService.findByNewsId(id);
+        News news= optional.get();
+        try {
+            newsService.deleteNews(news);
+            redir.addFlashAttribute("success","Xóa tin tức thành công");
+            return "redirect:/news/list-news";
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Xóa tin tức thất bại");
+            return "redirect:/news/list-news";
+        }
+    }
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

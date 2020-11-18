@@ -55,6 +55,7 @@ public class SubjectManagerController {
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
         model.addAttribute("pageInfo",pageSubject);
+        model.addAttribute("path","/subject/list-subject");
         return "admin/subject/list-subject";
     }
 

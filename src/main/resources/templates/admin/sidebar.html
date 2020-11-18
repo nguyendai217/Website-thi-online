@@ -45,8 +45,12 @@
                     <li id="examManager">
                         <a th:href="@{/exam/list-exam}"><i class="fa fa-file-pdf-o"></i> Quản lí đề thi</a>
                     </li>
-                    <li id="newsManager">
-                        <a th:href="@{/news/list-news}"><i class="fa fa-newspaper-o"></i> Quản lí tin tức</a>
+                    <li id="newsManager"  >
+                        <a><i class="fa fa-newspaper-o"></i> Quản lí tin tức <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li ><a th:href="@{/news/list-news}"><i class="fa fa-newspaper-o"></i> Quản lí tin tức</a></li>
+                            <li id="newsCategoryManager"><a th:href="@{/news/list-category}"><i class="fa fa-tumblr"></i> Quản lí thể loại</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

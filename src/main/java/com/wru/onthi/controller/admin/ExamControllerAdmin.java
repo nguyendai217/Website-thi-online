@@ -63,6 +63,7 @@ public class ExamControllerAdmin {
             model.addAttribute("pageInfo", pageExam);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
+            model.addAttribute("path","/exam/list-exam");
             return "admin/exam/list-exam";
         }
 

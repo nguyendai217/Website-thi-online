@@ -61,6 +61,7 @@ public class ClassManagerController {
         model.addAttribute("pageInfo",pageClass);
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
+        model.addAttribute("path","/class/list-class");
        return "admin/classroom/list-class";
     }
 

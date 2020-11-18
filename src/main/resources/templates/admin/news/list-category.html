@@ -16,7 +16,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3> <small>Danh sách môn học</small></h3>
+                        <h3> <small>Danh sách thể loại</small></h3>
                     </div>
 
                     <div class="title_right">
@@ -39,32 +39,39 @@
                             <h5>Tùy chọn tìm kiếm</h5>
                             <div class="clearfix"></div>
                         </div>
-                        <div>
-                            <form th:action="@{/subject/search-subject}" method="get">
-                                <div class="row">
-                                    <div class="col-md-2 col-sm-12">
-                                        <label>Tên môn học</label>
-                                        <div>
-                                            <input class="form-control" name="subject" type="text" th:text="${sbj}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-sm-12 ">
-                                        <label>&nbsp;</label>
-                                        <div>
-                                            <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-8 col-sm-12">
-                                        <label>&nbsp;</label>
-                                        <div>
-                                            <a th:href="@{/subject/add-subject}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm môn học</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                     </div>
+                </div>
+                <div class="row">
+
+                    <form th:action="@{/news/search-category}" method="get">
+                        <div class="col-md-6 col-sm-12">
+                            <label>Tên thể loại</label>
+                            <div>
+                                <input class="form-control" name="category" type="text" th:text="${categoryname}">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 ">
+                            <label>&nbsp;</label>
+                            <div>
+                                <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form th:action="@{/news/add-category}" method="post">
+                        <div class="col-md-7 col-sm-12 ">
+                            <label>Thêm thể loại</label>
+                            <div>
+                                <input class="form-control" name="categoryname" type="text" >
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-12">
+                            <label>&nbsp</label>
+                            <div>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Thêm mới</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
                 <br>
@@ -82,21 +89,21 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Mã môn học</th>
-                                        <th>Tên môn học</th>
-                                        <th>Hình ảnh</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Tên thể loại tin tức</th>
+                                        <th>Trạng thái</th>
+                                        <th>Tuỳ chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td th:text="${row.code}"></td>
-                                        <td th:text="${row.name}"></td>
-                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
-                                        <td ><a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a></td>
-                                        <td><a th:href="@{/subject/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a></td>
+                                        <td th:text="${row.categoryName}"></td>
+                                        <td th:if="${row.status==1}">Đang hoạt động</td>
+                                        <td th:if="${row.status==0}">Không hoạt động</td>
+                                        <td>
+                                            <a th:href="@{/news/update-category/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
+                                            <a th:href="@{/news/delete-category/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -106,7 +113,6 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-
             </div>
         </div>
         <!-- page content -->
@@ -117,19 +123,7 @@
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#subjectManager").addClass("active");
-    $('#success').delay(5000).fadeOut(1000);
-    $('#error').delay(5000).fadeOut(1000);
-
-    //for delete user
-    $(document).ready(function () {
-        $('.table #confirmDelete').on('click', function(event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#removeModalCenter #delRef').attr('href', href);
-            $('#removeModalCenter').modal();
-        });
-    });
+    $("#newsManagerManager").addClass("active");
 </script>
 </body>
 </html>

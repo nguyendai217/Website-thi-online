@@ -130,82 +130,24 @@
                                         </tr>
                                         </tbody>
                                     </table>
-
-                                    <div class="float-left">
-                                        <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
-                                    </div>
-                                    <div class="float-right">
-                                        <ul class="pagination ">
-                                            <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                                <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number}|}">&laquo;</a>
-                                            </li>
-
-                                            <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
-                                                <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
-                                                    <a
-                                                            th:if="${itemPage} != ${pageInfo.number + 1}"
-                                                            class="page-link"
-                                                            th:href="@{|/admin/user/list-user?page=${itemPage}|}"
-                                                            th:text="${itemPage}"
-                                                    >1</a>
-                                                    <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
-                                                </li>
-                                            </th:block>
-
-                                            <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                                <a class="page-link" th:href="@{|/admin/user/list-user?page=${pageInfo.number + 2}|}">&raquo;</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <div th:replace="admin/pagging::content">
                                 </div>
                         </div>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-
             </div>
         </div>
         <!-- page content -->
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="removeModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="removeModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="removeModalCenterTitle">Xác nhận xóa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6>Bạn có chắc chắn muốn xóa user ?</h6>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fa fa-times"></i>Hủy bỏ</button>
-                    <a href="" class="btn btn-danger" id="delRef"><i class="fa fa-check"></i>Đồng ý</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div th:replace="admin/footer :: content"></div>
+<div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $("#userManager").addClass("active");
-    $('#success').delay(5000).fadeOut(1000);
-
     //for delete user
     $(document).ready(function () {
-        $('.table #confirmDelete').on('click', function(event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#removeModalCenter #delRef').attr('href', href);
-            $('#removeModalCenter').modal();
-        });
-
         $('#datepicker').datepicker({
             iconsLibrary: 'fontawesome',
             uiLibrary: 'bootstrap4',

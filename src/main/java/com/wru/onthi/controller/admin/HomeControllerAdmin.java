@@ -84,7 +84,6 @@ public class HomeControllerAdmin {
         }
         try {
             userService.updateUser(user);
-
         }
         catch (Exception e){
             model.addAttribute("error","Cập nhật thông tin thất bại");

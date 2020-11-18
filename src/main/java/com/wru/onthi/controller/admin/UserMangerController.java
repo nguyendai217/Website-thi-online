@@ -1,5 +1,6 @@
 package com.wru.onthi.controller.admin;
 
+import com.sun.java.swing.plaf.windows.WindowsTextAreaUI;
 import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.repository.RoleRepository;
@@ -12,9 +13,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +64,7 @@ public class UserMangerController {
         model.addAttribute("pageInfo",pageUser);
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
-
+        model.addAttribute("path","/admin/user/list-user");
         return "admin/user/list-user";
     }
 
@@ -80,7 +89,7 @@ public class UserMangerController {
         model.addAttribute("pageInfo",pageUser);
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
-
+        model.addAttribute("path","/admin/user/search-user");
         return "admin/user/list-user";
     }
 
@@ -245,9 +254,39 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/updateImage")
-    public String updateImage(){
-        return "";
+    public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile, @RequestParam("userId") Integer id) {
+        Date date= new Date();
+        long time= date.getTime();
+        String imgname= String.valueOf(time);
+        String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
+            Optional<User> optional= userService.findById(id);
+            User user= optional.get();
+            user.setImage(imgname);
+            UploadImage(multipartFile,imgname);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path= "redirect:/admin/user/update/"+id;
+        return path;
     }
+
+    private void UploadImage(MultipartFile multipartFile, String fileImage) throws IOException {
+        String uploadDir="src/main/resources/static/image/subject/";
+        Path uploadpath= Paths.get(uploadDir);
+        if(! Files.exists(uploadpath)){
+            Files.createDirectories(uploadpath);
+        }
+
+        try(InputStream inputStream= multipartFile.getInputStream()) {
+            Path filePath= uploadpath.resolve(fileImage);
+            System.out.print(filePath.toString());
+            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
+        }catch (IOException e){
+            throw new IOException("Could not upload file"+ fileImage);
+        }
+    }
+
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

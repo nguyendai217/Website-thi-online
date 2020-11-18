@@ -42,7 +42,7 @@
                         <div>
                             <form th:action="@{/news/search-news}" method="get">
                                 <div class="row">
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-4 col-sm-12 col-sm-4 col-xs-3">
                                         <label>Tiêu đề</label>
                                         <div>
                                             <input class="form-control" name="username" type="text" th:text="${strUser}">
@@ -118,44 +118,18 @@
                                     </tr>
                                     </tbody>
                                 </table>
-
-                                <div class="float-left">
-                                    <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
-                                </div>
-                                <div class="float-right">
-                                    <ul class="pagination ">
-                                        <li class="page-item" th:if="${pageInfo.number + 1} != 1">
-                                            <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number}|}">&laquo;</a>
-                                        </li>
-
-                                        <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 5), (pageInfo.number + 5))}" >
-                                            <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''" class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
-                                                <a
-                                                        th:if="${itemPage} != ${pageInfo.number + 1}"
-                                                        class="page-link"
-                                                        th:href="@{|/news/list-news?page=${itemPage}|}"
-                                                        th:text="${itemPage}"
-                                                >1</a>
-                                                <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
-                                            </li>
-                                        </th:block>
-
-                                        <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
-                                            <a class="page-link" th:href="@{|/news/list-news?page=${pageInfo.number + 2}|}">&raquo;</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <div th:replace="admin/pagging::content"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-
             </div>
         </div>
         <!-- page content -->
     </div>
 </div>
+<div th:replace="admin/modal_confirm::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
@@ -163,6 +137,7 @@
     $(document).ready(function () {
         $('#newsManager').addClass("active");
     });
+
 </script>
 </body>
 </html>
