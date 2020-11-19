@@ -86,4 +86,12 @@ public class Subject {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
+
+    public List<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(List<Exam> exams) {
+        this.exams = exams;
+    }
 }

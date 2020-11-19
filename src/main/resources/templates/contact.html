@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Liên hệ</title>
-    <div th:replace="fragments/init :: header"></div>
-    <link rel="stylesheet" th:href="@{/css/contact.css}" type="text/css">
+    <div th:replace="fragments/init_lib :: header"></div>
 </head>
 <body>
-<div class="container">
-    <form id="contact" th:action="@{/contact}" method="post">
-        <h3> Contact Form</h3>
-        <h4>Contact us for custom quote</h4>
-        <fieldset>
-            <input placeholder="Your name" type="text" tabindex="1"  name="fullname" required autofocus>
-        </fieldset>
-        <fieldset>
-            <input placeholder="Your Email Address" type="email" tabindex="2" name="email" required>
-        </fieldset>
-        <fieldset>
-            <input placeholder="Your Phone Number (optional)" type="tel" tabindex="3" name="phone" required>
-        </fieldset>
-        <fieldset>
-            <textarea placeholder="Type your message here...." tabindex="5" name="content" required></textarea>
-        </fieldset>
-        <fieldset>
-            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-        </fieldset>
-    </form>
-    <div th:replace="fragments/init :: script"></div>
-</div>
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
+<main class="home">
+    <div class="container">
+        <div class="title-contact">
+            <h1>Liên hệ</h1>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="googlemap" >
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.636851391952!2d105.82263251440709!3d21.00718924389147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac8109765ba5%3A0xb3be79f8f64a59f9!2zMTc1IFTDonkgU8ahbiwgVHJ1bmcgTGnhu4d0LCDEkOG7kW5nIMSQYSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1605770112273!5m2!1svi!2s" width="530" height="450"
+                            frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-6">
+                <form class="form-contact" method="post" th:action="@{/contact}" >
+                    <div class="form-group">
+                        <label for="form-name">Họ và tên</label>
+                        <input type="email" class="form-control" id="form-name" name="fullname" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-email">Email</label>
+                        <input type="email" class="form-control" id="form-email" name="email" placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-subject">Số điện thoại</label>
+                        <input type="text" class="form-control" id="form-subject" name="phone" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-message">Nội dung</label>
+                        <textarea class="form-control" id="form-message" cols="20" rows="7" name="content" placeholder="Message"></textarea>
+                    </div>
+                    <button class="btn btn-default" type="submit">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/init_lib :: script"></div>
 </body>
 </html>

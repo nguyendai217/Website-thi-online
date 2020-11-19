@@ -44,15 +44,19 @@ public class ClassManagerController {
     SchoolService schoolService;
 
     @GetMapping("/class/list-class")
-    public String listClass(Model model, Principal principal, Pageable pageable){
+    public String listClass(Model model, Principal principal, Pageable pageable,String searchClass){
        getInfoUser(model,principal);
 
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
-        Page<Classroom> pageClass = classroomService.getAllClass(pageItem);
-
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Page<Classroom> pageClass= null;
+        if(searchClass == null){
+            pageClass = classroomService.getAllClass(pageItem);
+        }else {
+            pageClass = classroomService.searchClass(searchClass,pageItem);
+        }
         int totalItem = (int) pageClass.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
         if(itemPerPage > totalItem){

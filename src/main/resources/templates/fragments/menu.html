@@ -15,16 +15,15 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#">kiểm tra</a></li>
-                        <li><a href="#">Tin tưc</a></li>
-                        <li><a href="#">liên hệ</a></li>
+                        <li><a th:href="@{/kiemtra}">kiểm tra</a></li>
+                        <li><a th:href="@{/tintuc}">Tin tưc</a></li>
+                        <li><a th:href="@{/contact}">liên hệ</a></li>
                     </ul>
-
                 </div>
                 <div class="col-md-4 col-12">
                     <div class="menu-right">
                         <button class="btn-login" id="link-login">
-                            <i class="fas fa-user"></i><a th:href="@{/login}"> Đăng nhập</a>
+                            <i class="fa fa-user"></i><a th:href="@{/login}"> Đăng nhập</a>
                         </button>
                         <div class="dropdown d-none" id="div-account" sec:authorize="isAuthenticated()">
                             <button class="dropdown-toggle btn-login"
@@ -44,11 +43,11 @@
         <nav class="lg-menu d-lg-none">
             <div class="searchBox">
                 <input type="text" placeholder="Mời bạn nhập thông tin...">
-                <button class="btn-search"><i class="fas fa-search"></i></button>
+                <button class="btn-search"><i class="fa fa-search"></i></button>
             </div>
             <ul>
                 <button class="btn-showMenu d-lg-none">
-                    <i class="fas fa-bars"></i>
+                    <i class="fa fa-bars"></i>
                 </button>
                 <li><a href="#">Trang chủ</a></li>
                 <li hasSubMenu="true">
@@ -59,9 +58,9 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="#">kiểm tra</a></li>
-                <li><a href="#">Tin tưc</a></li>
-                <li><a href="#">liên hệ</a></li>
+                <li><a th:href="@{/kiemtra}">kiểm tra</a></li>
+                <li><a th:href="@{/tintuc}">Tin tưc</a></li>
+                <li><a th:href="@{/contact}">liên hệ</a></li>
             </ul>
         </nav>
     </div>

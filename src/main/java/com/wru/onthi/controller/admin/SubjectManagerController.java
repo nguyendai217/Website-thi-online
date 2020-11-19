@@ -36,7 +36,7 @@ public class SubjectManagerController {
     SubjectService subjectService;
 
     @GetMapping("/list-subject")
-    public String listSubject(Model model, Principal principal,Pageable pageable){
+    public String listSubject(Model model, Principal principal,Pageable pageable,String subject){
         getInfoUser(model,principal);
 
         // pageable list subject
@@ -44,7 +44,12 @@ public class SubjectManagerController {
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
-        Page<Subject> pageSubject = subjectService.getAllSubject(pageItem);
+        Page<Subject> pageSubject= null;
+        if(subject== null){
+            pageSubject = subjectService.getAllSubject(pageItem);
+        }else {
+            pageSubject= subjectService.searchSubject(subject,pageItem);
+        }
 
         int totalItem = (int) pageSubject.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
@@ -133,27 +138,27 @@ public class SubjectManagerController {
         }
     }
 
-    @GetMapping("/search-subject")
-    public String searchSubject(Model model, Principal principal,Pageable pageable,@RequestParam("subject") String subject){
-        getInfoUser(model,principal);
-
-        int pageNumber = pageable.getPageNumber();
-        int pageSize= 5;
-        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
-        Page<Subject> pageSubject = subjectService.searchSubject(subject,newPageAble);
-
-        int totalItem = (int) pageSubject.getTotalElements();
-        int itemPerPage= pageSize * (pageNumber +1);
-        if(itemPerPage > totalItem){
-            itemPerPage= totalItem;
-        }
-        model.addAttribute("pageInfo",pageSubject);
-        model.addAttribute("total",totalItem);
-        model.addAttribute("itemPerPage",itemPerPage);
-        model.addAttribute("sbj",subject);
-        return "admin/subject/list-subject";
-    }
+//    @GetMapping("/search-subject")
+//    public String searchSubject(Model model, Principal principal,Pageable pageable,@RequestParam("subject") String subject){
+//        getInfoUser(model,principal);
+//
+//        int pageNumber = pageable.getPageNumber();
+//        int pageSize= 5;
+//        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+//        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
+//        Page<Subject> pageSubject = subjectService.searchSubject(subject,newPageAble);
+//
+//        int totalItem = (int) pageSubject.getTotalElements();
+//        int itemPerPage= pageSize * (pageNumber +1);
+//        if(itemPerPage > totalItem){
+//            itemPerPage= totalItem;
+//        }
+//        model.addAttribute("pageInfo",pageSubject);
+//        model.addAttribute("total",totalItem);
+//        model.addAttribute("itemPerPage",itemPerPage);
+//        model.addAttribute("sbj",subject);
+//        return "admin/subject/list-subject";
+//    }
 
     @GetMapping("/delete/{id}")
     public String deleteSubject(Model model, Principal principal,RedirectAttributes redr,

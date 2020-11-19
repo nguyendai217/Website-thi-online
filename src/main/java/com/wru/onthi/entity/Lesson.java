@@ -20,8 +20,12 @@ public class Lesson {
     private Integer views;
     @Column(name = "create_date")
     private Date createDate;
+    @Column(name = "create_by")
+    private String createBy;
     @Column(name = "update_date")
     private Date updateDate;
+    @Column(name = "update_by")
+    private String updateBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
@@ -101,5 +105,21 @@ public class Lesson {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

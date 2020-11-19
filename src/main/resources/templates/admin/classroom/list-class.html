@@ -40,12 +40,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <form th:action="@{/class/search-class}" method="get">
+                            <form th:action="@{/class/list-class}" method="get">
                                 <div class="row">
                                     <div class="col-md-2 col-sm-12">
                                         <label>Mã lớp / tên lớp học</label>
                                         <div>
-                                            <input class="form-control" name="classroom" type="text" th:text="${cl}">
+                                            <input class="form-control" name="searchClass" type="text" th:text="${cl}">
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-sm-12 ">
@@ -58,7 +58,7 @@
                                     <div class="col-md-2 col-sm-12">
                                         <label>&nbsp;</label>
                                         <div>
-                                            <a th:href="@{/class/add-class}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm lớp học</a>
+                                            <a th:href="@{/class/add-class}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm mới</a>
                                         </div>
                                     </div>
                                 </div>

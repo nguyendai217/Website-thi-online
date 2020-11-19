@@ -34,14 +34,19 @@ public class NewsController {
 
     // list- category
     @GetMapping("/list-category")
-    public String listCategoryNews(Model model, Principal principal, Pageable pageable){
+    public String listCategoryNews(Model model, Principal principal, Pageable pageable,String category){
         getInfoUser(model,principal);
 
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
-        Page<CategoryNews> categoryNews = categoryNewsService.getAllCategoryNews(pageItem);
+        Page<CategoryNews> categoryNews= null;
+        if(category == null){
+            categoryNews = categoryNewsService.getAllCategoryNews(pageItem);
+        }else {
+            categoryNews = categoryNewsService.searchCategory(category,pageItem);
+        }
 
         int totalItem = (int) categoryNews.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
@@ -49,12 +54,10 @@ public class NewsController {
             itemPerPage= totalItem;
         }
 
-        Page<CategoryNews> pageCategoryNews = categoryNewsService.getAllCategoryNews(pageItem);
-        if(pageCategoryNews == null){
+        if(categoryNews == null){
             model.addAttribute("error","Danh sách thể loại trống.");
             return "admin/news/list-category";
         } else {
-            model.addAttribute("pageInfo", pageCategoryNews);
             model.addAttribute("pageInfo", categoryNews);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
@@ -64,7 +67,8 @@ public class NewsController {
     }
 
     @PostMapping("/add-category")
-    public String addCategoryPost(RedirectAttributes redir,@RequestParam(value = "categoryname") String categoryName) {
+    public String addCategoryPost(RedirectAttributes redir,
+                                  @RequestParam(value = "categoryname") String categoryName) {
         CategoryNews categoryNews = new CategoryNews();
 
         if(!categoryName.isEmpty()){

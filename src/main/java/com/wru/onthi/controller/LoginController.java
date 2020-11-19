@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,12 +44,12 @@ public class LoginController {
     }
 
     @PostMapping("/signin")
-    public String signIn(Model model,
-                         @RequestParam(value = "fullname") String fullname,
-                         @RequestParam(value = "email") String email,
-                         @RequestParam(value = "username") String username,
-                         @RequestParam(value = "password") String password,
-                         @RequestParam(value = "phone") String phone) {
+    public String signIn(Model model, HttpServletRequest httpServletRequest) {
+        String fullname= httpServletRequest.getParameter("fullname");
+        String email= httpServletRequest.getParameter("email");
+        String username= httpServletRequest.getParameter("username");
+        String password= httpServletRequest.getParameter("password");
+        String phone= httpServletRequest.getParameter("phone");
 
         if (!Strings.isNullOrEmpty(fullname) && !Strings.isNullOrEmpty(email)
                 && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(phone)) {
@@ -64,6 +65,7 @@ public class LoginController {
                 user.setPassword(passwordEncoder.encode(password));
                 user.setFullname(fullname);
                 user.setPhone(phone);
+                user.setImage("default_avatar.png");
                 Date date= new Date();
               //  System.out.println("time"+ date+ "datetostring"+ date.toString());
                 user.setCreateDate(date);

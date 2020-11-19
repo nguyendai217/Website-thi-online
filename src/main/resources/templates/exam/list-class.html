@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
-    <title>Bài học</title>
+    <title>Lớp học</title>
     <div th:replace="fragments/init_lib :: header"></div>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
-<main class="subject-knowledge">
+<main class="class">
     <div class="container">
         <!-- banner -->
-        <div class="banner class-banner">
-            <h2 class="title">Toán 10</h2>
+        <div class="banner exam-banner">
         </div>
         <!-- class content-->
-        <section class="subject-knowledgeContent">
+        <section class="class-content">
             <div class="row">
                 <div class="col-md-8 col-12">
-                    <div class="subject-knowledgeLeft">
-                        <!-- Subject knowledge -->
+                    <div class="class-left">
+                        <!-- list-subject -->
                         <div class="class-sectionTitle">
-                            <span>Kiến thức môn học</span>
+                            <span>Danh sách lớp học</span>
                         </div>
-                        <div class="list-knowledge">
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listLessonByClass)}"
-                                 th:each="item:${listLessonByClass}">
-                                <p th:text="${item.lessonName}"></p>
-                                <a th:href="@{/noidungbaihoc(lessonId=${item.id})}">Học ngay</a>
-                            </div>
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
-                                <h3>Xin lỗi, môn học này chưa có bài học, vui lòng quay lại sau.</h3>
-                            </div>
+                        <div class="list-subject">
+                            <a th:each="item:${listClass}">
+                                <div class="subject-item">
+                                    <img th:src="@{'/image/classroom/'+${item.image}}">
+                                </div>
+                            </a>
                         </div>
                         <!-- test-list -->
                         <div class="class-sectionTitle">
                             <span>Danh sách đề thi mới</span>
                         </div>
                         <div class="test-list">
-                            <a href="">
+                            <a href="#">
                                 <div class="test-listItem">
                                     <div class="img">
                                         <img src="./images/img-right1.png" alt="">
@@ -88,12 +84,12 @@
                         </div>
                     </div>
                 </div>
-                <div th:replace="fragments/sidebar :: content"></div>
+                <div th:replace="fragments/sidebar::content"></div>
             </div>
         </section>
     </div>
 </main>
-<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/footer::content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
 

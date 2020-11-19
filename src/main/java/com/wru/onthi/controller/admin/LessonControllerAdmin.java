@@ -4,6 +4,7 @@ import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Subject;
 import com.wru.onthi.entity.User;
+import com.wru.onthi.model.LessonModel;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.LessonService;
 import com.wru.onthi.services.SubjectService;
@@ -14,12 +15,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,10 +74,50 @@ public class LessonControllerAdmin {
         }
     }
 
-    @GetMapping("/add-lesson-manager")
+    @GetMapping("/add-lesson")
     public String addLessonGet(Model model,Principal principal){
         getInfoUser(model,principal);
+
+        //get AllClassroom
+        List<Classroom> lístClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",lístClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+
         return "admin/lesson/add-lesson";
+    }
+
+    @RequestMapping(value = "/add-lesson",method = RequestMethod.POST)
+    public @ResponseBody String addLessonPost(Model model, Principal principal,RedirectAttributes redir,
+                                @RequestBody LessonModel lessonModel){
+
+        getInfoUser(model,principal);
+
+        String lessonName= lessonModel.getLessonName();
+        String content= lessonModel.getLessonContent();
+        String classId= lessonModel.getClassroom();
+        String subjectId= lessonModel.getSubject();
+
+        Optional<Subject> optional= subjectService.findBySubjectId(Integer.valueOf(subjectId));
+        Optional<Classroom> optionalClass= classroomService.findById(Integer.valueOf(classId));
+        Lesson lesson= new Lesson();
+        lesson.setCreateDate(new Date());
+        lesson.setLessonContent(content);
+        lesson.setLessonName(lessonName);
+        lesson.setSubject(optional.get());
+        lesson.setViews(0);
+        lesson.setCreateBy(principal.getName());
+        lesson.setClassroom(optionalClass.get());
+        try {
+            lessonService.createLesson(lesson);
+            redir.addFlashAttribute("success","Thêm bài học thành công.");
+            return "redirect:/lesson/list-lesson";
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Thêm bài học thất bại.");
+            return "admin/lesson/add-lesson";
+        }
     }
 
     @GetMapping("/update-lesson/{id}")

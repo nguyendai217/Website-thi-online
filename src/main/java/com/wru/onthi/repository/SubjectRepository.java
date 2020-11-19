@@ -19,9 +19,8 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
     Subject findByCode(String code);
 
-    @Query(value = "SELECT * FROM subject sb " +
-            "WHERE (sb.name LIKE :subject) " +
-            "OR (sb.code LIKE :subject)",nativeQuery = true)
+    @Query(value = "SELECT * FROM subject sb WHERE (sb.name LIKE %:subject%) " +
+            "OR (sb.code LIKE %:subject%)",nativeQuery = true)
     Page<Subject> searchSubject(@Param("subject") String subject, Pageable pageable);
 
     @Query(value = "SELECT sb.* FROM subject sb ,classroom cl, subject_class sl " +

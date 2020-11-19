@@ -29,4 +29,7 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     List<Lesson> getListLessonByClassAndSubject(@Param("clas_Id") Integer class_Id,
                                                 @Param("sub_Id")Integer subject_Id);
 
+    @Query(value = "select ls from Lesson ls where ls.id = :lessonId",nativeQuery = false)
+    Lesson getContentLesson(Integer lessonId);
+
 }

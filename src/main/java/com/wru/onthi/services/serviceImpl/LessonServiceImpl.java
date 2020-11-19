@@ -96,4 +96,9 @@ public class LessonServiceImpl implements LessonService {
     public List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId) {
         return lessonRepository.getListLessonByClassAndSubject(classId,subjectId) ;
     }
+
+    @Override
+    public Lesson getContentLesson(Integer lessonId) {
+        return lessonRepository.getContentLesson(lessonId);
+    }
 }

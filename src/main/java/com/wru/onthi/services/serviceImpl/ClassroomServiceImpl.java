@@ -62,5 +62,10 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classRoomRepository.getListClassBySchool(idSchool);
     }
 
+    @Override
+    public Page<Classroom> searchClass(String keyword,Pageable pageable) {
+        return classRoomRepository.searchClass(keyword,pageable);
+    }
+
 
 }

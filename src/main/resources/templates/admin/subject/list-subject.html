@@ -40,12 +40,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <form th:action="@{/subject/search-subject}" method="get">
+                            <form th:action="@{/subject/list-subject}" method="get">
                                 <div class="row">
                                     <div class="col-md-2 col-sm-12">
                                         <label>Tên môn học</label>
                                         <div>
-                                            <input class="form-control" name="subject" type="text" th:text="${sbj}">
+                                            <input class="form-control" name="subject" type="text">
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-sm-12 ">
@@ -54,11 +54,13 @@
                                             <button type="submit" class="btn btn-success">Tìm kiếm</button>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-sm-12">
 
-                                    <div class="col-md-8 col-sm-12">
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
                                         <label>&nbsp;</label>
                                         <div>
-                                            <a th:href="@{/subject/add-subject}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm môn học</a>
+                                            <a th:href="@{/subject/add-subject}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm mới</a>
                                         </div>
                                     </div>
                                 </div>
@@ -118,18 +120,6 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $("#subjectManager").addClass("active");
-    $('#success').delay(5000).fadeOut(1000);
-    $('#error').delay(5000).fadeOut(1000);
-
-    //for delete user
-    $(document).ready(function () {
-        $('.table #confirmDelete').on('click', function(event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#removeModalCenter #delRef').attr('href', href);
-            $('#removeModalCenter').modal();
-        });
-    });
 </script>
 </body>
 </html>

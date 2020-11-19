@@ -46,4 +46,9 @@ public class CategoryNewsImpl implements CategoryNewsService {
     public Page<CategoryNews> getAllCategoryNews(Pageable pageable) {
         return categoryNewsRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<CategoryNews> searchCategory(String category, Pageable pageable) {
+        return categoryNewsRepository.searchCategory(category,pageable);
+    }
 }

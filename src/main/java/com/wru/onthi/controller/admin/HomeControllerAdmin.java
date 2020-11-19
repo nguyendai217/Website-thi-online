@@ -10,8 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,13 +59,14 @@ public class HomeControllerAdmin {
 
     @PostMapping("/profile")
     public String profilePost(Model model, Principal principal,
-                              @RequestParam(value = "userId",defaultValue = "") Integer id,
-                              @RequestParam(value = "fullname",defaultValue = "") String fullname,
-                              @RequestParam(value = "phone",defaultValue = "") String phone,
-                              @RequestParam(value = "address",defaultValue = "") String address,
-                              @RequestParam(value = "gender",defaultValue = "") Integer gender,
-                              @RequestParam(value = "birthday",defaultValue = "") String birthday){
+                              RedirectAttributes redir,HttpServletRequest request){
 
+        Integer id =Integer.valueOf(request.getParameter("userId"));
+        String fullname= request.getParameter("fullname");
+        String phone= request.getParameter("phone");
+        String address= request.getParameter("address");
+        Integer gender= Integer.valueOf(request.getParameter("gender"));
+        String birthday= request.getParameter("birthday");
         getInfoUser(model,principal);
 
         Optional<User> optionalUser= userService.findById(id);
@@ -86,10 +95,11 @@ public class HomeControllerAdmin {
             userService.updateUser(user);
         }
         catch (Exception e){
-            model.addAttribute("error","Cập nhật thông tin thất bại");
+            redir.addFlashAttribute("error","Cập nhật thông tin thất bại");
         }
-        model.addAttribute("success","Cập nhật thông tin thành công.");
-        return "admin/profile";
+        redir.addFlashAttribute("success","Cập nhật thông tin thành công.");
+
+        return "redirect:/profile";
     }
 
     @PostMapping("/profile/changepass")
@@ -123,6 +133,46 @@ public class HomeControllerAdmin {
         }
         model.addAttribute("us",user);
         return "admin/profile";
+    }
+
+    @PostMapping("/profile/updateImage")
+    public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile,
+                              @RequestParam("userId") Integer id,RedirectAttributes redir) {
+        Date date= new Date();
+        long time= date.getTime();
+        String strName= String.valueOf(time);
+        String flName = multipartFile.getOriginalFilename();
+        String[] flPath = flName.split("[.]");
+        String flExtension = flPath[flPath.length - 1];
+        String imgname= strName +"."+flExtension;
+
+        try {
+            Optional<User> optional= userService.findById(id);
+            User user= optional.get();
+            user.setImage(imgname);
+            userService.updateUser(user);
+            UploadImage(multipartFile,imgname);
+            redir.addFlashAttribute("success","Thay đổi ảnh thành công.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            redir.addFlashAttribute("success","Thay đổi ảnh thất bại.");
+        }
+        return "redirect:/profile";
+    }
+
+    private void UploadImage(MultipartFile multipartFile, String fileImage) throws IOException {
+        String uploadDir="src/main/resources/static/image/user/";
+        Path uploadpath= Paths.get(uploadDir);
+        if(! Files.exists(uploadpath)){
+            Files.createDirectories(uploadpath);
+        }
+        try(InputStream inputStream= multipartFile.getInputStream()) {
+            Path filePath= uploadpath.resolve(fileImage);
+            System.out.print(filePath.toString());
+            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
+        }catch (IOException e){
+            throw new IOException("Could not upload file"+ fileImage);
+        }
     }
 
     // get info user login

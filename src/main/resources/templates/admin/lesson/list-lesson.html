@@ -77,7 +77,7 @@
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                                         <label>&nbsp;</label>
                                         <div>
-                                            <a th:href="@{/lesson/add-lesson}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm bài học</a>
+                                            <a th:href="@{/lesson/add-lesson}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm mới</a>
                                         </div>
                                     </div>
                                 </div>
@@ -91,6 +91,9 @@
                     <div class="col-md-12">
                         <div class="bg-success col-md-12" id="success"
                              th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="bg-danger col-md-12" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
                         </div>
                         <div class="tile-body">
                             <div class="table-responsive">

@@ -23,14 +23,33 @@
                             <span>Kiến thức môn học</span>
                         </div>
                         <div class="list-knowledge">
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listLessonByClass)}"
-                                 th:each="item:${listLessonByClass}">
-                                <p th:text="${item.lessonName}"></p>
-                                <a th:href="@{/noidungbaihoc(lessonId=${item.id})}">Học ngay</a>
+                            <div class="title_lesson">
+                                <h3>Môn học: <span th:text="${lessonContent.subject.name}"></span> - <span th:text="${lessonContent.classroom.classname}"></span></h3>
+                                <h3>Bài học: <span th:text="${lessonContent.lessonName}"></span></h3>
+
                             </div>
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
-                                <h3>Xin lỗi, môn học này chưa có bài học, vui lòng quay lại sau.</h3>
+                            <div class="main_lesson">
+                                <div class="main_top">Nội dung bài học:</div>
+                                <div class="main">
+                                    <p th:text="${lessonContent.lessonContent}"></p>
+                                </div>
+                                <div class="footer_lesson">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6 view">
+                                            <p>Số lượt xem:<i class="fa fa-eye" aria-hidden="true"></i><span th:text="${lessonContent.views}"></span></p>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <p>Chia sẻ ngay</p>
+                                            <a href="#"><span><i class="fa fa-facebook"></i></span> Facebook</a>
+                                            <a href="#"><i class="fa fa-google"  aria-hidden="true"></i> Facebook</a>
+                                            </i><a href="#"><i class="fa fa-facebook"  aria-hidden="true"></i> Facebook</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="comment-lesson">
+
                         </div>
                         <!-- test-list -->
                         <div class="class-sectionTitle">

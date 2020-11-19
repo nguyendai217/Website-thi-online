@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -45,17 +46,21 @@ public class UserMangerController {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     @GetMapping("/user/list-user")
-    public String getAllUser(Model model, Principal principal, Pageable pageable){
-        // get info user login
-        getInfoUser(model,principal);
-
+    public String getAllUser(Model model, Principal principal, Pageable pageable,
+                             String username,String email, String phone){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable newPageAble = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "username"));
-        Page<User> pageUser = userService.getAllUser(newPageAble);
-
+        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
+        Page<User> pageUser= null;
+        if(username== null && email == null && phone== null){
+            pageUser = userService.getAllUser(newPageAble);
+        }else {
+            pageUser= userService.searchUser(username,email,phone,pageable);
+        }
+        // get info user login
+        getInfoUser(model,principal);
         int totalItem = (int) pageUser.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
         if(itemPerPage > totalItem){
@@ -65,31 +70,6 @@ public class UserMangerController {
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
         model.addAttribute("path","/admin/user/list-user");
-        return "admin/user/list-user";
-    }
-
-    @GetMapping("/user/search-user")
-    public String searchUser(Model model, Principal principal, Pageable pageable,
-                             @RequestParam(value = "username", defaultValue = "") String username,
-                             @RequestParam(value = "email",defaultValue = "") String email,
-                             @RequestParam(value = "phone", defaultValue = "") String phone){
-        getInfoUser(model,principal);
-
-        int pageNumber = pageable.getPageNumber();
-        int pageSize= 5;
-        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
-        Page<User> pageUser = userService.searchUser(username,email,phone,newPageAble);
-
-        int totalItem = (int) pageUser.getTotalElements();
-        int itemPerPage= pageSize * (pageNumber +1);
-        if(itemPerPage > totalItem){
-            itemPerPage= totalItem;
-        }
-        model.addAttribute("pageInfo",pageUser);
-        model.addAttribute("total",totalItem);
-        model.addAttribute("itemPerPage",itemPerPage);
-        model.addAttribute("path","/admin/user/search-user");
         return "admin/user/list-user";
     }
 
@@ -110,17 +90,18 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/add-user")
-    public String addUserGet(Model model, Principal principal, RedirectAttributes redir,
-                             @RequestParam(value = "username",defaultValue = "") String username,
-                             @RequestParam(value = "fullname",defaultValue = "") String fullname,
-                             @RequestParam(value = "email",defaultValue = "") String email,
-                             @RequestParam(value = "password",defaultValue = "") String password,
-                             @RequestParam(value = "phone",defaultValue = "") String phone,
-                             @RequestParam(value = "address",defaultValue = "") String address,
-                             @RequestParam(value = "gender",defaultValue = "") Integer gender,
-                             @RequestParam(value = "birthday",defaultValue = "") String birthday,
-                             @RequestParam(value = "role",defaultValue = "") Integer role) {
+    public String addUserGet(Model model, Principal principal, RedirectAttributes redir,HttpServletRequest request) {
         getInfoUser(model, principal);
+
+        String username = request.getParameter("username");
+        String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        Integer gender = Integer.valueOf(request.getParameter("gender"));
+        String birthday = request.getParameter("birthday");
+        Integer role =Integer.valueOf(request.getParameter("role"));
 
         //check email is exist
         User checkEmailExist = userService.findByEmail(email);
@@ -190,16 +171,17 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/update-user")
-    public String updateUserPost(Model model,Principal principal,RedirectAttributes redir,
-                                 @RequestParam(value = "userId",defaultValue = "" ) Integer id,
-                                 @RequestParam(value = "username",defaultValue = "") String username,
-                                 @RequestParam(value = "fullname",defaultValue = "") String fullname,
-                                 @RequestParam(value = "phone",defaultValue = "") String phone,
-                                 @RequestParam(value = "address",defaultValue = "") String address,
-                                 @RequestParam(value = "gender",defaultValue = "") Integer gender,
-                                 @RequestParam(value = "birthday",defaultValue = "") String birthday,
-                                 @RequestParam(value = "role",defaultValue = "") Integer role){
+    public String updateUserPost(Model model,Principal principal,RedirectAttributes redir,HttpServletRequest request){
         getInfoUser(model,principal);
+
+        Integer id= Integer.valueOf(request.getParameter("userId"));
+        String username = request.getParameter("username");
+        String fullname = request.getParameter("fullname");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        Integer gender = Integer.valueOf(request.getParameter("gender"));
+        String birthday = request.getParameter("birthday");
+        Integer role =Integer.valueOf(request.getParameter("role"));
 
         Optional<User> optionalUser= userService.findById(id);
         User user = optionalUser.get();
@@ -254,15 +236,23 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/updateImage")
-    public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile, @RequestParam("userId") Integer id) {
+    public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile,
+                              @RequestParam("userId") Integer id) {
         Date date= new Date();
         long time= date.getTime();
-        String imgname= String.valueOf(time);
-        String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String strName= String.valueOf(time);
+
+        String flName = multipartFile.getOriginalFilename();
+        String[] flPath = flName.split("[.]");
+        String flExtension = flPath[flPath.length - 1];
+        String imgname= strName +"."+flExtension;
+
+       // String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
         try {
             Optional<User> optional= userService.findById(id);
             User user= optional.get();
             user.setImage(imgname);
+            userService.updateUser(user);
             UploadImage(multipartFile,imgname);
         } catch (IOException e) {
             e.printStackTrace();
@@ -272,7 +262,7 @@ public class UserMangerController {
     }
 
     private void UploadImage(MultipartFile multipartFile, String fileImage) throws IOException {
-        String uploadDir="src/main/resources/static/image/subject/";
+        String uploadDir="src/main/resources/static/image/user/";
         Path uploadpath= Paths.get(uploadDir);
         if(! Files.exists(uploadpath)){
             Files.createDirectories(uploadpath);

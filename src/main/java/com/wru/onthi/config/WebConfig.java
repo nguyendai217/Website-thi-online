@@ -13,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/403").setViewName("403");
         registry.addViewController("/404").setViewName("404");
-
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

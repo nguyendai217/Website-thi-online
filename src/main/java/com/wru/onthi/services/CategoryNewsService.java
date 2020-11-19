@@ -14,4 +14,5 @@ public interface CategoryNewsService {
     Optional<CategoryNews> findByCategoryNewsId(Integer id);
     List<CategoryNews> getlistCategoryNews();
     Page<CategoryNews> getAllCategoryNews(Pageable pageable);
+    Page<CategoryNews> searchCategory(String category,Pageable pageable);
 }

@@ -49,8 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/login/**","/reset_password",
-                        "/oauth2/**","/signin","/class","/tintuc","/monhoc/**","/baihoc/**").permitAll()
-                .antMatchers("/home/**","/contact").hasAnyAuthority("USER","ADMIN","MANAGER")
+                        "/oauth2/**","/signin","/class/**","/tintuc/**"
+                        ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**"
+                        ,"/kiemtra/**","/contact","/lesson").permitAll()
+                .antMatchers("/home/**").hasAnyAuthority("USER","ADMIN","MANAGER")
                 .antMatchers("/admin/**","/profile","/lesson/**","/exam/**").hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()
                 //login
@@ -68,6 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 rememberMeParameter("remember").
                 rememberMeCookieName("my-remember-me").
                 tokenValiditySeconds(1296000);
+
+                //http.csrf().disable();
     }
 
     @Override
@@ -75,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/resources/**", "/image/**"
                 ,"/css/**","/js/**","/static/**","/templates/**");
     }
-//
+
 //    @Bean
 //    public PersistentTokenRepository persistentTokenRepository() {
 //        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();

@@ -36,8 +36,8 @@ $(document).ready(function () {
         dots: true,
         autoplay: true,
         autoplaySpeed: 5000,
-        prevArrow: `<button type="button" class="prev-arrow arrow--big"><i class="fas fa-chevron-left"></i></button>`,
-        nextArrow: `<button type="button" class="next-arrow arrow--big"><i class="fas fa-chevron-right"></i></button>`,
+        prevArrow: `<button type="button" class="prev-arrow arrow--big"><i class="fa fa-chevron-left"></i></button>`,
+        nextArrow: `<button type="button" class="next-arrow arrow--big"><i class="fa fa-chevron-right"></i></button>`,
 
     });
 
@@ -45,8 +45,8 @@ $(document).ready(function () {
         arrows: true,
         slidesToShow: 3,
         slidesToScroll: 3,
-        prevArrow: `<button type="button" class="prev-arrow "><i class="fas fa-chevron-left"></i></button>`,
-        nextArrow: `<button type="button" class="next-arrow"><i class="fas fa-chevron-right"></i></button>`,
+        prevArrow: `<button type="button" class="prev-arrow "><i class="fa fa-chevron-left"></i></button>`,
+        nextArrow: `<button type="button" class="next-arrow"><i class="fa fa-chevron-right"></i></button>`,
     });
 
 
@@ -54,8 +54,8 @@ $(document).ready(function () {
         arrows: true,
         slidesToShow: 5,
         slidesToScroll: 5,
-        prevArrow: `<button type="button" class="prev-arrow"><i class="fas fa-chevron-left"></i></button>`,
-        nextArrow: `<button type="button" class="next-arrow"><i class="fas fa-chevron-right"></i></button>`,
+        prevArrow: `<button type="button" class="prev-arrow"><i class="fa fa-chevron-left"></i></button>`,
+        nextArrow: `<button type="button" class="next-arrow"><i class="fa fa-chevron-right"></i></button>`,
         responsive: [
             {
                 breakpoint: 1024,
@@ -82,7 +82,6 @@ $(document).ready(function () {
         ]
     });
 
-
     $('.feel-slider').slick({
         infinite: true,
         speed: 500,
@@ -90,8 +89,8 @@ $(document).ready(function () {
         autoplay: true,
         autoplaySpeed: 5000,
         cssEase: 'linear',
-        prevArrow: `<button type="button" class="prev-arrow arrow--big"><i class="fas fa-chevron-left"></i></button>`,
-        nextArrow: `<button type="button" class="next-arrow arrow--big"><i class="fas fa-chevron-right"></i></button>`,
+        prevArrow: `<button type="button" class="prev-arrow arrow--big"><i class="fa fa-chevron-left"></i></button>`,
+        nextArrow: `<button type="button" class="next-arrow arrow--big"><i class="fa fa-chevron-right"></i></button>`,
     });
 
 

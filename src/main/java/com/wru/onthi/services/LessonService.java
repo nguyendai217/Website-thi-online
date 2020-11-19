@@ -20,4 +20,5 @@ public interface LessonService {
     List<Lesson> getListLessonOrderById();
     List<Lesson> getListLessonOrderByViews();
     List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId);
+    Lesson getContentLesson(Integer lessonId);
 }

@@ -916,7 +916,7 @@ button.btn-showMenu {
 
 .list-knowledge {
     box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, 0.5);
-    height: 250px;
+    min-height: 250px;
     padding: 1rem;
     margin: 1rem 0;
     overflow-y: auto;
@@ -946,3 +946,81 @@ button.btn-showMenu {
     border-radius: 4px;
     color: var(--white)
 }
+
+/* content-lesson*/
+.list-knowledge .title_lesson{
+    width: 100%;
+    margin: 0px auto;
+    text-align: center;
+    font-size: 18px;
+}
+.list-knowledge .content_lesson{
+    width: 100%;
+
+}
+.list-knowledge .main_lesson .main_top{
+    font-size: 15px;
+    color: #ff4b3e;
+    font-weight: bold;
+}
+.list-knowledge .main_lesson .main{
+    font-size: 14px;
+    padding: 0px 0px 0px 20px;
+}
+.footer_lesson .view p{
+    font-size: 14px;
+    padding-left: 20px;
+    color: #25d03f;
+}
+
+/*comment lesson*/
+
+
+/* exam banner */
+.exam-banner {
+    background-image: url("../image/exam/img-exam.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 350px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/**/
+
+/* form contact*/
+.form-contact {
+    color: #305896;
+    padding: 30px 0px 30px 0px;
+}
+.title-contact{
+    margin: 0px auto;
+    font-size: 20px;
+    text-align: center;
+}
+.form-group label{
+    font-size: 14px;
+    font-weight: 700;
+}
+.form-contact .btn-default {
+    width: 100px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-radius: 5px;
+}
+.form-contact .btn-default:hover {
+    background-color: #4498C6;
+    color: #fff;
+}
+.form-contact .form-control {
+    border-radius: 5px;
+}
+.googlemap{
+    padding: 30px 0px 30px 0px;
+}
+/*end form contact*/
