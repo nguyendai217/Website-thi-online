@@ -87,8 +87,7 @@
                                         <th>Mã môn học</th>
                                         <th>Tên môn học</th>
                                         <th>Hình ảnh</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Tùy chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody th:if="${pageInfo.content != null}">
@@ -97,8 +96,10 @@
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.name}"></td>
                                         <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
-                                        <td ><a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a></td>
-                                        <td><a th:href="@{/subject/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a></td>
+                                        <td>
+                                            <a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
+                                            <a th:href="@{/subject/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

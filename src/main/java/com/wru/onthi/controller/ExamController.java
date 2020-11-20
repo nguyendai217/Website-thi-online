@@ -36,7 +36,29 @@ public class ExamController {
         return "exam/list-class";
     }
 
-    private void genDefault(Model model){
+    @GetMapping("/lophoc/list-class")
+    public String getClassBySubject(Model model, Principal principal, @RequestParam("subjectId") Integer subjectId){
+        getDefault(model);
+        // get list class by subject
+
+        List<Classroom> getListClassBySubject= classroomService.listClassBySubject(subjectId);
+        model.addAttribute("subjectId",subjectId);
+        model.addAttribute("listClass",getListClassBySubject);
+        return "exam/list-class-bySubject";
+    }
+
+    //get list exam by subject
+
+    @GetMapping("/kiemtra/list-exam")
+    public String listExam(Model model,@RequestParam("subjectId") Integer subjectId,
+                           @RequestParam("classId") Integer classId){
+        getDefault(model);
+        List<Exam> listExam= examService.getListExamBySubjectAndClass(subjectId,classId);
+        model.addAttribute("listExam",listExam);
+        return "exam/list-exam";
+    }
+
+    private void getDefault(Model model){
         // get list class menu
         List<Classroom> listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
@@ -49,16 +71,6 @@ public class ExamController {
         //list exam views
         List<Exam> listExam =examService.getListExamOrderByViews().subList(0,5);
         model.addAttribute("listExam",listExam);
-    }
-
-    @GetMapping("/lophoc/list-class")
-    public String getClassBySubject(Model model, Principal principal, @RequestParam("subjectId") Integer subjectId){
-        genDefault(model);
-        // get list class by subject
-
-        List<Classroom> getListClassBySubject= classroomService.listClassBySubject(subjectId);
-        model.addAttribute("listClass",getListClassBySubject);
-        return "exam/list-class-bySubject";
     }
 
 }

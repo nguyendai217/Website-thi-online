@@ -30,4 +30,9 @@ public class ExamServiceImpl implements ExamService {
     public Page<Exam> getAllListExam(Pageable pageable) {
         return examRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Exam> getListExamBySubjectAndClass(Integer subjectId, Integer classId) {
+        return examRepository.getListExamBySubjectAndClass(subjectId,classId);
+    }
 }
