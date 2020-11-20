@@ -195,7 +195,7 @@
             <div class="test-slider">
                 <div class="test-sliderItem" th:each="item:${listSubject}">
                     <div class="subject" >
-                        <a href="#">
+                        <a th:href="@{/lophoc/list-class(subjectId=${item.id})}">
                             <img th:src="@{'/image/subject/'+ ${item.image}}">
                         </a>
                     </div>

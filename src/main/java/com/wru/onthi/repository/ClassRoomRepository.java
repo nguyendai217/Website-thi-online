@@ -22,4 +22,10 @@ public interface ClassRoomRepository extends JpaRepository<Classroom,Integer> {
 
     @Query(value = "select * from Classroom c where c.classname like %:searchClass% or c.code like %:searchClass% ",nativeQuery = true)
     Page<Classroom> searchClass(@Param("searchClass") String searchClass, Pageable pageable);
+
+    @Query(value = "SELECT cl.* FROM subject sb ,classroom cl, subject_class sl " +
+            "where sb.id= sl.subject_id " +
+            "and sl.class_id= cl.id " +
+            "and sb.id=?1 ",nativeQuery = true)
+    List<Classroom> getListClassBySubject(Integer subjectId);
 }

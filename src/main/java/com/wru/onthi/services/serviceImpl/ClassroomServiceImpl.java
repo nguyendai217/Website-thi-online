@@ -67,5 +67,10 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classRoomRepository.searchClass(keyword,pageable);
     }
 
+    @Override
+    public List<Classroom> listClassBySubject(Integer subjectId) {
+        return classRoomRepository.getListClassBySubject(subjectId);
+    }
+
 
 }

@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/login/**","/reset_password",
-                        "/oauth2/**","/signin","/class/**","/tintuc/**"
+                        "/oauth2/**","/signin","/class/**","/tintuc/**","/lophoc/**"
                         ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**"
                         ,"/kiemtra/**","/contact","/lesson").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("USER","ADMIN","MANAGER")
