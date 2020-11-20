@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
-    <title>Bài thi</title>
+    <title>Kiểm tra</title>
     <div th:replace="fragments/init_lib :: header"></div>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
-<main class="subject-knowledge">
+<main class="class">
     <div class="container">
         <!-- banner -->
         <div class="banner exam-banner">
         </div>
         <!-- class content-->
-        <section class="subject-knowledgeContent">
+        <section class="class-content">
             <div class="row">
                 <div class="col-md-8 col-12">
-                    <div class="subject-knowledgeLeft">
-                        <!-- Subject knowledge -->
+                    <div class="class-left">
+                        <!-- list-subject -->
                         <div class="class-sectionTitle">
-                            <span>Danh sách bài thi</span>
+                            <span>Danh sách lớp học</span>
                         </div>
-                        <div class="list-knowledge">
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listExam)}"
-                                 th:each="item:${listExam}">
-                                <p th:text="${item.title}"></p>
-                                <a th:href="@{/kiemtra/chitiet(examId=${item.id})}">Kiểm tra</a>
-                            </div>
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
-                                <h3>Xin lỗi, môn học này chưa có bài thi, vui lòng quay lại sau.</h3>
-                            </div>
+                        <div class="list-subject">
+                            <div>Bài Kiểm tra :<span th:text="${exam.title}"></span></div><br>
+                            <div>Môn học :<span th:text="${exam.exam_subject.name}"></span></div><br>
+                            <div>Nội dung :<span th:text="${exam.content}"></span></div><br>
+                            <div>Thời gian :<span th:text="${exam.timeOut}"></span>phút</div><br>
+                            <div>Số câu hỏi :<span th:text="${exam.totalQuestion}"></span></div><br>
+                            <a class="btn btn-success" th:href="@{/kiemtra(examId=${exam.id})}">Kiểm tra ngay</a>
                         </div>
                         <!-- test-list -->
                         <div class="class-sectionTitle">
                             <span>Danh sách đề thi mới</span>
                         </div>
                         <div class="test-list">
-                            <a href="">
+                            <a href="#">
                                 <div class="test-listItem">
                                     <div class="img">
                                         <img src="./images/img-right1.png" alt="">
@@ -87,12 +85,12 @@
                         </div>
                     </div>
                 </div>
-                <div th:replace="fragments/sidebar :: content"></div>
+                <div th:replace="fragments/sidebar::content"></div>
             </div>
         </section>
     </div>
 </main>
-<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/footer::content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
 

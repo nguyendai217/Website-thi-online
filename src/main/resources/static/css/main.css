@@ -1024,3 +1024,59 @@ button.btn-showMenu {
     padding: 30px 0px 30px 0px;
 }
 /*end form contact*/
+
+/* exam test  */
+.main-exam {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.main-exam .item-question{
+    margin: 10px 0px 20px;
+}
+
+.main-exam .item-question .title{
+    font-size: 20px;
+}
+
+.main-exam .item-question .title .question-no::after{
+    content: ", ";
+}
+
+.main-exam .item-question .content{
+    margin-left: 20px;
+}
+
+.main-exam .item-question .content .content-ans{
+    font-size: 16px;
+    margin: 5px;
+}
+
+.main-exam .item-question .content .content-ans span{
+    margin-left: 15px;
+}
+
+.test-more {
+    margin-top: 15px;
+    /* margin: 10px 10px; */
+    margin-bottom: 50px;
+}
+
+.hide {
+    display: none;
+}
+
+#timer {
+    font-size: 50px;
+    color: #db4844;
+}
+#hours {
+    color: #f07c22;
+}
+#minutes {
+    color: #f6da74;
+}
+#seconds {
+    color: #abcd58;
+}
+/**/

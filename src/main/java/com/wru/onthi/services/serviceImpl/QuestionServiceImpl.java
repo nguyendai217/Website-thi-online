@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Page<Question> getAllQuestion(Pageable pageable) {
         return questionRepository.findAll(pageable) ;
+    }
+
+    @Override
+    public List<Question> getListQuestionByExam(Integer examId) {
+        return questionRepository.getListQuestionByExamId(examId);
     }
 }

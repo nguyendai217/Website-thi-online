@@ -9,12 +9,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExamServiceImpl implements ExamService {
 
     @Autowired
     ExamRepository examRepository;
+
+    @Override
+    public Optional<Exam> findByExamId(Integer examId) {
+        return examRepository.findById(examId);
+    }
 
     @Override
     public List<Exam> getListExam() {

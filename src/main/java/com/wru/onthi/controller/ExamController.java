@@ -1,19 +1,24 @@
 package com.wru.onthi.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Exam;
 import com.wru.onthi.entity.Lesson;
+import com.wru.onthi.entity.Question;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.ExamService;
 import com.wru.onthi.services.LessonService;
+import com.wru.onthi.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ExamController {
@@ -27,9 +32,13 @@ public class ExamController {
     @Autowired
     LessonService lessonService;
 
+    @Autowired
+    QuestionService questionService;
 
-    @GetMapping("/kiemtra")
+
+    @GetMapping("/kiemtra/list-class")
     public String getAllClass(Model model, Principal principal){
+        getDefault(model);
         //get ListClass
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",listClass);
@@ -56,6 +65,23 @@ public class ExamController {
         List<Exam> listExam= examService.getListExamBySubjectAndClass(subjectId,classId);
         model.addAttribute("listExam",listExam);
         return "exam/list-exam";
+    }
+
+
+    @GetMapping("/kiemtra/chitiet")
+    public String firstExam(Model model,@RequestParam("examId") Integer examId){
+        getDefault(model);
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        model.addAttribute("exam",exam);
+        return "exam/first_exam";
+    }
+
+    @GetMapping("/kiemtra")
+    public @ResponseBody String getListQuestion(Model model, @RequestParam("examId") Integer examId){
+        getDefault(model);
+        List<Question> listQuestion =questionService.getListQuestionByExam(examId);
+        return null;
     }
 
     private void getDefault(Model model){
