@@ -31,6 +31,7 @@
                                     aria-haspopup="true" aria-expanded="false" sec:authentication="principal.username">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="adminManager" th:href="@{/admin/home}">Quản lí</a>
                                 <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
                                 <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
                             </div>

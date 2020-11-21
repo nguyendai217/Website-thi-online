@@ -1,14 +1,22 @@
 package com.wru.onthi.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Exam;
 import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Question;
+import com.wru.onthi.model.LessonNew;
+import com.wru.onthi.model.QuestionModel;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.ExamService;
 import com.wru.onthi.services.LessonService;
 import com.wru.onthi.services.QuestionService;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -73,10 +83,25 @@ public class ExamController {
         Optional<Exam> optionalExam= examService.findByExamId(examId);
         Exam exam= optionalExam.get();
         model.addAttribute("exam",exam);
+        model.addAttribute("examId",examId);
+        model.addAttribute("timeOut",exam.getTimeOut());
 
-        //List<Question> listQuestion =questionService.getListQuestionByExam(examId);
+        List<QuestionModel> questionModels= questionService.getListQuestion(examId);
+        Gson gson= new Gson();
+        String result= gson.toJson(questionModels);
+        model.addAttribute("dataExam",result);
+
         return "exam/exam-test";
     }
+
+//    @GetMapping("/kiemtra/getData")
+//    public @ResponseBody String getData(@RequestParam("examId") Integer examId){
+////        List<QuestionModel> questionModels= questionService.getListQuestion(examId);
+////        Gson gson= new Gson();
+////        String result= gson.toJson(questionModels);
+//        String result = "";
+//        return result;
+//    }
 
     private void getDefault(Model model,Principal principal){
         // get list class menu
@@ -84,6 +109,7 @@ public class ExamController {
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
+
         // list lesson views
         List<Lesson> listLesson =lessonService.getListLessonOrderByViews().subList(0,5);
         model.addAttribute("listLesson",listLesson);

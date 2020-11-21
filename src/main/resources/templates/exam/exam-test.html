@@ -11,7 +11,6 @@
 <main class="home">
     <div class="container">
         <div class="infomation-exam">
-
         </div>
     </div>
     <div class="container exam-test">
@@ -74,6 +73,12 @@
 </main>
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
+<script>
+    var exam_id = [[${examId}]];
+    var exam_data = '[[${dataExam}]]';
+    var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
+    var timeOut= [[${timeOut}]];
+</script>
 <script type="text/javascript" th:src="@{/js/exam.js}"></script>
-</body>
+</body>s
 </html>

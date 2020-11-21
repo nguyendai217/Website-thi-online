@@ -1037,7 +1037,6 @@ button.btn-showMenu {
 
 .main-exam .item-question{
     margin: 10px 0px 20px;
-    text-align: center;
 }
 .main-exam .item-question .title{
     font-size: 20px;
@@ -1071,6 +1070,7 @@ button.btn-showMenu {
 }
 
 #timer {
+    text-align: center;
     font-size: 50px;
     color: #db4844;
 }

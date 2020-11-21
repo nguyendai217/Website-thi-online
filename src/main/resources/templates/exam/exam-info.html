@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <title>Liên hệ</title>
+    <div th:replace="fragments/init_lib :: header"></div>
+</head>
+
+<body>
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
+<main class="home">
+    <div class="container exam-test">
+        <section class="main-exam container">
+            <div class="header">
+                <h3>Thông tin đề thi</h3>
+            </div>
+            <div class="info">
+
+            </div>
+        </section>
+    </div>
+</main>
+<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/init_lib :: script"></div>
+<script type="text/javascript" th:src="@{/js/exam.js}"></script>
+</body>
+</html>

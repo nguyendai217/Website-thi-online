@@ -6,9 +6,9 @@ var checkUpdateApi = true; // cái này để check khi next nhiều trang mà k
 var finishTest = false; // kết thúc bài thi
 
 // json câu hỏi
-var _json = '[{"title": "Câu hỏi thứ 1","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 2","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 3","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 4","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 5","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 6","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 7","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 8","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 9","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 10","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 11","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 12","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 13","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 14","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 15","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 16","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 17","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 18","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 19","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 20","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 21","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 22","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 23","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 24","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 25","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 26","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 27","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 28","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 29","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null},{"title": "Câu hỏi thứ 30","list_anwser": ["Câu trả lời 1","Câu trả lời 2","Câu trả lời 3","Câu trả lời 4"],"correct_answer": null,"answered": null}]';
-const json = JSON.parse(_json);
-var listQuestion = JSON.parse(_json);
+const json = _dataJson;
+var listQuestion =_dataJson;
+console.log("listQuestion: ",listQuestion)
 var listAnser = localStorage.getItem("test-" + id_test);
 listAnser = listAnser == null ? { ...listQuestion } : JSON.parse(listAnser);
 
@@ -16,7 +16,7 @@ res = Object.keys(listAnser).map((k) => listAnser[k]);
 listAnser = res;
 
 /* Khởi tạo Thời gian */
-var limitTime = 30; // Thời gian làm bài ( phút )
+var limitTime = timeOut; // Thời gian làm bài ( phút )
 var startTime = localStorage.getItem("test-" + id_test + "-time"); // Thời gian bắt đầu làm bài
 if (startTime === null) { // Nếu localstorage không có thì sẽ khởi tạo
     startTime = new Date();
@@ -52,11 +52,10 @@ if (checkTestFinished(endTime) === false) {
         let _this = $(this);
         let _quest = _this.parents('.item-question');
         let keyQuest = _quest.attr('data-key');
-        listAnser[keyQuest].answered = _this.val();
+        listAnser[keyQuest].yourAns = _this.val();
         localStorage.setItem("test-" + id_test, JSON.stringify(listAnser));
         // Call api cập nhập ở đây
     });
-
 
     // Pre câu hỏi
     $('.btn-pre').click(function () {
@@ -68,7 +67,7 @@ if (checkTestFinished(endTime) === false) {
 
     // Next câu hỏi
     $('.btn-next').click(function () {
-        if (currentPage >= Math.floor(json.length / limitPage)) return;
+        if (currentPage >= Math.ceil(json.length / limitPage)) return;
         currentPage++;
         renderListQuestion(listAnser);
         checkUpdateApi = false;
@@ -98,12 +97,11 @@ function renderListQuestion(listAnser) {
             showQuestion = '';
         }
 
-        stringListQuest += `<div class='item-question ${showQuestion}' data-key="${k}"><div class='title'><b><span class='question-no'>${k + 1}</span>${v.title}</b></div><div class='content'>`;
-        v.list_anwser.forEach((va, ka) => {
-            let _checked = (v.answered == (ka + 1)) ? 'checked' : '';
+        stringListQuest += `<div class='item-question ${showQuestion}' data-key="${k}"><div class='title'><b><span class='question-no'>${k + 1}</span>${v.content}</b></div><div class='content'>`;
+        v.listAns.forEach((va, ka) => {
+            let _checked = (v.yourAns == (ka + 1)) ? 'checked' : '';
             stringListQuest += `<div class='content-ans'><input ${_checked} ${disabledAnswer} type='radio' class='radio-check' name='test-${id_test}-quest-${k}' id='' value='${ka + 1}' title=''><span>${va}</span></div>`;
         });
-
         stringListQuest += '</div></div>';
     });
 
