@@ -11,7 +11,7 @@
     <div class="container">
         <!-- banner -->
         <div class="banner class-banner">
-            <h2 class="title">Toán 10</h2>
+            <h2 class="title" th:text="${lessonContent.classroom.classname}"></h2>
         </div>
         <!-- class content-->
         <section class="subject-knowledgeContent">
@@ -30,8 +30,7 @@
                             </div>
                             <div class="main_lesson">
                                 <div class="main_top">Nội dung bài học:</div>
-                                <div class="main">
-                                    <p th:text="${lessonContent.lessonContent}"></p>
+                                <div class="main" th:text="${lessonContent.lessonContent}">
                                 </div>
                                 <div class="footer_lesson">
                                     <div class="row">
@@ -115,17 +114,16 @@
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
+    var acc =$('#account').val();
+    if(acc != null || acc != undefined){
+        $('#div-account').removeClass('d-none');
+        $('#link-login').addClass('d-none');
+    }else {
+        $('#div-account').addClass('d-none');
+        $('#link-login').removeClass('d-none');
+    }
 
     $(document).ready(function (){
-        var acc =$('#account').val();
-        if(acc != null || acc != undefined){
-            $('#div-account').removeClass('d-none');
-            $('#link-login').addClass('d-none');
-        }else {
-            $('#div-account').addClass('d-none');
-            $('#link-login').removeClass('d-none');
-        }
-
         var logout= $('#msg-logout').val();
         if(logout != null){
             alert("Đăng xuất thành công.");

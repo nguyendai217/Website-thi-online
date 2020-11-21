@@ -1,65 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
-    <title>Kiểm tra</title>
+    <title>Liên hệ</title>
     <div th:replace="fragments/init_lib :: header"></div>
 </head>
 
 <body>
-<section class="container">
-    <h2>Thời gian</h2>
-    <div id="timer">
-        <span id="hours">00</span> :
-        <span id="minutes">00</span> :
-        <span id="seconds">00</span>
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
+<main class="home">
+    <div class="container">
+        <div class="infomation-exam">
+
+        </div>
     </div>
-</section>
-<section class="main-exam container">
-    <h2>Bài thi</h2>
-    <div class="exam-content">
-        <div class="list-question">
-            <div class="item-question">
-                <div class="title">
-                    <b><span class="question-no">1</span> Câu hỏi số 1</b>
-                </div>
-                <div class="content">
-                    <div class="content-ans">
-                        <input type="radio" name=""  value="" title="">
-                        <span>Câu trả lời 1</span>
-                    </div>
-                    <div class="content-ans">
-                        <input type="radio" name="" value="" title="">
-                        <span>Câu trả lời 1</span>
-                    </div>
-                    <div class="content-ans">
-                        <input type="radio" name=""  value="" title="">
-                        <span>Câu trả lời 1</span>
-                    </div>
-                    <div class="content-ans">
-                        <input type="radio" name="" value="" title="">
-                        <span>Câu trả lời 1</span>
+    <div class="container exam-test">
+        <section class="container">
+            <h2>Thời gian</h2>
+            <div id="timer">
+                <span id="hours">00</span> :
+                <span id="minutes">00</span> :
+                <span id="seconds">00</span>
+            </div>
+        </section>
+        <section class="main-exam container">
+            <h2 style="text-align: center;font-size: 20px">Bài thi : môn toán</h2>
+            <div class="exam-content">
+                <div class="list-question">
+                    <div class="item-question">
+                        <div class="title">
+                            <b><span class="question-no">1</span> Câu hỏi số 1</b>
+                        </div>
+                        <div class="content">
+                            <div class="content-ans">
+                                <input type="radio" name=""  value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name="" value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name=""  value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name="" value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="test-more container">
-    <div class="row">
-        <div class="col-md-4 text-left">
-            <button class="btn-pre btn btn-primary">Trở lại câu hỏi trước</button>
-        </div>
-        <div class="col-md-4 text-center test-more-infor">
-            <button class="btn-finish btn btn-success">Hoàn Thành Bài Thi</button>
-        </div>
-        <div class="col-md-4 text-right">
-            <button class="btn-next btn btn-primary">Câu hỏi tiếp theo</button>
-        </div>
+        <section class="test-more container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 ">
+                    <a class="btn-pre btn btn-primary">Trở lại câu hỏi trước</a>
+                </div>
+                <div class="col-md-3 col-sm-6  test-more-infor">
+                    <a class="btn-finish btn btn-success">Hoàn Thành Bài Thi</a>
+                </div>
+                <div class="col-md-3 col-sm-6 ">
+                    <a class="btn-finish btn btn-warning">Hủy bỏ</a>
+                </div>
+                <div class="col-md-3 col-sm-6 ">
+                    <a class="btn-next btn btn-primary">Câu hỏi tiếp theo</a>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
-<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</main>
+<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/init_lib :: script"></div>
+<script type="text/javascript" th:src="@{/js/exam.js}"></script>
 </body>
-
 </html>

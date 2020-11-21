@@ -16,8 +16,8 @@
                             </ul>
                         </li>
                         <li><a th:href="@{/kiemtra/list-class}">kiểm tra</a></li>
-                        <li><a th:href="@{/tintuc}">Tin tưc</a></li>
-                        <li><a th:href="@{/contact}">liên hệ</a></li>
+                        <li><a th:href="@{/tintuc}">Tin tức</a></li>
+                        <li><a th:href="@{/contact}">Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-12">
@@ -31,7 +31,7 @@
                                     aria-haspopup="true" aria-expanded="false" sec:authentication="principal.username">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" th:href="@{/profile}">Profile</a>
+                                <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
                                 <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                 </button>
                 <li><a href="#">Trang chủ</a></li>
                 <li hasSubMenu="true">
-                    <a href="#">Học tập</a>
+                    <a href="#">Học tập <i class="fa fa-chevron-down"></i></a>
                     <ul>
                         <li th:each="item:${listClass}">
                             <a th:href="@{'/monhoc?class_id='+ ${item.id}}" th:text="${item.classname}"></a>
@@ -59,8 +59,14 @@
                     </ul>
                 </li>
                 <li><a th:href="@{/kiemtra/list-class}">kiểm tra</a></li>
-                <li><a th:href="@{/tintuc}">Tin tưc</a></li>
-                <li><a th:href="@{/contact}">liên hệ</a></li>
+                <li><a th:href="@{/tintuc}">Tin tức</a></li>
+                <li><a th:href="@{/contact}">Liên hệ</a></li>
+                <li hasSubMenu="true">
+                    <a href="#"><i class="fa fa-user"></i>Đăng nhập</a>
+                    <ul>
+                        <li>Đăng xuất</li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

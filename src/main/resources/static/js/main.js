@@ -97,15 +97,17 @@ $(document).ready(function () {
 
     menuItem.attr("hasSubMenu", "true").click(function (e) {
         $(this).toggleClass("show")
-        console.log("sss")
+
     })
 
     btnMenu.on('click', function (e) {
         menuMobile.toggleClass('show')
-        console.log("yyy")
     })
 
+
+
 });
+
 
 
 

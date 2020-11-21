@@ -3,10 +3,12 @@ package com.wru.onthi.controller;
 import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Exam;
 import com.wru.onthi.entity.Lesson;
+import com.wru.onthi.entity.Subject;
 import com.wru.onthi.repository.ExamRepository;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.ExamService;
 import com.wru.onthi.services.LessonService;
+import com.wru.onthi.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class LessonController {
@@ -27,6 +30,9 @@ public class LessonController {
     @Autowired
     ExamService examService;
 
+    @Autowired
+    SubjectService subjectService;
+
 
     @GetMapping("/baihoc")
     public String getListLesson(Model model,
@@ -34,15 +40,20 @@ public class LessonController {
                                 @RequestParam("subject_id") Integer subject_id){
         genDefault(model);
 
-        List<Lesson> listLessons= lessonService.getListLessonByClassAndSubject(class_id,subject_id);
 
+        Optional<Classroom> optional = classroomService.findById(class_id);
+        Classroom classroom= optional.get();
+        Optional<Subject> optionalSubject=subjectService.findBySubjectId(subject_id);
+        Subject subject= optionalSubject.get();
+        List<Lesson> listLessons= lessonService.getListLessonByClassAndSubject(class_id,subject_id);
         if(listLessons.size()>0){
             model.addAttribute("listLessonByClass",listLessons);
         } else {
             model.addAttribute("emptyLesson","listEmpty");
         }
+        model.addAttribute("className",classroom.getClassname());
+        model.addAttribute("subjectName",subject.getName());
         return "lesson/list-lesson";
-
     }
     @GetMapping("/noidungbaihoc")
     public String getContentLesson(Model model, @RequestParam("lessonId") Integer lessonId){

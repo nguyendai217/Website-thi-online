@@ -1,21 +1,36 @@
 package com.wru.onthi.controller;
 
+import com.wru.onthi.entity.Classroom;
+import com.wru.onthi.services.ClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.rmi.MarshalledObject;
+import java.security.Principal;
+import java.util.List;
+import java.util.PrimitiveIterator;
 
 @Controller
 public class ContactController {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    ClassroomService classroomService;
+
     @GetMapping("/contact")
-    public String contact(){
+    public String contact(Model model, Principal principal){
+        // get list class menu
+        List<Classroom> listClass = classroomService.getAllClassroom();
+        if(!listClass.isEmpty()){
+            model.addAttribute("listClass",listClass);
+        }
         return "contact";
     }
 

@@ -38,7 +38,7 @@ public class ExamController {
 
     @GetMapping("/kiemtra/list-class")
     public String getAllClass(Model model, Principal principal){
-        getDefault(model);
+        getDefault(model,principal);
         //get ListClass
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",listClass);
@@ -47,7 +47,7 @@ public class ExamController {
 
     @GetMapping("/lophoc/list-class")
     public String getClassBySubject(Model model, Principal principal, @RequestParam("subjectId") Integer subjectId){
-        getDefault(model);
+        getDefault(model,principal);
         // get list class by subject
 
         List<Classroom> getListClassBySubject= classroomService.listClassBySubject(subjectId);
@@ -59,32 +59,26 @@ public class ExamController {
     //get list exam by subject
 
     @GetMapping("/kiemtra/list-exam")
-    public String listExam(Model model,@RequestParam("subjectId") Integer subjectId,
+    public String listExam(Model model,Principal principal,@RequestParam("subjectId") Integer subjectId,
                            @RequestParam("classId") Integer classId){
-        getDefault(model);
+        getDefault(model,principal);
         List<Exam> listExam= examService.getListExamBySubjectAndClass(subjectId,classId);
         model.addAttribute("listExam",listExam);
         return "exam/list-exam";
     }
 
-
-    @GetMapping("/kiemtra/chitiet")
-    public String firstExam(Model model,@RequestParam("examId") Integer examId){
-        getDefault(model);
+    @GetMapping("/kiemtra")
+    public String getListQuestion(Model model,Principal principal, @RequestParam("examId") Integer examId){
+        getDefault(model,principal);
         Optional<Exam> optionalExam= examService.findByExamId(examId);
         Exam exam= optionalExam.get();
         model.addAttribute("exam",exam);
-        return "exam/first_exam";
+
+        //List<Question> listQuestion =questionService.getListQuestionByExam(examId);
+        return "exam/exam-test";
     }
 
-    @GetMapping("/kiemtra")
-    public @ResponseBody String getListQuestion(Model model, @RequestParam("examId") Integer examId){
-        getDefault(model);
-        List<Question> listQuestion =questionService.getListQuestionByExam(examId);
-        return null;
-    }
-
-    private void getDefault(Model model){
+    private void getDefault(Model model,Principal principal){
         // get list class menu
         List<Classroom> listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
