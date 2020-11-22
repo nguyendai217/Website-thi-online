@@ -1,6 +1,7 @@
 package com.wru.onthi.controller.admin;
 
 import com.wru.onthi.entity.*;
+import com.wru.onthi.repository.ClassRoomRepository;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.ExamService;
 import com.wru.onthi.services.SubjectService;
@@ -12,10 +13,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/exam")
@@ -33,9 +39,11 @@ public class ExamControllerAdmin {
     ClassroomService classroomService;
 
     @GetMapping("/list-exam")
-    public String getListExam(Model model, Principal principal,Pageable pageable){
+    public String getListExam(Model model, Principal principal,Pageable pageable,String codeExam ,String subjectId,String classId){
         getInfoUser(model,principal);
-
+//        String codeExam = request.getParameter("codeExam");
+//        String subjectId= request.getParameter("subjectId");
+//        String classId= request.getParameter("classId");
         //get AllClassroom
         List<Classroom> lístClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",lístClass);
@@ -48,7 +56,15 @@ public class ExamControllerAdmin {
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
-        Page<Exam> pageExam = examService.getAllListExam(pageItem);
+
+        Page<Exam> pageExam = null;
+        if(codeExam== null && subjectId== null && classId==null){
+            pageExam=examService.getAllListExam(pageItem);
+        }
+        else {
+            pageExam=examService.searchExam(codeExam,subjectId,classId,pageItem);
+        }
+
 
         int totalItem = (int) pageExam.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
@@ -66,7 +82,62 @@ public class ExamControllerAdmin {
             model.addAttribute("path","/exam/list-exam");
             return "admin/exam/list-exam";
         }
+    }
 
+    @GetMapping("/update-exam/{id}")
+    public String updateExamGet(Model model, Principal principal,@PathVariable("id") Integer id){
+        getInfoUser(model,principal);
+
+        //get AllClassroom
+        List<Classroom> lístClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",lístClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+
+        Optional<Exam> optionalExam= examService.findByExamId(id);
+        Exam exam = optionalExam.get();
+        model.addAttribute("exam",exam);
+        return "admin/exam/update-exam";
+    }
+
+    @PostMapping("/update-exam")
+    public String updateExamPost(Model model, Principal principal, HttpServletRequest request, RedirectAttributes redr){
+        getInfoUser(model,principal);
+        Integer id=Integer.valueOf(request.getParameter("examId"));
+        String examCode= request.getParameter("examCode");
+        String title= request.getParameter("title");
+        Integer classId= Integer.valueOf(request.getParameter("classId"));
+        Integer subjectId=Integer.valueOf(request.getParameter("subjectId"));
+        Integer totalQuestion= Integer.valueOf(request.getParameter("totalQuestion"));
+        Integer timeOut= Integer.valueOf(request.getParameter("timeOut"));
+        String content= request.getParameter("content");
+
+        Optional<Subject> optionalSubject= subjectService.findBySubjectId(subjectId);
+        Subject subject= optionalSubject.get();
+
+        Optional<Classroom> optionalClassroom= classroomService.findById(classId);
+        Classroom classroom= optionalClassroom.get();
+        try {
+            Optional<Exam> optionalExam= examService.findByExamId(id);
+            Exam exam= optionalExam.get();
+            exam.setCodeExam(examCode);
+            exam.setTitle(title);
+            exam.setExam_subject(subject);
+            exam.setExam_classroom(classroom);
+            exam.setTitle(title);
+            exam.setTotalQuestion(totalQuestion);
+            exam.setContent(content);
+            exam.setTimeOut(timeOut);
+            examService.updateExam(exam);
+            redr.addFlashAttribute("success","Update thành công");
+            return "redirect:/exam/list-exam";
+        }catch (Exception e){
+            model.addAttribute("error","Update thông tin đề thi thất bại");
+            String path= "redirect:/exam/update-exam/"+ id;
+            return path;
+        }
     }
 
     // get info user login

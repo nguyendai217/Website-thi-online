@@ -43,7 +43,7 @@ public class Exam {
     private Integer totalQuestion;
 
     @Column(name = "time_out")
-    private String timeOut;
+    private Integer timeOut;
 
     @Column(name = "views")
     private Integer views;
@@ -88,11 +88,11 @@ public class Exam {
         this.listQuestion = listQuestion;
     }
 
-    public String getTimeOut() {
+    public Integer getTimeOut() {
         return timeOut;
     }
 
-    public void setTimeOut(String timeOut) {
+    public void setTimeOut(Integer timeOut) {
         this.timeOut = timeOut;
     }
 

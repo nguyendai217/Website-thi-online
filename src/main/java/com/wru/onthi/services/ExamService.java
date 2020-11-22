@@ -14,4 +14,8 @@ public interface ExamService {
     List<Exam> getListExamOrderByViews();
     Page<Exam> getAllListExam(Pageable pageable);
     List<Exam> getListExamBySubjectAndClass(Integer subjectId, Integer classId);
+    Exam updateExam(Exam exam);
+    void createExam(Exam exam);
+    void deleteExam(Exam exam);
+    Page<Exam> searchExam(String examCode, String subjectId, String classId, Pageable pageable);
 }

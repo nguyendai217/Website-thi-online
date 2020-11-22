@@ -41,4 +41,33 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> getListExamBySubjectAndClass(Integer subjectId, Integer classId) {
         return examRepository.getListExamBySubjectAndClass(subjectId,classId);
     }
+
+    @Override
+    public Exam updateExam(Exam exam) {
+        return examRepository.save(exam);
+    }
+
+    @Override
+    public void createExam(Exam exam) {
+        examRepository.save(exam);
+    }
+
+    @Override
+    public void deleteExam(Exam exam) {
+        examRepository.delete(exam);
+    }
+
+    @Override
+    public Page<Exam> searchExam(String examCode, String subjectId, String classId,Pageable pageable) {
+        if(examCode==""){
+            examCode = null;
+        }
+        if(subjectId ==""){
+            subjectId = null;
+        }
+        if(classId== ""){
+            classId = null;
+        }
+        return examRepository.searchExam(examCode,subjectId,classId,pageable);
+    }
 }

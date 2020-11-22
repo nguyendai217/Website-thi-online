@@ -2,8 +2,11 @@ package com.wru.onthi.repository;
 
 import com.wru.onthi.entity.Exam;
 import com.wru.onthi.entity.Lesson;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +19,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
 
     @Query(value = "select * from exam where subject_id=?1 and class_id=?2",nativeQuery = true)
     List<Exam> getListExamBySubjectAndClass(Integer subjectId,Integer classId);
+
+    @Query(value = "select  * from exam where code_exam like %:examCode% or subject_id like %:subjectId% or class_id like %:classId%",nativeQuery = true)
+    Page<Exam> searchExam(@Param("examCode") String examCode,@Param("subjectId") String subjectId,@Param("classId") String classId, Pageable pageable);
 }
