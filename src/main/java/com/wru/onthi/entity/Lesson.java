@@ -2,6 +2,7 @@ package com.wru.onthi.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "lesson")
@@ -34,6 +35,9 @@ public class Lesson {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id")
     private Classroom classroom;
+
+    @OneToMany(mappedBy = "lessonComment")
+    private List<Comment> listComment;
 
     public Classroom getClassroom() {
         return classroom;
@@ -121,5 +125,13 @@ public class Lesson {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public List<Comment> getListComment() {
+        return listComment;
+    }
+
+    public void setListComment(List<Comment> listComment) {
+        this.listComment = listComment;
     }
 }

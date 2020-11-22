@@ -13,6 +13,54 @@ public class Comment {
     @Column(name = "time_comment")
     private String timeComment;
 
+    @Column(name = "content")
+    private String contentComment;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userComment;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
+    private Lesson lessonComment;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTimeComment() {
+        return timeComment;
+    }
+
+    public void setTimeComment(String timeComment) {
+        this.timeComment = timeComment;
+    }
+
+    public String getContentComment() {
+        return contentComment;
+    }
+
+    public void setContentComment(String contentComment) {
+        this.contentComment = contentComment;
+    }
+
+    public User getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(User userComment) {
+        this.userComment = userComment;
+    }
+
+    public Lesson getLessonComment() {
+        return lessonComment;
+    }
+
+    public void setLessonComment(Lesson lessonComment) {
+        this.lessonComment = lessonComment;
+    }
 }

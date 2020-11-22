@@ -62,6 +62,9 @@ public class User {
     @OneToMany(mappedBy = "userResult")
     private List<Result> results;
 
+    @OneToMany(mappedBy = "userComment")
+    private List<Comment> listComment;
+
 
     public List<News> getListNews() {
         return listNews;
@@ -197,5 +200,21 @@ public class User {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+
+    public List<Comment> getListComment() {
+        return listComment;
+    }
+
+    public void setListComment(List<Comment> listComment) {
+        this.listComment = listComment;
     }
 }
