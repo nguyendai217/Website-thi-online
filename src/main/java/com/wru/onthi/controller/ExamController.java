@@ -77,6 +77,18 @@ public class ExamController {
         return "exam/list-exam";
     }
 
+    @GetMapping("/kiemtra/info")
+    public String infoExam(Model model,Principal principal, @RequestParam("examId") Integer examId){
+        getDefault(model,principal);
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        model.addAttribute("exam",exam);
+        model.addAttribute("examId",examId);
+        model.addAttribute("timeOut",exam.getTimeOut());
+        model.addAttribute("content",exam.getContent());
+        return "exam/exam-info";
+    }
+
     @GetMapping("/kiemtra")
     public String getListQuestion(Model model,Principal principal, @RequestParam("examId") Integer examId){
         getDefault(model,principal);
@@ -85,7 +97,6 @@ public class ExamController {
         model.addAttribute("exam",exam);
         model.addAttribute("examId",examId);
         model.addAttribute("timeOut",exam.getTimeOut());
-
         List<QuestionModel> questionModels= questionService.getListQuestion(examId);
         Gson gson= new Gson();
         String result= gson.toJson(questionModels);

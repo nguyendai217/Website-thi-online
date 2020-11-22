@@ -25,7 +25,7 @@
                             <div class="knowledge-item" th:if="${not #strings.isEmpty(listExam)}"
                                  th:each="item:${listExam}">
                                 <p th:text="${item.title}"></p>
-                                <a th:href="@{/kiemtra(examId=${item.id})}">Kiểm tra</a>
+                                <a th:href="@{/kiemtra/info(examId=${item.id})}">Kiểm tra</a>
                             </div>
                             <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
                                 <h3>Xin lỗi, môn học này chưa có bài thi, vui lòng quay lại sau.</h3>

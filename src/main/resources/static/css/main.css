@@ -1064,6 +1064,34 @@ button.btn-showMenu {
     /* margin: 10px 10px; */
     margin-bottom: 50px;
 }
+.test-more .row {
+    text-align: center;
+}
+.test-more .row a{
+    margin: 15px 10px 15px 10px;
+}
+.main-exam h2{
+    font-size: 22px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.main-exam .row label{
+    font-size: 18px;
+    font-weight: bold;
+}
+.main-exam .row span{
+    font-size: 16px;
+}
+.main-exam .row .start-exam{
+    text-align: center;
+    padding:15px 0px 15px 0px;
+}
+.main-exam .row .start-exam a{
+    width: 30%;
+    color: white;
+    margin: 10px;
+}
+
 
 .hide {
     display: none;

@@ -15,8 +15,8 @@
     </div>
     <div class="container exam-test">
         <section class="container">
-            <h2>Thời gian</h2>
             <div id="timer">
+                <span><i class="fa fa-clock-o"></i></span>
                 <span id="hours">00</span> :
                 <span id="minutes">00</span> :
                 <span id="seconds">00</span>
@@ -55,16 +55,10 @@
 
         <section class="test-more container">
             <div class="row">
-                <div class="col-md-3 col-sm-6 ">
-                    <a class="btn-pre btn btn-primary">Trở lại câu hỏi trước</a>
-                </div>
-                <div class="col-md-3 col-sm-6  test-more-infor">
+                <div class="col-md-12 col-sm-12">
+                    <a class="btn-pre btn btn-primary">Câu hỏi trước</a>
                     <a class="btn-finish btn btn-success">Hoàn Thành Bài Thi</a>
-                </div>
-                <div class="col-md-3 col-sm-6 ">
-                    <a class="btn-finish btn btn-warning">Hủy bỏ</a>
-                </div>
-                <div class="col-md-3 col-sm-6 ">
+                    <a class="btn-cancel btn btn-warning">Hủy bỏ</a>
                     <a class="btn-next btn btn-primary">Câu hỏi tiếp theo</a>
                 </div>
             </div>
@@ -78,7 +72,24 @@
     var exam_data = '[[${dataExam}]]';
     var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
     var timeOut= [[${timeOut}]];
+
+    var acc =$('#account').val();
+    if(acc != null || acc != undefined){
+        $('#div-account').removeClass('d-none');
+        $('#link-login').addClass('d-none');
+    }else {
+        $('#div-account').addClass('d-none');
+        $('#link-login').removeClass('d-none');
+    }
+
+    $(document).ready(function (){
+        var logout= $('#msg-logout').val();
+        if(logout != null){
+            alert("Đăng xuất thành công.");
+        }
+    });
+
 </script>
 <script type="text/javascript" th:src="@{/js/exam.js}"></script>
-</body>s
+</body>
 </html>

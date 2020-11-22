@@ -11,11 +11,25 @@
 <main class="home">
     <div class="container exam-test">
         <section class="main-exam container">
-            <div class="header">
-                <h3>Thông tin đề thi</h3>
-            </div>
-            <div class="info">
-
+            <h2>Thông tin đề thi</h2>
+            <div class="row">
+                <div class="col-md-3 "></div>
+                <div class="col-md-7">
+                    <label>Môn học:</label><span>Toán</span><br>
+                    <label>Lớp học:</label><span>10</span><br>
+                    <label>Mã đề thi:</label><span>TOAN002</span><br>
+                    <label>Thời gian:</label><span>120 phút</span><br>
+                    <label>Số câu hỏi:</label><span>20 câu</span><br>
+                    <label>Đã thi:</label><span>120 lượt</span><br>
+                    <label>Thời gian tạo:</label><span>20/10/2020</span><br>
+                    <label>Nội dung thi:</label><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique dolorem et repudiandae voluptas perferendis quos illum, provident consectetur possimus dolor reiciendis quo mollitia ipsum deserunt repellendus qui rem deleniti consequatur.</span>
+                    <div class="start-exam">
+                        <a class="btn btn-success" id="btnStart" th:href="@{/kiemtra(examId=${examId})}">Bắt đầu</a>
+                        <a href="javascript:history.back();" class="btn btn-info">Trở lại</a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
             </div>
         </section>
     </div>
@@ -23,5 +37,32 @@
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script type="text/javascript" th:src="@{/js/exam.js}"></script>
+<script>
+    $(document).ready(function (){
+        var logout= $('#msg-logout').val();
+        if(logout != null){
+            alert("Đăng xuất thành công.");
+        }
+    });
+
+    var acc =$('#account').val();
+    if(acc != null || acc != undefined){
+        $('#div-account').removeClass('d-none');
+        $('#link-login').addClass('d-none');
+    }else {
+        $('#div-account').addClass('d-none');
+        $('#link-login').removeClass('d-none');
+    }
+
+    $('#btnStart').click(function (){
+        if((acc== null) || (acc== undefined)){
+            alert("Bạn phải đăng nhập trước khi thi.");
+            return false;
+        }else {
+            window.location=document.getElementById('btnStart').href;
+        }
+    });
+
+</script>
 </body>
 </html>
