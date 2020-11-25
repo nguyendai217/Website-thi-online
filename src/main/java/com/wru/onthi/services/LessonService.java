@@ -21,4 +21,6 @@ public interface LessonService {
     List<Lesson> getListLessonOrderByViews();
     List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId);
     Lesson getContentLesson(Integer lessonId);
+    Page<Lesson> searchLesson(String lessonName,String subjectId,String classId,Pageable pageable);
+
 }

@@ -1,5 +1,6 @@
 package com.wru.onthi.controller.admin;
 
+import com.google.common.base.Strings;
 import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Subject;
@@ -39,7 +40,8 @@ public class LessonControllerAdmin {
     SubjectService subjectService;
 
     @GetMapping("/list-lesson")
-    public String getAllLesson(Model model, Principal principal,Pageable pageable){
+    public String getAllLesson(Model model, Principal principal,String lessonName,
+                               String subjectId, String classId,Pageable pageable){
         getInfoUser(model,principal);
 
         //get AllClassroom
@@ -54,7 +56,13 @@ public class LessonControllerAdmin {
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
-        Page<Lesson> pageLesson = lessonService.getAllLesson(pageItem);
+        Page<Lesson> pageLesson= null;
+        if((lessonName == "" || lessonName==null) &&
+                (subjectId == "" || subjectId == null) && (classId == "" ||classId == null)){
+            pageLesson = lessonService.getAllLesson(pageItem);
+        }else {
+            pageLesson = lessonService.searchLesson(lessonName,subjectId,classId,pageItem);
+        }
 
         int totalItem = (int) pageLesson.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);

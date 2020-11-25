@@ -1,6 +1,8 @@
 package com.wru.onthi.repository;
 
 import com.wru.onthi.entity.Lesson;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,4 +33,8 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     @Query(value = "select ls from Lesson ls where ls.id = :lessonId",nativeQuery = false)
     Lesson getContentLesson(Integer lessonId);
 
+    @Query(value = "select  * from lesson where lessonname like %:lessonName% " +
+            "or (subject_id like %:subjectId% and class_id like %:classId%) " +
+            "or subject_id like %:subjectId% or class_id like %:classId% ",nativeQuery = true)
+    Page<Lesson>searchLesson(String lessonName, String subjectId, String classId, Pageable pageable);
 }

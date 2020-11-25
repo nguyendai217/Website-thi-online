@@ -101,4 +101,18 @@ public class LessonServiceImpl implements LessonService {
     public Lesson getContentLesson(Integer lessonId) {
         return lessonRepository.getContentLesson(lessonId);
     }
+
+    @Override
+    public Page<Lesson> searchLesson(String lessonName, String subjectId, String classId,Pageable pageable) {
+        if(lessonName=="") {
+            lessonName = null;
+        }
+        if(subjectId==""){
+            subjectId= null;
+        }
+        if(classId==""){
+            classId= null;
+        }
+        return lessonRepository.searchLesson(lessonName,subjectId,classId,pageable);
+    }
 }

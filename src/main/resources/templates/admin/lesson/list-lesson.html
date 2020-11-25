@@ -40,12 +40,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <form th:action="@{/lesson/search-lesson}" method="get">
+                            <form th:action="@{/lesson/list-lesson}" method="get">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-12 col-sm-4 col-xs-3">
                                         <label>Tên bài học</label>
                                         <div>
-                                            <input class="form-control" name="lessonName" type="text" th:text="${strLesson}">
+                                            <input class="form-control" name="lessonName" type="text">
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -144,7 +144,7 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $(document).ready(function () {
-        $('#userManager').addClass("active");
+        $('#lessonManager').addClass("active");
     });
 </script>
 </body>
