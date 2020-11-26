@@ -50,4 +50,20 @@ public class NewsServiceImpl implements NewsService {
     public List<News> getListNewsOrderByTime() {
         return newsRepository.getListNewsOrderByTime();
     }
+
+    @Override
+    public List<News> getNewsBanner() {
+        return newsRepository.getNewsBanner();
+    }
+
+    @Override
+    public Page<News> searchNews(String title, String category, Pageable pageable) {
+        if(title==""){
+            title= null;
+        }
+        if(category==""){
+            category=null;
+        }
+        return newsRepository.searchNews(title,category,pageable);
+    }
 }

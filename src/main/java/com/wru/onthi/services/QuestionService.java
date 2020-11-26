@@ -16,6 +16,6 @@ public interface QuestionService {
     Question updateQuestion(Question question);
     Page<Question> getAllQuestion(Pageable pageable);
     List<Question> getListQuestionByExam(Integer examId);
-
     List<QuestionModel> getListQuestion(Integer examId);
+    Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable);
 }

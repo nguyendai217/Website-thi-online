@@ -40,12 +40,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <form th:action="@{/news/search-news}" method="get">
+                            <form th:action="@{/news/list-news}" method="get">
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-12 col-sm-4 col-xs-3">
                                         <label>Tiêu đề</label>
                                         <div>
-                                            <input class="form-control" name="username" type="text" th:text="${strUser}">
+                                            <input class="form-control" name="title" type="text">
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -53,7 +53,8 @@
                                         <select class="form-control" name="categoryId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listCategory}"
-                                                    th:value="${item.id}" th:text="${item.categoryName}">
+                                                    th:value="${item.id}" th:text="${item.categoryName}"
+                                                    th:selected="${item.id==categorySelected}">
                                             </option>
                                         </select>
                                     </div>

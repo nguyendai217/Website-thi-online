@@ -141,7 +141,7 @@ public class NewsController {
     }
     //list news
     @GetMapping("/list-news")
-    public String listNews(Model model,Principal principal,Pageable pageable){
+    public String listNews(Model model,Principal principal,Pageable pageable,String categoryId, String title){
         getInfoUser(model,principal);
 
         //get list category
@@ -153,8 +153,19 @@ public class NewsController {
         int pageSize=5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Page<News> pageNews= null;
+        if((categoryId== null || categoryId=="") && (title== null || title=="")){
+            pageNews = newsService.getAllNews(pageItem);
+        }else {
+            pageNews = newsService.searchNews(title,categoryId,pageItem);
+            model.addAttribute("title",title);
+            if(categoryId !=""){
+                model.addAttribute("categorySelected",Integer.valueOf(categoryId));
+            }else {
+                model.addAttribute("categorySelected",categoryId);
+            }
+        }
 
-        Page<News> pageNews = newsService.getAllNews(pageItem);
         int totalItem = (int) pageNews.getTotalElements();
         int itemPerPage= pageSize * (pageNumber +1);
         if(itemPerPage > totalItem){

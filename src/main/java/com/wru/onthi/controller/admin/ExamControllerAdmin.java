@@ -45,8 +45,8 @@ public class ExamControllerAdmin {
 //        String subjectId= request.getParameter("subjectId");
 //        String classId= request.getParameter("classId");
         //get AllClassroom
-        List<Classroom> lístClass= classroomService.getAllClassroom();
-        model.addAttribute("listClass",lístClass);
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
 
         //get list Subject
         List<Subject> listSubject= subjectService.getlistSubject();

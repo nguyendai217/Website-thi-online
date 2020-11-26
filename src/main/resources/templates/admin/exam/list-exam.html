@@ -45,7 +45,7 @@
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
                                         <label>Mã bài thi</label>
                                         <div>
-                                            <input class="form-control" name="examCode" type="text">
+                                            <input class="form-control" name="codeExam" type="text">
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
@@ -123,7 +123,9 @@
                                         <td th:text="${row.totalQuestion}"></td>
                                         <td th:text="${row.timeOut}"></td>
                                         <td th:text="${row.views}"></td>
+
                                         <td>
+                                            <a th:href="@{/question/list-question(examId=${row.id})}" class="btn btn-success" title="Thêm câu hỏi"><i class="fa fa-plus"></i></a>
                                             <a th:href="@{/exam/detail-exam/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                             <a th:href="@{/exam/update-exam/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
                                             <a th:href="@{/exam/delete-exam/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
@@ -147,7 +149,7 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $(document).ready(function () {
-        $('#userManager').addClass("active");
+        $('#examManager').addClass("active");
 
     });
 </script>

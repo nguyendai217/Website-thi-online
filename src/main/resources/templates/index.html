@@ -34,36 +34,11 @@
                 </div>
                 <div class="col-md-5 col-12">
                     <div class="banner-right">
-                        <div class="banner-rightImage">
+                        <div class="banner-rightImage" th:each="item:${newsBanner}">
                             <div class="item">
-                                <a href="#"><img th:src="@{/image/img-right1.png}" alt=""></a>
+                                <a th:href="@{/tintuc(newsId=${item.id})}"><img th:src="@{'/image/news/'+ ${item.image}}" alt=""></a>
                                 <div class="news-right">
-                                    <a href="#">Bí kíp học tập đạt kết quả cao.</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-rightImage">
-                            <div class="item">
-                                <img th:src="@{/image/img-right2.png}" alt="">
-                                <div class="news-right">
-                                    <a href="#">Học trực tuyến cần kĩ năng gì ?</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-rightImage">
-                            <div class="item">
-                                <img th:src="@{/image/img-right3.png}" alt="">
-                                <div class="news-right">
-                                    <a href="#">Học trực tuyến tốt hay không?</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="banner-rightImage">
-                            <div class="item">
-                                <img th:src="@{/image/img-right4.png}" alt="">
-                                <div class="news-right">
-                                    <a href="#">Nên học trực tuyến ở đâu ?</a>
+                                    <a th:href="@{/tintuc(newsId=${item.id})}" th:text="${item.title}"></a>
                                 </div>
                             </div>
                         </div>

@@ -83,4 +83,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return listQuestion;
     }
+
+    @Override
+    public Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable) {
+        return questionRepository.getPageQuestionByExamId(examId,pageable);
+    }
 }

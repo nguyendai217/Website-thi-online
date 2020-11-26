@@ -50,7 +50,6 @@ public class HomeController {
         List<Classroom> listClassTHPT= classroomService.listClassBySchool(3);
         model.addAttribute("listClassTHPT",listClassTHPT);
 
-
         // get list-exam
         List<Exam> listExam= examService.getListExam().subList(0,3);
         if(!listExam.isEmpty()){
@@ -65,6 +64,9 @@ public class HomeController {
         // get news service
         List<News> listNews = newsService.getListNewsOrderByTime().subList(0,5);
         model.addAttribute("listNews",listNews);
+
+        List<News> listnewBanner= newsService.getNewsBanner().subList(0,4) ;
+        model.addAttribute("newsBanner",listnewBanner);
 
         return "index";
     }

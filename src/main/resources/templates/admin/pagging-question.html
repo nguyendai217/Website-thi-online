@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="content" th:remove="tag">
+    <div class="float-left">
+        <span>Số bản ghi: </span><span th:text="${itemPerPage}"></span>/<span th:text="${total}"></span>
+    </div>
+    <div class="float-right">
+        <ul class="pagination ">
+            <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                <a class="page-link" th:href="@{|${path}&page=${pageInfo.number}|}">&laquo;</a>
+            </li>
+
+            <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 2), (pageInfo.number + 2))}" >
+                <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                    class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                    <a
+                            th:if="${itemPage} != ${pageInfo.number + 1}"
+                            class="page-link"
+                            th:href="@{|${path}&page=${itemPage}|}"
+                            th:text="${itemPage}"
+                    >1</a>
+                    <p th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</p>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                <a class="page-link" th:href="@{|${path}&page=${pageInfo.number + 2}|}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
