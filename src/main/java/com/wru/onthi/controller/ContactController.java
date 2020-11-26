@@ -34,7 +34,7 @@ public class ContactController {
         return "contact";
     }
 
-    @PostMapping("/contact")
+    @PostMapping("/contact/send")
     public String submitContact(HttpServletRequest  request){
         String fullname= request.getParameter("fullname");
         String email= request.getParameter("email");

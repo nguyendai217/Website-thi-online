@@ -8,7 +8,7 @@
         <div class="sidebar-content">
             <ul>
                 <li class="list-item" th:each="item:${listLesson}">
-                    <a href="#" th:text="${item.lessonName}"></a>
+                    <a th:href="@{/noidungbaihoc(lessonId=${item.id})}" th:text="${item.lessonName}"></a>
                 </li>
             </ul>
         </div>
@@ -19,7 +19,7 @@
         <div class="sidebar-content">
             <ul>
                 <li class="list-item" th:each="item:${listExam}">
-                    <a href="#" th:text="${item.title}"></a>
+                    <a th:href="@{/kiemtra/info(examId= ${item.id})}" th:text="${item.title}"></a>
                 </li>
             </ul>
         </div>

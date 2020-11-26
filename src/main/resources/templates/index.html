@@ -140,7 +140,7 @@
                             <span><i class="fa fa-file-text" ></i> Danh sách bài kiểm tra mới</span>
                         </div>
                         <div class="study-listChemistry">
-                            <a href="#" th:each="item:${listExam}">
+                            <a th:href="@{/kiemtra/info(examId=${item.id})}" th:each="item:${listExam}">
                                 <div class="study-chemistryItem" >
                                     <div class="img">
                                         <img th:src="@{/image/img-right1.png}" alt="">
@@ -265,7 +265,7 @@
                             <span><i class="fa fa-newspaper-o" ></i> Danh sách tin tức mới</span>
                         </div>
                         <div class="news-list">
-                            <a th:href="@{'/tintuc?id='+${item.id}}" th:each="item:${listNews}">
+                            <a th:href="@{/tintuc(newsId=${item.id})}" th:each="item:${listNews}">
                                 <div class="news-listItem">
                                     <div class="img">
                                         <img th:src="@{/image/img-right1.png}" alt="">

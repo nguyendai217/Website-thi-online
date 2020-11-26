@@ -104,13 +104,13 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Page<Lesson> searchLesson(String lessonName, String subjectId, String classId,Pageable pageable) {
-        if(lessonName=="") {
+        if(lessonName==""){
             lessonName = null;
         }
-        if(subjectId==""){
+        if(subjectId ==""){
             subjectId= null;
         }
-        if(classId==""){
+        if(classId ==""){
             classId= null;
         }
         return lessonRepository.searchLesson(lessonName,subjectId,classId,pageable);

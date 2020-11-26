@@ -1,6 +1,7 @@
 package com.wru.onthi.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -47,6 +48,9 @@ public class Exam {
 
     @Column(name = "views")
     private Integer views;
+
+    @Column(name = "create_date")
+    private Date createDate;
 
     public Integer getId() {
         return id;
@@ -126,5 +130,13 @@ public class Exam {
 
     public void setExam_classroom(Classroom exam_classroom) {
         this.exam_classroom = exam_classroom;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

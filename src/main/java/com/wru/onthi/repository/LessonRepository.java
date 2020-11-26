@@ -26,15 +26,14 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
                    "where ls.subject.id= sb.id " +
                    "and cl.id= ls.classroom.id " +
                    "and cl.id = ?1 " +
-                   "and sb.id = ?2 " , nativeQuery = false)
+                   "and sb.id = ?2 ")
     List<Lesson> getListLessonByClassAndSubject(@Param("clas_Id") Integer class_Id,
                                                 @Param("sub_Id")Integer subject_Id);
 
-    @Query(value = "select ls from Lesson ls where ls.id = :lessonId",nativeQuery = false)
+    @Query(value = "select ls from Lesson ls where ls.id = :lessonId")
     Lesson getContentLesson(Integer lessonId);
 
     @Query(value = "select  * from lesson where lessonname like %:lessonName% " +
-            "or (subject_id like %:subjectId% and class_id like %:classId%) " +
-            "or subject_id like %:subjectId% or class_id like %:classId% ",nativeQuery = true)
+            "or (subject_id like %:subjectId% and class_id like %:classId%) ",nativeQuery = true)
     Page<Lesson>searchLesson(String lessonName, String subjectId, String classId, Pageable pageable);
 }

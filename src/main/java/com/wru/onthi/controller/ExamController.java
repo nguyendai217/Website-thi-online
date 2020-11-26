@@ -84,8 +84,6 @@ public class ExamController {
         Exam exam= optionalExam.get();
         model.addAttribute("exam",exam);
         model.addAttribute("examId",examId);
-        model.addAttribute("timeOut",exam.getTimeOut());
-        model.addAttribute("content",exam.getContent());
         return "exam/exam-info";
     }
 

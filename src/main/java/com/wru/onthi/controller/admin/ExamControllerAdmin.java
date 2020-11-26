@@ -64,8 +64,6 @@ public class ExamControllerAdmin {
         else {
             pageExam=examService.searchExam(codeExam,subjectId,classId,pageItem);
         }
-
-
         int totalItem = (int) pageExam.getTotalElements();
         int itemPerPage= pageSize * (pageNumber+1);
         if(itemPerPage > totalItem){
@@ -138,6 +136,19 @@ public class ExamControllerAdmin {
             String path= "redirect:/exam/update-exam/"+ id;
             return path;
         }
+    }
+
+    @GetMapping("/add-exam")
+    public String addExamGet(Model model, Principal principal){
+        getInfoUser(model,principal);
+        //get AllClassroom
+        List<Classroom> lístClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",lístClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+        return "admin/exam/add-exam";
     }
 
     // get info user login

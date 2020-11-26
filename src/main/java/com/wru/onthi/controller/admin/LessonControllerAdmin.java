@@ -45,8 +45,8 @@ public class LessonControllerAdmin {
         getInfoUser(model,principal);
 
         //get AllClassroom
-        List<Classroom> lístClass= classroomService.getAllClassroom();
-        model.addAttribute("listClass",lístClass);
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
 
         //get list Subject
         List<Subject> listSubject= subjectService.getlistSubject();
@@ -87,8 +87,8 @@ public class LessonControllerAdmin {
         getInfoUser(model,principal);
 
         //get AllClassroom
-        List<Classroom> lístClass= classroomService.getAllClassroom();
-        model.addAttribute("listClass",lístClass);
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
 
         //get list Subject
         List<Subject> listSubject= subjectService.getlistSubject();
@@ -131,6 +131,15 @@ public class LessonControllerAdmin {
     @GetMapping("/update-lesson/{id}")
     public String updateLessonGet(Model model, Principal principal, @PathVariable("id") Integer id){
         getInfoUser(model,principal);
+
+        //get AllClassroom
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+
         Optional<Lesson> optional= lessonService.findByLessonId(id);
         Lesson lesson= optional.get();
         model.addAttribute("lesson",lesson);

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin Home</title>
+    <div th:replace="admin/init_admin :: header"></div>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Thêm mới đề thi</small></h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <form th:action="@{/exam/add-exam}" method="post">
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Thông tin đề thi</h4>
+                                </div>
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label class="labels">Tiêu đề </label>
+                                        <input type="text" class="form-control" name="title">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6 col-sm-12 ">
+                                        <label>Môn học</label>
+                                        <select class="form-control" name="subjectId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listSubject}"
+                                                    th:value="${item.id}" th:text="${item.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <label>Lớp</label>
+                                        <select class="form-control" name="classId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listClass}"
+                                                    th:value="${item.id}" th:text="${item.classname}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6 col-sm-12">
+                                        <label class="labels">Số câu hỏi</label>
+                                        <input type="number" class="form-control" name="totalQuestion"  >
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <label class="labels">Thời gian (phút)</label>
+                                        <input type="number" class="form-control" name="timeOut" >
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label class="labels">Nội dung</label>
+                                        <textarea type="text" class="form-control" name="content" cols="7" rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-success" type="submit">Thêm đề thi</button>
+                                    <a class="btn btn-warning" th:href="@{/exam/list-exam}">Bỏ qua</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $(document).ready(function () {
+        $('#examManager').addClass("active");
+    });
+</script>
+</body>
+</html>
