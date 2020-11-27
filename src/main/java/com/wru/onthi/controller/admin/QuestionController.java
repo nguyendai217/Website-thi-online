@@ -1,22 +1,22 @@
 package com.wru.onthi.controller.admin;
 
-import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.Question;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.QuestionService;
 import com.wru.onthi.services.UserService;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/question")
@@ -58,15 +58,22 @@ public class QuestionController {
         }
     }
 
+    @GetMapping("/update-question/{questionId}")
+    public String updateQuestionGet(Model model, Principal principal, @PathVariable("questionId") Integer questionId){
+        getInfoUser(model,principal);
+        Optional<Question> optionalQuestion= questionService.findById(questionId);
+        Question question= optionalQuestion.get();
+        model.addAttribute("qs",question);
+        return "admin/question/update-question";
+    }
+
     @GetMapping("/add-question")
     public String addQuestionGet(@RequestParam("examId") Integer examId,
                                  Model model, Principal principal, Pageable pageable){
         getInfoUser(model,principal);
 
-        return "";
+        return "admin/question/add-question";
     }
-
-
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

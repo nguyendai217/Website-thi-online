@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**"
                         ,"/kiemtra/**","/contact/**","/lesson","/user/profile").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("USER","ADMIN","MANAGER")
-                .antMatchers("/admin/**","/profile","/lesson/**","/exam/**").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers("/admin/**","/profile","/lesson/**","/exam/**","/download/**").hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")

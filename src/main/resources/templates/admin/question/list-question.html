@@ -42,7 +42,7 @@
                         <div class="col-md-2 col-sm-12">
                             <label>&nbsp;</label>
                             <div>
-                                <a th:href="@{/subject/add-subject}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm câu hỏi</a>
+                                <a th:href="@{/question/add-question(examId=${examId})}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm câu hỏi</a>
                             </div>
                         </div>
                     </div>
@@ -85,8 +85,8 @@
                                         <td th:if="${row.ansCorrect=='3'}">C</td>
                                         <td th:if="${row.ansCorrect=='4'}">D</td>
                                         <td>
-                                            <a th:href="@{/question/update-question(examId=${examId})/{questionId}(questionId=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
-                                            <a th:href="@{/news/update-news/{id}(id=${row.id})}" title="Chỉnh Sửa"><i class="fa fa-edit btn btn-success" ></i></a>
+                                            <a th:href="@{/question/detail-question/{questionId}(questionId=${row.id})}" title="Chi tiết"><i class="fa fa-info-circle btn btn-info" ></i></a>
+                                            <a th:href="@{/question/update-question/{questionId}(questionId=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
                                             <a th:href="@{/question/delete-question/{questionId}(questionId=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>
                                         </td>
                                     </tr>

@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Home</title>
+    <div th:replace="admin/init_admin :: header"></div>
 </head>
-<body>
 
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3><small>Update câu hỏi</small></h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 border-right">
+                        <div class="p-3">
+                            <form th:action="@{/question/update-question}" method="post"  >
+                                <div class="align-items-center mb-4">
+                                    <h4>Thông tin câu hỏi</h4>
+                                </div>
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <input type="text" hidden="true" name="examId" th:value="${qs.id}"/>
+                                <div class="row">
+                                    <div class="col-md-12 mt-3">
+                                        <label class="labels">Nội dung câu hỏi</label>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" th:field="${qs.content}" ></textarea>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án A</label>
+                                        <input type="text" class="form-control" name="ansA"  th:value="${qs.ansA}" >
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án B</label>
+                                        <input type="text" class="form-control" name="ansB"  th:value="${qs.ansB}" >
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án C</label>
+                                        <input type="text" class="form-control" name="ansC"  th:value="${qs.ansC}" >
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án D</label>
+                                        <input type="text" class="form-control" name="ansD"  th:value="${qs.ansD}" >
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án đúng</label>
+                                        <select class="form-control" name="ansCorrect">
+                                            <option value="1" th:selected="${qs.ansCorrect=='1'}">A</option>
+                                            <option value="2" th:selected="${qs.ansCorrect=='2'}">B</option>
+                                            <option value="3" th:selected="${qs.ansCorrect=='3'}">C</option>
+                                            <option value="4" th:selected="${qs.ansCorrect=='4'}">D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-success" type="submit">Lưu thông tin</button>
+                                    <a class="btn btn-warning" href="javascript:history.back();">Hủy bỏ</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $('#error').delay(5000).fadeOut(1000);
+    $('#examManager').addClass("active");
+</script>
 </body>
 </html>

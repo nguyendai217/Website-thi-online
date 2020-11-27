@@ -16,7 +16,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3><small>Thêm mới câu hỏi</small></h3>
+                        <h3><small>Thông tin câu hỏi</small></h3>
                     </div>
                 </div>
 
@@ -28,75 +28,58 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="col-md-8 border-right">
+                    <div class="col-md-12 border-right">
                         <div class="p-3">
-                            <form th:action="@{/question/add-question}" method="post"  >
+                            <form th:action="@{/question/update-question}" method="post"  >
                                 <div class="align-items-center mb-4">
-                                    <h4>Thông tin câu hỏi</h4>
+                                    <h4>Chi tiết câu hỏi</h4>
                                 </div>
                                 <div class="bg-danger" id="error"
                                      th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
                                 </div>
+                                <input type="text" hidden="true" name="examId" th:value="${qs.id}"/>
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <label class="labels">Nội dung câu hỏi</label>
-                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" ></textarea>
+                                        <textarea type="text" class="form-control"cols="10" rows="5" th:field="${qs.content}" readonly ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
                                         <label class="labels">Đáp án A</label>
-                                        <input type="text" class="form-control" name="ansA"  >
+                                        <input type="text" class="form-control" th:value="${qs.ansA}" readonly>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
                                         <label class="labels">Đáp án B</label>
-                                        <input type="text" class="form-control" name="ansB"  >
+                                        <input type="text" class="form-control" th:value="${qs.ansB}" readonly>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
                                         <label class="labels">Đáp án C</label>
-                                        <input type="text" class="form-control" name="ansC">
+                                        <input type="text" class="form-control" th:value="${qs.ansC}" readonly >
                                     </div>
 
                                     <div class="col-md-6 mt-3">
                                         <label class="labels">Đáp án D</label>
-                                        <input type="text" class="form-control" name="ansD">
+                                        <input type="text" class="form-control" th:value="${qs.ansD}" readonly>
                                     </div>
                                     <div class="col-md-6 mt-3">
                                         <label class="labels">Đáp án đúng</label>
+                                        <input type="text" class="form-control" th:value="${qs.ansCorrect}">
                                         <select class="form-control" name="ansCorrect">
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                            <option value="3">C</option>
-                                            <option value="4">D</option>
+                                            <option value="1" th:selected="${qs.ansCorrect=='1'}">A</option>
+                                            <option value="2" th:selected="${qs.ansCorrect=='2'}">B</option>
+                                            <option value="3" th:selected="${qs.ansCorrect=='3'}">C</option>
+                                            <option value="4" th:selected="${qs.ansCorrect=='4'}">D</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-success" type="submit">Thêm câu hỏi</button>
-                                    <a class="btn btn-warning" href="javascript:history.back();">Hủy bỏ</a>
+                                    <a class="btn btn-warning" href="javascript:history.back();">Trở lại</a>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-4 ">
-                        <div class="align-items-center mt-3 mb-4">
-                            <h4>Upload file câu hỏi</h4>
-                        </div>
-                        <div class="mt-2 align-content-center">
-                            <a th:href="@{/download/template-question}">Down load file mẫu (.xlsx) tại đây.</a>
-                        </div>
-                        <div class="mt-2 ">
-                            <div class="form-group align-content-center">
-                                <input type="file" class="form-control" name="fileData" id="fileData" />
-
-                            </div>
-                            <div class="align-content-center">
-                                <button type="button" class="btn btn-success " id="idProcess">Upload</button>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
