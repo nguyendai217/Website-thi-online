@@ -73,8 +73,7 @@ public class ClassManagerController {
     public String addClass(Model model, Principal principal){
         getInfoUser(model,principal);
 
-        List<School> listSchool= new ArrayList<>();
-        listSchool= schoolService.getListSchool();
+        List<School> listSchool= schoolService.getListSchool();
         model.addAttribute("listSchool",listSchool);
         return "admin/classroom/add-class";
     }

@@ -16,8 +16,8 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
     @Query("select e from News e order by e.insertDate desc ")
     List<News> getListNewsOrderByTime();
 
-    @Query(value = "select e from News e where e.categoryNews.id =4 ",nativeQuery = false)
-    List<News> getNewsBanner();
+    @Query(value = "select e from News e where e.categoryNews.id =4 order by e.id desc",nativeQuery = false)
+    List<News> getNewsStudy();
 
     @Query(value = "select  * from news where title like %:title% " +
             "or category_id like %:category%",nativeQuery = true)

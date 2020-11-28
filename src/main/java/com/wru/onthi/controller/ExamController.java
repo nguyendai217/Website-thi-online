@@ -1,19 +1,14 @@
 package com.wru.onthi.controller;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.wru.onthi.entity.Classroom;
-import com.wru.onthi.entity.Exam;
-import com.wru.onthi.entity.Lesson;
-import com.wru.onthi.entity.Question;
+import com.wru.onthi.entity.*;
 import com.wru.onthi.model.LessonNew;
 import com.wru.onthi.model.QuestionModel;
-import com.wru.onthi.services.ClassroomService;
-import com.wru.onthi.services.ExamService;
-import com.wru.onthi.services.LessonService;
-import com.wru.onthi.services.QuestionService;
+import com.wru.onthi.services.*;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +39,9 @@ public class ExamController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    NewsService newsService;
 
 
     @GetMapping("/kiemtra/list-class")
@@ -129,6 +127,9 @@ public class ExamController {
         //list exam views
         List<Exam> listExam =examService.getListExamOrderByViews().subList(0,5);
         model.addAttribute("listExam",listExam);
+
+        List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
+        model.addAttribute("listnewStudy",listnewStudy);
     }
 
 }

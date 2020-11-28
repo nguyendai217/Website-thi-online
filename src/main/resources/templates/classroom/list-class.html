@@ -11,7 +11,6 @@
     <div class="container">
         <!-- banner -->
         <div class="banner class-banner">
-            <h2 class="title" th:text="${className}"></h2>
         </div>
         <!-- class content-->
         <section class="class-content">
@@ -20,12 +19,12 @@
                     <div class="class-left">
                         <!-- list-subject -->
                         <div class="class-sectionTitle">
-                            <span>Danh sách môn học</span>
+                            <span>Danh sách lớp học</span>
                         </div>
                         <div class="list-subject">
-                            <a th:each="item:${listSubject}">
+                            <a th:href="@{/monhoc(class_id=${item.id})}" th:each="item:${listClass}">
                                 <div class="subject-item">
-                                    <img th:src="@{'/image/subject/'+${item.image}}">
+                                    <img th:src="@{'/image/classroom/'+${item.image}}">
                                 </div>
                             </a>
                         </div>
@@ -101,6 +100,7 @@
         $('#div-account').addClass('d-none');
         $('#link-login').removeClass('d-none');
     }
+
     $(document).ready(function (){
         var logout= $('#msg-logout').val();
         if(logout != null){

@@ -65,8 +65,8 @@ public class HomeController {
         List<News> listNews = newsService.getListNewsOrderByTime().subList(0,5);
         model.addAttribute("listNews",listNews);
 
-        List<News> listnewBanner= newsService.getNewsBanner().subList(0,4) ;
-        model.addAttribute("newsBanner",listnewBanner);
+        List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
+        model.addAttribute("listnewStudy",listnewStudy);
 
         return "index";
     }

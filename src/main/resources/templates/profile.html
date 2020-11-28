@@ -3,6 +3,14 @@
 <head>
     <title>Liên hệ</title>
     <div th:replace="fragments/init_lib :: header"></div>
+    <style>
+        .hidden{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -10,7 +18,99 @@
 <div th:replace="fragments/menu :: content"></div>
 <main class="home">
     <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-3 border-right">
+                    <form method="POST" th:action="@{/profile/updateImage}" enctype="multipart/form-data">
+                        <input type="text" hidden="true" name="userId" th:value="${us.id}">
+                        <img class="mt-5" id="imgPreview" style="width: 60%;height: 60%" th:src="@{'/image/user/'+${us.image}}" >
+                        <input type="file" name="fileImage" class="col-md-12 mt-3" />
+                        <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
+                    </form>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <form th:action="@{/profile}" method="post"  >
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Thông tin tài khoản</h4>
+                        </div>
+                        <div class="bg-danger" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="bg-success" id="success"
+                             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <input type="text" hidden="true" name="userId" th:value="${us.id}">
 
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="labels">Username</label>
+                                <input type="text" class="form-control" name="username" th:value="${us.username}" readonly>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Fullname</label>
+                                <input type="text" class="form-control" name="fullname"  th:value="${us.fullname}" >
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Email</label>
+                                <input type="text" class="form-control" name="email" th:value="${us.email}" readonly >
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Số điện thoại</label>
+                                <input type="text" class="form-control" name="phone" th:value="${us.phone}" >
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Địa chỉ</label>
+                                <input type="text" class="form-control" name="address" th:value="${us.address}" >
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Giới tính</label>
+                                <select class="p-2" name="gender" >
+                                    <option value="" th:selected="${us.gender==null}">Tùy chọn</option>
+                                    <option value="1" th:selected="${us.gender==1}">Nam</option>
+                                    <option value="0" th:selected="${us.gender==0}">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Sinh nhật</label>
+                                <input id="datepicker" class="form-control" name="birthday" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" />
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-success" type="submit">Lưu thông tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form th:action="@{/profile/changepass}" method="post">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="text-right">Thay đổi mật khẩu</h4>
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+                            <label class="labels">Nhập mật khẩu cũ</label>
+                            <input type="password" class="form-control"  name="password_old" >
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Nhập mật khẩu mới</label>
+                            <input type="password" class="form-control"  name="password1" id="pass1">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Nhập lại mật khẩu mới</label>
+                            <input type="password" class="form-control"  name="password2" id="pass2" >
+                            <p class="hidden" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+                            <input type="submit" id="btnSubmit" value="Thay đổi password" class="btn btn-success mt-3 ml-5">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 <div th:replace="fragments/footer :: content"></div>

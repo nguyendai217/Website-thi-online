@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-5 col-12">
                     <div class="banner-right">
-                        <div class="banner-rightImage" th:each="item:${newsBanner}">
+                        <div class="banner-rightImage" th:each="item:${listnewStudy}">
                             <div class="item">
                                 <a th:href="@{/tintuc(newsId=${item.id})}"><img th:src="@{'/image/news/'+ ${item.image}}" alt=""></a>
                                 <div class="news-right">

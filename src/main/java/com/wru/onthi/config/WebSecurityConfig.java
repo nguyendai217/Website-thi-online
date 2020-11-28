@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/login/**","/reset_password",
                         "/oauth2/**","/signin","/class/**","/tintuc/**","/lophoc/**"
                         ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**"
-                        ,"/kiemtra/**","/contact/**","/lesson","/user/profile").permitAll()
+                        ,"/kiemtra/**","/contact/**","/lesson","/user/profile","/hoctap/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("USER","ADMIN","MANAGER")
                 .antMatchers("/admin/**","/profile","/lesson/**","/exam/**","/download/**").hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()

@@ -995,6 +995,20 @@ button.btn-showMenu {
     margin-bottom: 1rem;
 }
 
+.class-banner {
+    background-image: url("../image/exam/img-exam.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 350px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 /**/
 
 /* form contact*/

@@ -15,6 +15,6 @@ public interface NewsService {
     List<News> getlistNews();
     Page<News> getAllNews(Pageable pageable);
     List<News> getListNewsOrderByTime();
-    List<News> getNewsBanner();
+    List<News> getNewsStudy();
     Page<News> searchNews(String title,String category, Pageable pageable);
 }

@@ -1,14 +1,8 @@
 package com.wru.onthi.controller;
 
-import com.wru.onthi.entity.Classroom;
-import com.wru.onthi.entity.Exam;
-import com.wru.onthi.entity.Lesson;
-import com.wru.onthi.entity.Subject;
+import com.wru.onthi.entity.*;
 import com.wru.onthi.repository.ExamRepository;
-import com.wru.onthi.services.ClassroomService;
-import com.wru.onthi.services.ExamService;
-import com.wru.onthi.services.LessonService;
-import com.wru.onthi.services.SubjectService;
+import com.wru.onthi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +27,8 @@ public class LessonController {
     @Autowired
     SubjectService subjectService;
 
+    @Autowired
+    NewsService newsService;
 
     @GetMapping("/baihoc")
     public String getListLesson(Model model,
@@ -80,6 +76,9 @@ public class LessonController {
         //list exam views
         List<Exam> listExam =examService.getListExamOrderByViews().subList(0,5);
         model.addAttribute("listExam",listExam);
+
+        List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
+        model.addAttribute("listnewStudy",listnewStudy);
     }
 
 

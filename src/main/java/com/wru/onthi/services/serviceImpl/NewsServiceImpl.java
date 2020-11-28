@@ -52,8 +52,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getNewsBanner() {
-        return newsRepository.getNewsBanner();
+    public List<News> getNewsStudy() {
+        return newsRepository.getNewsStudy();
     }
 
     @Override
