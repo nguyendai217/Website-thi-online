@@ -45,7 +45,7 @@ public class SubjectManagerController {
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
         Page<Subject> pageSubject= null;
-        if(subject== null){
+        if(subject== null || subject==""){
             pageSubject = subjectService.getAllSubject(pageItem);
         }else {
             pageSubject= subjectService.searchSubject(subject,pageItem);

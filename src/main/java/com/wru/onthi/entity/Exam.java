@@ -29,6 +29,9 @@ public class Exam {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "create_by")
+    private String createBy;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private Subject exam_subject;
@@ -138,5 +141,13 @@ public class Exam {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 }

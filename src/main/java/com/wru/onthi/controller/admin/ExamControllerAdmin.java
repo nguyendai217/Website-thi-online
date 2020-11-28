@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/exam")
@@ -58,7 +60,8 @@ public class ExamControllerAdmin {
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
 
         Page<Exam> pageExam = null;
-        if(codeExam== null && subjectId== null && classId==null){
+        if((codeExam== null || codeExam =="") && (subjectId== null || subjectId =="")
+                && (classId==null|| classId=="")){
             pageExam=examService.getAllListExam(pageItem);
         }
         else {
@@ -149,6 +152,69 @@ public class ExamControllerAdmin {
         List<Subject> listSubject= subjectService.getlistSubject();
         model.addAttribute("listSubject", listSubject);
         return "admin/exam/add-exam";
+    }
+
+    @PostMapping("/add-exam")
+    public String addExamPost(Model model,Principal principal,HttpServletRequest request,RedirectAttributes redr){
+        getInfoUser(model,principal);
+        String title= request.getParameter("title");
+        Integer subjectId= Integer.valueOf(request.getParameter("subjectId"));
+        Integer classId= Integer.valueOf(request.getParameter("classId"));
+        Integer totalQuestion= Integer.valueOf(request.getParameter("totalQuestion"));
+        Integer timeOut= Integer.valueOf(request.getParameter("timeOut"));
+        String content= request.getParameter("content");
+
+        Optional<Subject> optional= subjectService.findBySubjectId(subjectId);
+        Subject subject= optional.get();
+        String subjectCode= subject.getCode();
+        String codeExam= randomCodeExam(subjectCode);
+
+        Optional<Classroom> optionalClassroom= classroomService.findById(classId);
+        Classroom classroom= optionalClassroom.get();
+
+        try {
+            Exam exam= new Exam();
+            exam.setTitle(title);
+            exam.setExam_subject(subject);
+            exam.setExam_classroom(classroom);
+            exam.setTotalQuestion(totalQuestion);
+            exam.setTimeOut(timeOut);
+            exam.setContent(content);
+            exam.setCreateBy(principal.getName());
+            exam.setViews(0);
+            exam.setCreateDate(new Date());
+            exam.setCodeExam(codeExam);
+            examService.createExam(exam);
+            redr.addFlashAttribute("success","Thêm mới đề thi thành công, mã đề thi:"+ codeExam);
+            return "redirect:/exam/list-exam";
+        }catch (Exception e){
+            e.printStackTrace();
+            redr.addFlashAttribute("error","Thêm mới đề thi thất bại.");
+            return "admin/exam/add-exam";
+        }
+    }
+
+    public String randomCodeExam(String subjectCode){
+        Random random= new Random();
+        Integer number= random.nextInt(99999);
+        String codeExam= subjectCode+ number;
+        return codeExam;
+    }
+
+    @GetMapping("/delete-exam/{examId}")
+    public String deleteExam(Model model, Principal principal,@PathVariable("examId") Integer examId,RedirectAttributes redr){
+        getInfoUser(model,principal);
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        try {
+            examService.deleteExam(exam);
+            redr.addFlashAttribute("success","Xóa đề thi thành công");
+            return "redirect:/exam/list-exam";
+        }catch (Exception e){
+            e.printStackTrace();
+            redr.addFlashAttribute("error","Xóa đề thi thất bại");
+            return "redirect:/exam/list-exam";
+        }
     }
 
     // get info user login

@@ -192,7 +192,7 @@
                             <span><i class="fa fa-book" aria-hidden="true"></i> Danh sách bài học mới</span>
                         </div>
                         <div class="news-list">
-                            <a href="#" th:each="item:${lessonList}">
+                            <a th:href="@{/noidungbaihoc(lessonId=${item.id})}" th:each="item:${lessonList}">
                                 <div class="news-listItem">
                                     <div class="img">
                                         <img th:src="@{'/image/subject/'+ ${item.image}}" alt="">

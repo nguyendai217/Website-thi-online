@@ -98,6 +98,9 @@ public class ExamController {
         List<QuestionModel> questionModels= questionService.getListQuestion(examId);
         Gson gson= new Gson();
         String result= gson.toJson(questionModels);
+        Integer views= exam.getViews();
+        exam.setViews(views+1);
+        examService.updateExam(exam);
         model.addAttribute("dataExam",result);
 
         return "exam/exam-test";

@@ -40,7 +40,6 @@ public class LessonController {
                                 @RequestParam("subject_id") Integer subject_id){
         genDefault(model);
 
-
         Optional<Classroom> optional = classroomService.findById(class_id);
         Classroom classroom= optional.get();
         Optional<Subject> optionalSubject=subjectService.findBySubjectId(subject_id);
@@ -59,6 +58,11 @@ public class LessonController {
     public String getContentLesson(Model model, @RequestParam("lessonId") Integer lessonId){
        genDefault(model);
        Lesson lesson= lessonService.getContentLesson(lessonId);
+
+       // tang views khi click vao hoc
+       Integer views= lesson.getViews();
+       lesson.setViews(views+1);
+       lessonService.updateLesson(lesson);
        model.addAttribute("lessonContent",lesson);
        return "lesson/content_lesson";
     }
