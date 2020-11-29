@@ -13,6 +13,9 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,7 +74,11 @@ public class ExamController {
                            @RequestParam("classId") Integer classId){
         getDefault(model,principal);
         List<Exam> listExam= examService.getListExamBySubjectAndClass(subjectId,classId);
-        model.addAttribute("listExam",listExam);
+        if(listExam.size()>0){
+            model.addAttribute("listExams",listExam);
+        }else {
+            model.addAttribute("emptyExam","emptyExam");
+        }
         return "exam/list-exam";
     }
 
@@ -132,4 +139,17 @@ public class ExamController {
         model.addAttribute("listnewStudy",listnewStudy);
     }
 
+    @GetMapping("/kiemtra/class/")
+    public String getListExamByClass(Model model,Principal principal,@RequestParam("classId") Integer classId,Pageable pageable){
+        getDefault(model,principal);
+
+        int pageNumber = pageable.getPageNumber();
+        int pageSize= 5;
+        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Page<Exam> pageExam = examService.getListExamByClass(classId,pageItem);
+        model.addAttribute("listExam",pageExam);
+
+        return "exam/exam-by-class";
+    }
 }

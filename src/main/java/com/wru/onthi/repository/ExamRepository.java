@@ -22,4 +22,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
 
     @Query(value = "select  * from exam where code_exam like %:examCode% or subject_id like %:subjectId% or class_id like %:classId%",nativeQuery = true)
     Page<Exam> searchExam(@Param("examCode") String examCode,@Param("subjectId") String subjectId,@Param("classId") String classId, Pageable pageable);
+
+    @Query(value = "select * from exam where class_id =: classId",nativeQuery = true )
+    Page<Exam> getListExamByClass(@Param("classId") Integer classId,Pageable pageable);
 }

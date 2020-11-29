@@ -40,9 +40,6 @@ public class Exam {
     @JoinColumn(name = "class_id")
     private Classroom exam_classroom;
 
-    @OneToMany(mappedBy = "examQuestion")
-    private List<Question> listQuestion;
-
     @Column(name = "total_question")
     private Integer totalQuestion;
 
@@ -54,6 +51,9 @@ public class Exam {
 
     @Column(name = "create_date")
     private Date createDate;
+
+    @OneToMany(mappedBy = "examQuestion")
+    private List<ExamQuestion> listExamQuestion;
 
     public Integer getId() {
         return id;
@@ -87,13 +87,6 @@ public class Exam {
         this.exam_subject = exam_subject;
     }
 
-    public List<Question> getListQuestion() {
-        return listQuestion;
-    }
-
-    public void setListQuestion(List<Question> listQuestion) {
-        this.listQuestion = listQuestion;
-    }
 
     public Integer getTimeOut() {
         return timeOut;
@@ -149,5 +142,13 @@ public class Exam {
 
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
+    }
+
+    public List<ExamQuestion> getListExamQuestion() {
+        return listExamQuestion;
+    }
+
+    public void setListExamQuestion(List<ExamQuestion> listExamQuestion) {
+        this.listExamQuestion = listExamQuestion;
     }
 }

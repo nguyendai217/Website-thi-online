@@ -1,8 +1,10 @@
 package com.wru.onthi.entity;
 
+import org.apache.catalina.LifecycleState;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -30,9 +32,9 @@ public class Question {
     @Column(name = "ans_correct")
     private String ansCorrect;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id")
-    private Exam examQuestion;
+    @OneToMany(mappedBy = "questionExam")
+    private List<ExamQuestion> listQuestionExam;
+
 
     public Integer getId() {
         return id;
@@ -90,11 +92,11 @@ public class Question {
         this.ansCorrect = ansCorrect;
     }
 
-    public Exam getExamQuestion() {
-        return examQuestion;
+    public List<ExamQuestion> getListQuestionExam() {
+        return listQuestionExam;
     }
 
-    public void setExamQuestion(Exam examQuestion) {
-        this.examQuestion = examQuestion;
+    public void setListQuestionExam(List<ExamQuestion> listQuestionExam) {
+        this.listQuestionExam = listQuestionExam;
     }
 }

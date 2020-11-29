@@ -18,4 +18,5 @@ public interface ExamService {
     void createExam(Exam exam);
     void deleteExam(Exam exam);
     Page<Exam> searchExam(String examCode, String subjectId, String classId, Pageable pageable);
+    Page<Exam> getListExamByClass(Integer classId,Pageable pageable);
 }

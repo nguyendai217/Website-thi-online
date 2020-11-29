@@ -70,4 +70,9 @@ public class ExamServiceImpl implements ExamService {
         }
         return examRepository.searchExam(examCode,subjectId,classId,pageable);
     }
+
+    @Override
+    public Page<Exam> getListExamByClass(Integer classId, Pageable pageable) {
+        return examRepository.getListExamByClass(classId,pageable);
+    }
 }
