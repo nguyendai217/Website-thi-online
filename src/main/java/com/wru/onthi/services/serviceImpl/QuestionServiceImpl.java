@@ -6,6 +6,7 @@ import com.wru.onthi.repository.QuestionRepository;
 import com.wru.onthi.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +65,10 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionModel> listQuestion= new ArrayList<>();
         Query query= entityManager.createNativeQuery(
                 "select qs.content,qs.ans_a,qs.ans_b,qs.ans_c,qs.ans_d,qs.ans_correct " +
-                "from question qs where qs.exam_id = ? ");
+                        "from question qs, exam ex, exam_question eq " +
+                        "where  qs.id = eq.question_id and ex.id= eq.exam_id " +
+                        "and ex.id = ? " +
+                        "order by eq.order asc ");
 
         query.setParameter(1,examId);
         List<Object[]> objects = query.getResultList();
@@ -86,6 +90,31 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable) {
-        return questionRepository.getPageQuestionByExamId(examId,pageable);
+
+//        List<QuestionModel> listQuestion= new ArrayList<>();
+//        Query query= entityManager.createNativeQuery(
+//                "select qs.content,qs.ans_a,qs.ans_b,qs.ans_c,qs.ans_d,qs.ans_correct " +
+//                        "from question qs, exam ex, exam_question eq " +
+//                        "where  qs.id = eq.question_id and ex.id= eq.exam_id " +
+//                        "and ex.id = ? order by qs.order asc ");
+//
+//        query.setParameter(1,examId);
+//        List<Object[]> objects = query.getResultList();
+//
+//        for (Object[] record : objects) {
+//            QuestionModel questionModel= new QuestionModel();
+//            List<String> listAns= new ArrayList<>();
+//            questionModel.setContent((String) record[0]);
+//            listAns.add((String) record[1]);
+//            listAns.add((String) record[2]);
+//            listAns.add((String) record[3]);
+//            listAns.add((String) record[4]);
+//            questionModel.setAnsCorrect((String) record[5]);
+//            questionModel.setListAns(listAns);
+//            listQuestion.add(questionModel);
+//        }
+//        Page<QuestionModel> page= new PageImpl<QuestionModel>(listQuestion,pageable,listQuestion.size());
+//        return page;
+       return questionRepository.getPageQuestionByExamId(examId,pageable);
     }
 }

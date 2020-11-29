@@ -2,6 +2,7 @@ package com.wru.onthi.controller.admin;
 
 import com.wru.onthi.entity.Question;
 import com.wru.onthi.entity.User;
+import com.wru.onthi.model.QuestionModel;
 import com.wru.onthi.services.QuestionService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
