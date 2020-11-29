@@ -38,4 +38,7 @@
         top: 40px;
         text-transform: uppercase;
     }
+    .newsItem .newsItem__title--content{
+        font-size: 13px !important;
+    }
 }

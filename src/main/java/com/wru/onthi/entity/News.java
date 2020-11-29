@@ -14,6 +14,9 @@ public class News {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "description", columnDefinition="LONGTEXT")
+    private String description;
+
     @Column(name = "content", columnDefinition="LONGTEXT")
     private String content;
 
@@ -60,6 +63,14 @@ public class News {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getContent() {

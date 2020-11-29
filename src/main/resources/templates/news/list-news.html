@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <title>Bài học</title>
+    <div th:replace="fragments/init_lib :: header"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
+<main class="subject-knowledge">
+    <div class="container">
+        <!-- class content-->
+        <section class="subject-knowledgeContent">
+            <div class="row">
+                <div class="col-md-8 col-12">
+                    <div class="subject-knowledgeLeft">
+                        <div class="class-sectionTitle">
+                            <span>Tin tức nổi bật</span>
+                        </div>
+                        <div class="news__list">
+                            <div class="newsItem" th:each="item:${pageInfo}">
+                                <a href="#">
+                                    <div class="newItem__content">
+                                        <div class="img">
+                                            <img th:src="@{'/image/news/'+${item.image}}" alt="">
+                                        </div>
+                                        <div class="newsItem__description">
+                                            <h3 class="newsItem__title--content" th:text="${item.title}"></h3>
+                                            <span>Thời gian :<span th:text="${#dates.format(item.insertDate, 'dd/MM/yyyy HH:mm')}"></span></span><br>
+                                            <span>Số lượt xem: <span th:text="${item.views}"></span></span><br>
+                                            <p th:text="${item.content}"></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="pagination_news">
+                            <ul class="pagination ">
+                                <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                    <a class="page-link" th:href="@{|${path}?page=${pageInfo.number}|}">&laquo;</a>
+                                </li>
+
+                                <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 2), (pageInfo.number + 2))}" >
+                                    <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                                        class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                        <a
+                                                th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                class="page-link"
+                                                th:href="@{|${path}?page=${itemPage}|}"
+                                                th:text="${itemPage}"
+                                        >1</a>
+                                        <span th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</span>
+                                    </li>
+                                </th:block>
+
+                                <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                    <a class="page-link" th:href="@{|${path}?page=${pageInfo.number + 2}|}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/sidebar :: content"></div>
+            </div>
+        </section>
+
+    </div>
+</main>
+<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/init_lib :: script"></div>
+<script>
+    var acc =$('#account').val();
+    if(acc != null || acc != undefined){
+        $('#div-account').removeClass('d-none');
+        $('#link-login').addClass('d-none');
+    }else {
+        $('#div-account').addClass('d-none');
+        $('#link-login').removeClass('d-none');
+    }
+
+    $(document).ready(function (){
+        var logout= $('#msg-logout').val();
+        if(logout != null){
+            alert("Đăng xuất thành công.");
+        }
+    });
+</script>
+</body>
+
+</html>

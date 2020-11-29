@@ -726,12 +726,10 @@ button.btn-showMenu {
 
 .feel-content p {
     width: 80%;
-    height: 87px;
     color: #fdf9f9;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .avatar {
@@ -977,6 +975,72 @@ button.btn-showMenu {
     color: #25d03f;
 }
 
+
+/* ----------------------news---------------------------*/
+
+.news__list {
+    padding: 20px 10px;
+}
+
+.newsItem {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.newsItem:not(:last-child) {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.newsItem a {
+    display: flex;
+    flex-direction: column;
+}
+
+.newsItem__title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.newsItem__title--content {
+    display: none;
+}
+
+.newItem__content {
+    display: flex;
+}
+
+.newsItem .newItem__content .img {
+    flex: 2;
+}
+.newsItem .newItem__content .img img{
+    width: 70%;
+    height: 80%;
+}
+
+.newsItem .newItem__content .newsItem__description {
+    flex: 4;
+    margin-left: -45px;
+}
+.newsItem .newItem__content .newsItem__description h3:hover{
+    color: #25d03f;
+}
+
+.newsItem .newsItem__title--content {
+    display: block;
+    margin-top: 0;
+    font-size: 1rem;
+}
+.page-item.active .page-link{
+    background-color: #477d86 !important;
+}
+.pagination_news{
+    margin-bottom: 10px;
+}
+.pagination_news .pagination{
+    margin: 0px auto;
+    width: 0;
+}
 /*comment lesson*/
 
 
