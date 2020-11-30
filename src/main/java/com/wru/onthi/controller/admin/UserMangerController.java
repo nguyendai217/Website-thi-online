@@ -235,6 +235,11 @@ public class UserMangerController {
         try {
             if(status==0){
                 userService.updateStatus(userId,1);
+                Optional<User> optionalUser= userService.findById(userId);
+                User user= optionalUser.get();
+                user.setUpdateBy(principal.getName());
+                user.setUpdateDate(new Date());
+                userService.updateUser(user);
             }else if(status==1){
                 userService.updateStatus(userId,0);
             }

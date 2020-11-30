@@ -10,7 +10,8 @@ import java.util.Optional;
 public interface NewsService {
     void createNews(News news);
     News updateNews(News news);
-    void deleteNews(News news);
+    void deleteNews(Integer id);
+    void updateStatus(Integer id, Integer status);
     Optional<News> findByNewsId(Integer id);
     List<News> getlistNews();
     Page<News> getAllNews(Pageable pageable);

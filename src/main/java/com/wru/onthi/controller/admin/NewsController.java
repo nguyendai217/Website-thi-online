@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,12 +94,8 @@ public class NewsController {
                                  Principal principal,
                                  @PathVariable(value = "id") Integer id) {
         getInfoUser(model,principal);
-
-        Optional<CategoryNews> optionalCategory= categoryNewsService.findByCategoryNewsId(id);
-        CategoryNews categoryNews= optionalCategory.get();
-
         try {
-            categoryNewsService.deleteCategory(categoryNews);
+            categoryNewsService.deleteCategory(id);
             redir.addFlashAttribute("success","Xoá thể loại thành công");
         }catch (Exception e){
             redir.addFlashAttribute("error","Xoá thể loại thất bại");
@@ -139,6 +136,25 @@ public class NewsController {
         return "redirect:/news/list-category";
 
     }
+    @GetMapping("/update-category-status")
+    public String updateStatus(Model model,Principal principal,
+                               @RequestParam("id") Integer id,
+                               @RequestParam("status") Integer status,
+                               RedirectAttributes redir){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                categoryNewsService.updateCategoryStatus(id,0);
+            }else if(status==0){
+                categoryNewsService.updateCategoryStatus(id,1);
+            }
+            redir.addFlashAttribute("success","Update trạng thái thành công.");
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/news/list-category";
+    }
+
     //list news
     @GetMapping("/list-news")
     public String listNews(Model model,Principal principal,Pageable pageable,String categoryId, String title){
@@ -229,16 +245,39 @@ public class NewsController {
                              @PathVariable(value = "id") Integer id){
         getInfoUser(model,principal);
 
-        Optional<News> optional = newsService.findByNewsId(id);
-        News news= optional.get();
         try {
-            newsService.deleteNews(news);
+            newsService.deleteNews(id);
             redir.addFlashAttribute("success","Xóa tin tức thành công");
             return "redirect:/news/list-news";
         }catch (Exception e){
             redir.addFlashAttribute("error","Xóa tin tức thất bại");
             return "redirect:/news/list-news";
         }
+    }
+
+    @GetMapping("/update-new-status")
+    public String updateNewsStatus(Model model,Principal principal,
+                               @RequestParam("id") Integer id,
+                               @RequestParam("status") Integer status,
+                               RedirectAttributes redir){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                newsService.updateStatus(id,0);
+                Optional<News> optionalNews= newsService.findByNewsId(id);
+                News news= optionalNews.get();
+                news.setUpdateBy(principal.getName());
+                news.setUpdateDate(new Date());
+                newsService.updateNews(news);
+
+            }else if(status==0){
+                newsService.updateStatus(id,1);
+            }
+            redir.addFlashAttribute("success","Update trạng thái thành công.");
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/news/list-news";
     }
 
     // get info user login

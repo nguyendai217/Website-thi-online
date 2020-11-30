@@ -168,6 +168,11 @@ public class LessonControllerAdmin {
         try {
             if(status==1){
                 lessonService.updateStatus(id,0);
+                Optional<Lesson>optionalLesson= lessonService.findByLessonId(id);
+                Lesson lesson=optionalLesson.get();
+                lesson.setUpdateBy(principal.getName());
+                lesson.setUpdateDate(new Date());
+                lessonService.updateLesson(lesson);
             }else if(status==0){
                 lessonService.updateStatus(id,1);
             }

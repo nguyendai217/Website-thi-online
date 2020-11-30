@@ -28,8 +28,13 @@ public class CategoryNewsImpl implements CategoryNewsService {
     }
 
     @Override
-    public void deleteCategory(CategoryNews categoryNews) {
-        categoryNewsRepository.delete(categoryNews);
+    public void deleteCategory(Integer id) {
+        categoryNewsRepository.deleteCategoryNews(id);
+    }
+
+    @Override
+    public void updateCategoryStatus(Integer id, Integer status) {
+        categoryNewsRepository.updateStatus(id,status);
     }
 
     @Override

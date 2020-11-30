@@ -27,7 +27,7 @@ public class Result {
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
-    @Column(name = "satus")
+    @Column(name = "status")
     private Integer status;
 
     public Integer getId() {
