@@ -28,8 +28,8 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public void deleteClass(Classroom classroom) {
-        classRoomRepository.delete(classroom);
+    public void deleteClass(Integer classId) {
+        classRoomRepository.deleteClass(classId);
     }
 
     @Override
@@ -70,6 +70,11 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     public List<Classroom> listClassBySubject(Integer subjectId) {
         return classRoomRepository.getListClassBySubject(subjectId);
+    }
+
+    @Override
+    public void updateStatus(Integer classId, Integer status) {
+        classRoomRepository.updateStatus(classId,status);
     }
 
 

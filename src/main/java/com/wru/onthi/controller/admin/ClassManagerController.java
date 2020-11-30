@@ -154,14 +154,12 @@ public class ClassManagerController {
         }
     }
 
-    @GetMapping("/class/delete-class/{id}")
+    @GetMapping("/class/delete-class/{classId}")
     public String deleteClass(Model model, Principal principal,RedirectAttributes redr,
-                                @PathVariable("id") Integer id) {
+                                @PathVariable("classId") Integer id) {
         getInfoUser(model,principal);
-        Optional<Classroom> optional=classroomService.findById(id);
-        Classroom classroom= optional.get();
         try {
-            classroomService.deleteClass(classroom);
+            classroomService.deleteClass(id);
             redr.addFlashAttribute("success","Xóa lớp học thành công");
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa lớp học thất bại");
@@ -169,6 +167,24 @@ public class ClassManagerController {
         return "redirect:/class/list-class";
     }
 
+    @GetMapping("class/update-status")
+    public String updateStatus(Model model,Principal principal,
+                               @RequestParam("classId") Integer classId,
+                               @RequestParam("status") Integer status,
+                               RedirectAttributes redir){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                classroomService.updateStatus(classId,0);
+            }else if(status==0){
+                classroomService.updateStatus(classId,1);
+            }
+            redir.addFlashAttribute("success","Update trạng thái thành công.");
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/class/list-class";
+    }
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

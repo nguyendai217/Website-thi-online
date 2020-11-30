@@ -15,7 +15,7 @@ import java.util.Optional;
 public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
-    private SubjectRepository subjectRepo;
+    SubjectRepository subjectRepo;
 
     @Override
     public void createSubject(Subject subject) {
@@ -28,8 +28,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void deleteSubject(Subject subject) {
-        subjectRepo.delete(subject);
+    public void deleteSubject(Integer id) {
+        subjectRepo.deleteSubject(id);
     }
 
     @Override
@@ -60,5 +60,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Subject> getListSubjectByClass(Integer id) {
         return subjectRepo.getListSubjectByClass(id);
+    }
+
+    @Override
+    public void updateStatus(Integer id, Integer status) {
+        subjectRepo.updateStatus(id,status);
     }
 }

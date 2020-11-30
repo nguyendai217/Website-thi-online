@@ -98,10 +98,10 @@
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.name}"></td>
                                         <td th:if="${row.status==1}">
-                                            <a th:href="@{#}" class="btn btn-success" title="Active">Active</a>
+                                            <a th:href="@{/subject/update-status(id=${row.id},status=${row.status})}" id="confirmDisable" class="btn btn-success" title="Active">Active</a>
                                         </td>
                                         <td th:if="${row.status==0}">
-                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable">Disable</a>
+                                            <a th:href="@{/subject/update-status(id=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable">Disable</a>
                                         </td>
                                         <td>
                                             <a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
@@ -123,6 +123,8 @@
     </div>
 </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+<div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>

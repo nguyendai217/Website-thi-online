@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.jws.soap.SOAPBinding;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -27,20 +28,24 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM user",nativeQuery = true)
     Page<User> findAllUser(Pageable pageable);
 
-    @Query(value = " SELECT * from User us "
-                    +"WHERE us.username like %:username% " +
-                    "or us.email like %:email% " +
-                    "or us.phone like %:phone% " +
-                    "or us.status =:status", nativeQuery = true)
+    @Query(value = " SELECT u from User u "
+                    +"WHERE u.username like %:username% " +
+                    "or u.email like %:email% " +
+                    "or u.phone like %:phone% " +
+                    "or u.status=:status", nativeQuery = false)
     Page<User> searchUser(@Param("username") String username,
                           @Param("email") String email,
                           @Param("phone") String phone,
-                          @Param("status") String status, Pageable pageable);
+                          @Param("status") Integer status,
+                          Pageable pageable);
 
+    @Modifying
+    @Transactional
     @Query("update User u set u.status=0 where u.id=:userId")
     void deleteUser(Integer userId);
 
     @Modifying
+    @Transactional
     @Query("update User u set u.status =:status where u.id=:userId")
     void updateStatus(@Param("userId") Integer userId,@Param("status") Integer status);
 

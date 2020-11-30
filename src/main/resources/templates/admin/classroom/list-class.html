@@ -96,15 +96,14 @@
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.classname}"></td>
                                         <td th:if="${row.status==1}">
-                                            <a th:href="@{#}" class="btn btn-success" title="Active">Active</a>
+                                            <a th:href="@{/class/update-status(classId=${row.id},status= ${row.status})}" id="confirmDisable" class="btn btn-success" title="Active">Active</a>
                                         </td>
                                         <td th:if="${row.status==0}">
-                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable">Disable</a>
+                                            <a th:href="@{/class/update-status(classId=${row.id},status= ${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable">Disable</a>
                                         </td>
-
                                         <td>
                                             <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/class/delete-class/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/class/delete-class/{classId}(classId=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -121,23 +120,13 @@
     </div>
 </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+<div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $("#classManager").addClass("active");
-    $('#success').delay(5000).fadeOut(1000);
-    $('#error').delay(5000).fadeOut(1000);
-
-    //for delete user
-    $(document).ready(function () {
-        $('.table #confirmDelete').on('click', function(event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#removeModalCenter #delRef').attr('href', href);
-            $('#removeModalCenter').modal();
-        });
-    });
 </script>
 </body>
 </html>

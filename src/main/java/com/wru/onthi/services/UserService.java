@@ -15,7 +15,7 @@ public interface UserService {
     Optional<User> findById(Integer id);
     User findUserByName(String name);
     Page<User> getAllUser(Pageable pageable);
-    Page<User> searchUser(String username, String email, String phone,String status,Pageable pageable);
+    Page<User> searchUser(String username, String email, String phone,Integer status,Pageable pageable);
     User findByEmail(String email);
     User findByUsername(String username);
     void updateStatus(Integer userId, Integer status);

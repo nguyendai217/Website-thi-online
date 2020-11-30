@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> searchUser(String username, String email, String phone, String status,Pageable pageable) {
+    public Page<User> searchUser(String username, String email, String phone, Integer status,Pageable pageable) {
         if(username==""){
             username= null;
         }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         if(phone==""){
             phone= null;
         }
-        if(status==""){
+        if(status.equals("")){
             status= null;
         }
         return userRepository.searchUser(username,email,phone,status,pageable);
@@ -74,7 +74,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void updateStatus(Integer userId, Integer status) {
         userRepository.updateStatus(userId,status);
     }

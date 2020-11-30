@@ -1,6 +1,7 @@
 package com.wru.onthi.controller.admin;
 
 import com.google.common.base.Strings;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.Subject;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.SubjectService;
@@ -164,13 +165,29 @@ public class SubjectManagerController {
     public String deleteSubject(Model model, Principal principal,RedirectAttributes redr,
                                 @PathVariable("id") Integer id) {
         getInfoUser(model,principal);
-        Optional<Subject> optional= subjectService.findBySubjectId(id);
-        Subject subject= optional.get();
         try {
-            subjectService.deleteSubject(subject);
+            subjectService.deleteSubject(id);
             redr.addFlashAttribute("success","Xóa môn học thành công");
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa môn học thất bại");
+        }
+        return "redirect:/subject/list-subject";
+    }
+
+    @GetMapping("/update-status")
+    public String updateStatus(Model model, Principal principal,RedirectAttributes redr,
+                               @RequestParam("id") Integer id,
+                               @RequestParam("status") Integer status){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                subjectService.updateStatus(id,0);
+            }else if(status==0){
+                subjectService.updateStatus(id,1);
+            }
+            redr.addFlashAttribute("success","Updpate trạng thái thành công");
+        }catch (Exception e){
+            redr.addFlashAttribute("error","Update trạng thái thất bại");
         }
         return "redirect:/subject/list-subject";
     }

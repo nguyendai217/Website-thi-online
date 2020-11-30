@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ClassroomService {
     void createClass(Classroom classroom);
     Classroom updateClass(Classroom classroom);
-    void deleteClass(Classroom classroom);
+    void deleteClass(Integer classId);
     Optional<Classroom> findById(Integer id);
     Classroom findByClassName(String name);
     Classroom findByClassCode(String code);
@@ -19,4 +19,5 @@ public interface ClassroomService {
     List<Classroom> listClassBySchool(Integer idSchool);
     Page<Classroom> searchClass(String keyword,Pageable pageable);
     List<Classroom> listClassBySubject(Integer subjectId);
+    void updateStatus(Integer classId, Integer status);
 }

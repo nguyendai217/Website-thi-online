@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,22 +48,22 @@ public class UserMangerController {
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable,
-                             String username,String email, String phone,String status){
+                             String username, String email, String phone, Integer status){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
         Page<User> pageUser= null;
         if((username== null || username=="") && (email == null|| email=="")
-                && (phone== null || phone=="") && (status== null || status=="")){
-            pageUser = userService.getAllUser(newPageAble);
+                && (phone== null || phone=="") && (status== null || status.equals(""))){
+            pageUser = userService.getAllUser(pageItem);
         }else {
-            pageUser= userService.searchUser(username,email,phone,status,newPageAble);
+            pageUser= userService.searchUser(username,email,phone,status,pageItem);
             model.addAttribute("us",username);
             model.addAttribute("em",email);
             model.addAttribute("ph",phone);
-            model.addAttribute("stt",status);
+            model.addAttribute("stt",Integer.valueOf(status));
         }
         // get info user login
         getInfoUser(model,principal);
