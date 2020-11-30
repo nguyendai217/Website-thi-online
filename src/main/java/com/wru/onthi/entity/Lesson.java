@@ -13,7 +13,7 @@ public class Lesson {
     private Integer id;
     @Column(name = "lessonname")
     private String lessonName;
-    @Column(name = "lessoncontent")
+    @Column(name = "lessoncontent",columnDefinition="LONGTEXT")
     private String lessonContent;
     @Column(name = "image")
     private String image;
@@ -27,6 +27,8 @@ public class Lesson {
     private Date updateDate;
     @Column(name = "update_by")
     private String updateBy;
+    @Column(name = "status")
+    private Integer status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
@@ -133,5 +135,13 @@ public class Lesson {
 
     public void setListComment(List<Comment> listComment) {
         this.listComment = listComment;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

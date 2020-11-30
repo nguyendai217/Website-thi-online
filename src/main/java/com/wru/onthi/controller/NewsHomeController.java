@@ -13,9 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class NewsHomeController {
@@ -41,5 +43,14 @@ public class NewsHomeController {
         model.addAttribute("pageInfo", pageNews);
         model.addAttribute("path","/tintuc/list-news");
         return "news/list-news";
+    }
+
+    @GetMapping("/tintuc")
+    public String getInfoNews(@RequestParam("newsId") Integer newsId,Model model,Principal principal){
+        Optional<News> optionalNews= newsService.findByNewsId(newsId);
+        News news= optionalNews.get();
+        model.addAttribute("news",news);
+
+        return "news/content-news";
     }
 }

@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="content" th:remove="tag">
+    <!-- Modal -->
+    <div class="modal fade" id="removeModalCenterActive" tabindex="-1" role="dialog"
+         aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeModalCenterTitle">Xác nhận Active</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Bạn có muốn thay đổi sang Active hay không ?</h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i>Hủy bỏ</button>
+                    <a href="" class="btn btn-danger" id="delRef"><i class="fa fa-check"></i>Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

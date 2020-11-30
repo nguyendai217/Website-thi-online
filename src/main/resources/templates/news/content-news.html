@@ -34,72 +34,17 @@
                 </div>
 
                 <!-- Tiêu đề  -->
-                <h1 class="main-title">
-                    Mua chuột không dây nào tốt giữa Logitech, Microsoft, Apple
-                </h1>
+                <h1 class="main-title" th:text="${news.title}"></h1>
 
                 <!-- Thông tin ngày đăng -->
                 <div class="post-more-info">
-                    <div class="entry-date">06/09/2020 06:09 PM</div>
+                    <div class="entry-date" th:text="${#dates.format(news.insertDate, 'dd/MM/yyyy HH:mm')}"></div>
                     <div class="clear"></div>
                 </div>
 
                 <!-- Bài Viết -->
                 <article class="post-main-content">
-                    <p><strong><em>Học sinh trung học cơ sở có thể trải nghiệm miễn phí lộ trình lớp 7,8,9 trên hệ thống
-                        VioEdu ngay từ hôm nay</em></strong>.</p>
-                    <p>Để hỗ trợ các bạn lớp 7, 8, 9 có một công cụ học tập hiện đại, cá nhân hóa, mang tính tương tác
-                        cao, VioEdu đã nhanh chóng hoàn thiện và “trình làng” chương trình của 3 khối lớp này. Với hệ
-                        thống bài giảng sinh động, các thử thách thú vị cùng vô vàn quà thưởng hấp dẫn, VioEdu đang chờ
-                        đón các bạn lớp 7, 8, 9 vào học MIỄN PHÍ từ nay tới hết 31/12/2020.&nbsp;</p>
-                    <ul class="wp-block-gallery columns-1 is-cropped">
-                        <li class="blocks-gallery-item">
-                            <figure><img
-                                    src="https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-1024x1024.jpg"
-                                    alt="" data-id="3845"
-                                    data-link="https://vio.edu.vn/tin-tuc/trai-nghiem-mien-phi-lo-trinh-hoc-lop-789-tai-vioedu/171120trai-nghiem-mien-phi-lo-trinh-hoc-tap-lop-789-post-01/"
-                                    class="wp-image-3845"
-                                    srcset="https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-1024x1024.jpg 1024w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-150x150.jpg 150w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-300x300.jpg 300w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-768x768.jpg 768w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-696x696.jpg 696w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-1068x1068.jpg 1068w, https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/171120TRẢI-NGHIỆM-MIỄN-PHÍ-LỘ-TRÌNH-HỌC-TẬP-LỚP-789-post-01-420x420.jpg 420w"
-                                    sizes="(max-width: 1024px) 100vw, 1024px"/></figure>
-                        </li>
-                    </ul>
-                    <p><strong>Bạn có thể trải nghiệm tất cả những tính năng của hệ thống, cụ thể:</strong></p>
-                    <ul>
-                        <li>Bài giảng thiết kế sinh động, ứng dụng tình huống thực tế</li>
-                        <li>Bộ câu hỏi phong phú, giàu tính tương tác; chia theo tuần học, bám sát với chương trình sách
-                            giáo khoa của Bộ Giáo Dục và Đào Tạo
-                        </li>
-                        <li>Học tập với lộ trình cá nhân hóa, được hệ thống tự động điều chỉnh mức độ từ cơ bản tới nâng
-                            cao
-                        </li>
-                        <li>Học tập linh động mọi lúc mọi nơi, chỉ cần có thiết bị điện tử kết nối internet</li>
-                        <li>Cạnh tranh, cọ xát với các bạn học khác thông qua những sân chơi quy mô cá nhân, tập thể:
-                            Thách đấu, Đấu trường toán học,&#8230;
-                        </li>
-                        <li>Tích lũy kim cương, đổi quà thưởng hấp dẫn</li>
-                        <li>Rèn luyện với ngân hàng bài kiểm tra, thi thử phong phú</li>
-                    </ul>
-                    <figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
-                        <div class="wp-block-embed__wrapper">
-                            <iframe title="[VioEdu TV] Getting started with VioEdu !" style="width: 100%;"
-                                    src="https://www.youtube.com/embed/00lqIT_gI7I?feature=oembed" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
-                        </div>
-                        <figcaption><em>Học tập chủ động, cá nhân hóa cùng VioEdu</em></figcaption>
-                    </figure>
-                    <p><strong>Các bước để học tập trên VioEdu:</strong></p>
-                    <p>B1: Đăng ký tài khoản trên VioEdu tại đây <a href="https://vio.edu.vn/register/step-one">Đăng ký
-                        tài khoản</a> (Nếu bạn đã có tài khoản trên VioEdu thì có thể bỏ qua bước này)</p>
-                    <p>B2: Đăng nhập tài khoản và click tới phần <a href="https://vio.edu.vn/skill-list">Vào Học</a>,
-                        chọn khối lớp tương ứng với thông tin cá nhân mà bạn đã đăng ký với hệ thống</p>
-                    <p>B3: Chọn chủ đề mà bạn đang học theo từng chương và học thôi!<br></p>
-                    <ul class="wp-block-gallery columns-1 is-cropped">
-                        <li class="blocks-gallery-item">
-                            <figure><img src="https://vio.edu.vn/tin-tuc/wp-content/uploads/2020/11/221-1024x628.jpg"
-                                         alt=""/></figure>
-                        </li>
-                    </ul>
+                    [(${news.content})]
                 </article>
                 <div class="post-category">
                     <div class="item-category">
@@ -113,52 +58,53 @@
                     </div>
                 </div>
                 <!-- List comment -->
-                <div class="list-comment">
-                    <h2>Bình luận</h2>
-                    <div class="item-comment">
-                        <div class="comment-image">
-                            <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">
-                        </div>
-                        <div class="comment-main-content">
-                            <div class="comment-infor">
-                                <div class="comment-infor-author"><a href="#">Nguyen van A</a></div>
-                                <div class="comment-infor-time">12/11/2020</div>
-                            </div>
-                            <div class="comment-content">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit facilis
-                                incidunt obcaecati sed, cupiditate architecto ullam, in nostrum aspernatur voluptate
-                                esse deleniti ea aperiam quas repudiandae hic! Illum.
-                            </div>
-                            <div class="rep-comment">
-                                <div class="item-comment">
-                                    <div class="comment-image">
-                                        <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">
-                                    </div>
-                                    <div class="comment-main-content">
-                                        <div class="comment-infor">
-                                            <div class="comment-infor-author"><a href="#">Nguyen van B</a></div>
-                                            <div class="comment-infor-time">12/11/2020</div>
-                                        </div>
-                                        <div class="comment-content">
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit
-                                            facilis incidunt obcaecati sed, cupiditate architecto ullam, in nostrum
-                                            aspernatur voluptate esse deleniti ea aperiam quas repudiandae hic! Illum.
-                                        </div>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="list-comment">-->
+
+<!--                    <div class="item-comment">-->
+<!--                        <div class="comment-image">-->
+<!--                            <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">-->
+<!--                        </div>-->
+<!--                        <div class="comment-main-content">-->
+<!--                            <div class="comment-infor">-->
+<!--                                <div class="comment-infor-author"><a href="#">Nguyen van A</a></div>-->
+<!--                                <div class="comment-infor-time">12/11/2020</div>-->
+<!--                            </div>-->
+<!--                            <div class="comment-content">-->
+<!--                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit facilis-->
+<!--                                incidunt obcaecati sed, cupiditate architecto ullam, in nostrum aspernatur voluptate-->
+<!--                                esse deleniti ea aperiam quas repudiandae hic! Illum.-->
+<!--                            </div>-->
+<!--                            <div class="rep-comment">-->
+<!--                                <div class="item-comment">-->
+<!--                                    <div class="comment-image">-->
+<!--                                        <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">-->
+<!--                                    </div>-->
+<!--                                    <div class="comment-main-content">-->
+<!--                                        <div class="comment-infor">-->
+<!--                                            <div class="comment-infor-author"><a href="#">Nguyen van B</a></div>-->
+<!--                                            <div class="comment-infor-time">12/11/2020</div>-->
+<!--                                        </div>-->
+<!--                                        <div class="comment-content">-->
+<!--                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit-->
+<!--                                            facilis incidunt obcaecati sed, cupiditate architecto ullam, in nostrum-->
+<!--                                            aspernatur voluptate esse deleniti ea aperiam quas repudiandae hic! Illum.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="clear"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="clear"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!-- Comment -->
                 <div>
+                    <h2>Bình luận</h2>
                     <form class="needs-validation" novalidate>
                         <div class="form-row">
                             <div class="col-md-12 mb-12">
-                                <textarea type="text" class="form-control" id="comment" placeholder="Bình Luận" rows="8"
+                                <textarea type="text" class="form-control" id="comment" placeholder="Bình Luận" rows="4"
                                           value="Mark" required></textarea>
                                 <div class="valid-feedback">
                                     Looks good!

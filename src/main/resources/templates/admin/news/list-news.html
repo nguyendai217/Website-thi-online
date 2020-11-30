@@ -95,9 +95,9 @@
                                         <th>Tiêu đề</th>
                                         <th>Nội dung</th>
                                         <th>Thể loại</th>
-                                        <th>CreateBy</th>
                                         <th>Thời gian</th>
                                         <th>Views</th>
+                                        <th>Trạng thái</th>
                                         <th>Tùy chọn</th>
                                     </tr>
                                     </thead>
@@ -108,9 +108,14 @@
                                         <td th:text="${#strings.substring(row.title,0,20)+'...'}"></td>
                                         <td th:text="${#strings.substring(row.content,0,30)+'...'}"></td>
                                         <td th:text="${row.categoryNews.categoryName}"></td>
-                                        <td th:text="${row.insertBy}"></td>
                                         <td th:text="${#dates.format(row.insertDate, 'dd/MM/yyyy')}"></td>
                                         <td th:text="${row.views}"></td>
+                                        <td th:if="${row.status==1}">
+                                            <a th:href="@{#}" class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
+                                        </td>
+                                        <td th:if="${row.status==0}">
+                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
+                                        </td>
                                         <td>
                                             <a th:href="@{/news/detail-news/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                             <a th:href="@{/news/update-news/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>

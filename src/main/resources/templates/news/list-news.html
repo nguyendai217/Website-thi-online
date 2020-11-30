@@ -19,7 +19,7 @@
                         </div>
                         <div class="news__list">
                             <div class="newsItem" th:each="item:${pageInfo}">
-                                <a href="#">
+                                <a th:href="@{/tintuc(newsId=${item.id})}">
                                     <div class="newItem__content">
                                         <div class="img">
                                             <img th:src="@{'/image/news/'+${item.image}}" alt="">

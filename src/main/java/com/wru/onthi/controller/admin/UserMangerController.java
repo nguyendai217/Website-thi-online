@@ -47,17 +47,22 @@ public class UserMangerController {
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable,
-                             String username,String email, String phone){
+                             String username,String email, String phone,String status){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable newPageAble = PageRequest.of(pageNumber, pageSize);
         Page<User> pageUser= null;
-        if(username== null && email == null && phone== null){
+        if((username== null || username=="") && (email == null|| email=="")
+                && (phone== null || phone=="") && (status== null || status=="")){
             pageUser = userService.getAllUser(newPageAble);
         }else {
-            pageUser= userService.searchUser(username,email,phone,pageable);
+            pageUser= userService.searchUser(username,email,phone,status,newPageAble);
+            model.addAttribute("us",username);
+            model.addAttribute("em",email);
+            model.addAttribute("ph",phone);
+            model.addAttribute("stt",status);
         }
         // get info user login
         getInfoUser(model,principal);
@@ -221,13 +226,29 @@ public class UserMangerController {
         return "redirect:/admin/user/list-user";
     }
 
+    @GetMapping("/user/update-status")
+    public String updateStatus(Model model,RedirectAttributes redirectAttributes, Principal principal,
+                               @RequestParam("userId") Integer userId,
+                               @RequestParam("status") Integer status){
+        getInfoUser(model,principal);
+        try {
+            if(status==0){
+                userService.updateStatus(userId,1);
+            }else if(status==1){
+                userService.updateStatus(userId,0);
+            }
+            redirectAttributes.addFlashAttribute("success","Update trạng thái thành công");
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/admin/user/list-user";
+    }
+
     @GetMapping("/user/delete/{id}")
     public String deleteUser(Model model,RedirectAttributes redirectAttributes, Principal principal,@PathVariable(value = "id") Integer id){
         getInfoUser(model,principal);
-        Optional<User> optionalUser= userService.findById(id);
-        User user= optionalUser.get();
         try {
-            userService.deleteUser(user);
+            userService.deleteUser(id);
             redirectAttributes.addFlashAttribute("success","Xóa user thành công.");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error","Delete user thất bại");

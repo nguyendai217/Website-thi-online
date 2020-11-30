@@ -41,6 +41,9 @@ public class News {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "status")
+    private Integer status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryNews categoryNews;
@@ -151,5 +154,13 @@ public class News {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

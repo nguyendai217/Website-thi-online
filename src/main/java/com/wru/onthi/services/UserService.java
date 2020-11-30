@@ -11,11 +11,12 @@ import java.util.Optional;
 public interface UserService {
     void createUser(User user);
     User updateUser(User user);
-    void deleteUser(User user);
+    void deleteUser(Integer userId);
     Optional<User> findById(Integer id);
     User findUserByName(String name);
     Page<User> getAllUser(Pageable pageable);
-    Page<User> searchUser(String username, String email, String phone,Pageable pageable);
+    Page<User> searchUser(String username, String email, String phone,String status,Pageable pageable);
     User findByEmail(String email);
     User findByUsername(String username);
+    void updateStatus(Integer userId, Integer status);
 }

@@ -49,34 +49,40 @@
                         <div>
                             <form th:action="@{/admin/user/list-user}" method="get">
                                 <div class="row">
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
                                         <label>Username</label>
                                         <div>
-                                            <input class="form-control" name="username" type="text" th:text="${strUser}">
+                                            <input class="form-control" name="username" type="text" th:value="${us}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
                                         <label>Email</label>
                                         <div>
-                                            <input class="form-control" name="email" type="text" th:text="${strEmail}">
+                                            <input class="form-control" name="email" type="text" th:value="${em}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12  col-xs-3">
                                         <label>Số điện thoại</label>
                                         <div>
-                                            <input class="form-control" name="phone" type="text" th:text="${strPhone}">
+                                            <input class="form-control" name="phone" type="text" th:value="${ph}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
+                                        <label class="labels">Trạng thái</label>
+                                        <select class="form-control" name="status">
+                                            <option value="">Tùy chọn</option>
+                                            <option value="1" th:selected="${stt=='1'}">Active</option>
+                                            <option value="0" th:selected="${stt=='0'}">Disable</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
                                         <label>&nbsp;</label>
                                         <div>
                                             <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                                    </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
                                         <label>&nbsp;</label>
                                         <div>
                                             <a th:href="@{/admin/user/add-user}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm user</a>
@@ -94,6 +100,9 @@
                         <div class="bg-success col-md-12" id="success"
                              th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
                         </div>
+                        <div class="bg-success col-md-12" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                        </div>
                         <div class="tile-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="sampleTable">
@@ -106,7 +115,7 @@
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
                                             <th>Giới tính</th>
-                                            <th>Sinh nhật</th>
+                                            <th>Trạng thái</th>
                                             <th>Tùy chọn</th>
                                         </tr>
                                         </thead>
@@ -121,7 +130,14 @@
                                             <td th:if="${row.gender == null}">NULL</td>
                                             <td th:if="${row.gender==1}">Nam</td>
                                             <td th:if="${row.gender==0}">Nữ</td>
-                                            <td th:text="${#dates.format(row.birthday, 'dd/MM/yyy')}"></td>
+                                            <td th:if="${row.status==1}">
+                                                <a th:href="@{/admin/user/update-status(userId=${row.id},status=${row.status})}"
+                                                   class="btn btn-success" title="Active" id="confirmDisable"><i class="fa fa-check"></i></a>
+                                            </td>
+                                            <td th:if="${row.status==0}">
+                                                <a th:href="@{/admin/user/update-status(userId=${row.id},status=${row.status})}"
+                                                   class="btn btn-secondary" title="Disable" id="confirmActive"><i class="fa fa-minus"></i></a>
+                                            </td>
                                             <td>
                                                 <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                                 <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
@@ -141,6 +157,8 @@
         </div>
     </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+    <div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>

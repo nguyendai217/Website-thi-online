@@ -84,18 +84,25 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>Hình ảnh</th>
                                         <th>Mã môn học</th>
                                         <th>Tên môn học</th>
-                                        <th>Hình ảnh</th>
+                                        <th>Trạng thái</th>
                                         <th>Tùy chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
+                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.name}"></td>
-                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
+                                        <td th:if="${row.status==1}">
+                                            <a th:href="@{#}" class="btn btn-success" title="Active">Active</a>
+                                        </td>
+                                        <td th:if="${row.status==0}">
+                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable">Disable</a>
+                                        </td>
                                         <td>
                                             <a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
                                             <a th:href="@{/subject/delete/{id}(id=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>

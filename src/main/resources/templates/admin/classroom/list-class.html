@@ -82,21 +82,26 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>Hình ảnh</th>
                                         <th>Mã lớp</th>
                                         <th>Tên lớp</th>
                                         <th>Trạng thái</th>
-                                        <th>Hình ảnh</th>
                                         <th>Tuỳ chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
+                                        <td><img style="height: 50px;width: 50px" th:src="@{'/image/classroom/'+ ${row.image}}"></td>
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.classname}"></td>
-                                        <td th:if="${row.status==1}">Đang hoạt động</td>
-                                        <td th:if="${row.status==0}">Không hoạt động</td>
-                                        <td><img style="height: 50px;width: 50px" th:src="@{'/image/classroom/'+ ${row.image}}"></td>
+                                        <td th:if="${row.status==1}">
+                                            <a th:href="@{#}" class="btn btn-success" title="Active">Active</a>
+                                        </td>
+                                        <td th:if="${row.status==0}">
+                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable">Disable</a>
+                                        </td>
+
                                         <td>
                                             <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
                                             <a th:href="@{/class/delete-class/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>

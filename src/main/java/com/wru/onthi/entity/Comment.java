@@ -13,7 +13,7 @@ public class Comment {
     @Column(name = "time_comment")
     private String timeComment;
 
-    @Column(name = "content")
+    @Column(name = "content",columnDefinition="LONGTEXT")
     private String contentComment;
 
     @ManyToOne(fetch = FetchType.LAZY)

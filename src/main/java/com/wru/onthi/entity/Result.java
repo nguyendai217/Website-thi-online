@@ -16,6 +16,9 @@ public class Result {
     @Column(name = "score")
     private Double score;
 
+    @Column(name = "detail",columnDefinition="TEXT")
+    private String detail;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userResult;
@@ -23,6 +26,9 @@ public class Result {
     @OneToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
+
+    @Column(name = "satus")
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -54,5 +60,21 @@ public class Result {
 
     public void setExam(Exam exam) {
         this.exam = exam;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

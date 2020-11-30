@@ -104,12 +104,12 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Mã đề thi</th>
-                                        <th>Tiêu đề</th>
                                         <th>Môn học</th>
                                         <th>Lớp</th>
                                         <th>Số câu hỏi</th>
-                                        <th>Thời gian(phút)</th>
+                                        <th>Time(phút)</th>
                                         <th>Views</th>
+                                        <th>Trạng thái</th>
                                         <th>Tùy chọn</th>
                                     </tr>
                                     </thead>
@@ -117,13 +117,17 @@
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
                                         <td th:text="${row.codeExam}"></td>
-                                        <td th:text="${row.title}"></td>
                                         <td th:text="${row.exam_subject.name}"></td>
                                         <td th:text="${row.exam_classroom.classname}"></td>
                                         <td th:text="${row.totalQuestion}"></td>
                                         <td th:text="${row.timeOut}"></td>
                                         <td th:text="${row.views}"></td>
-
+                                        <td th:if="${row.status==1}">
+                                            <a th:href="@{#}" class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
+                                        </td>
+                                        <td th:if="${row.status==0}">
+                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
+                                        </td>
                                         <td>
                                             <a th:href="@{/question/list-question(examId=${row.id})}" class="btn btn-success" title="Thêm câu hỏi"><i class="fa fa-plus"></i></a>
                                             <a th:href="@{/exam/detail-exam/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>

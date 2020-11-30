@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) {
-        userRepository.delete(user);
+    public void deleteUser(Integer userId) {
+        userRepository.deleteUser(userId);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> searchUser(String username, String email, String phone,Pageable pageable) {
+    public Page<User> searchUser(String username, String email, String phone, String status,Pageable pageable) {
         if(username==""){
             username= null;
         }
@@ -56,7 +57,10 @@ public class UserServiceImpl implements UserService {
         if(phone==""){
             phone= null;
         }
-        return userRepository.searchUser(username,email,phone,pageable);
+        if(status==""){
+            status= null;
+        }
+        return userRepository.searchUser(username,email,phone,status,pageable);
     }
 
     @Override
@@ -67,6 +71,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Integer userId, Integer status) {
+        userRepository.updateStatus(userId,status);
     }
 
 

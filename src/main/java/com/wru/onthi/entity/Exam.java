@@ -52,6 +52,9 @@ public class Exam {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Column(name = "status")
+    private Integer status;
+
     @OneToMany(mappedBy = "examQuestion")
     private List<ExamQuestion> listExamQuestion;
 
@@ -142,6 +145,14 @@ public class Exam {
 
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public List<ExamQuestion> getListExamQuestion() {

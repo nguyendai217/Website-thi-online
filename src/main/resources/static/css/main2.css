@@ -81,11 +81,11 @@
 }
 
 #post .main-title {
-    font-size: 34px;
+    font-size: 28px;
     line-height: 34px;
     margin: 20px 0 20px 0;
     word-break: break-word;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 #post .post-more-info .entry-date {
@@ -93,7 +93,7 @@
     color: #444;
     font-weight: normal;
     font-size: 14px;
-    color: #a8a8a8;
+    color: #262626;
     letter-spacing: 2px;
     float: right;
 }
