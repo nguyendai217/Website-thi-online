@@ -95,12 +95,12 @@ $(document).ready(function () {
 
 
     menuItem.attr("hasSubMenu", "true").click(function (e) {
-        $(this).toggleClass("show")
+        $(this).toggleClass("show",500)
 
     })
 
     btnMenu.on('click', function (e) {
-        menuMobile.toggleClass('show')
+        menuMobile.toggleClass('show',500)
     })
 
 

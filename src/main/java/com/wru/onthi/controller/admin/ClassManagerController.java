@@ -9,6 +9,7 @@ import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.SchoolService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +43,9 @@ public class ClassManagerController {
 
     @Autowired
     SchoolService schoolService;
+
+    @Value("${folder.upload}")
+    String foldeUpload;
 
     @GetMapping("/class/list-class")
     public String listClass(Model model, Principal principal, Pageable pageable,String searchClass){
@@ -201,7 +205,7 @@ public class ClassManagerController {
     }
 
     private void UploadImage(MultipartFile multipartFile,String fileImage) throws IOException {
-        String uploadDir="src/main/resources/static/image/classroom/";
+        String uploadDir= this.foldeUpload +"/"+ "classroom";
         Path uploadpath= Paths.get(uploadDir);
         if(! Files.exists(uploadpath)){
             Files.createDirectories(uploadpath);

@@ -526,7 +526,7 @@ button.btn-showMenu {
     z-index: 1;
     color: var(--white);
     width: 100%;
-    height: 30%;
+    height: 34%;
     overflow: hidden;
     transition: 1s ease-in-out;
     margin-bottom: 4px;

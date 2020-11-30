@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/","/login/**","/reset_password",
                         "/oauth2/**","/signin","/class/**","/tintuc/**","/lophoc/**"
-                        ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**"
+                        ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**", "/image/**"
                         ,"/kiemtra/**","/contact/**","/lesson","/user/profile","/hoctap/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("USER","ADMIN","MANAGER")
                 .antMatchers("/admin/**","/profile","/lesson/**","/exam/**","/download/**").hasAnyAuthority("ADMIN","MANAGER")
