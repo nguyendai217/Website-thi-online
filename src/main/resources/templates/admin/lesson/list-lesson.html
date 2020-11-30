@@ -121,10 +121,10 @@
                                         <td th:text="${row.subject.name}"></td>
                                         <td th:text="${row.classroom.classname}"></td>
                                         <td th:if="${row.status==1}">
-                                            <a th:href="@{#}" class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
+                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"  id="confirmDisable"class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
                                         </td>
                                         <td th:if="${row.status==0}">
-                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
+                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
                                         </td>
                                         <td>
                                             <a th:href="@{/lesson/detail-lesson/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
@@ -146,6 +146,8 @@
     </div>
 </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+<div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>

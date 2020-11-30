@@ -123,10 +123,10 @@
                                         <td th:text="${row.timeOut}"></td>
                                         <td th:text="${row.views}"></td>
                                         <td th:if="${row.status==1}">
-                                            <a th:href="@{#}" class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
+                                            <a th:href="@{/exam/update-status(examId=${row.id},status=${row.status})}" id="confirmDisable" class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
                                         </td>
                                         <td th:if="${row.status==0}">
-                                            <a th:href="@{#}" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
+                                            <a th:href="@{/exam/update-status(examId=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
                                         </td>
                                         <td>
                                             <a th:href="@{/question/list-question(examId=${row.id})}" class="btn btn-success" title="Thêm câu hỏi"><i class="fa fa-plus"></i></a>
@@ -148,6 +148,8 @@
     </div>
 </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+<div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>

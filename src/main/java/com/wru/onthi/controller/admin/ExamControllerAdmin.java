@@ -12,10 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -204,10 +201,8 @@ public class ExamControllerAdmin {
     @GetMapping("/delete-exam/{examId}")
     public String deleteExam(Model model, Principal principal,@PathVariable("examId") Integer examId,RedirectAttributes redr){
         getInfoUser(model,principal);
-        Optional<Exam> optionalExam= examService.findByExamId(examId);
-        Exam exam= optionalExam.get();
         try {
-            examService.deleteExam(exam);
+            examService.deleteExam(examId);
             redr.addFlashAttribute("success","Xóa đề thi thành công");
             return "redirect:/exam/list-exam";
         }catch (Exception e){
@@ -215,6 +210,25 @@ public class ExamControllerAdmin {
             redr.addFlashAttribute("error","Xóa đề thi thất bại");
             return "redirect:/exam/list-exam";
         }
+    }
+
+    @GetMapping("/update-status")
+    public String updateStatus(Model model,Principal principal,
+                               @RequestParam("examId") Integer examId,
+                               @RequestParam("status") Integer status,
+                               RedirectAttributes redir){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                examService.updateStatus(examId,0);
+            }else if(status==0){
+                examService.updateStatus(examId,1);
+            }
+            redir.addFlashAttribute("success","Update trạng thái thành công.");
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/exam/list-exam";
     }
 
     // get info user login

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface LessonService {
     void createLesson(Lesson lesson);
     Lesson updateLesson(Lesson lesson);
-    void deleteLesson(Lesson lesson);
+    void deleteLesson(Integer id);
     List<Lesson> getListLesson();
     Optional<Lesson> findByLessonId(Integer id);
     List<Lesson> findByName(String name);
@@ -22,5 +22,6 @@ public interface LessonService {
     List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId);
     Lesson getContentLesson(Integer lessonId);
     Page<Lesson> searchLesson(String lessonName,String subjectId,String classId,Pageable pageable);
+    void updateStatus(Integer id, Integer status);
 
 }

@@ -53,8 +53,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public void deleteExam(Exam exam) {
-        examRepository.delete(exam);
+    public void deleteExam(Integer examId) {
+        examRepository.deleteExam(examId);
     }
 
     @Override
@@ -74,5 +74,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Page<Exam> getListExamByClass(Integer classId, Pageable pageable) {
         return examRepository.getListExamByClass(classId,pageable);
+    }
+
+    @Override
+    public void updateStatus(Integer examId, Integer status) {
+        examRepository.updateStatus(examId,status);
     }
 }

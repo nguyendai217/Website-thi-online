@@ -37,8 +37,8 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void deleteLesson(Lesson lesson) {
-        lessonRepository.delete(lesson);
+    public void deleteLesson(Integer id) {
+        lessonRepository.deleteLesson(id);
     }
 
     @Override
@@ -114,5 +114,10 @@ public class LessonServiceImpl implements LessonService {
             classId= null;
         }
         return lessonRepository.searchLesson(lessonName,subjectId,classId,pageable);
+    }
+
+    @Override
+    public void updateStatus(Integer id, Integer status) {
+        lessonRepository.updateStatus(id,status);
     }
 }

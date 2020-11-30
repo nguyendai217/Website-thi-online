@@ -5,10 +5,12 @@ import com.wru.onthi.entity.Lesson;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -25,4 +27,14 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
 
     @Query(value = "select * from exam where class_id =: classId",nativeQuery = true )
     Page<Exam> getListExamByClass(@Param("classId") Integer classId,Pageable pageable);
+
+    @Modifying
+    @Transactional
+    @Query("update Exam ex set ex.status=0 where ex.id =:examId")
+    void deleteExam(@Param("examId") Integer examId);
+
+    @Modifying
+    @Transactional
+    @Query("update Exam ex set ex.status=:status where ex.id=:examId")
+    void updateStatus(@Param("examId") Integer examId, @Param("status") Integer status);
 }

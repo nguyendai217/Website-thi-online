@@ -150,15 +150,32 @@ public class LessonControllerAdmin {
     public String deleteLesson(Model model, Principal principal, RedirectAttributes redr,
                                @PathVariable("id") Integer id){
         getInfoUser(model,principal);
-        Optional<Lesson> optional= lessonService.findByLessonId(id);
-        Lesson lesson= optional.get();
         try {
-            lessonService.deleteLesson(lesson);
+            lessonService.deleteLesson(id);
             redr.addFlashAttribute("success","Xóa bài học thành công");
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa bài học thất bại");
         }
-        return "redirect:/lesson/list-lesson-manager";
+        return "redirect:/lesson/list-lesson";
+    }
+
+    @GetMapping("/update-status")
+    public String updateStatus(Model model,Principal principal,
+                               @RequestParam("id") Integer id,
+                               @RequestParam("status") Integer status,
+                               RedirectAttributes redir){
+        getInfoUser(model,principal);
+        try {
+            if(status==1){
+                lessonService.updateStatus(id,0);
+            }else if(status==0){
+                lessonService.updateStatus(id,1);
+            }
+            redir.addFlashAttribute("success","Update trạng thái thành công.");
+        }catch (Exception e){
+            redir.addFlashAttribute("error","Update trạng thái thất bại");
+        }
+        return "redirect:/lesson/list-lesson";
     }
 
     // get info user login
