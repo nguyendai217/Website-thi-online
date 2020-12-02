@@ -32,9 +32,13 @@
                     <div class="col-md-4 border-right">
                         <div class="d-flex flex-column align-items-center text-center">
                             <span class="font-weight-bold mt-2">Hình đại diện </span>
-                            <form method="POST" th:action="@{/uploadFile}" enctype="multipart/form-data">
-                                <input type="file" class="ml-5 pl-5 mt-3"  />
-                                <input type="submit" value="Upload image" class="btn btn-success mt-3">
+                            <form method="POST" th:action="@{/news/update-image-news}" enctype="multipart/form-data">
+                                <input type="text" name="newsId" th:value="${news.id}" hidden>
+                                <input type="file" name="image" id="fileImage" style="overflow: hidden"/>
+                                <div class="col-md-12 col-sm-12 mt-3">
+                                    <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{/image/news/{image}(image=${news.image})}">
+                                </div>
+                                <input type="submit" value="Cập nhật ảnh" class="btn btn-success mt-3">
                             </form>
                         </div>
                     </div>
@@ -82,7 +86,7 @@
                                               class="form-control" rows="10" cols="50" th:field="${news.content}"></textarea>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button class="btn btn-success" type="submit">Thêm tin tức</button>
+                                    <button class="btn btn-success" type="submit">Update tin tức</button>
                                     <a th:href="@{/news/list-news}" class="btn btn-danger">Hủy bỏ</a>
                                 </div>
                             </div>

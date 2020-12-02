@@ -122,7 +122,7 @@
                                         <tbody th:if="${pageInfo.content != null}">
                                         <tr th:each=" row,iterStat: ${pageInfo.content}">
                                             <td th:text="${iterStat.count}"></td>
-                                            <td><img id="img_user" th:src="@{'/image/user/'+ ${row.image}}"></td>
+                                            <td><img id="img_user" th:src="@{/image/user/{image}(image=${row.image})}"></td>
                                             <td th:text="${row.username}"></td>
                                             <td th:text="${row.fullname}"></td>
                                             <td th:text="${row.email}"></td>

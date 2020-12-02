@@ -152,7 +152,7 @@ button.btn-showMenu {
 
 .menu {
     margin-bottom: 10px;
-    box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 .menu-left {
@@ -269,6 +269,9 @@ button.btn-showMenu {
     text-transform: uppercase;
     font-weight: bold;
     color: var(--secondary-color);
+}
+.btn-login i:hover, .btn-login a:hover ,.btn-logout:hover{
+    color: #47d444;
 }
 
 /*------------banner--------------*/
@@ -915,7 +918,7 @@ button.btn-showMenu {
 /*-------------------Subject knowledge-----------------*/
 
 .list-knowledge {
-    box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.5);
     min-height: 250px;
     padding: 1rem;
     margin: 1rem 0;
@@ -971,6 +974,20 @@ button.btn-showMenu {
     font-size: 14px;
     padding-left: 20px;
     color: #25d03f;
+}
+.footer_lesson .share a{
+    padding: 7px;
+    width: 20px;
+    height: 20px;
+}
+.footer_lesson .share a > i{
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #3390f1;
+    color: white;
+    line-height: 30px;
 }
 
 
@@ -1188,3 +1205,16 @@ button.btn-showMenu {
     color: #abcd58;
 }
 /**/
+
+/*coment*/
+.comment-lesson{
+    min-height: 200px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.5);
+}
+.comment-lesson h3{
+    font-size: 20px;
+    padding-top: 10px;
+    margin-left: 20px;
+}

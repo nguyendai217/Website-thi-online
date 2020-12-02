@@ -40,7 +40,7 @@
 
                         <div class="col-md-4 border-right">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img style="width:40%;height: 40%" class="mt-5" th:src="@{'/image/user/'+ ${us.image}}">
+                                <img style="width:40%;height: 40%" class="mt-5" th:src="@{/image/lesson/{image}(image=${us.image})}">
                                 <span class="font-weight-bold mt-3">Ảnh đại diện</span>
                             </div>
                         </div>

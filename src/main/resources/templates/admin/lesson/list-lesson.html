@@ -103,7 +103,6 @@
                                         <th>STT</th>
                                         <th>Image</th>
                                         <th>Tiêu đề</th>
-                                        <th>Nội dung</th>
                                         <th>Views</th>
                                         <th>Môn học</th>
                                         <th>Lớp</th>
@@ -114,9 +113,8 @@
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td><img id="img-lesson" th:src="@{'/image/lesson/'+ ${row.image}}"></td>
+                                        <td><img id="img-lesson" th:src="@{/image/lesson/{image}(image=${row.image})}"></td>
                                         <td th:text="${#strings.substring(row.lessonName,0,20)+'...'}"></td>
-                                        <td th:text="${#strings.substring(row.lessonContent,0,40)+'...'}"></td>
                                         <td th:text="${row.views}"></td>
                                         <td th:text="${row.subject.name}"></td>
                                         <td th:text="${row.classroom.classname}"></td>

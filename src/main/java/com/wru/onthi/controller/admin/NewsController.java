@@ -196,7 +196,7 @@ public class NewsController {
             }else {
                 model.addAttribute("categorySelected",categoryId);
             }
-            String path= request.getRequestURI();
+            String path= "/news/list-news?title=" + title + "&categoryId=" + Integer.valueOf(categoryId);
             model.addAttribute("path",path);
         }
 
@@ -316,6 +316,30 @@ public class NewsController {
             redr.addFlashAttribute("error","Update tin tưc thất bại");
             String path="/news/add-news/"+newsId;
             return path;
+        }
+    }
+
+    @PostMapping("/update-image-news")
+    public String updateImageNews(Model model, Principal principal,RedirectAttributes redr,
+                                  @RequestParam("image") MultipartFile multipartFile,HttpServletRequest request){
+
+        getInfoUser(model,principal);
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
+
+        Integer newsId= Integer.valueOf(request.getParameter("newsId"));
+        Optional<News> optionalNews= newsService.findByNewsId(newsId);
+        News news= optionalNews.get();
+        news.setImage(imgname);
+        try {
+            newsService.updateNews(news);
+            uploadImageController.uploadImage(multipartFile,imgname,foldeUpload,"news");
+            redr.addFlashAttribute("success","Update hình ảnh tin tức thành công");
+            return "redirect:/news/list-news";
+        }catch (Exception e){
+            e.printStackTrace();
+            redr.addFlashAttribute("error","update hình ảnh thất bại");
+            return "redirect:/news/list-news";
         }
     }
 

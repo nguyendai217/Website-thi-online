@@ -94,7 +94,7 @@
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{'/image/subject/'+ ${row.image}}"></td>
+                                        <td><img style="height: 50px;width: 50px" id="img" th:src="@{/image/subject/{image}(image=${row.image})}"></td>
                                         <td th:text="${row.code}"></td>
                                         <td th:text="${row.name}"></td>
                                         <td th:if="${row.status==1}">
