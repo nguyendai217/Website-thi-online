@@ -41,7 +41,8 @@
                         </div>
                     </div>
                     <div class="col-md-9 border-right">
-                        <input type="text" class="form-control" hidden  id="lessonId" th:value="${lesson.id}" >
+                        <form th:action="@{/lesson/update-lesson}" method="post">
+                        <input type="text" class="form-control" hidden  name="lessonId" th:value="${lesson.id}" >
                         <div class="p-3">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Chỉnh sửa bài học</h4>
@@ -52,7 +53,7 @@
                             <div class="row mt-2">
                                 <div class="col-md-12">
                                     <label class="labels">Tiêu đề bài học</label>
-                                    <input type="text" class="form-control"  id="lessonname" th:value="${lesson.lessonName}" >
+                                    <input type="text" class="form-control"  name="lessonname" th:value="${lesson.lessonName}" >
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -86,10 +87,11 @@
                                 </div>
                             </div>
                             <div class="text-center mt-3">
-                                <button class="btn btn-success" id="btnUpdateLesson">Update bài học</button>
+                                <button class="btn btn-success" id="btnUpdateLesson" type="submit">Update bài học</button>
                                 <a th:href="@{/lesson/list-lesson}" class="btn btn-danger">Hủy bỏ</a>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -102,49 +104,48 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script th:src="@{/ckeditor/ckeditor.js}" type="text/javascript"></script>
 <script>
-    var editor="";
+    // var editor="";
     $(document).ready(function () {
         $('#lessonManager').addClass("active");
-        editor= CKEDITOR.replace('content')
+        CKEDITOR.replace('content')
     });
 
-
-    $('#btnUpdateLesson').click(function (){
-        var lessonName= $('#lessonname').val();
-        var classId= $('#classId').val();
-        var subjectId=$('#subjectId').val();
-        var content = editor.getData();
-        var lessonId= $('#lessonId').value();
-
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        var data = {
-            "lessonId":lessonId,
-            "lessonName": lessonName,
-            "classroom":classId,
-            "subject":subjectId,
-            "lessonContent":content
-        }
-        $.ajax({
-            type: "post",
-            contentType: "application/json",
-            dataType: "json",
-            url: "/lesson/update-lesson",
-            data: JSON.stringify(data),
-            cache:false,
-            success: function(response) {
-                window.location.href="/lesson/list-lesson";
-                console.log("success");
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("failed")
-            },
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header,token);
-            }
-        });
-    });
+    // $('#btnUpdateLesson').click(function (){
+    //     var lessonName= $('#lessonname').val();
+    //     var classId= $('#classId').val();
+    //     var subjectId=$('#subjectId').val();
+    //     var content = editor.getData();
+    //     var lessonId= $('#lessonId').value();
+    //
+    //     var token = $("meta[name='_csrf']").attr("content");
+    //     var header = $("meta[name='_csrf_header']").attr("content");
+    //
+    //     var data = {
+    //         "lessonId":lessonId,
+    //         "lessonName": lessonName,
+    //         "classroom":classId,
+    //         "subject":subjectId,
+    //         "lessonContent":content
+    //     }
+    //     $.ajax({
+    //         type: "post",
+    //         contentType: "application/json",
+    //         dataType: "json",
+    //         url: "/lesson/update-lesson",
+    //         data: JSON.stringify(data),
+    //         cache:false,
+    //         success: function(response) {
+    //             // window.location.href="/lesson/list-lesson";
+    //             console.log("success");
+    //         },
+    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //             console.log("failed")
+    //         },
+    //         beforeSend: function(xhr) {
+    //             xhr.setRequestHeader(header,token);
+    //         }
+    //     });
+    // });
 </script>
 </body>
 </html>

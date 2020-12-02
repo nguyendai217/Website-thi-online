@@ -7,14 +7,23 @@ import com.wru.onthi.services.CategoryNewsService;
 import com.wru.onthi.services.NewsService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +42,9 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
+    @Value("${folder.upload}")
+    String foldeUpload;
+
     // list- category
     @GetMapping("/list-category")
     public String listCategoryNews(Model model, Principal principal, Pageable pageable,String category){
@@ -45,6 +57,7 @@ public class NewsController {
         Page<CategoryNews> categoryNews= null;
         if(category == null){
             categoryNews = categoryNewsService.getAllCategoryNews(pageItem);
+            model.addAttribute("path","/news/list-category");
         }else {
             categoryNews = categoryNewsService.searchCategory(category,pageItem);
         }
@@ -62,7 +75,7 @@ public class NewsController {
             model.addAttribute("pageInfo", categoryNews);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
-            model.addAttribute("path","/news/list-category");
+
             return "admin/news/list-category";
         }
     }
@@ -157,7 +170,7 @@ public class NewsController {
 
     //list news
     @GetMapping("/list-news")
-    public String listNews(Model model,Principal principal,Pageable pageable,String categoryId, String title){
+    public String listNews(Model model,Principal principal,Pageable pageable,String categoryId, String title, HttpServletRequest request){
         getInfoUser(model,principal);
 
         //get list category
@@ -172,14 +185,19 @@ public class NewsController {
         Page<News> pageNews= null;
         if((categoryId== null || categoryId=="") && (title== null || title=="")){
             pageNews = newsService.getAllNews(pageItem);
+            String path= request.getRequestURI();
+            model.addAttribute("path",path);
         }else {
             pageNews = newsService.searchNews(title,categoryId,pageItem);
             model.addAttribute("title",title);
             if(categoryId !=""){
                 model.addAttribute("categorySelected",Integer.valueOf(categoryId));
+
             }else {
                 model.addAttribute("categorySelected",categoryId);
             }
+            String path= request.getRequestURI();
+            model.addAttribute("path",path);
         }
 
         int totalItem = (int) pageNews.getTotalElements();
@@ -194,7 +212,7 @@ public class NewsController {
             model.addAttribute("pageInfo", pageNews);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
-            model.addAttribute("path","/news/list-news");
+
             return "admin/news/list-news";
         }
     }
@@ -206,6 +224,49 @@ public class NewsController {
         List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
         model.addAttribute("listCategory",listCategory);
         return "admin/news/add-news";
+    }
+
+    @PostMapping("/add-news")
+    public String addNewsPost(Model model, Principal principal, HttpServletRequest request,
+                              RedirectAttributes redr,
+                              @RequestParam("image") MultipartFile multipartFile){
+        getInfoUser(model,principal);
+        String username= principal.getName();
+        User user= userService.findUserByName(username);
+        String title= request.getParameter("title");
+        String description= request.getParameter("description");
+        String content= request.getParameter("content");
+        Integer categoryId= Integer.valueOf(request.getParameter("categoryId"));
+        String tag= request.getParameter("tags");
+        Optional<CategoryNews> optional= categoryNewsService.findByCategoryNewsId(categoryId);
+
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
+
+        try {
+            News news= new News();
+            news.setTitle(title);
+            news.setContent(content);
+            news.setStatus(1);
+            news.setTag(tag);
+            news.setViews(0);
+            news.setImage(imgname);
+            news.setUserNews(user);
+            news.setInsertBy(username);
+            news.setInsertDate(new Date());
+            news.setDescription(description);
+            news.setCategoryNews(optional.get());
+            newsService.createNews(news);
+
+            uploadImageController.uploadImage(multipartFile,imgname,foldeUpload,"news");
+            redr.addFlashAttribute("success","Thêm mới tin tức thành công");
+            return "redirect:/news/list-news";
+        } catch (IOException e){
+            e.printStackTrace();
+
+            redr.addFlashAttribute("error","Thêm mới tin tức thất bại");
+            return "admin/news/add-news";
+        }
     }
 
     // add new
@@ -222,10 +283,40 @@ public class NewsController {
         return "admin/news/update-news";
     }
 
-    @PostMapping("/add-news")
-    public String addNewsPost(Model model,Principal principal){
+    @PostMapping("/update-news")
+    public String updateNewsPost(Model model, Principal principal,HttpServletRequest request,
+                                 RedirectAttributes redr){
         getInfoUser(model,principal);
-        return "";
+        String username= principal.getName();
+        Integer newsId= Integer.valueOf(request.getParameter("newsId"));
+        String title= request.getParameter("title");
+        String description= request.getParameter("description");
+        String content= request.getParameter("content");
+        Integer categoryId= Integer.valueOf(request.getParameter("categoryId"));
+        String tags= request.getParameter("tags");
+        Optional<CategoryNews> optional= categoryNewsService.findByCategoryNewsId(categoryId);
+        CategoryNews categoryNews= optional.get();
+
+        Optional<News> optionalNews= newsService.findByNewsId(newsId);
+        News news= optionalNews.get();
+
+        try {
+            news.setTitle(title);
+            news.setContent(content);
+            news.setCategoryNews(categoryNews);
+            news.setDescription(description);
+            news.setTag(tags);
+            news.setUpdateDate(new Date());
+            news.setUpdateBy(username);
+            newsService.updateNews(news);
+            redr.addFlashAttribute("success","Update tin tức thành công");
+            return "redirect:/news/list-news";
+        }catch (Exception e){
+            e.printStackTrace();
+            redr.addFlashAttribute("error","Update tin tưc thất bại");
+            String path="/news/add-news/"+newsId;
+            return path;
+        }
     }
 
     // detail news
@@ -244,7 +335,6 @@ public class NewsController {
                              Principal principal,
                              @PathVariable(value = "id") Integer id){
         getInfoUser(model,principal);
-
         try {
             newsService.deleteNews(id);
             redir.addFlashAttribute("success","Xóa tin tức thành công");

@@ -1,10 +1,19 @@
 package com.wru.onthi.model;
 
 public class LessonModel {
+    private Integer lessonId;
     private String lessonName;
     private String lessonContent;
     private String subject;
     private String classroom;
+
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
 
     public String getLessonName() {
         return lessonName;

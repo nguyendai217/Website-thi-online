@@ -28,7 +28,7 @@
                                             <h3 class="newsItem__title--content" th:text="${item.title}"></h3>
                                             <span>Thời gian :<span th:text="${#dates.format(item.insertDate, 'dd/MM/yyyy HH:mm')}"></span></span><br>
                                             <span>Số lượt xem: <span th:text="${item.views}"></span></span><br>
-                                            <p th:text="${item.content}"></p>
+                                            <p th:text="${#strings.substring(item.description,0,60)+'...'}"></p>
                                         </div>
                                     </div>
                                 </a>

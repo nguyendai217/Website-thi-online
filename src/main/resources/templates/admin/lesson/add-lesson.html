@@ -31,64 +31,62 @@
                         </div>
                     </div>
                     <br>
-                    <div class="col-md-3 border-right">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <span class="font-weight-bold mt-2">Hình đại diện </span>
-                            <form method="POST" th:action="@{/uploadFile}" enctype="multipart/form-data">
-                                <input type="file" class="ml-5 pl-5 mt-3"  />
-                                <input type="submit" value="Upload image" class="btn btn-success mt-3">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-9 border-right">
-                        <div class="p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Thêm mới bài học</h4>
-                            </div>
-                            <div class="bg-danger" id="error"
-                                 th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-12">
-                                    <label class="labels">Tiêu đề bài học</label>
-                                    <input type="text" class="form-control"  id="lessonname" >
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-6">
-                                    <label>Môn học</label>
-                                    <select class="form-control" id="subjectId">
-                                        <option value="">Tùy chọn</option>
-                                        <option th:each="item : ${listSubject}"
-                                                th:value="${item.id}" th:text="${item.name}">
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Lớp học</label>
-                                    <select class="form-control" id="classId">
-                                        <option value="">Tùy chọn</option>
-                                        <option th:each="item : ${listClass}"
-                                                th:value="${item.id}" th:text="${item.classname}">
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                <label class="labels">Nội dung bài học</label>
-                                <br>
-                                <textarea type="text" name="content" id="content"  class="form-control" rows="10" cols="55"></textarea>
-
-                                </div>
-                            </div>
-                            <div class="text-center mt-3">
-                                <button class="btn btn-success" id="btnAddLesson">Thêm bài học</button>
-                                <a th:href="@{/lesson/list-lesson}" class="btn btn-danger">Hủy bỏ</a>
+                    <form th:action="@{/lesson/add-lesson}" method="post">
+                        <div class="col-md-3 border-right">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <span class="font-weight-bold mt-2">Hình đại diện </span>
+                                <input type="file" class="ml-5 pl-5 mt-3"/>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-md-9 border-right">
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Thêm mới bài học</h4>
+                                </div>
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="labels">Tiêu đề bài học</label>
+                                        <input type="text" class="form-control"  name="lessonName" >
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label>Môn học</label>
+                                        <select class="form-control" name="subjectId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listSubject}"
+                                                    th:value="${item.id}" th:text="${item.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Lớp học</label>
+                                        <select class="form-control" name="classId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listClass}"
+                                                    th:value="${item.id}" th:text="${item.classname}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                    <label class="labels">Nội dung bài học</label>
+                                    <br>
+                                    <textarea type="text" name="content" id="content"  class="form-control" rows="10" cols="55"></textarea>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-success" id="btnAddLesson" type="submit">Thêm bài học</button>
+                                    <a th:href="@{/lesson/list-lesson}" class="btn btn-danger">Hủy bỏ</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -100,47 +98,45 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script th:src="@{/ckeditor/ckeditor.js}" type="text/javascript"></script>
 <script>
-    var editor="";
+
     $(document).ready(function () {
         $('#lessonManager').addClass("active");
-        editor= CKEDITOR.replace('content')
+         CKEDITOR.replace('content')
     });
-
-
-    $('#btnAddLesson').click(function (){
-        var lessonName= $('#lessonname').val();
-        var classId= $('#classId').val();
-        var subjectId=$('#subjectId').val();
-        var content = editor.getData();
-
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        var data = {
-            "lessonName": lessonName,
-            "classroom":classId,
-            "subject":subjectId,
-            "lessonContent":content
-        }
-        $.ajax({
-            type: "post",
-            contentType: "application/json",
-            dataType: "json",
-            url: "/lesson/add-lesson",
-            data: JSON.stringify(data),
-            cache:false,
-            success: function(response) {
-                window.location.href="/lesson/list-lesson";
-                console.log("success");
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("failed")
-            },
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header,token);
-            }
-        });
-    });
+    // $('#btnAddLesson').click(function (){
+    //     var lessonName= $('#lessonname').val();
+    //     var classId= $('#classId').val();
+    //     var subjectId=$('#subjectId').val();
+    //     var content = editor.getData();
+    //
+    //     var token = $("meta[name='_csrf']").attr("content");
+    //     var header = $("meta[name='_csrf_header']").attr("content");
+    //
+    //     var data = {
+    //         "lessonName": lessonName,
+    //         "classroom":classId,
+    //         "subject":subjectId,
+    //         "lessonContent":content
+    //     }
+    //     $.ajax({
+    //         type: "post",
+    //         contentType: "application/json",
+    //         dataType: "json",
+    //         url: "/lesson/add-lesson",
+    //         data: JSON.stringify(data),
+    //         cache:false,
+    //         success: function(response) {
+    //             window.location.href="/lesson/list-lesson";
+    //             console.log("success");
+    //         },
+    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //             console.log("failed")
+    //         },
+    //         beforeSend: function(xhr) {
+    //             xhr.setRequestHeader(header,token);
+    //         }
+    //     });
+    // });
 </script>
 </body>
 </html>

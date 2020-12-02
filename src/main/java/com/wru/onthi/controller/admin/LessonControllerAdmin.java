@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +57,7 @@ public class LessonControllerAdmin {
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
         Page<Lesson> pageLesson= null;
         if((lessonName == "" || lessonName==null) &&
                 (subjectId == "" || subjectId == null) && (classId == "" ||classId == null)){
@@ -98,24 +100,24 @@ public class LessonControllerAdmin {
     }
 
     @RequestMapping(value = "/add-lesson",method = RequestMethod.POST)
-    public @ResponseBody String addLessonPost(Model model, Principal principal,RedirectAttributes redir,
-                                @RequestBody LessonModel lessonModel){
+    public String addLessonPost(Model model, Principal principal,HttpServletRequest request,RedirectAttributes redir){
 
         getInfoUser(model,principal);
 
-        String lessonName= lessonModel.getLessonName();
-        String content= lessonModel.getLessonContent();
-        String classId= lessonModel.getClassroom();
-        String subjectId= lessonModel.getSubject();
+        String lessonName = request.getParameter("lessonName");
+        Integer classId= Integer.valueOf(request.getParameter("classId"));
+        Integer subjectId=Integer.valueOf(request.getParameter("subjectId"));
+        String content= request.getParameter("content");
 
-        Optional<Subject> optional= subjectService.findBySubjectId(Integer.valueOf(subjectId));
-        Optional<Classroom> optionalClass= classroomService.findById(Integer.valueOf(classId));
+        Optional<Subject> optional= subjectService.findBySubjectId(subjectId);
+        Optional<Classroom> optionalClass= classroomService.findById(classId);
         Lesson lesson= new Lesson();
         lesson.setCreateDate(new Date());
         lesson.setLessonContent(content);
         lesson.setLessonName(lessonName);
         lesson.setSubject(optional.get());
         lesson.setViews(0);
+        lesson.setStatus(1);
         lesson.setCreateBy(principal.getName());
         lesson.setClassroom(optionalClass.get());
         try {
@@ -125,6 +127,36 @@ public class LessonControllerAdmin {
         }catch (Exception e){
             redir.addFlashAttribute("error","Thêm bài học thất bại.");
             return "admin/lesson/add-lesson";
+        }
+    }
+
+    @PostMapping("/update-lesson")
+    public String updateLessonPost(Model model, Principal principal,HttpServletRequest request, RedirectAttributes redr){
+        getInfoUser(model,principal);
+        Integer lessonId=Integer.valueOf(request.getParameter("lessonId"));
+        String lessonname = request.getParameter("lessonname");
+        Integer classId= Integer.valueOf(request.getParameter("classId"));
+        Integer subjectId=Integer.valueOf(request.getParameter("subjectId"));
+        String lessonContent= request.getParameter("content");
+
+        Optional<Lesson> optionalLesson= lessonService.findByLessonId(lessonId);
+        Lesson lesson= optionalLesson.get();
+        Optional<Subject> optionalSubject= subjectService.findBySubjectId(subjectId);
+        Optional<Classroom> optionalClass= classroomService.findById(classId);
+        try{
+            lesson.setLessonName(lessonname);
+            lesson.setLessonContent(lessonContent);
+            lesson.setSubject(optionalSubject.get());
+            lesson.setClassroom(optionalClass.get());
+            lesson.setUpdateDate(new Date());
+            lesson.setUpdateBy(principal.getName());
+            lessonService.updateLesson(lesson);
+            redr.addFlashAttribute("success","Update bài học thành công");
+            return "redirect:/lesson/list-lesson";
+        }catch (Exception e){
+            redr.addFlashAttribute("error","Update bài học thất bại");
+            String path= "/lesson/update-lesson/"+lessonId;
+            return "redirect:"+path;
         }
     }
 

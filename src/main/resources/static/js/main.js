@@ -102,10 +102,9 @@ $(document).ready(function () {
     btnMenu.on('click', function (e) {
         menuMobile.toggleClass('show',500)
     })
-
-
-
 });
+
+
 
 
 

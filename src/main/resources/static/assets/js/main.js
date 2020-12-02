@@ -36,3 +36,18 @@ $(document).ready(function () {
     $('#success').delay(5000).fadeOut(1000);
     $('#error').delay(5000).fadeOut(1000);
 });
+
+$(document).ready(function () {
+    $('#fileImage').change(function() {
+        showPreview(this);
+    });
+});
+function showPreview(fileImage){
+    file = fileImage.files[0];
+    render = new FileReader();
+
+    render.onload = function(e) {
+        $('#imgPreview').attr('src',e.target.result);
+    }
+    render.readAsDataURL(file);
+}
