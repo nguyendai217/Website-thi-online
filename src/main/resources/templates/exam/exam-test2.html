@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <title>Liên hệ</title>
+    <div th:replace="fragments/init_lib :: header"></div>
+</head>
+
+<body>
+<div th:replace="fragments/header :: content"></div>
+<div th:replace="fragments/menu :: content"></div>
+<main class="home">
+    <div class="container">
+        <div class="infomation-exam">
+        </div>
+    </div>
+    <input 
+  type="hidden" 
+  th:name="${_csrf.parameterName}" 
+  th:value="${_csrf.token}" />
+    <div class="container exam-test">
+        <section class="container">
+            <div id="timer">
+                <span><i class="fa fa-clock-o"></i></span>
+                <span id="hours">00</span> :
+                <span id="minutes">00</span> :
+                <span id="seconds">00</span>
+            </div>
+        </section>
+        <section class="main-exam container">
+            <h2 style="text-align: center;font-size: 20px">Bài thi : môn toán</h2>
+            <div class="exam-content">
+                <div class="list-question">
+                    <div class="item-question">
+                        <div class="title">
+                            <b><span class="question-no">1</span> Câu hỏi số 1</b>
+                        </div>
+                        <div class="content">
+                            <div class="content-ans">
+                                <input type="radio" name=""  value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name="" value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name=""  value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                            <div class="content-ans">
+                                <input type="radio" name="" value="" title="">
+                                <span>Câu trả lời 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="test-more container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <a class="btn-pre btn btn-primary">Câu hỏi trước</a>
+                    <a class="btn-finish btn btn-success">Hoàn Thành Bài Thi</a>
+                    <a class="btn-cancel btn btn-warning">Hủy bỏ</a>
+                    <a class="btn-next btn btn-primary">Câu hỏi tiếp theo</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<div th:replace="fragments/footer :: content"></div>
+<div th:replace="fragments/init_lib :: script"></div>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script>
+    var exam_id = [[${examId}]];
+	var test_id = [[${testId}]];
+    var exam_data = '[[${dataExam}]]';
+    var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
+    var timeOut= [[${timeOut}]];
+
+    var acc =$('#account').val();
+    if(acc != null || acc != undefined){
+        $('#div-account').removeClass('d-none');
+        $('#link-login').addClass('d-none');
+    }else {
+        $('#div-account').addClass('d-none');
+        $('#link-login').removeClass('d-none');
+    }
+
+    $(document).ready(function (){
+        var logout= $('#msg-logout').val();
+        if(logout != null){
+            alert("Đăng xuất thành công.");
+        }
+    });
+
+</script>
+<script type="text/javascript" th:src="@{/js/exam.js}"></script>
+</body>
+</html>

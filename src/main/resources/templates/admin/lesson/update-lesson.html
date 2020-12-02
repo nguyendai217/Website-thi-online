@@ -33,10 +33,14 @@
                     <br>
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <span class="font-weight-bold mt-2">Hình đại diện </span>
+                            <span class="font-weight-bold mt-2">Hình ảnh bài học </span>
                             <form method="POST" th:action="@{/lesson/update-image-lesson}" enctype="multipart/form-data">
-                                <input type="file" name="imageFile"  />
-                                <input type="submit" value="Update hình ảnh" class="btn btn-success mt-3">
+                                <input type="text" name="lessonId" th:value="${lesson.id}" hidden>
+                                <input type="file" name="image" id="fileImage" style="overflow: hidden"/>
+                                <div class="col-md-12 col-sm-12 mt-3">
+                                    <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{/image/lesson/{image}(image=${lesson.image})}">
+                                </div>
+                                <input type="submit" value="Cập nhật ảnh" class="btn btn-success mt-3">
                             </form>
                         </div>
                     </div>

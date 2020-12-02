@@ -1,5 +1,8 @@
 package com.wru.onthi.entity;
 
+
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -29,6 +32,9 @@ public class Result {
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -77,4 +83,14 @@ public class Result {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
 }

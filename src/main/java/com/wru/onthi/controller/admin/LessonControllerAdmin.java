@@ -1,16 +1,14 @@
 package com.wru.onthi.controller.admin;
 
 import com.google.common.base.Strings;
-import com.wru.onthi.entity.Classroom;
-import com.wru.onthi.entity.Lesson;
-import com.wru.onthi.entity.Subject;
-import com.wru.onthi.entity.User;
+import com.wru.onthi.entity.*;
 import com.wru.onthi.model.LessonModel;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.LessonService;
 import com.wru.onthi.services.SubjectService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +39,9 @@ public class LessonControllerAdmin {
 
     @Autowired
     SubjectService subjectService;
+
+    @Value("${folder.upload}")
+    private String foldeUpload;
 
     @GetMapping("/list-lesson")
     public String getAllLesson(Model model, Principal principal,String lessonName,
@@ -176,6 +178,33 @@ public class LessonControllerAdmin {
         Lesson lesson= optional.get();
         model.addAttribute("lesson",lesson);
         return "admin/lesson/update-lesson";
+    }
+
+    @PostMapping("/update-image-lesson")
+    public String updateImageLesson(Model model, Principal principal,
+                                    RedirectAttributes redr,
+                                    HttpServletRequest request,
+                                    @RequestParam("image") MultipartFile multipartFile){
+        getInfoUser(model,principal);
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
+
+        Integer lessonId= Integer.valueOf(request.getParameter("lessonId"));
+        Optional<Lesson> optionalLesson= lessonService.findByLessonId(lessonId);
+        Lesson lesson= optionalLesson.get();
+
+        try {
+            lesson.setImage(imgname);
+            lessonService.updateLesson(lesson);
+            uploadImageController.uploadImage(multipartFile,imgname,foldeUpload,"lesson");
+            redr.addFlashAttribute("success","Update hình ảnh bài học thành công");
+            return "redirect:/lesson/list-lesson";
+        }catch (Exception e){
+            e.printStackTrace();
+            redr.addFlashAttribute("error","update hình ảnh bài học thất bại");
+            return "redirect:/lesson/list-lesson";
+        }
+
     }
 
     @GetMapping("/delete-lesson/{id}")

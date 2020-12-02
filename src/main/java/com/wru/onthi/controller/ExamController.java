@@ -1,6 +1,9 @@
 package com.wru.onthi.controller;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -11,6 +14,7 @@ import com.wru.onthi.model.QuestionModel;
 import com.wru.onthi.services.*;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,15 +22,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ExamController {
@@ -45,6 +45,12 @@ public class ExamController {
 
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    ResultService resultService;
+
+    @Autowired
+    UserService userService;
 
 
     @GetMapping("/kiemtra/list-class")
@@ -96,10 +102,28 @@ public class ExamController {
     public String getListQuestion(Model model,Principal principal, @RequestParam("examId") Integer examId){
         getDefault(model,principal);
         Optional<Exam> optionalExam= examService.findByExamId(examId);
+        User user = userService.findUserByName(principal.getName());
+        Optional<Exam> examOptional = examService.findByExamId(examId);
+        Exam examDetail = examOptional.get();
         Exam exam= optionalExam.get();
+        Date dateTest = new Date();
         model.addAttribute("exam",exam);
         model.addAttribute("examId",examId);
         model.addAttribute("timeOut",exam.getTimeOut());
+
+        Optional<Result> testOptional = resultService.checkResultExist(exam.getTimeOut(), user.getId(), examId);
+        Result test = null;
+        if (testOptional.isPresent() == false) {
+            test = new Result();
+        } else {
+            test = testOptional.get();
+        }
+
+        test.setCreatedAt(dateTest);
+        test.setStatus(0);
+        test.setUserResult(user);
+        test.setExam(examDetail);
+        resultService.save(test);
         List<QuestionModel> questionModels= questionService.getListQuestion(examId);
         Gson gson= new Gson();
         String result= gson.toJson(questionModels);
@@ -107,9 +131,47 @@ public class ExamController {
         exam.setViews(views+1);
         examService.updateExam(exam);
         model.addAttribute("dataExam",result);
-
-        return "exam/exam-test";
+        model.addAttribute("testId",test.getId());
+        System.out.println("xxx");
+        return "exam/exam-test2";
     }
+
+    @RequestMapping(path = "/kiemtra-process-result", method = RequestMethod.POST)
+    public @ResponseBody String processResult(Principal principal,
+                                              HttpServletResponse httpRep,
+                                              @RequestParam(value = "dataJson", defaultValue = "") String dataJson,
+                                              @RequestParam(value = "examId", defaultValue = "") Integer examId,
+                                              @RequestParam(value = "testId", defaultValue = "") Integer testId
+    ) throws JsonMappingException, JsonProcessingException {
+
+        Gson gson= new Gson();
+        int scores = 0;
+        Double formatScores = null;
+
+        int[] array = new ObjectMapper().readValue(dataJson, int[].class);
+        List<QuestionModel> questionModels = questionService.getListQuestion(examId);
+
+        for (int i = 0; i < questionModels.size(); i++) {
+            String ansCorrect = questionModels.get(i).getAnsCorrect();
+            if (Integer.valueOf(ansCorrect) == array[i]) {
+                scores++;
+            }
+
+//            System.out.println("x: " + i + " " + questionModels.get(i).getAnsCorrect().toString());
+        }
+
+        formatScores =  (double)Math.round(1000 * (double)scores / questionModels.size()) / 100;
+        Optional<Result> resultOptional =  resultService.findById(testId);
+        Result result =  resultOptional.get();
+        result.setDetail(gson.toJson(array));
+        result.setScore(formatScores);
+        result.setStatus(1);
+
+        resultService.save(result);
+        httpRep.setStatus(HttpServletResponse.SC_OK);
+        return "";
+    }
+
 
 //    @GetMapping("/kiemtra/getData")
 //    public @ResponseBody String getData(@RequestParam("examId") Integer examId){
@@ -151,5 +213,26 @@ public class ExamController {
         model.addAttribute("listExam",pageExam);
 
         return "exam/exam-by-class";
+    }
+
+    @GetMapping("/history")
+    public String getHistory(Model model,Principal principal, @RequestParam("testId") Integer testId){
+        Optional<Result> resultOptional =  resultService.findById(testId);
+        Result result =  resultOptional.get();
+        Exam exam = result.getExam();
+        getDefault(model,principal);
+        List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId());
+        Gson gson= new Gson();
+        String dateJson = gson.toJson(questionModels);
+
+        model.addAttribute("dataExam", dateJson);
+        model.addAttribute("resultDetail", result.getDetail()); // chi tiet cau hoi da thi
+        model.addAttribute("resultData", result);
+        model.addAttribute("exam",exam);
+        model.addAttribute("testId",result.getId());
+        model.addAttribute("examId",exam.getId());
+        model.addAttribute("timeOut",exam.getTimeOut());
+
+        return "exam/history-test";
     }
 }

@@ -1,11 +1,13 @@
 package com.wru.onthi.controller.admin;
 
 import com.sun.java.swing.plaf.windows.WindowsTextAreaUI;
+import com.wru.onthi.entity.News;
 import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.repository.RoleRepository;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,9 @@ public class UserMangerController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Value("${folder.upload}")
+    private String folderUpload;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -262,48 +267,33 @@ public class UserMangerController {
         return "redirect:/admin/user/list-user";
     }
 
-    @PostMapping("/user/updateImage")
-    public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile,
-                              @RequestParam("userId") Integer id) {
-        Date date= new Date();
-        long time= date.getTime();
-        String strName= String.valueOf(time);
+    @PostMapping("/user/update-image-user")
+    public String updateImageNews(Model model, Principal principal,RedirectAttributes redr,
+                                  @RequestParam("image") MultipartFile multipartFile,
+                                  HttpServletRequest request){
 
-        String flName = multipartFile.getOriginalFilename();
-        String[] flPath = flName.split("[.]");
-        String flExtension = flPath[flPath.length - 1];
-        String imgname= strName +"."+flExtension;
+        getInfoUser(model,principal);
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
 
-       // String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Integer userId= Integer.valueOf(request.getParameter("userId"));
+        Optional<User> optionalUser= userService.findById(userId);
+        User user= optionalUser.get();
+
         try {
-            Optional<User> optional= userService.findById(id);
-            User user= optional.get();
             user.setImage(imgname);
+            user.setUpdateDate(new Date());
+            user.setUpdateBy(principal.getName());
             userService.updateUser(user);
-            UploadImage(multipartFile,imgname);
-        } catch (IOException e) {
+            uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"user");
+            redr.addFlashAttribute("success","Update hình ảnh thành công");
+            return "redirect:/admin/user/list-user";
+        }catch (Exception e){
             e.printStackTrace();
-        }
-        String path= "redirect:/admin/user/update/"+id;
-        return path;
-    }
-
-    private void UploadImage(MultipartFile multipartFile, String fileImage) throws IOException {
-        String uploadDir="src/main/resources/static/image/user/";
-        Path uploadpath= Paths.get(uploadDir);
-        if(! Files.exists(uploadpath)){
-            Files.createDirectories(uploadpath);
-        }
-
-        try(InputStream inputStream= multipartFile.getInputStream()) {
-            Path filePath= uploadpath.resolve(fileImage);
-            System.out.print(filePath.toString());
-            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
-        }catch (IOException e){
-            throw new IOException("Could not upload file"+ fileImage);
+            redr.addFlashAttribute("error","update hình ảnh thất bại");
+            return "redirect:/admin/user/list-user";
         }
     }
-
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

@@ -119,10 +119,12 @@
                                         <td th:text="${row.subject.name}"></td>
                                         <td th:text="${row.classroom.classname}"></td>
                                         <td th:if="${row.status==1}">
-                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"  id="confirmDisable"class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
+                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"
+                                               id="confirmDisable"class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
                                         </td>
                                         <td th:if="${row.status==0}">
-                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
+                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"
+                                               id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
                                         </td>
                                         <td>
                                             <a th:href="@{/lesson/update-lesson/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>

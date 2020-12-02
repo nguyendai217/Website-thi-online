@@ -30,11 +30,14 @@
                     </div>
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <form method="POST" th:action="@{/admin/user/updateImage}" enctype="multipart/form-data">
-                                <input type="text" hidden="true" name="userId" th:value="${user.id}"/>
-                                <img class="mt-5" id="imgPreview" style="width: 40%;height: 50%" th:src="@{/image/lesson/{image}(image=${user.image})}">
-                                <input type="file" name="fileImage" class="ml-5 pl-5 mt-3" />
-                                <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
+                            <form method="post" th:action="@{/admin/user/update-image-user}" enctype="multipart/form-data">
+                                <input type="text" name="userId" th:value="${user.id}" hidden>
+                                <h4 class="mb-3">Update hình ảnh</h4>
+                                <input type="file" name="image" id="fileImage" style="overflow: hidden"/>
+                                <div class="col-md-12 col-sm-12 mt-3">
+                                    <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{/image/user/{image}(image=${user.image})}">
+                                </div>
+                                <input type="submit" value="Cập nhật ảnh" class="btn btn-success mt-3">
                             </form>
                         </div>
                     </div>
@@ -97,7 +100,7 @@
                                 </div>
                                 <div class="mt-5 text-center">
                                     <button class="btn btn-success" type="submit">Lưu thông tin</button>
-                                    <a class="btn btn-danger" href="javascript:history.back();">Hủy bỏ</a>
+                                    <a class="btn btn-danger" th:href="@{/admin/user/list-user}">Hủy bỏ</a>
                                 </div>
                             </form>
                         </div>

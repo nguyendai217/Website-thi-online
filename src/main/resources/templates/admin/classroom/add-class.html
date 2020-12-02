@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Admin Home</title>
+    <title>Admin Manager</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
 
@@ -41,11 +41,11 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Mã lớp học</label>
-                                            <input type="text" class="form-control" name="classCode" >
+                                            <input type="text" class="form-control" name="classCode" required>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Tên lớp học</label>
-                                            <input type="text" class="form-control" name="className" >
+                                            <input type="text" class="form-control" name="className" required >
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Cấp bậc</label>

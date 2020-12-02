@@ -63,7 +63,7 @@
                                                    accept="image/jpeg, image/png, image/jpg"   >
                                         </div>
                                         <div class="col-md-12 col-sm-12 mt-3">
-                                            <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{'/image/classroom/'+ ${cl.image}}">
+                                            <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{/image/classroom/{image}(image=${cl.image})}">
                                         </div>
                                     </div>
                                 </div>

@@ -118,7 +118,7 @@
                             <a th:href="@{/kiemtra/info(examId=${item.id})}" th:each="item:${listExam}">
                                 <div class="study-chemistryItem" >
                                     <div class="img">
-                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                        <img th:src="@{/image/subject/{image}(image=${item.getExam_subject().image})}" alt="">
                                     </div>
                                     <div class="content">
                                         <h3 class="title">
@@ -171,7 +171,7 @@
                 <div class="test-sliderItem" th:each="item:${listSubject}">
                     <div class="subject" >
                         <a th:href="@{/lophoc/list-class(subjectId=${item.id})}">
-                            <img th:src="@{'/image/subject/'+ ${item.image}}">
+                            <img th:src="@{/image/subject/{image}(image=${item.image})}">
                         </a>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                             <a th:href="@{/noidungbaihoc(lessonId=${item.id})}" th:each="item:${lessonList}">
                                 <div class="news-listItem">
                                     <div class="img">
-                                        <img th:src="@{'/image/subject/'+ ${item.image}}" alt="">
+                                        <img th:src="@{/image/lesson/{image}(image=${item.image})}" alt="">
                                     </div>
                                     <div class="content">
                                         <h3 class="title">
@@ -219,7 +219,7 @@
                             <a href="#" th:each="item:${lessonList}">
                                 <div class="news-listItem">
                                     <div class="img">
-                                        <img th:src="@{'/image/subject/'+ ${item.image}}" alt="">
+                                        <img th:src="@{/image/subject/(image)${item.image}}" alt="">
                                     </div>
                                     <div class="content">
                                         <h3 class="title">
@@ -243,7 +243,7 @@
                             <a th:href="@{/tintuc(newsId=${item.id})}" th:each="item:${listNews}">
                                 <div class="news-listItem">
                                     <div class="img">
-                                        <img th:src="@{/image/img-right1.png}" alt="">
+                                        <img th:src="@{/image/news/{image}(image=${item.image})}" alt="">
                                     </div>
                                     <div class="content">
                                         <h4 class="title" th:text="${item.title}">

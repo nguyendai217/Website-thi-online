@@ -1,5 +1,5 @@
 // Khởi tạo dữ liệu
-var id_test = 1; // cái này là id bài thi
+var id_test = test_id; // cái này là id bài thi
 var currentPage = 1; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
 var limitPage = 5; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
 var checkUpdateApi = true; // cái này để check khi next nhiều trang mà không thay đổi câu hỏi thì k có hiện tượng call Api update nhiều lần
@@ -48,6 +48,7 @@ if (checkTestFinished(endTime) === false) {
 
     // trả lời câu hỏi
     $(".list-question").on("change", ".radio-check", function(e) {
+		e.preventDefault();
         checkUpdateApi = true;
         let _this = $(this);
         let _quest = _this.parents('.item-question');
@@ -58,7 +59,8 @@ if (checkTestFinished(endTime) === false) {
     });
 
     // Pre câu hỏi
-    $('.btn-pre').click(function () {
+    $('.btn-pre').click(function (e) {
+		e.preventDefault();
         if (currentPage <= 1) return;
         currentPage--;
         renderListQuestion(listAnser);
@@ -66,16 +68,46 @@ if (checkTestFinished(endTime) === false) {
     });
 
     // Next câu hỏi
-    $('.btn-next').click(function () {
+    $('.btn-next').click(function (e) {
+		e.preventDefault();
         if (currentPage >= Math.ceil(json.length / limitPage)) return;
         currentPage++;
         renderListQuestion(listAnser);
         checkUpdateApi = false;
     });
 
-    $('.btn-finish').click(function () {
+    $('.btn-finish').click(function (e) {
+		e.preventDefault();
+        let arrRes = [];
+        
+        for (let i = 0; i < json.length; i++) {
+            let data = $(`input[name="test[${i}]"]:checked`).val();
+            arrRes.push((typeof data === "undefined" ? null : data));
+        }
+        
         let confirmFinish = confirm('Bạn chắc chắn muốn kết thúc bài thi?');
         if (confirmFinish === false) return;
+        var token = $('#csrfToken').val();
+		var header = $('#csrfHeader').val();
+		
+		console.log("json: ", json);
+		
+        $.ajax({
+            type: "POST",
+			headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+            url: "./kiemtra-process-result",
+            data: {
+                dataJson: JSON.stringify(arrRes),
+                examId: exam_id,
+                testId: id_test,
+            },
+            dataType: "json",
+            success: (response) => {
+                console.log(response);
+                window.location = './history?testId=' + id_test;
+
+            },
+        });
 
         clearInterval(_countDown);
         $(this).hide();
@@ -98,9 +130,10 @@ function renderListQuestion(listAnser) {
         }
 
         stringListQuest += `<div class='item-question ${showQuestion}' data-key="${k}"><div class='title'><b><span class='question-no'>${k + 1}</span>${v.content}</b></div><div class='content'>`;
+        stringListQuest += `<div class='content-ans' style='display:none'><input ${v.yourAns !== null ? 'checked' : ''}  type='radio' class='radio-check' exam-id='${id_test}' name='test[${k}]' id='' value='0' title=''></div>`;
         v.listAns.forEach((va, ka) => {
             let _checked = (v.yourAns == (ka + 1)) ? 'checked' : '';
-            stringListQuest += `<div class='content-ans'><input ${_checked} ${disabledAnswer} type='radio' class='radio-check' name='test-${id_test}-quest-${k}' id='' value='${ka + 1}' title=''><span>${va}</span></div>`;
+            stringListQuest += `<div class='content-ans'><input ${_checked} ${disabledAnswer} type='radio' class='radio-check' exam-id='${id_test}' name='test[${k}]' id='' value='${ka + 1}' title=''><span>${va}</span></div>`;
         });
         stringListQuest += '</div></div>';
     });
