@@ -56,10 +56,15 @@
 
     $('#btnStart').click(function (){
         if((acc== null) || (acc== undefined)){
-            alert("Bạn phải đăng nhập trước khi thi.");
+            var result= confirm ("Bạn phải đăng nhập trước khi thi");
+            if(result){
+                window.location="../login";
+            }else {
+                return false;
+            }
             return false;
         }else {
-            window.location=document.getElementById('btnStart').href;
+            window.location=$('#btnStart').href;
         }
     });
 

@@ -31,7 +31,7 @@ public class ClassroomController {
     @Autowired
     NewsService newsService;
 
-    @GetMapping("hoctap/list-class")
+    @GetMapping("/hoctap/list-class")
     public String listClass(Model model, Principal principal){
         getDefault(model,principal);
         //get ListClass

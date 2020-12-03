@@ -132,7 +132,6 @@ public class ExamController {
         examService.updateExam(exam);
         model.addAttribute("dataExam",result);
         model.addAttribute("testId",test.getId());
-        System.out.println("xxx");
         return "exam/exam-test2";
     }
 
@@ -166,21 +165,12 @@ public class ExamController {
         result.setDetail(gson.toJson(array));
         result.setScore(formatScores);
         result.setStatus(1);
-
         resultService.save(result);
+
         httpRep.setStatus(HttpServletResponse.SC_OK);
+
         return "";
     }
-
-
-//    @GetMapping("/kiemtra/getData")
-//    public @ResponseBody String getData(@RequestParam("examId") Integer examId){
-////        List<QuestionModel> questionModels= questionService.getListQuestion(examId);
-////        Gson gson= new Gson();
-////        String result= gson.toJson(questionModels);
-//        String result = "";
-//        return result;
-//    }
 
     private void getDefault(Model model,Principal principal){
         // get list class menu
@@ -202,7 +192,8 @@ public class ExamController {
     }
 
     @GetMapping("/kiemtra/class/")
-    public String getListExamByClass(Model model,Principal principal,@RequestParam("classId") Integer classId,Pageable pageable){
+    public String getListExamByClass(Model model,Principal principal,@RequestParam("classId") Integer classId,
+                                     Pageable pageable){
         getDefault(model,principal);
 
         int pageNumber = pageable.getPageNumber();
@@ -226,7 +217,7 @@ public class ExamController {
         String dateJson = gson.toJson(questionModels);
 
         model.addAttribute("dataExam", dateJson);
-        model.addAttribute("resultDetail", result.getDetail()); // chi tiet cau hoi da thi
+        model.addAttribute("resultDetail", result.getDetail());
         model.addAttribute("resultData", result);
         model.addAttribute("exam",exam);
         model.addAttribute("testId",result.getId());

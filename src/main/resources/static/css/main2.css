@@ -275,6 +275,9 @@
     margin: 0 auto;
 } */
 
+.history-test{
+    margin-top: 20px;
+}
 .history-test .content-infor {
     border: 1px solid #ccc;
     border-radius: 15px;
@@ -283,7 +286,7 @@
 }
 
 .history-test .big-title{
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
@@ -307,17 +310,17 @@
     font-weight: bold;
 }
 
-.xxx-ans-success {
+.result-ans-success {
     font-weight: bold;
     color: #28a745;
 }
 
-.xxx-ans-err {
+.result-ans-err {
     font-weight: bold;
     color: #dc3545;
 }
 
-.xxx-ans-result {
+.result-ans-result {
     font-weight: bold;
     color: #0069d9;
 }

@@ -81,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
             listAns.add((String) record[2]);
             listAns.add((String) record[3]);
             listAns.add((String) record[4]);
-            questionModel.setAnsCorrect((String) record[5]);
+            questionModel.setAnsCorrect(null);
             questionModel.setListAns(listAns);
             listQuestion.add(questionModel);
         }

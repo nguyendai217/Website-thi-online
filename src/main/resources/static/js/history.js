@@ -52,13 +52,13 @@ console.log(result_detail);
         v.listAns.forEach((va, ka) => {
             let _classAns = '';
             if (result_detail[k] == (ka + 1)) { // nếu trả lời sai
-                _classAns = "xxx-ans-err";
+                _classAns = "result-ans-err";
             }
             
             if (v.ansCorrect == (ka + 1)) {
-            	_classAns = "xxx-ans-result";
+            	_classAns = "result-ans-result";
                 if (v.ansCorrect == result_detail[k]) { // Nếu trả lời đúng
-                    _classAns = "xxx-ans-success";
+                    _classAns = "result-ans-success";
                     countAnsCorrect++;
                 }
             }
@@ -69,6 +69,6 @@ console.log(result_detail);
         stringListQuest += '</div></div>';
     });
 
-	$('.result-test-data').html(countAnsCorrect + " câu / trên tổng số " + listAnser.length + " câu")
+	$('.result-test-data').html(countAnsCorrect + " câu / tổng số " + listAnser.length + " câu")
     $('.list-question').html(stringListQuest)
 }

@@ -55,7 +55,6 @@ if (checkTestFinished(endTime) === false) {
         let keyQuest = _quest.attr('data-key');
         listAnser[keyQuest].yourAns = _this.val();
         localStorage.setItem("test-" + id_test, JSON.stringify(listAnser));
-        // Call api cập nhập ở đây
     });
 
     // Pre câu hỏi
@@ -84,14 +83,13 @@ if (checkTestFinished(endTime) === false) {
             let data = $(`input[name="test[${i}]"]:checked`).val();
             arrRes.push((typeof data === "undefined" ? null : data));
         }
-        
+
         let confirmFinish = confirm('Bạn chắc chắn muốn kết thúc bài thi?');
         if (confirmFinish === false) return;
         var token = $('#csrfToken').val();
 		var header = $('#csrfHeader').val();
-		
+
 		console.log("json: ", json);
-		
         $.ajax({
             type: "POST",
 			headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
@@ -102,22 +100,19 @@ if (checkTestFinished(endTime) === false) {
                 testId: id_test,
             },
             dataType: "json",
-            success: (response) => {
-                console.log(response);
-                window.location = './history?testId=' + id_test;
-
+            success:function (response) {
             },
         });
-
         clearInterval(_countDown);
         $(this).hide();
         $("#hours").html("00");
         $("#minutes").html("00");
         $("#seconds").html("00");
+        window.location.href = './history?testId=' + id_test;
+        localStorage.removeItem("test-" + id_test + "-time")
+        localStorage.removeItem("test-" + id_test);
     });
 }
-
-
 
 function renderListQuestion(listAnser) {
     let stringListQuest = "";

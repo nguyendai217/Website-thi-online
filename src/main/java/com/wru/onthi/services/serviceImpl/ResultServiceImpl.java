@@ -12,25 +12,21 @@ import com.wru.onthi.services.ResultService;
 @Service
 public class ResultServiceImpl implements ResultService  {
 
-
     @Autowired
     ResultRepository resultRepository;
 
 	@Override
 	public void save(Result result) {
-		// TODO Auto-generated method stub
 		resultRepository.save(result);
 	}
 
 	@Override
 	public Optional<Result> findById(Integer id) {
-		// TODO Auto-generated method stub
 		return resultRepository.findById(id);
 	}
 
 	@Override
 	public Optional<Result> checkResultExist(Integer timeout, Integer userId, Integer ExamId) {
-		// TODO Auto-generated method stub
 		return resultRepository.checkResultExist(timeout, userId, ExamId);
 	}
 
