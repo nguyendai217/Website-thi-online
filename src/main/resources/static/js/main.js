@@ -102,7 +102,21 @@ $(document).ready(function () {
     btnMenu.on('click', function (e) {
         menuMobile.toggleClass('show',500)
     })
+
+    $('#fileImage').change(function() {
+        showPreview(this);
+    });
 });
+
+function showPreview(fileImage){
+    file = fileImage.files[0];
+    render = new FileReader();
+
+    render.onload = function(e) {
+        $('#imgPreview').attr('src',e.target.result);
+    }
+    render.readAsDataURL(file);
+}
 
 
 

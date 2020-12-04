@@ -41,7 +41,7 @@
 
                             <form method="POST" th:action="@{/profile/updateImage}" enctype="multipart/form-data">
                                 <input type="text" hidden="true" name="userId" th:value="${us.id}">
-                                <img class="mt-5" id="imgPreview" style="width: 40%;height: 50%" th:src="@{'/image/user/'+${us.image}}" >
+                                <img class="mt-5" id="imgPreview" style="width: 40%;height: 50%" th:src="@{/image/user/{image}(image=${us.image})}" >
                                 <input type="file" name="fileImage" class="ml-5 pl-5 mt-3" />
                                 <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
                             </form>
@@ -175,15 +175,11 @@
             uiLibrary: 'bootstrap4',
             format: 'dd-mm-yyyy'
         });
-
     });
-
 
     $("#btnSubmit").click(function (){
         var pass1= $("#pass1").val();
         var pass2= $("#pass2").val();
-        console.log("xxx");
-        console.log("xx"+ pass1,pass2);
         if(pass1=== pass2){
             $('#err').addClass("hidden");
             return true;

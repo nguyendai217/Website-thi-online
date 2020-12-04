@@ -19,14 +19,7 @@
 <main class="home">
     <div class="container">
         <div class="row mt-4">
-            <div class="col-md-3 border-right">
-                    <form method="POST" th:action="@{/profile/updateImage}" enctype="multipart/form-data">
-                        <input type="text" hidden="true" name="userId" th:value="${us.id}">
-                        <img class="mt-5" id="imgPreview" style="width: 60%;height: 60%" th:src="@{'/image/user/'+${us.image}}" >
-                        <input type="file" name="fileImage" class="col-md-12 mt-3" />
-                        <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
-                    </form>
-            </div>
+
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <form th:action="@{/profile}" method="post"  >

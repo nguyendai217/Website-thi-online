@@ -36,7 +36,7 @@
                     <div class="banner-right">
                         <div class="banner-rightImage" th:each="item:${listnewStudy}">
                             <div class="item">
-                                <a th:href="@{/tintuc(newsId=${item.id})}"><img th:src="@{'/image/news/'+ ${item.image}}" alt=""></a>
+                                <a th:href="@{/tintuc(newsId=${item.id})}"><img th:src="@{/image/news/{image}(image=${item.image})}"></a>
                                 <div class="news-right">
                                     <a th:href="@{/tintuc(newsId=${item.id})}" th:text="${item.title}"></a>
                                 </div>
@@ -84,7 +84,9 @@
                                  aria-labelledby="pills-home-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTH}">
-                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}">
+                                            <img th:src="@{/image/classroom/{image}(image=${item.image})}">
+                                        </a>
                                     </div>
                                 </div>
 
@@ -93,7 +95,9 @@
                                  aria-labelledby="pills-profile-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTHCS}">
-                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}">
+                                            <img th:src="@{/image/classroom/{image}(image=${item.image})}">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +105,9 @@
                                  aria-labelledby="pills-contact-tab">
                                 <div class="study-slider">
                                     <div class="study-sliderItem" th:each="item:${listClassTHPT}">
-                                        <a th:href="@{'/monhoc?class_id='+${item.id}}"><img th:src="@{'/image/classroom/'+${item.image}}"></a>
+                                        <a th:href="@{'/monhoc?class_id='+${item.id}}">
+                                            <img th:src="@{/image/classroom/{image}(image=${item.image})}">
+                                        </a>
                                     </div>
                                 </div>
                             </div>

@@ -24,7 +24,7 @@
                         <div class="list-subject">
                             <a th:href="@{/kiemtra/list-exam(subjectId=${subjectId},classId=${item.id})}" th:each="item:${listClass}">
                                 <div class="subject-item">
-                                    <img th:src="@{'/image/classroom/'+${item.image}}">
+                                    <img th:src="@{/image/classroom/{image}(image=${item.image})}">
                                 </div>
                             </a>
                         </div>

@@ -58,7 +58,7 @@ public class UserMangerController {
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
         Page<User> pageUser= null;
         if((username== null || username=="") && (email == null|| email=="")
                 && (phone== null || phone=="") && (status== null || status.equals(""))){
@@ -101,7 +101,9 @@ public class UserMangerController {
     }
 
     @PostMapping("/user/add-user")
-    public String addUserGet(Model model, Principal principal, RedirectAttributes redir,HttpServletRequest request) {
+    public String addUserGet(Model model, Principal principal,
+                             RedirectAttributes redir,HttpServletRequest request,
+                             @RequestParam("image") MultipartFile multipartFile) throws IOException {
         getInfoUser(model, principal);
 
         String username = request.getParameter("username");
@@ -113,6 +115,13 @@ public class UserMangerController {
         Integer gender = Integer.valueOf(request.getParameter("gender"));
         String birthday = request.getParameter("birthday");
         Integer role =Integer.valueOf(request.getParameter("role"));
+
+        String imgname= "default_avatar.png";
+        if(multipartFile != null){
+            UploadImageController uploadImageController= new UploadImageController();
+            imgname= uploadImageController.getImageName(multipartFile);
+            uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"user");
+        }
 
         //check email is exist
         User checkEmailExist = userService.findByEmail(email);
@@ -143,7 +152,8 @@ public class UserMangerController {
             user.setCreateDate(new Date());
             user.setAddress(address);
             user.setGender(gender);
-            //user.setBirthday(birthday);
+            user.setImage(imgname);
+
             try {
                 if (birthday != null) {
                     Date dateBirthday = sdf.parse(birthday);
