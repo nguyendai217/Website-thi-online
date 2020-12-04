@@ -182,6 +182,7 @@ public class ExamControllerAdmin {
             exam.setViews(0);
             exam.setCreateDate(new Date());
             exam.setCodeExam(codeExam);
+            exam.setStatus(1);
             examService.createExam(exam);
             redr.addFlashAttribute("success","Thêm mới đề thi thành công, mã đề thi:"+ codeExam);
             return "redirect:/exam/list-exam";

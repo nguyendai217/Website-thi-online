@@ -117,4 +117,14 @@ public class QuestionServiceImpl implements QuestionService {
 //        return page;
        return questionRepository.getPageQuestionByExamId(examId,pageable);
     }
+
+    @Override
+    public Page<Question> getListAllQuestion(Pageable pageable) {
+        return questionRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Question> getPageQuestionByClassAndSubject(Integer classId, Integer subjectId, Pageable pageable) {
+        return null ;
+    }
 }

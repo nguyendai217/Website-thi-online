@@ -21,4 +21,5 @@ public interface ExamService {
     Page<Exam> getListExamByClass(Integer classId,Pageable pageable);
     void updateStatus(Integer examId, Integer status);
 
+
 }

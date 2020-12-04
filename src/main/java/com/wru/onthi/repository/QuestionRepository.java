@@ -20,4 +20,10 @@ public interface QuestionRepository extends JpaRepository<Question,Integer> {
             "join Exam ex on ex.id= eq.examQuestion.id "+
             "and ex.id=?1")
     Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable);
+
+    @Query(value = "select qs  from Question qs " +
+            "join ExamQuestion eq on qs.id= eq.questionExam.id " +
+            "join Exam ex on ex.id= eq.examQuestion.id "+
+            "and ex.id=?1")
+    Page<Question> getPageQuestionByClassAndSubject(Integer classId,Integer subjectId, Pageable pageable);
 }

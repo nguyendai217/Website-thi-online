@@ -1,24 +1,34 @@
 package com.wru.onthi.controller.admin;
 
-import com.wru.onthi.entity.Question;
-import com.wru.onthi.entity.User;
-import com.wru.onthi.model.QuestionModel;
-import com.wru.onthi.services.QuestionService;
-import com.wru.onthi.services.UserService;
+import com.google.gson.Gson;
+import com.wru.onthi.entity.*;
+import com.wru.onthi.services.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/question")
@@ -30,9 +40,29 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    ClassroomService classroomService;
+
+    @Autowired
+    SubjectService subjectService;
+
+    @Autowired
+    ExamService examService;
+
+    @Autowired
+    ExamQuestionService examQuestionService;
+
+//    @Autowired
+//    QuestionUploadService questionUploadService;
+
     @GetMapping("/list-question")
-    public String getAllQuestion(@RequestParam("examId") Integer examId, Model model, Principal principal, org.springframework.data.domain.Pageable pageable){
+    public String getAllQuestion(@RequestParam("examId") Integer examId, Model model, Principal principal, Pageable pageable){
         getInfoUser(model,principal);
+
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        String subjectName= exam.getExam_subject().getName();
+        String className= exam.getExam_classroom().getClassname();
 
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
@@ -55,6 +85,8 @@ public class QuestionController {
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
             model.addAttribute("examId",examId);
+            model.addAttribute("className",className);
+            model.addAttribute("subjectName",subjectName);
             model.addAttribute("path","/question/list-question?examId="+examId);
             return "admin/question/list-question";
         }
@@ -71,10 +103,44 @@ public class QuestionController {
 
     @GetMapping("/add-question")
     public String addQuestionGet(@RequestParam("examId") Integer examId,
-                                 Model model, Principal principal, Pageable pageable){
+                                 Model model, Principal principal){
+        getInfoUser(model,principal);
+        model.addAttribute("exId", examId);
+        return "admin/question/add-question";
+    }
+
+    @PostMapping("/add-question")
+    public String addQuestionPost(@RequestParam("examId") Integer examId,
+                                  HttpServletRequest request, Principal principal,Model model,
+                                  RedirectAttributes red){
         getInfoUser(model,principal);
 
-        return "admin/question/add-question";
+        String contentQuestion= request.getParameter("content");
+        String ansA= request.getParameter("ansA");
+        String ansB= request.getParameter("ansB");
+        String ansC= request.getParameter("ansC");
+        String ansD= request.getParameter("ansD");
+        String ansCorrect=request.getParameter("ansCorrect");
+
+        Question question= new Question();
+        question.setContent(contentQuestion);
+        question.setAnsA(ansA);
+        question.setAnsB(ansB);
+        question.setAnsC(ansC);
+        question.setAnsD(ansD);
+        question.setAnsCorrect(ansCorrect);
+        questionService.createQuestion(question);
+
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        ExamQuestion examQuestion= new ExamQuestion();
+        examQuestion.setQuestionExam(question);
+        examQuestion.setExamQuestion(exam);
+        examQuestionService.createExamQuestion(examQuestion);
+
+        red.addFlashAttribute("success", "Thêm mới câu hỏi thành công");
+        String path= "redirect:/question/list-question?examId="+ examId;
+        return path;
     }
 
     // get info user login
@@ -91,5 +157,178 @@ public class QuestionController {
         }
     }
 
+    @GetMapping("/search-question")
+    public String chooseQuestion(Model model, Principal principal){
+        getInfoUser(model,principal);
+
+        //get AllClassroom
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+        return "admin/question/search-question";
+    }
+
+    @PostMapping("/list-question-search")
+    public String getListQuestionBySubjectAndClass(Model model,
+                                                   @RequestParam("subjectId") Integer subjectId,
+                                                   @RequestParam("classId") Integer classId,
+                                                   Principal principal){
+        getInfoUser(model,principal);
+        List<Exam> listExam ;
+        return "admin/question/search-question";
+    }
+
+    @PostMapping(value = "/upload-question/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public String uploadFile(Principal principal,Model model,
+                             @RequestParam("examId") Integer examId,
+                             @RequestPart(name = "fileData") MultipartFile file){
+
+        getInfoUser(model,principal);
+
+        // Check Data
+        Map<String, String> result = new HashMap<String, String>();
+        String message = validateData(file);
+        Gson gson = new Gson();
+        if (StringUtils.isEmpty(message)) {
+            result = this.processFile(file,examId);
+        } else {
+            result.put("STATUS", "1");
+            result.put("MESSAGE", message);
+        }
+        return gson.toJson(result);
+    }
+
+    private Map<String, String> processFile(MultipartFile file, Integer examId) {
+        Map<String, String> result = new HashMap<>();
+        int iSuccess = 0;
+        String flName = file.getOriginalFilename();
+        InputStream inp = null;
+        String[] flPath = flName.split("[.]");
+        String flExtension = flPath[flPath.length - 1].toUpperCase();
+        Workbook wbFile = null;
+        try {
+            inp = file.getInputStream();
+            if ("XLSX".equals(flExtension)) {
+                wbFile = new XSSFWorkbook(file.getInputStream());
+            } else {
+                wbFile = new HSSFWorkbook(file.getInputStream());
+            }
+            Sheet sheet = wbFile.getSheetAt(0);
+            Iterator<Row> rows = sheet.rowIterator();
+            // Skip the first row
+            rows.next();
+            while (rows.hasNext()) {
+                if (insertQuestion(rows.next(), examId)) {
+                    iSuccess++;
+                }
+            }
+        } catch (IOException e) {
+           e.printStackTrace();
+        } finally {
+            if (inp != null) {
+                try {
+                    inp.close();
+                } catch (IOException e) {
+                   e.printStackTrace();
+                }
+            }
+        }
+        if (iSuccess == 0) {
+            result.put("STATUS", "1");
+            result.put("MESSAGE", "Cannot create the detail data.");
+        }
+        result.put("NUM_SUCCESS", iSuccess + "");
+        return result;
+    }
+
+    private boolean insertQuestion(Row row, Integer examId) {
+        try {
+            Question question= new Question();
+            Cell cell;
+            CellType cellType;
+            String temp = null;
+
+            cell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+                question.setContent(temp);
+            }
+
+            cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+                question.setAnsA(temp);
+            }
+
+            cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+                question.setAnsB(temp);
+            }
+
+            cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+                question.setAnsC(temp);
+            }
+
+            cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+                question.setAnsD(temp);
+            }
+
+            // cmnd
+            cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cellType = cell.getCellType();
+            temp = null;
+            if (CellType.NUMERIC.equals(cellType)) {
+                temp = new BigDecimal(cell.getNumericCellValue()).toString();
+            } else if (CellType.STRING.equals(cellType)) {
+                temp = StringUtils.trim(cell.getStringCellValue());
+            }
+            if (StringUtils.isNotEmpty(temp)) {
+                question.setAnsCorrect(temp);
+            }
+//            questionUploadService.createQuestionUpload(question);
+            questionService.createQuestion(question);
+
+            Optional<Exam> optionalExam= examService.findByExamId(examId);
+            Exam exam= optionalExam.get();
+            ExamQuestion examQuestion= new ExamQuestion();
+            examQuestion.setQuestionExam(question);
+            examQuestion.setExamQuestion(exam);
+            examQuestionService.createExamQuestion(examQuestion);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private String validateData(MultipartFile file) {
+        StringBuilder builderMessage = new StringBuilder();
+        if (file == null) {
+            builderMessage.append("File không đúng định dạng xlsx hoặc xls");
+        } else {
+            String flName = file.getOriginalFilename();
+            String[] flPath = flName.split("[.]");
+            String flExtension = flPath[flPath.length - 1].toUpperCase();
+            if (!"XLSX".equals(flExtension) && !"XLS".equals(flExtension)) {
+                builderMessage.append("File không đúng định dạng xlsx hoặc xls");
+            }
+        }
+        return builderMessage.toString();
+    }
 
 }

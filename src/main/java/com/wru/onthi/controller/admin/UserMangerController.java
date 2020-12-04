@@ -53,7 +53,7 @@ public class UserMangerController {
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable,
-                             String username, String email, String phone, Integer status){
+                             String username, String email, String phone, Integer status, HttpServletRequest request){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
@@ -69,6 +69,7 @@ public class UserMangerController {
             model.addAttribute("em",email);
             model.addAttribute("ph",phone);
             model.addAttribute("stt",Integer.valueOf(status));
+
         }
         // get info user login
         getInfoUser(model,principal);
@@ -80,6 +81,8 @@ public class UserMangerController {
         model.addAttribute("pageInfo",pageUser);
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
+        String path= request.getRequestURI();
+
         model.addAttribute("path","/admin/user/list-user");
         return "admin/user/list-user";
     }

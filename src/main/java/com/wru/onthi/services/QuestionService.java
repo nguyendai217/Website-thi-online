@@ -1,6 +1,7 @@
 package com.wru.onthi.services;
 
 import com.wru.onthi.entity.Question;
+import com.wru.onthi.entity.Subject;
 import com.wru.onthi.model.QuestionModel;
 import com.wru.onthi.services.serviceImpl.QuestionServiceImpl;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,6 @@ public interface QuestionService {
     List<Question> getListQuestionByExam(Integer examId);
     List<QuestionModel> getListQuestion(Integer examId);
     Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable);
+    Page<Question> getListAllQuestion(Pageable pageable);
+    Page<Question> getPageQuestionByClassAndSubject(Integer classId,Integer subjectId, Pageable pageable);
 }

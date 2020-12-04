@@ -31,7 +31,12 @@
                         <a  th:href="@{/admin/home}"><i class="fa fa-home" ></i> Home</a>
                     </li>
                     <li id="chartManager">
-                        <a  th:href="@{/admin/chart}"><i class="fa fa-bar-chart" ></i> Thống kê</a>
+                        <a><i class="fa fa-bar-chart"></i> Thống kê<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li id="chart-user"><a th:href="@{/thongke/thongke-user}"><i class="fa fa-user"></i> Thống kê user</a></li>
+                            <li id="chart-score"><a th:href="@{/thongke/thongke-diem}"><i class="fa fa-check-square-o"></i> Thống kê điểm</a></li>
+                            <li id="chart-exam"><a th:href="@{/thongke/thongke-exam}"><i class="fa fa-file-text-o"></i> Thống kê bài thi</a></li>
+                        </ul>
                     </li>
                     <li id="userManager">
                         <a th:href="@{/admin/user/list-user}"><i class="fa fa-users" ></i> Quản lí user</a>
@@ -47,6 +52,9 @@
                     </li>
                     <li id="examManager">
                         <a th:href="@{/exam/list-exam}"><i class="fa fa-file-pdf-o"></i> Quản lí đề thi</a>
+                    </li>
+                    <li id="questionManager">
+                        <a th:href="@{/question/search-question}"><i class="fa fa-question-circle-o"></i> Quản lí câu hỏi</a>
                     </li>
                     <li id="newsManager"  >
                         <a><i class="fa fa-newspaper-o"></i> Quản lí tin tức <span class="fa fa-chevron-down"></span></a>

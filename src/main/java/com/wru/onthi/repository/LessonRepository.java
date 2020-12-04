@@ -36,7 +36,7 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     Lesson getContentLesson(Integer lessonId);
 
     @Query(value = "select  * from lesson where lessonname like %:lessonName% " +
-            "or (subject_id like %:subjectId% and class_id like %:classId%) ",nativeQuery = true)
+            "or subject_id like %:subjectId% or class_id like %:classId% ",nativeQuery = true)
     Page<Lesson>searchLesson(String lessonName, String subjectId, String classId, Pageable pageable);
 
     @Modifying

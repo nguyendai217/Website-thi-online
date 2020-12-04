@@ -16,7 +16,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3><small>Danh sách câu hỏi</small></h3>
+                        <h3> <small>Danh sách câu hỏi</small></h3>
                     </div>
 
                     <div class="title_right">
@@ -34,16 +34,11 @@
                 <div class="clearfix"></div>
 
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12">
                         <div class="x_title">
-                            <h6>Môn học : <span th:text="${subjectName}"></span></h6>
-                            <h6>Lớp : <span th:text="${className}"></span></h6>
-                        </div>
-                        <div class="col-md-2 col-sm-12">
-                            <label>&nbsp;</label>
-                            <div>
-                                <a th:href="@{/question/add-question(examId=${examId})}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm câu hỏi</a>
-                            </div>
+                            <h5>Danh sách câu hỏi</h5>
+                            <p>Môn học :<span th:text="${subjectName}"></span></p>
+                            <p>Lớp :<span th:text="${className}"></span></p>
                         </div>
                     </div>
                 </div>

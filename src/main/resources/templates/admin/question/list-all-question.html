@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Admin Home</title>
+    <title>Admin</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
 
@@ -16,7 +16,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3><small>Danh sách câu hỏi</small></h3>
+                        <h3> <small>Danh sách câu hỏi</small></h3>
                     </div>
 
                     <div class="title_right">
@@ -34,16 +34,49 @@
                 <div class="clearfix"></div>
 
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12">
                         <div class="x_title">
-                            <h6>Môn học : <span th:text="${subjectName}"></span></h6>
-                            <h6>Lớp : <span th:text="${className}"></span></h6>
+                            <h5>T</h5>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="col-md-2 col-sm-12">
-                            <label>&nbsp;</label>
-                            <div>
-                                <a th:href="@{/question/add-question(examId=${examId})}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm câu hỏi</a>
-                            </div>
+                        <div>
+                            <form th:action="@{/question/list-all-question}" method="get">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>Môn học</label>
+                                        <select class="form-control" name="subjectId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listSubject}"
+                                                    th:value="${item.id}" th:text="${item.name}"
+                                                    th:selected="${item.id==subjectSelected}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>Lớp</label>
+                                        <select class="form-control" name="classId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${listClass}"
+                                                    th:value="${item.id}" th:text="${item.classname}"
+                                                    th:selected="${item.id==classSelected}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <a th:href="@{/question/add-question}" class="btn btn-success"><i class="fa fa-plus"></i> Thêm mới</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -54,7 +87,7 @@
                         <div class="bg-success col-md-12" id="success"
                              th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
                         </div>
-                        <div class="bg-danger col-md-12" id="error"
+                        <div class="bg-success col-md-12" id="error"
                              th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
                         </div>
                         <div class="tile-body">
@@ -92,24 +125,27 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div th:replace="admin/pagging-question::content"></div>
+                                <div th:replace="admin/pagging::content"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-
             </div>
         </div>
         <!-- page content -->
     </div>
 </div>
 <div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/modal_active::content"></div>
+<div th:replace="admin/modal_disable::content"></div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#examManager").addClass("active");
+    $(document).ready(function () {
+        $('#questionManager').addClass("active");
+    });
 
 </script>
 </body>
