@@ -28,6 +28,8 @@ public class HomeController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    ResultService resultService;
 
     @GetMapping(value = {"/"})
     public String index(Model model){
@@ -67,6 +69,10 @@ public class HomeController {
 
         List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
         model.addAttribute("listnewStudy",listnewStudy);
+
+        List<Result> listScoreDesc= resultService.getResultScoreDESC().subList(0,5);
+        model.addAttribute("userScore",listScoreDesc);
+
 
         return "index";
     }

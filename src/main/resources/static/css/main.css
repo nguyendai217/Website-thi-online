@@ -872,21 +872,21 @@ button.btn-showMenu {
 .test-list {
     height: 500px;
 }
-
 .test-list .test-listItem {
-    max-height: 150px;
+    max-height: 115px;
 }
-
+.test-list .test-listItem .img img{
+    width: 85%;
+}
 .test-list .test-listItem .title {
-    font-size: 1.3rem;
+    margin: 0.5rem 0;
 }
-
 .test-list .test-listItem .description {
     font-size: 1rem;
+    margin-top: 4px;
     color: var(--quick-silver);
     transition: 1s ease-in-out;
 }
-
 .test-list .test-listItem:hover .description {
     font-size: 1rem;
     color: var(--white);

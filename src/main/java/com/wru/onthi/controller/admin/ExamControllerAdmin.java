@@ -71,16 +71,11 @@ public class ExamControllerAdmin {
             itemPerPage= totalItem;
         }
 
-        if(pageExam == null){
-            model.addAttribute("error","Danh sách bài thi trống.");
-            return "admin/exam/list-exam";
-        } else {
-            model.addAttribute("pageInfo", pageExam);
-            model.addAttribute("total",totalItem);
-            model.addAttribute("itemPerPage",itemPerPage);
-            model.addAttribute("path","/exam/list-exam");
-            return "admin/exam/list-exam";
-        }
+        model.addAttribute("pageInfo", pageExam);
+        model.addAttribute("total",totalItem);
+        model.addAttribute("itemPerPage",itemPerPage);
+        model.addAttribute("path","/exam/list-exam");
+        return "admin/exam/list-exam";
     }
 
     @GetMapping("/update-exam/{id}")

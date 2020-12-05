@@ -80,4 +80,9 @@ public class ExamServiceImpl implements ExamService {
     public void updateStatus(Integer examId, Integer status) {
         examRepository.updateStatus(examId,status);
     }
+
+    @Override
+    public List<Exam> getListExamNew() {
+        return examRepository.getlistExamNew();
+    }
 }

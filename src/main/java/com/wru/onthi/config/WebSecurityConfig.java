@@ -52,8 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/oauth2/**","/signin","/class/**","/tintuc/**","/lophoc/**"
                         ,"/monhoc/**","/baihoc/**","/noidungbaihoc/**", "/image/**"
                         ,"/kiemtra/**","/contact/**","/lesson","/user/profile","/hoctap/**").permitAll()
-                .antMatchers("/home/**","/history/**","/question/**").hasAnyAuthority("USER","ADMIN","MANAGER")
-                .antMatchers("/admin/**","/profile","/lesson/**","/exam/**","/download/**","/thongke/**").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers("/home/**","/history/**","/question/**")
+                .hasAnyAuthority("USER","ADMIN","MANAGER")
+                .antMatchers("/admin/**","/profile","/lesson/**",
+                        "/exam/**","/download/**","/thongke/**","/result/**")
+                .hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")

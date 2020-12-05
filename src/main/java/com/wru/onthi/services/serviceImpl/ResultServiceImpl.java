@@ -1,5 +1,6 @@
 package com.wru.onthi.services.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,18 @@ public class ResultServiceImpl implements ResultService  {
 		return resultRepository.findAll(pageable);
 	}
 
+	@Override
+	public Page<Result> searchResultExam(String username, String examCode, Pageable pageable) {
+		return resultRepository.searchResultExam(username,examCode,pageable);
+	}
 
+	@Override
+	public void deleteResult(Result result) {
+		resultRepository.delete(result);
+	}
+
+	@Override
+	public List<Result> getResultScoreDESC() {
+		return resultRepository.getListScoreDESC();
+	}
 }

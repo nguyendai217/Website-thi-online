@@ -222,17 +222,18 @@
                             <span><i class="fa fa-book" aria-hidden="true"></i> Danh sách điểm cao</span>
                         </div>
                         <div class="news-list">
-                            <a href="#" th:each="item:${lessonList}">
+                            <a th:each="item:${userScore}">
                                 <div class="news-listItem">
                                     <div class="img">
-                                        <img th:src="@{/image/subject/(image)${item.image}}" alt="">
+                                        <img th:src="@{/image/user/{image}(image=${item.userResult.image})}" alt="">
                                     </div>
                                     <div class="content">
                                         <h5 class="title" style="font-size: 100%">
-                                            Môn học: <span th:text="${item.getSubject().name}"></span>
+                                            Môn học: <span th:text="${item.exam.exam_subject.name}"></span> --
+                                            <span th:text="${item.exam.exam_classroom.classname}"></span>
                                         </h5>
                                         <span class="description">
-                                           Thành viên : <span> Nguyễn Văn A</span><br>Số điểm: 9
+                                           Thành viên : <span th:text="${item.userResult.fullname}"></span><br>Số điểm: <span th:text="${item.score}"></span>
                                         </span>
                                     </div>
                                 </div>

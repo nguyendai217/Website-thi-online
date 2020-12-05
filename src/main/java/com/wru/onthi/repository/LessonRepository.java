@@ -48,4 +48,7 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     @Transactional
     @Query("update Lesson ls set ls.status=:status where ls.id=:id")
     void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    @Query("SELECT u from Lesson  u where u.classroom.id=:classId order by u.views desc ")
+    List<Lesson> getListLessonByClass(Integer classId);
 }

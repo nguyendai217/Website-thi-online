@@ -13,6 +13,8 @@ public class Lesson {
     private Integer id;
     @Column(name = "lessonname")
     private String lessonName;
+    @Column(name = "description")
+    private String description;
     @Column(name = "lessoncontent",columnDefinition="LONGTEXT")
     private String lessonContent;
     @Column(name = "image")
@@ -63,6 +65,14 @@ public class Lesson {
 
     public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLessonContent() {

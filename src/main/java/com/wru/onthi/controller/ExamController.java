@@ -68,6 +68,8 @@ public class ExamController {
         // get list class by subject
 
         List<Classroom> getListClassBySubject= classroomService.listClassBySubject(subjectId);
+        List<Exam> listExam= examService.getListExamNew().subList(0,4);
+        model.addAttribute("listExam",listExam);
         model.addAttribute("subjectId",subjectId);
         model.addAttribute("listClass",getListClassBySubject);
         return "exam/list-class-bySubject";

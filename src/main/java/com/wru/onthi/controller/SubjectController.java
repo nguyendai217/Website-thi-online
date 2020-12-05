@@ -48,6 +48,8 @@ public class SubjectController {
         model.addAttribute("className",className);
         model.addAttribute("classId",id);
 
+        List<Lesson> lessonByClass= lessonService.getListLessonByClass(id).subList(0,4);
+        model.addAttribute("lesson", lessonByClass);
         // list lesson views
         List<Lesson> listLesson =lessonService.getListLessonOrderByViews().subList(0,5);
         model.addAttribute("listLesson",listLesson);

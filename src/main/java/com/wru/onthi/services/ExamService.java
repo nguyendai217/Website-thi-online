@@ -20,4 +20,5 @@ public interface ExamService {
     Page<Exam> searchExam(String examCode, String subjectId, String classId, Pageable pageable);
     Page<Exam> getListExamByClass(Integer classId,Pageable pageable);
     void updateStatus(Integer examId, Integer status);
+    List<Exam> getListExamNew();
 }

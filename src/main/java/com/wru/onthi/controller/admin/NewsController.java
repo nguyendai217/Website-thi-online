@@ -178,11 +178,6 @@ public class NewsController {
 
         getInfoUser(model,principal);
 
-
-
-
-
-
         //get list category
         List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
         model.addAttribute("listCategory",listCategory);

@@ -37,4 +37,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     @Transactional
     @Query("update Exam ex set ex.status=:status where ex.id=:examId")
     void updateStatus(@Param("examId") Integer examId, @Param("status") Integer status);
+
+    @Query("SELECT u from Exam  u order by u.id desc ")
+    List<Exam> getlistExamNew();
 }

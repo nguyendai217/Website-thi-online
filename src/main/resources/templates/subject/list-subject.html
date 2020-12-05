@@ -29,60 +29,27 @@
                                 </div>
                             </a>
                         </div>
+
                         <!-- test-list -->
                         <div class="class-sectionTitle">
-                            <span>Danh sách đề thi mới</span>
+                            <span>Danh sách bài học</span>
                         </div>
-                        <div class="test-list">
-                            <a href="#">
+                        <div class="test-list" >
+                            <a th:each="item:${lesson}" th:href="@{/noidungbaihoc/(lessonId=${item.id})}">
                                 <div class="test-listItem">
                                     <div class="img">
-                                        <img src="./images/img-right1.png" alt="">
+                                        <img th:src="@{/image/lesson/{image}(image=${item.image})}" alt="">
                                     </div>
                                     <div class="content">
-                                        <h3 class="title">
-                                            Khóa học 1
-                                        </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="">
-                                <div class="test-listItem">
-                                    <div class="img">
-                                        <img src="./images/img-right1.png" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="title">
-                                            Khóa học 1
-                                        </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="">
-                                <div class="test-listItem">
-                                    <div class="img">
-                                        <img src="./images/img-right2.png" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="title">
-                                            Khóa học 1
-                                        </h3>
-                                        <p class="description">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-                                            itaque!
+                                        <h6 class="title">Tên bài học: <span th:text="${item.lessonName}"></span> <br>
+                                            Môn học: <span th:text="${item.subject.name}"></span></h6>
+                                        <p class="description" th:text="${item.description}">
                                         </p>
                                     </div>
                                 </div>
                             </a>
                         </div>
+
                     </div>
                 </div>
                 <div th:replace="fragments/sidebar :: content"></div>

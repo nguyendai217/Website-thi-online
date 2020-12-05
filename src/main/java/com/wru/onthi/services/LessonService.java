@@ -23,5 +23,5 @@ public interface LessonService {
     Lesson getContentLesson(Integer lessonId);
     Page<Lesson> searchLesson(String lessonName,String subjectId,String classId,Pageable pageable);
     void updateStatus(Integer id, Integer status);
-
+    List<Lesson> getListLessonByClass(Integer classId);
 }

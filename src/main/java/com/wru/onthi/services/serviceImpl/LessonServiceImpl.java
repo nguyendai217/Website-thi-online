@@ -120,4 +120,9 @@ public class LessonServiceImpl implements LessonService {
     public void updateStatus(Integer id, Integer status) {
         lessonRepository.updateStatus(id,status);
     }
+
+    @Override
+    public List<Lesson> getListLessonByClass(Integer classId) {
+        return lessonRepository.getListLessonByClass(classId);
+    }
 }
