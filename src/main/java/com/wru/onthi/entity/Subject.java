@@ -31,6 +31,17 @@ public class Subject {
     @OneToMany(mappedBy = "exam_subject")
     private List<Exam> exams;
 
+    @OneToMany(mappedBy = "question_subject")
+    private List<Question> lisQuestion;
+
+    public List<Question> getLisQuestion() {
+        return lisQuestion;
+    }
+
+    public void setLisQuestion(List<Question> lisQuestion) {
+        this.lisQuestion = lisQuestion;
+    }
+
     public Integer getId() {
         return id;
     }

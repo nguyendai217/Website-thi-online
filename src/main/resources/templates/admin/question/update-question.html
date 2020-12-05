@@ -37,11 +37,14 @@
                                 <div class="bg-danger" id="error"
                                      th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
                                 </div>
-                                <input type="text" hidden="true" name="examId" th:value="${qs.id}"/>
+                                <div class="bg-success" id="success"
+                                     th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                                </div>
+                                <input type="text" hidden="true" name="questionId" th:value="${qs.id}"/>
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <label class="labels">Nội dung câu hỏi</label>
-                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" th:field="${qs.content}" ></textarea>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="4" th:field="${qs.content}" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
@@ -90,8 +93,7 @@
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $('#error').delay(5000).fadeOut(1000);
-    $('#examManager').addClass("active");
+    $('#questionManager').addClass("active");
 </script>
 </body>
 </html>

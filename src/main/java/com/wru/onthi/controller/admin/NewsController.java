@@ -171,8 +171,17 @@ public class NewsController {
 
     //list news
     @GetMapping("/list-news")
-    public String listNews(Model model,Principal principal,Pageable pageable,String categoryId, String title, HttpServletRequest request){
+    public String listNews(Model model,Principal principal,Pageable pageable,
+                           String categoryId,
+                           String title,
+                           HttpServletRequest request){
+
         getInfoUser(model,principal);
+
+
+
+
+
 
         //get list category
         List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
@@ -186,8 +195,7 @@ public class NewsController {
         Page<News> pageNews= null;
         if((categoryId== null || categoryId=="") && (title== null || title=="")){
             pageNews = newsService.getAllNews(pageItem);
-            String path= request.getRequestURI();
-            model.addAttribute("path",path);
+
         }else {
             pageNews = newsService.searchNews(title,categoryId,pageItem);
             model.addAttribute("title",title);
@@ -197,8 +205,6 @@ public class NewsController {
             }else {
                 model.addAttribute("categorySelected",categoryId);
             }
-            String path= "/news/list-news?title=" + title + "&categoryId=" + Integer.valueOf(categoryId);
-            model.addAttribute("path",path);
         }
 
         int totalItem = (int) pageNews.getTotalElements();
@@ -213,7 +219,7 @@ public class NewsController {
             model.addAttribute("pageInfo", pageNews);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
-
+            model.addAttribute("path","/news/list-news");
             return "admin/news/list-news";
         }
     }

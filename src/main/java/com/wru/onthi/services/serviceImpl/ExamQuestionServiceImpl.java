@@ -15,4 +15,9 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     public void createExamQuestion(ExamQuestion examQuestion) {
         examQuestionRepo.save(examQuestion);
     }
+
+    @Override
+    public void removeQuestionFromExam(Integer questionId, Integer examId) {
+        examQuestionRepo.removeQuestionFromExam(questionId,examId);
+    }
 }

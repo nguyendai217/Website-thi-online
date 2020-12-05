@@ -53,7 +53,7 @@ public class UserMangerController {
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable,
-                             String username, String email, String phone, Integer status, HttpServletRequest request){
+                             String username, String email, String phone, String status, HttpServletRequest request){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
@@ -64,7 +64,7 @@ public class UserMangerController {
                 && (phone== null || phone=="") && (status== null || status.equals(""))){
             pageUser = userService.getAllUser(pageItem);
         }else {
-            pageUser= userService.searchUser(username,email,phone,status,pageItem);
+            pageUser= userService.searchUser(username,email,phone,Integer.valueOf(status),pageItem);
             model.addAttribute("us",username);
             model.addAttribute("em",email);
             model.addAttribute("ph",phone);
@@ -81,9 +81,20 @@ public class UserMangerController {
         model.addAttribute("pageInfo",pageUser);
         model.addAttribute("total",totalItem);
         model.addAttribute("itemPerPage",itemPerPage);
-        String path= request.getRequestURI();
-
         model.addAttribute("path","/admin/user/list-user");
+        if(username==null){
+            username="";
+        }
+        if(email== null){
+            email="";
+        }
+        if(status==null){
+            status= "";
+        }
+        if(phone== null){
+            phone= "";
+        }
+        model.addAttribute("condition",("&username="+username+ "&email="+email+"&status="+status+"&phone="+phone));
         return "admin/user/list-user";
     }
 

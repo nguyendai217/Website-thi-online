@@ -17,8 +17,8 @@ public interface QuestionService {
     Question updateQuestion(Question question);
     Page<Question> getAllQuestion(Pageable pageable);
     List<Question> getListQuestionByExam(Integer examId);
-    List<QuestionModel> getListQuestion(Integer examId);
+    List<QuestionModel> getListQuestion(Integer examId,boolean history);
     Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable);
     Page<Question> getListAllQuestion(Pageable pageable);
-    Page<Question> getPageQuestionByClassAndSubject(Integer classId,Integer subjectId, Pageable pageable);
+    Page<Question> getPageQuestionBySubjectAndClass(Integer subjectId,Integer classId, Pageable pageable);
 }

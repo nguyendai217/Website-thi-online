@@ -54,7 +54,7 @@ public class ClassManagerController {
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
         Page<Classroom> pageClass= null;
         if(searchClass == null){
             pageClass = classroomService.getAllClass(pageItem);

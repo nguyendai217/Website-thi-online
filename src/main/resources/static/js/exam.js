@@ -100,7 +100,9 @@ if (checkTestFinished(endTime) === false) {
                 testId: id_test,
             },
             dataType: "json",
-            success:function (response) {
+            success: function (response) {
+                console.log("response: ",response)
+                window.location.href = './history?testId=' + id_test;
             },
         });
         clearInterval(_countDown);
@@ -108,7 +110,6 @@ if (checkTestFinished(endTime) === false) {
         $("#hours").html("00");
         $("#minutes").html("00");
         $("#seconds").html("00");
-        window.location.href = './history?testId=' + id_test;
         localStorage.removeItem("test-" + id_test + "-time")
         localStorage.removeItem("test-" + id_test);
     });

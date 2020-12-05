@@ -55,7 +55,7 @@ public class QuestionController {
 //    @Autowired
 //    QuestionUploadService questionUploadService;
 
-    @GetMapping("/list-question")
+    @GetMapping("/list-question-by-exam")
     public String getAllQuestion(@RequestParam("examId") Integer examId, Model model, Principal principal, Pageable pageable){
         getInfoUser(model,principal);
 
@@ -79,16 +79,17 @@ public class QuestionController {
 
         if(pageQuestion == null){
             model.addAttribute("error","Danh sách câu hỏi trống.");
-            return "admin/question/list-question";
+            return "admin/question/list-question-by-exam";
         } else {
             model.addAttribute("pageInfo", pageQuestion);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
             model.addAttribute("examId",examId);
+            model.addAttribute("examCode",exam.getCodeExam());
             model.addAttribute("className",className);
             model.addAttribute("subjectName",subjectName);
-            model.addAttribute("path","/question/list-question?examId="+examId);
-            return "admin/question/list-question";
+            model.addAttribute("path","/question/list-question-by-exam?examId="+examId);
+            return "admin/question/list-question-by-exam";
         }
     }
 
@@ -101,19 +102,56 @@ public class QuestionController {
         return "admin/question/update-question";
     }
 
-    @GetMapping("/add-question")
+    @PostMapping("/update-question")
+    public String updateQuestionPost(Model model, Principal principal,
+                                     HttpServletRequest request,
+                                     RedirectAttributes redr){
+
+        getInfoUser(model,principal);
+        Integer questionId=Integer.valueOf(request.getParameter("questionId"));
+        String contentQuestion= request.getParameter("content");
+        String ansA= request.getParameter("ansA");
+        String ansB= request.getParameter("ansB");
+        String ansC= request.getParameter("ansC");
+        String ansD= request.getParameter("ansD");
+        String ansCorrect=request.getParameter("ansCorrect");
+
+        Optional<Question>optionalQuestion= questionService.findById(questionId);
+        Question question= optionalQuestion.get();
+        try {
+            question.setContent(contentQuestion);
+            question.setAnsA(ansA);
+            question.setAnsB(ansB);
+            question.setAnsC(ansC);
+            question.setAnsD(ansD);
+            question.setAnsCorrect(ansCorrect);
+            questionService.updateQuestion(question);
+            redr.addFlashAttribute("success","Update thông tin câu hỏi thành công");
+        }catch (Exception e){
+            redr.addFlashAttribute("error","Update thông tin câu hỏi thất bại");
+        }
+        String path="redirect:/question/update-question/"+questionId;
+        return path;
+    }
+
+    @GetMapping("/add-question-by-exam")
     public String addQuestionGet(@RequestParam("examId") Integer examId,
                                  Model model, Principal principal){
         getInfoUser(model,principal);
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        model.addAttribute("exam",optionalExam.get());
         model.addAttribute("exId", examId);
-        return "admin/question/add-question";
+        return "admin/question/add-question-by-exam";
     }
 
-    @PostMapping("/add-question")
+    @PostMapping("/add-question-by-exam")
     public String addQuestionPost(@RequestParam("examId") Integer examId,
                                   HttpServletRequest request, Principal principal,Model model,
                                   RedirectAttributes red){
         getInfoUser(model,principal);
+
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
 
         String contentQuestion= request.getParameter("content");
         String ansA= request.getParameter("ansA");
@@ -129,17 +167,22 @@ public class QuestionController {
         question.setAnsC(ansC);
         question.setAnsD(ansD);
         question.setAnsCorrect(ansCorrect);
-        questionService.createQuestion(question);
-
-        Optional<Exam> optionalExam= examService.findByExamId(examId);
-        Exam exam= optionalExam.get();
-        ExamQuestion examQuestion= new ExamQuestion();
-        examQuestion.setQuestionExam(question);
-        examQuestion.setExamQuestion(exam);
-        examQuestionService.createExamQuestion(examQuestion);
-
-        red.addFlashAttribute("success", "Thêm mới câu hỏi thành công");
-        String path= "redirect:/question/list-question?examId="+ examId;
+        Classroom classroom= exam.getExam_classroom();
+        Subject subject= exam.getExam_subject();
+        question.setQuestion_classroom(classroom);
+        question.setQuestion_subject(subject);
+        try {
+            questionService.createQuestion(question);
+            ExamQuestion examQuestion= new ExamQuestion();
+            examQuestion.setQuestionExam(question);
+            examQuestion.setExamQuestion(exam);
+            examQuestionService.createExamQuestion(examQuestion);
+            red.addFlashAttribute("success", "Thêm mới câu hỏi thành công");
+        }
+        catch (Exception e){
+            red.addFlashAttribute("error", "Thêm mới câu hỏi thất bại");
+        }
+        String path= "redirect:/question/list-question-by-exam?examId="+ examId;
         return path;
     }
 
@@ -157,31 +200,7 @@ public class QuestionController {
         }
     }
 
-    @GetMapping("/search-question")
-    public String chooseQuestion(Model model, Principal principal){
-        getInfoUser(model,principal);
-
-        //get AllClassroom
-        List<Classroom> listClass= classroomService.getAllClassroom();
-        model.addAttribute("listClass",listClass);
-
-        //get list Subject
-        List<Subject> listSubject= subjectService.getlistSubject();
-        model.addAttribute("listSubject", listSubject);
-        return "admin/question/search-question";
-    }
-
-    @PostMapping("/list-question-search")
-    public String getListQuestionBySubjectAndClass(Model model,
-                                                   @RequestParam("subjectId") Integer subjectId,
-                                                   @RequestParam("classId") Integer classId,
-                                                   Principal principal){
-        getInfoUser(model,principal);
-        List<Exam> listExam ;
-        return "admin/question/search-question";
-    }
-
-    @PostMapping(value = "/upload-question/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload-question-by-exam/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public String uploadFile(Principal principal,Model model,
                              @RequestParam("examId") Integer examId,
@@ -246,6 +265,11 @@ public class QuestionController {
     }
 
     private boolean insertQuestion(Row row, Integer examId) {
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam = optionalExam.get();
+        Classroom classroom = exam.getExam_classroom();
+        Subject subject = exam.getExam_subject();
+
         try {
             Question question= new Question();
             Cell cell;
@@ -299,11 +323,11 @@ public class QuestionController {
             if (StringUtils.isNotEmpty(temp)) {
                 question.setAnsCorrect(temp);
             }
-//            questionUploadService.createQuestionUpload(question);
+
+            question.setQuestion_classroom(classroom);
+            question.setQuestion_subject(subject);
             questionService.createQuestion(question);
 
-            Optional<Exam> optionalExam= examService.findByExamId(examId);
-            Exam exam= optionalExam.get();
             ExamQuestion examQuestion= new ExamQuestion();
             examQuestion.setQuestionExam(question);
             examQuestion.setExamQuestion(exam);
@@ -329,6 +353,74 @@ public class QuestionController {
             }
         }
         return builderMessage.toString();
+    }
+
+    @GetMapping("/search-question")
+    public String chooseQuestion(Model model, Principal principal){
+        getInfoUser(model,principal);
+
+        //get AllClassroom
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClass",listClass);
+
+        //get list Subject
+        List<Subject> listSubject= subjectService.getlistSubject();
+        model.addAttribute("listSubject", listSubject);
+        return "admin/question/search-question";
+    }
+
+    @GetMapping("/list-question-by-subject-class")
+    public String getListQuestionBySubjectAndClass(Model model,Principal principal,
+                                                   @RequestParam("subjectId") Integer subjectId,
+                                                   @RequestParam("classId") Integer classId,
+                                                   Pageable pageable){
+        getInfoUser(model,principal);
+
+        Optional<Classroom> optional= classroomService.findById(classId);
+        Classroom classroom= optional.get();
+        Optional<Subject> optionalSubject= subjectService.findBySubjectId(subjectId);
+        Subject subject= optionalSubject.get();
+
+        int pageNumber = pageable.getPageNumber();
+        int pageSize= 5;
+        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
+        Page<Question> pageQuestion= questionService.getPageQuestionBySubjectAndClass(subjectId,classId,pageItem);
+        int totalItem = (int) pageQuestion.getTotalElements();
+        int itemPerPage= pageSize * (pageNumber+1);
+        if(itemPerPage > totalItem){
+            itemPerPage= totalItem;
+        }
+        if(pageQuestion == null){
+            model.addAttribute("error","Danh sách câu hỏi trống.");
+            return "admin/question/list-question-by-subject-class";
+        } else {
+            model.addAttribute("pageInfo", pageQuestion);
+            model.addAttribute("total",totalItem);
+            model.addAttribute("itemPerPage",itemPerPage);
+            model.addAttribute("className",classroom.getClassname());
+            model.addAttribute("subjectName",subject.getName());
+            model.addAttribute("classId",classId);
+            model.addAttribute("subjectId",subjectId);
+            model.addAttribute("path","/question/list-question-by-subject-class");
+            return "admin/question/list-question-by-subject-class";
+        }
+    }
+
+    @GetMapping("/remove-question-from-exam/{questionId}/{examId}")
+    public String removeQuestionFromExam(Model model, Principal principal,RedirectAttributes redr,
+                                         @PathVariable("questionId") Integer questionId,
+                                         @PathVariable("examId") Integer examId){
+
+        getInfoUser(model,principal);
+        try {
+            examQuestionService.removeQuestionFromExam(questionId,examId);
+            redr.addFlashAttribute("success","Xóa thành công câu hỏi khỏi đề thi.");
+        }catch (Exception ex){
+            redr.addFlashAttribute("error","Xóa câu hỏi khỏi đề thi thất bại");
+        }
+        String path= "redirect:/question/list-question-by-exam?examId="+examId;
+        return path;
     }
 
 }

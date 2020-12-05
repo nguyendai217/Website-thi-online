@@ -98,45 +98,10 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script th:src="@{/ckeditor/ckeditor.js}" type="text/javascript"></script>
 <script>
-
     $(document).ready(function () {
         $('#lessonManager').addClass("active");
          CKEDITOR.replace('content')
     });
-    // $('#btnAddLesson').click(function (){
-    //     var lessonName= $('#lessonname').val();
-    //     var classId= $('#classId').val();
-    //     var subjectId=$('#subjectId').val();
-    //     var content = editor.getData();
-    //
-    //     var token = $("meta[name='_csrf']").attr("content");
-    //     var header = $("meta[name='_csrf_header']").attr("content");
-    //
-    //     var data = {
-    //         "lessonName": lessonName,
-    //         "classroom":classId,
-    //         "subject":subjectId,
-    //         "lessonContent":content
-    //     }
-    //     $.ajax({
-    //         type: "post",
-    //         contentType: "application/json",
-    //         dataType: "json",
-    //         url: "/lesson/add-lesson",
-    //         data: JSON.stringify(data),
-    //         cache:false,
-    //         success: function(response) {
-    //             window.location.href="/lesson/list-lesson";
-    //             console.log("success");
-    //         },
-    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
-    //             console.log("failed")
-    //         },
-    //         beforeSend: function(xhr) {
-    //             xhr.setRequestHeader(header,token);
-    //         }
-    //     });
-    // });
 </script>
 </body>
 </html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin Home</title>
+    <div th:replace="admin/init_admin :: header"></div>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3><small>Thêm mới câu hỏi</small></h3>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row alert alert-danger" id="errorProcess" style="color: white; display: none;"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h6>Mã đề thi: <span th:text="${exam.codeExam}"></span></h6>
+                            <h6>Môn học : <span th:text="${exam.exam_subject.name}"></span></h6>
+                            <h6>Lớp : <span th:text="${exam.exam_classroom.classname}"></span></h6>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 border-right">
+                        <div class="p-3">
+                            <form th:action="@{/question/add-question-by-exam}" method="post">
+                                <input type="text" hidden class="form-control" id="examId" name="examId" th:value="${exId}"  >
+                                <div class="bg-danger" id="error"
+                                     th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mt-1">
+                                        <label class="labels">Nội dung câu hỏi</label>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" ></textarea>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án A</label>
+                                        <input type="text" class="form-control" name="ansA"  >
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án B</label>
+                                        <input type="text" class="form-control" name="ansB"  >
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án C</label>
+                                        <input type="text" class="form-control" name="ansC">
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án D</label>
+                                        <input type="text" class="form-control" name="ansD">
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <label class="labels">Đáp án đúng</label>
+                                        <select class="form-control" name="ansCorrect">
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                            <option value="3">C</option>
+                                            <option value="4">D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-success" type="submit">Thêm câu hỏi</button>
+                                    <a class="btn btn-danger" th:href="@{'/question/list-question-by-exam?examId='+${exId}}" >Hủy bỏ</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="align-items-center mt-3 mb-4">
+                            <h4>Upload file câu hỏi</h4>
+                        </div>
+                        <div class="mt-2 align-content-center border-bottom">
+                            <a th:href="@{/download/template-question}">Down load file mẫu (.xlsx) tại đây.</a>
+                        </div>
+                        <div class="mt-2 border-bottom">
+                            <div class="form-group align-content-center">
+                                <h4>Upload </h4>
+                                <input type="file" name="fileData" id="fileData" style="overflow: hidden" />
+                            </div>
+                            <div class="align-content-center">
+                                <button type="button" class="btn btn-success " id="idProcess">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="align-items-center mt-3 mb-4">
+                            <h5>Chọn câu hỏi từ ngân hàng đề thi</h5>
+                        </div>
+                        <div class="mt-2 align-content-center ">
+                            <a type="button" class="btn btn-success" th:href="@{#}">Thêm câu hỏi</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<div class="modal fade" id="modalProcess" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xử lý dữ liệu</h5>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="min-width: 10px;">0</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $('#error').delay(5000).fadeOut(1000);
+    $('#examManager').addClass("active");
+
+    // $('#idProcess').click(function (){
+    //   console.log("xxx")
+    // });
+    var idProgress = "#modalProcess .modal-dialog .progress .progress-bar";
+    $(document).ready(function() {
+        $("#idProcess").click(function () {
+            var $this = $(this);
+            $("#errorProcess").css("display", "none");
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var formData = new FormData();
+            if (formInvalid()) {
+                $("#errorProcess").css("display", "block");
+                return;
+            }
+            var examId= $('#examId').val();
+            formData.append("fileData", $("#fileData")[0].files[0]);
+            $.ajax({
+                url: '/question/upload-question-by-exam/upload?examId='+examId,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (response) {
+                    var result = JSON.parse(response);
+                    if (result.STATUS == 1) {
+                        $("#errorProcess").css('display', 'block');
+                        $("#errorProcess").html(result['MESSAGE']);
+                    } else {
+                        $(idProgress).attr("aria-valuemax", result["NUM_SUCCESS"]);
+                        $(idProgress).attr("aria-valuenow", "0");
+                        $(idProgress).css("width", "0");
+                        $(idProgress).html( "0");
+                        $('#modalProcess').modal('show');
+                        processData(1, parseInt( result['NUM_SUCCESS']));
+                    }
+                    console.log(result);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#modalProcess').modal('hide');
+                    $("#errorProcess").css('display', 'block');
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+            });
+        });
+    });
+
+    function processData(iStep, iRecord) {
+        var iCurrent = parseInt($(idProgress).attr("aria-valuenow"));
+        var iNext = iStep + iCurrent;
+        if( iNext >= iRecord) {
+            iNext = iRecord;
+        }
+        $(idProgress).attr("aria-valuenow", iNext);
+        $(idProgress).css("width", ((iNext * 100.0)/iRecord) + "%");
+        $(idProgress).html( iNext + "/" + iRecord);
+        if(iNext >= iRecord) {
+            // Now don't process
+            $('#modalProcess').modal('hide');
+        } else {
+            processData(iStep, iRecord);
+        }
+    }
+    function formInvalid(){
+        var flData = $("#fileData")[0].files[0];
+        if(flData == null) {
+            $("#errorProcess").html("Vui lòng chọn file để upload.");
+            return true;
+        }
+        var flSplit = flData.name.split(".");
+        var flExtension = flSplit[flSplit.length - 1];
+        if (flExtension.toLowerCase() != 'xlsx' && flExtension.toLowerCase() != 'xls') {
+            $("#errorProcess").html("File không đúng định dạng (định dạng .xls hoặc .xlsx)");
+            return true;
+        }
+        return false;
+    }
+
+</script>
+</body>
+</html>

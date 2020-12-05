@@ -78,14 +78,24 @@ public class LessonControllerAdmin {
             model.addAttribute("error","Danh sách bài học trống.");
             return "admin/lesson/list-lesson";
         } else {
+
+            if(lessonName == null){
+                lessonName="";
+            }
+            if(subjectId== null){
+                subjectId="";
+            }
+            if(classId== null){
+                classId="";
+            }
             model.addAttribute("pageInfo", pageLesson);
             model.addAttribute("total",totalItem);
             model.addAttribute("itemPerPage",itemPerPage);
             model.addAttribute("path","/lesson/list-lesson");
+            model.addAttribute("condition", ("lessonName="+lessonName+"&subjectId="+subjectId+"&classId="+classId));
             return "admin/lesson/list-lesson";
         }
     }
-
     @GetMapping("/add-lesson")
     public String addLessonGet(Model model,Principal principal){
         getInfoUser(model,principal);

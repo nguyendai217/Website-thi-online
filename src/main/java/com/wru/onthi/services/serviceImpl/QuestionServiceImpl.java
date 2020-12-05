@@ -61,14 +61,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Transactional
     @Override
-    public List<QuestionModel> getListQuestion(Integer examId) {
+    public List<QuestionModel> getListQuestion(Integer examId,boolean history) {
         List<QuestionModel> listQuestion= new ArrayList<>();
         Query query= entityManager.createNativeQuery(
                 "select qs.content,qs.ans_a,qs.ans_b,qs.ans_c,qs.ans_d,qs.ans_correct " +
                         "from question qs, exam ex, exam_question eq " +
                         "where  qs.id = eq.question_id and ex.id= eq.exam_id " +
                         "and ex.id = ? " +
-                        "order by eq.order asc ");
+                        "order by eq.id asc ");
 
         query.setParameter(1,examId);
         List<Object[]> objects = query.getResultList();
@@ -81,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
             listAns.add((String) record[2]);
             listAns.add((String) record[3]);
             listAns.add((String) record[4]);
-            questionModel.setAnsCorrect(null);
+            questionModel.setAnsCorrect((history ? ((String) record[5]) : null ));
             questionModel.setListAns(listAns);
             listQuestion.add(questionModel);
         }
@@ -90,31 +90,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable) {
-
-//        List<QuestionModel> listQuestion= new ArrayList<>();
-//        Query query= entityManager.createNativeQuery(
-//                "select qs.content,qs.ans_a,qs.ans_b,qs.ans_c,qs.ans_d,qs.ans_correct " +
-//                        "from question qs, exam ex, exam_question eq " +
-//                        "where  qs.id = eq.question_id and ex.id= eq.exam_id " +
-//                        "and ex.id = ? order by qs.order asc ");
-//
-//        query.setParameter(1,examId);
-//        List<Object[]> objects = query.getResultList();
-//
-//        for (Object[] record : objects) {
-//            QuestionModel questionModel= new QuestionModel();
-//            List<String> listAns= new ArrayList<>();
-//            questionModel.setContent((String) record[0]);
-//            listAns.add((String) record[1]);
-//            listAns.add((String) record[2]);
-//            listAns.add((String) record[3]);
-//            listAns.add((String) record[4]);
-//            questionModel.setAnsCorrect((String) record[5]);
-//            questionModel.setListAns(listAns);
-//            listQuestion.add(questionModel);
-//        }
-//        Page<QuestionModel> page= new PageImpl<QuestionModel>(listQuestion,pageable,listQuestion.size());
-//        return page;
        return questionRepository.getPageQuestionByExamId(examId,pageable);
     }
 
@@ -124,7 +99,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> getPageQuestionByClassAndSubject(Integer classId, Integer subjectId, Pageable pageable) {
-        return null ;
+    public Page<Question> getPageQuestionBySubjectAndClass(Integer subjectId, Integer classId, Pageable pageable) {
+        return questionRepository.getPageQuestionBySubjectAndClass(subjectId,classId,pageable) ;
     }
 }

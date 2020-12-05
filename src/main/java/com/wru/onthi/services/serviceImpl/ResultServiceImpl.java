@@ -3,6 +3,8 @@ package com.wru.onthi.services.serviceImpl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.wru.onthi.entity.Result;
@@ -26,9 +28,14 @@ public class ResultServiceImpl implements ResultService  {
 	}
 
 	@Override
-	public Optional<Result> checkResultExist(Integer timeout, Integer userId, Integer ExamId) {
-		return resultRepository.checkResultExist(timeout, userId, ExamId);
+	public Optional<Result> checkResultExist(Integer timeout, Integer userId, Integer ExamId, Integer status) {
+		return resultRepository.checkResultExist(timeout, userId, ExamId, status);
 	}
 
-   
+	@Override
+	public Page<Result> getListResultExam(Pageable pageable) {
+		return resultRepository.findAll(pageable);
+	}
+
+
 }

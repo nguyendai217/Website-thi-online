@@ -14,7 +14,7 @@ public interface ResultRepository extends JpaRepository<Result,Integer> {
 	@Override
 	Optional<Result> findById(Integer id);
 	
-	@Query(value = "SELECT * FROM result where created_at  >= timestamp(DATE_SUB(NOW(), INTERVAL ?1 MINUTE)) and user_id = ?2 and exam_id = ?3 limit 1",
+	@Query(value = "SELECT * FROM result where created_at  >= timestamp(DATE_SUB(NOW(), INTERVAL ?1 MINUTE)) and user_id = ?2 and exam_id = ?3 and status = ?4 limit 1",
 			nativeQuery = true)
-	Optional<Result> checkResultExist(Integer timeout, Integer userId, Integer ExamId);
+	Optional<Result> checkResultExist(Integer timeout, Integer userId, Integer ExamId, Integer status);
 }

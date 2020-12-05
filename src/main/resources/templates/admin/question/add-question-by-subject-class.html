@@ -21,19 +21,21 @@
                         <h3><small>Thêm mới câu hỏi</small></h3>
                     </div>
                 </div>
-
                 <div class="clearfix"></div>
                 <div class="row alert alert-danger" id="errorProcess" style="color: white; display: none;"></div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="x_title">
+                            <h6>Môn học : <span th:text="${subject.name}"></span></h6>
+                            <h6>Lớp : <span th:text="${classroom.classname}"></span></h6>
                             <div class="clearfix"></div>
                         </div>
                     </div>
                     <div class="col-md-8 border-right">
                         <div class="p-3">
-                            <form th:action="@{/question/add-question}" method="post">
-                                <input type="text" hidden class="form-control" id="examId" name="examId" th:value="${exId}"  >
+                            <form th:action="@{/question/add-question-by-subject-class}" method="post">
+                                <input type="text" hidden class="form-control" id="classId" name="classId" th:value="${classId}"  >
+                                <input type="text" hidden class="form-control" id="subjectId" name="subjectId" th:value="${subjectId}"  >
                                 <div class="align-items-center mb-4">
                                     <h4>Thông tin câu hỏi</h4>
                                 </div>
@@ -43,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <label class="labels">Nội dung câu hỏi</label>
-                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" ></textarea>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="3" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
@@ -77,7 +79,7 @@
                                 </div>
                                 <div class="mt-5 text-center">
                                     <button class="btn btn-success" type="submit">Thêm câu hỏi</button>
-                                    <a class="btn btn-danger" th:href="@{'/question/list-question?examId='+${exId}}" >Hủy bỏ</a>
+                                    <a class="btn btn-danger" th:href="@{'/question/list-question-by-subject-class?subjectId='+${subjectId}+'&classId='+${classId}}" >Hủy bỏ</a>
                                 </div>
                             </form>
                         </div>
@@ -128,7 +130,7 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $('#error').delay(5000).fadeOut(1000);
-    $('#examManager').addClass("active");
+    $('#questionManager').addClass("active");
 
     // $('#idProcess').click(function (){
     //   console.log("xxx")
@@ -145,10 +147,11 @@
                 $("#errorProcess").css("display", "block");
                 return;
             }
-            var examId= $('#examId').val();
+            var classId= $('#classId').val();
+            var subjectId= $('#subjectId').val();
             formData.append("fileData", $("#fileData")[0].files[0]);
             $.ajax({
-                url: '/question/upload-question/upload?examId='+examId,
+                url: '/question/upload-question-by-subject-class/upload?classId='+classId+'&subjectId'+subjectId,
                 type: 'POST',
                 contentType: false,
                 processData: false,

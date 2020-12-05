@@ -35,6 +35,14 @@ public class Question {
     @OneToMany(mappedBy = "questionExam")
     private List<ExamQuestion> listQuestionExam;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id")
+    private Classroom question_classroom;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject question_subject;
+
 
     public Integer getId() {
         return id;
@@ -98,5 +106,21 @@ public class Question {
 
     public void setListQuestionExam(List<ExamQuestion> listQuestionExam) {
         this.listQuestionExam = listQuestionExam;
+    }
+
+    public Classroom getQuestion_classroom() {
+        return question_classroom;
+    }
+
+    public void setQuestion_classroom(Classroom question_classroom) {
+        this.question_classroom = question_classroom;
+    }
+
+    public Subject getQuestion_subject() {
+        return question_subject;
+    }
+
+    public void setQuestion_subject(Subject question_subject) {
+        this.question_subject = question_subject;
     }
 }

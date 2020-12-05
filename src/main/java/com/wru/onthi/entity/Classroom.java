@@ -34,6 +34,17 @@ public class Classroom {
     @OneToMany(mappedBy = "exam_classroom")
     private List<Exam> listExam;
 
+    @OneToMany(mappedBy = "question_classroom")
+    private List<Question> listQuestion;
+
+    public List<Question> getListQuestion() {
+        return listQuestion;
+    }
+
+    public void setListQuestion(List<Question> listQuestion) {
+        this.listQuestion = listQuestion;
+    }
+
     public List<Lesson> getListLessons() {
         return listLessons;
     }

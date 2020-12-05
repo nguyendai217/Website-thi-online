@@ -129,7 +129,7 @@
                                             <a th:href="@{/exam/update-status(examId=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
                                         </td>
                                         <td>
-                                            <a th:href="@{/question/list-question(examId=${row.id})}" class="btn btn-success" title="Thêm câu hỏi"><i class="fa fa-plus"></i></a>
+                                            <a th:href="@{/question/list-question-by-exam(examId=${row.id})}" class="btn btn-success" title="Danh sách câu hỏi"><i class="fa fa-question-circle-o"></i></a>
                                             <a th:href="@{/exam/detail-exam/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                             <a th:href="@{/exam/update-exam/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
                                             <a th:href="@{/exam/delete-exam/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>

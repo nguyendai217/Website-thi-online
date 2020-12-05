@@ -111,12 +111,17 @@ public class ExamController {
         model.addAttribute("examId",examId);
         model.addAttribute("timeOut",exam.getTimeOut());
 
-        Optional<Result> testOptional = resultService.checkResultExist(exam.getTimeOut(), user.getId(), examId);
+        Optional<Result> testOptional = resultService.checkResultExist(exam.getTimeOut(), user.getId(), examId, 0);
         Result test = null;
         if (testOptional.isPresent() == false) {
             test = new Result();
         } else {
             test = testOptional.get();
+
+            if(test.getStatus() == 1) {
+                return "redirect:/history?testId="+test.getId();
+            }
+
         }
 
         test.setCreatedAt(dateTest);
@@ -124,7 +129,7 @@ public class ExamController {
         test.setUserResult(user);
         test.setExam(examDetail);
         resultService.save(test);
-        List<QuestionModel> questionModels= questionService.getListQuestion(examId);
+        List<QuestionModel> questionModels= questionService.getListQuestion(examId,false);
         Gson gson= new Gson();
         String result= gson.toJson(questionModels);
         Integer views= exam.getViews();
@@ -148,7 +153,7 @@ public class ExamController {
         Double formatScores = null;
 
         int[] array = new ObjectMapper().readValue(dataJson, int[].class);
-        List<QuestionModel> questionModels = questionService.getListQuestion(examId);
+        List<QuestionModel> questionModels = questionService.getListQuestion(examId,true);
 
         for (int i = 0; i < questionModels.size(); i++) {
             String ansCorrect = questionModels.get(i).getAnsCorrect();
@@ -169,7 +174,7 @@ public class ExamController {
 
         httpRep.setStatus(HttpServletResponse.SC_OK);
 
-        return "";
+        return "{\"code\":\"200\"}";
     }
 
     private void getDefault(Model model,Principal principal){
@@ -178,11 +183,9 @@ public class ExamController {
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
-
         // list lesson views
         List<Lesson> listLesson =lessonService.getListLessonOrderByViews().subList(0,5);
         model.addAttribute("listLesson",listLesson);
-
         //list exam views
         List<Exam> listExam =examService.getListExamOrderByViews().subList(0,5);
         model.addAttribute("listExam",listExam);
@@ -195,7 +198,6 @@ public class ExamController {
     public String getListExamByClass(Model model,Principal principal,@RequestParam("classId") Integer classId,
                                      Pageable pageable){
         getDefault(model,principal);
-
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
@@ -212,7 +214,7 @@ public class ExamController {
         Result result =  resultOptional.get();
         Exam exam = result.getExam();
         getDefault(model,principal);
-        List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId());
+        List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId(),false);
         Gson gson= new Gson();
         String dateJson = gson.toJson(questionModels);
 
