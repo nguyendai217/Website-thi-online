@@ -30,13 +30,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = " SELECT u from User u "
                     +"WHERE u.username like %:username% " +
-                    "or u.email like %:email% " +
-                    "or u.phone like %:phone% " +
-                    "or u.status=:status", nativeQuery = false)
+                    "or u.phone like %:phone% " ,nativeQuery = false)
     Page<User> searchUser(@Param("username") String username,
-                          @Param("email") String email,
                           @Param("phone") String phone,
-                          @Param("status") Integer status,
                           Pageable pageable);
 
     @Modifying

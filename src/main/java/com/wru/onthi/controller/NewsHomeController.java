@@ -49,8 +49,13 @@ public class NewsHomeController {
     public String getInfoNews(@RequestParam("newsId") Integer newsId,Model model,Principal principal){
         Optional<News> optionalNews= newsService.findByNewsId(newsId);
         News news= optionalNews.get();
-        model.addAttribute("news",news);
+        Integer view= news.getViews();
 
+        // update view
+        news.setViews(view+1);
+        newsService.updateNews(news);
+
+        model.addAttribute("news",news);
         return "news/content-news";
     }
 }

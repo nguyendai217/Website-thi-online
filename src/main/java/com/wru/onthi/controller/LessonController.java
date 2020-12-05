@@ -80,6 +80,4 @@ public class LessonController {
         List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
         model.addAttribute("listnewStudy",listnewStudy);
     }
-
-
 }

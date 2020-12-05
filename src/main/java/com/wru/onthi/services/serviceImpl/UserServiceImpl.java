@@ -47,20 +47,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> searchUser(String username, String email, String phone, Integer status,Pageable pageable) {
+    public Page<User> searchUser(String username,String phone, Pageable pageable) {
         if(username==""){
             username= null;
-        }
-        if(email==""){
-            email= null;
         }
         if(phone==""){
             phone= null;
         }
-        if(status.equals("")){
-            status= null;
-        }
-        return userRepository.searchUser(username,email,phone,status,pageable);
+        return userRepository.searchUser(username,phone,pageable);
     }
 
     @Override

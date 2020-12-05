@@ -53,23 +53,19 @@ public class UserMangerController {
 
     @GetMapping("/user/list-user")
     public String getAllUser(Model model, Principal principal, Pageable pageable,
-                             String username, String email, String phone, String status, HttpServletRequest request){
+                             String username,String phone){
         // pageable list user
         int pageNumber = pageable.getPageNumber();
         int pageSize= 5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
         Page<User> pageUser= null;
-        if((username== null || username=="") && (email == null|| email=="")
-                && (phone== null || phone=="") && (status== null || status.equals(""))){
+        if((username== null || username=="") && (phone== null || phone=="")){
             pageUser = userService.getAllUser(pageItem);
         }else {
-            pageUser= userService.searchUser(username,email,phone,Integer.valueOf(status),pageItem);
+            pageUser= userService.searchUser(username,phone,pageItem);
             model.addAttribute("us",username);
-            model.addAttribute("em",email);
             model.addAttribute("ph",phone);
-            model.addAttribute("stt",Integer.valueOf(status));
-
         }
         // get info user login
         getInfoUser(model,principal);
@@ -85,16 +81,10 @@ public class UserMangerController {
         if(username==null){
             username="";
         }
-        if(email== null){
-            email="";
-        }
-        if(status==null){
-            status= "";
-        }
         if(phone== null){
             phone= "";
         }
-        model.addAttribute("condition",("&username="+username+ "&email="+email+"&status="+status+"&phone="+phone));
+        model.addAttribute("condition",("&username="+username+"&phone="+phone));
         return "admin/user/list-user";
     }
 

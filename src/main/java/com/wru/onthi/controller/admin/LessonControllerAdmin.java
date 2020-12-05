@@ -112,7 +112,9 @@ public class LessonControllerAdmin {
     }
 
     @RequestMapping(value = "/add-lesson",method = RequestMethod.POST)
-    public String addLessonPost(Model model, Principal principal,HttpServletRequest request,RedirectAttributes redir){
+    public String addLessonPost(Model model,Principal principal,
+                                HttpServletRequest request,
+                                RedirectAttributes redir){
 
         getInfoUser(model,principal);
 

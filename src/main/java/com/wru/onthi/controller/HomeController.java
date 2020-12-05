@@ -73,7 +73,6 @@ public class HomeController {
         List<Result> listScoreDesc= resultService.getResultScoreDESC().subList(0,5);
         model.addAttribute("userScore",listScoreDesc);
 
-
         return "index";
     }
 }

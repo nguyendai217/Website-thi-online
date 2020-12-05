@@ -1,21 +1,12 @@
 package com.wru.onthi.controller;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wru.onthi.entity.*;
-import com.wru.onthi.model.LessonNew;
 import com.wru.onthi.model.QuestionModel;
 import com.wru.onthi.services.*;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import org.apache.catalina.filters.ExpiresFilter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ExamController {
@@ -119,11 +112,9 @@ public class ExamController {
             test = new Result();
         } else {
             test = testOptional.get();
-
             if(test.getStatus() == 1) {
                 return "redirect:/history?testId="+test.getId();
             }
-
         }
 
         test.setCreatedAt(dateTest);
@@ -162,8 +153,6 @@ public class ExamController {
             if (Integer.valueOf(ansCorrect) == array[i]) {
                 scores++;
             }
-
-//            System.out.println("x: " + i + " " + questionModels.get(i).getAnsCorrect().toString());
         }
 
         formatScores =  (double)Math.round(1000 * (double)scores / questionModels.size()) / 100;

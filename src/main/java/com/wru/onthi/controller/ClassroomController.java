@@ -37,10 +37,8 @@ public class ClassroomController {
         //get ListClass
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",listClass);
-
         List<News> listnewStudy= newsService.getNewsStudy().subList(0,4) ;
         model.addAttribute("listnewStudy",listnewStudy);
-
         return "classroom/list-class";
     }
     private void getDefault(Model model,Principal principal){
@@ -49,7 +47,6 @@ public class ClassroomController {
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);
         }
-
         // list lesson views
         List<Lesson> listLesson =lessonService.getListLessonOrderByViews().subList(0,5);
         model.addAttribute("listLesson",listLesson);
