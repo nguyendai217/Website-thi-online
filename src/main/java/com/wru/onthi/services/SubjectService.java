@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface SubjectService {
     void createSubject(Subject subject);
     Subject updateSubject(Subject subject);
-    void deleteSubject(Integer id);
+    void deleteSubject(Subject subject);
+    void disableSubject(Integer id);
     Optional<Subject> findBySubjectId(Integer id);
     List<Subject> getlistSubject();
     Page<Subject> getAllSubject(Pageable pageable);

@@ -56,13 +56,13 @@ public class User {
             inverseJoinColumns ={@JoinColumn(name = "role_id",nullable = false)})
     private List<Role> roles;
 
-    @OneToMany(mappedBy ="userNews")
+    @OneToMany(mappedBy ="userNews",cascade = CascadeType.ALL)
     private List<News>listNews;
 
-    @OneToMany(mappedBy = "userResult")
+    @OneToMany(mappedBy = "userResult",cascade = CascadeType.ALL)
     private List<Result> results;
 
-    @OneToMany(mappedBy = "userComment")
+    @OneToMany(mappedBy = "userComment",cascade = CascadeType.ALL)
     private List<Comment> listComment;
 
 

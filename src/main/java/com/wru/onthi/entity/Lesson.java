@@ -40,7 +40,7 @@ public class Lesson {
     @JoinColumn(name = "class_id")
     private Classroom classroom;
 
-    @OneToMany(mappedBy = "lessonComment")
+    @OneToMany(mappedBy = "lessonComment",cascade = CascadeType.ALL)
     private List<Comment> listComment;
 
     public Classroom getClassroom() {

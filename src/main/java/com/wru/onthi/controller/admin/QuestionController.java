@@ -1,6 +1,7 @@
 package com.wru.onthi.controller.admin;
 
 import com.google.gson.Gson;
+import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import com.wru.onthi.entity.*;
 import com.wru.onthi.services.*;
 import org.apache.commons.lang3.StringUtils;
@@ -382,7 +383,7 @@ public class QuestionController {
         Subject subject= optionalSubject.get();
 
         int pageNumber = pageable.getPageNumber();
-        int pageSize= 5;
+        int pageSize= 8;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
         Page<Question> pageQuestion= questionService.getPageQuestionBySubjectAndClass(subjectId,classId,pageItem);
@@ -402,7 +403,7 @@ public class QuestionController {
             model.addAttribute("subjectName",subject.getName());
             model.addAttribute("classId",classId);
             model.addAttribute("subjectId",subjectId);
-            model.addAttribute("path","/question/list-question-by-subject-class");
+            model.addAttribute("path","/question/list-question-by-subject-class?subjectId="+ subjectId+"&classId="+classId);
             return "admin/question/list-question-by-subject-class";
         }
     }
@@ -423,4 +424,23 @@ public class QuestionController {
         return path;
     }
 
+    @GetMapping("/delete-question")
+    public String deleteQuestion(@RequestParam("questionId") Integer id,
+                                 @RequestParam("subjectId") Integer subjectId,
+                                 @RequestParam("classId") Integer classId,
+                                 Model model,Principal principal,
+                                 RedirectAttributes red){
+        getInfoUser(model,principal);
+        Optional<Question> optionalQuestion= questionService.findById(id);
+        Question question= optionalQuestion.get();
+        try {
+            questionService.deleteQuestion(question);
+            red.addFlashAttribute("success","Xóa câu hỏi thành công.");
+        }catch (Exception e){
+            e.printStackTrace();
+            red.addFlashAttribute("success","Xóa câu hỏi thất bại.");
+        }
+        String path="redirect:/question/list-question-by-subject-class?subjectId="+subjectId+"&classId="+classId;
+        return path;
+    }
 }

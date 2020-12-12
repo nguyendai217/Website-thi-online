@@ -101,7 +101,7 @@ public class UploadQuestionController {
         return path;
     }
 
-    @PostMapping(value = "/upload-question-by-subject-class/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/question/upload-question-by-subject-class/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public String uploadFile(Principal principal,Model model,
                              @RequestParam("subjectId") Integer subjectId,

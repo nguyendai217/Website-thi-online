@@ -28,8 +28,13 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void deleteSubject(Integer id) {
-        subjectRepo.deleteSubject(id);
+    public void deleteSubject(Subject subject) {
+        subjectRepo.delete(subject);
+    }
+
+    @Override
+    public void disableSubject(Integer id) {
+        subjectRepo.disableSubject(id);
     }
 
     @Override

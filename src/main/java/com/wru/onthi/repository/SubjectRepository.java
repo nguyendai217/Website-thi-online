@@ -34,7 +34,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     @Modifying
     @Transactional
     @Query("update Subject u set u.status=0 where u.id=:id")
-    void deleteSubject(Integer id);
+    void disableSubject(Integer id);
 
     @Modifying
     @Transactional

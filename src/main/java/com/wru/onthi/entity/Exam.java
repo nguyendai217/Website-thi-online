@@ -55,7 +55,7 @@ public class Exam {
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy = "examQuestion")
+    @OneToMany(mappedBy = "examQuestion",cascade = CascadeType.ALL)
     private List<ExamQuestion> listExamQuestion;
 
     public Integer getId() {

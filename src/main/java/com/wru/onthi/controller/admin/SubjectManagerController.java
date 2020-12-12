@@ -7,6 +7,7 @@ import com.wru.onthi.entity.User;
 import com.wru.onthi.services.SubjectService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,10 @@ public class SubjectManagerController {
 
     @Autowired
     SubjectService subjectService;
+
+
+    @Value("${folder.upload}")
+    private String folderUpload;
 
     @GetMapping("/list-subject")
     public String listSubject(Model model, Principal principal,Pageable pageable,String subject){
@@ -78,20 +83,21 @@ public class SubjectManagerController {
                                  @RequestParam("nameSubject") String name,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
         getInfoUser(model,principal);
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
         if(!Strings.isNullOrEmpty(code) && !Strings.isNullOrEmpty(name)){
             Subject checkCodeExist = subjectService.findBySubjectCode(code);
             if(checkCodeExist != null){
                 model.addAttribute("error","Mã môn học đã tồn tại");
             }else {
-                String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
                 Subject subject= new Subject();
                 subject.setCode(code);
                 subject.setName(name);
-                subject.setImage(fileImage);
+                subject.setImage(imgname);
                 subject.setStatus(1);
                 try {
                     subjectService.createSubject(subject);
-                    UploadImage(multipartFile,fileImage);
+                    uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"subject");
                     redir.addFlashAttribute("success","Thêm mới môn học thành công");
                 }catch (Exception e){
                     model.addAttribute("error","Thêm mới môn học thất bại");
@@ -118,17 +124,17 @@ public class SubjectManagerController {
                                     @RequestParam(value = "nameSubject") String name,
                                     @RequestParam("image") MultipartFile multipartFile){
         getInfoUser(model,principal);
-
+        UploadImageController uploadImageController= new UploadImageController();
+        String imgname= uploadImageController.getImageName(multipartFile);
         Optional<Subject> subject= subjectService.findBySubjectId(id);
         Subject sb= subject.get();
         if(!Strings.isNullOrEmpty(code) && !Strings.isNullOrEmpty(name)){
-            String fileImage= StringUtils.cleanPath(multipartFile.getOriginalFilename());
             sb.setCode(code);
             sb.setName(name);
-            sb.setImage(fileImage);
+            sb.setImage(imgname);
             try {
                 subjectService.updateSubject(sb);
-                UploadImage(multipartFile,fileImage);
+                uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"subject");
                 redir.addFlashAttribute("success","Cập nhật môn học thành công");
                 return "redirect:/subject/list-subject";
             }catch (Exception e){
@@ -162,13 +168,21 @@ public class SubjectManagerController {
 //        return "admin/subject/list-subject";
 //    }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/delete/{id}/{status}")
     public String deleteSubject(Model model, Principal principal,RedirectAttributes redr,
-                                @PathVariable("id") Integer id) {
+                                @PathVariable("id") Integer id,
+                                @PathVariable("status") Integer status) {
         getInfoUser(model,principal);
         try {
-            subjectService.deleteSubject(id);
-            redr.addFlashAttribute("success","Xóa môn học thành công");
+            if(status==1) {
+                subjectService.disableSubject(id);
+                redr.addFlashAttribute("success", "Môn học đã được disable.");
+            }else if (status==0){
+                Optional<Subject> optionalSubject= subjectService.findBySubjectId(id);
+                Subject subject= optionalSubject.get();
+                subjectService.deleteSubject(subject);
+                redr.addFlashAttribute("success", "Xóa môn học thành công.");
+            }
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa môn học thất bại");
         }
@@ -206,20 +220,5 @@ public class SubjectManagerController {
         }
     }
 
-    private void UploadImage(MultipartFile multipartFile,String fileImage) throws IOException {
-        String uploadDir="src/main/resources/static/image/subject/";
-        Path uploadpath= Paths.get(uploadDir);
-        if(! Files.exists(uploadpath)){
-            Files.createDirectories(uploadpath);
-        }
-
-        try(InputStream inputStream= multipartFile.getInputStream()) {
-            Path filePath= uploadpath.resolve(fileImage);
-            System.out.print(filePath.toString());
-            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
-        }catch (IOException e){
-            throw new IOException("Could not upload file"+ fileImage);
-        }
-    }
 
 }

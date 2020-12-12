@@ -43,7 +43,7 @@ public class ResultExamController {
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
         Page<Result> resultList = null;
         if((username== null || username =="") && (examCode== null || examCode=="")){
-            resultList =resultService.getListResultExam(pageable);
+            resultList =resultService.getListResultExam(pageItem);
         }else {
 //            String us= "%" + username + "%";
 //            String ex= "%"+ examCode +"%";

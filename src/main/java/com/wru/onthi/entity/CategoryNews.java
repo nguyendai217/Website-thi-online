@@ -17,7 +17,7 @@ public class CategoryNews {
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy ="categoryNews")
+    @OneToMany(mappedBy ="categoryNews",cascade = CascadeType.ALL)
     private List<News>listNews;
 
     public Integer getId() {

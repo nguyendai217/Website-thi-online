@@ -74,7 +74,7 @@
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td th:text="${#strings.substring(row.content,0,20)+'...'}"></td>
+                                        <td th:text="${#strings.substring(row.content,0,10)+'...'}"></td>
                                         <td th:text="${row.ansA}"></td>
                                         <td th:text="${row.ansB}"></td>
                                         <td th:text="${row.ansC}"></td>
@@ -85,7 +85,7 @@
                                         <td th:if="${row.ansCorrect=='4'}">D</td>
                                         <td>
                                             <a th:href="@{/question/update-question/{questionId}(questionId=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
-                                            <a th:href="@{/question/delete-question/{questionId}(questionId=${row.id})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>
+                                            <a th:href="@{/question/delete-question(questionId=${row.id},subjectId=${subjectId},classId= ${classId})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>

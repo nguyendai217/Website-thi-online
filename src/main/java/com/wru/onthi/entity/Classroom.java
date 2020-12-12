@@ -28,13 +28,13 @@ public class Classroom {
     @JoinColumn(name = "school_id")
     private School school;
 
-    @OneToMany(mappedBy = "classroom")
+    @OneToMany(mappedBy = "classroom",cascade = CascadeType.ALL)
     private List<Lesson> listLessons;
 
-    @OneToMany(mappedBy = "exam_classroom")
+    @OneToMany(mappedBy = "exam_classroom",cascade = CascadeType.ALL)
     private List<Exam> listExam;
 
-    @OneToMany(mappedBy = "question_classroom")
+    @OneToMany(mappedBy = "question_classroom",cascade = CascadeType.ALL)
     private List<Question> listQuestion;
 
     public List<Question> getListQuestion() {

@@ -138,7 +138,6 @@
     var idProgress = "#modalProcess .modal-dialog .progress .progress-bar";
     $(document).ready(function() {
         $("#idProcess").click(function () {
-            var $this = $(this);
             $("#errorProcess").css("display", "none");
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
@@ -151,7 +150,7 @@
             var subjectId= $('#subjectId').val();
             formData.append("fileData", $("#fileData")[0].files[0]);
             $.ajax({
-                url: '/question/upload-question-by-subject-class/upload?classId='+classId+'&subjectId'+subjectId,
+                url: '/question/upload-question-by-subject-class/upload?classId='+classId+'&subjectId='+subjectId,
                 type: 'POST',
                 contentType: false,
                 processData: false,
@@ -174,7 +173,7 @@
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#modalProcess').modal('hide');
                     $("#errorProcess").css('display', 'block');
-                    $("#errorProcess").html('Có lỗi kết nối tới server, vui lòng thử lại: <br/>' + textStatus + ": " + errorThrown);
+                    $("#errorProcess").html('Có lỗi kết nối tới server, vui lòng thử lại');
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);

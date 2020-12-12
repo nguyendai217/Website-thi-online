@@ -32,7 +32,7 @@ public class Question {
     @Column(name = "ans_correct")
     private String ansCorrect;
 
-    @OneToMany(mappedBy = "questionExam")
+    @OneToMany(mappedBy = "questionExam",cascade = CascadeType.ALL)
     private List<ExamQuestion> listQuestionExam;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -25,7 +25,7 @@ public class Subject {
             inverseJoinColumns ={@JoinColumn(name = "class_id",nullable = false)})
     private List<Classroom> classrooms;
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
     @OneToMany(mappedBy = "exam_subject")
