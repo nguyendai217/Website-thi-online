@@ -27,8 +27,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void deleteNews(Integer id) {
-        newsRepository.deleteNews(id);
+    public void disableNews(Integer id) {
+        newsRepository.disableNews(id);
+    }
+
+    @Override
+    public void deleteNews(News news) {
+        newsRepository.delete(news);
     }
 
     @Override

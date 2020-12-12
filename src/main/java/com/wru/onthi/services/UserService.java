@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface UserService {
     void createUser(User user);
     User updateUser(User user);
-    void deleteUser(Integer userId);
+    void disableUser(Integer userId);
+    void deleteUser(User user);
     Optional<User> findById(Integer id);
     User findUserByName(String name);
     Page<User> getAllUser(Pageable pageable);

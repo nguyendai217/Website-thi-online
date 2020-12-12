@@ -37,8 +37,13 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void deleteLesson(Integer id) {
-        lessonRepository.deleteLesson(id);
+    public void disableLesson(Integer id) {
+        lessonRepository.disableLesson(id);
+    }
+
+    @Override
+    public void deleteLesson(Lesson lesson) {
+        lessonRepository.delete(lesson);
     }
 
     @Override

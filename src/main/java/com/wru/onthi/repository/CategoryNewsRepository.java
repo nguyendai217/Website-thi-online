@@ -20,7 +20,7 @@ public interface CategoryNewsRepository extends JpaRepository<CategoryNews, Inte
     @Modifying
     @Transactional
     @Query("update CategoryNews ct set ct.status=0 where ct.id =:id")
-    void deleteCategoryNews(@Param("id") Integer id);
+    void disableCategoryNews(@Param("id") Integer id);
 
     @Modifying
     @Transactional

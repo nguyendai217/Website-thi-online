@@ -28,8 +28,13 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public void deleteClass(Integer classId) {
-        classRoomRepository.deleteClass(classId);
+    public void disableClass(Integer classId) {
+        classRoomRepository.disableClass(classId);
+    }
+
+    @Override
+    public void deleteClass(Classroom classroom) {
+        classRoomRepository.delete(classroom);
     }
 
     @Override

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -112,7 +113,7 @@ public class ClassManagerController {
         return "redirect:/class/list-class";
     }
 
-    @GetMapping("class/update-class/{id}")
+    @GetMapping("/class/update-class/{id}")
     public String updateGet(Model model, Principal principal, @PathVariable("id") Integer id){
         getInfoUser(model,principal);
         Optional<Classroom> optional= classroomService.findById(id);
@@ -120,7 +121,7 @@ public class ClassManagerController {
         model.addAttribute("cl",classroom);
         return "admin/classroom/update-class";
     }
-//
+
     @PostMapping("/class/update-class")
     public String updateClassroomPost(Model model, Principal principal, RedirectAttributes redir,
                                     @RequestParam(value = "idClass") Integer id,
@@ -158,13 +159,20 @@ public class ClassManagerController {
         }
     }
 
-    @GetMapping("/class/delete-class/{classId}")
+    @GetMapping("/class/delete-class")
     public String deleteClass(Model model, Principal principal,RedirectAttributes redr,
-                                @PathVariable("classId") Integer id) {
+                                @RequestParam("classId") Integer id,
+                                @RequestParam("status") Integer status) {
         getInfoUser(model,principal);
         try {
-            classroomService.deleteClass(id);
-            redr.addFlashAttribute("success","Xóa lớp học thành công");
+            if(status==1){
+                classroomService.disableClass(id);
+                redr.addFlashAttribute("success","Disable lớp học thành công");
+            }else {
+                Optional<Classroom> optionalClassroom= classroomService.findById(id);
+                classroomService.deleteClass(optionalClassroom.get());
+                redr.addFlashAttribute("success","Xóa lớp học thành công");
+            }
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa lớp học thất bại");
         }

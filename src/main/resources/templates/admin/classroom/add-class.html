@@ -41,11 +41,13 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Mã lớp học</label>
-                                            <input type="text" class="form-control" name="classCode" required>
+                                            <input type="text" class="form-control" name="classCode" id="classCode">
+                                            <span id="vld-classCode" class="span-vld hide"  >Mã code không được để trống </span>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Tên lớp học</label>
-                                            <input type="text" class="form-control" name="className" required >
+                                            <input type="text" class="form-control" name="className" id="className" >
+                                            <span id="vld-className" class="span-vld hide"  >Tên lớp không được để trống </span>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Cấp bậc</label>
@@ -76,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-success" type="submit">Thêm lớp học</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddClass">Thêm lớp học</button>
                                     <a th:href="@{/class/list-class}" class="btn btn-danger">Hủy bỏ</a>
                                 </div>
                             </form>

@@ -28,7 +28,7 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
     @Modifying
     @Transactional
     @Query("update News n set n.status=0 where n.id =:id")
-    void deleteNews(@Param("id") Integer id);
+    void disableNews(@Param("id") Integer id);
 
     @Modifying
     @Transactional

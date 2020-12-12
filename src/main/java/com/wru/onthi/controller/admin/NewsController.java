@@ -68,17 +68,10 @@ public class NewsController {
         if(itemPerPage > totalItem){
             itemPerPage= totalItem;
         }
-
-        if(categoryNews == null){
-            model.addAttribute("error","Danh sách thể loại trống.");
-            return "admin/news/list-category";
-        } else {
-            model.addAttribute("pageInfo", categoryNews);
-            model.addAttribute("total",totalItem);
-            model.addAttribute("itemPerPage",itemPerPage);
-
-            return "admin/news/list-category";
-        }
+        model.addAttribute("pageInfo", categoryNews);
+        model.addAttribute("total",totalItem);
+        model.addAttribute("itemPerPage",itemPerPage);
+        return "admin/news/list-category";
     }
 
     @PostMapping("/add-category")
@@ -103,14 +96,22 @@ public class NewsController {
     }
 
     // delete category
-    @GetMapping("/delete-category/{id}")
+    @GetMapping("/delete-category")
     public String deleteCategory(RedirectAttributes redir,Model model,
                                  Principal principal,
-                                 @PathVariable(value = "id") Integer id) {
+                                 @RequestParam(value = "id") Integer id,
+                                 @RequestParam(value = "status") Integer status) {
         getInfoUser(model,principal);
         try {
-            categoryNewsService.deleteCategory(id);
-            redir.addFlashAttribute("success","Xoá thể loại thành công");
+            if(status==1){
+                categoryNewsService.disableCategory(id);
+                redir.addFlashAttribute("success","Disable loại thành công");
+            }else {
+                Optional<CategoryNews> optional= categoryNewsService.findByCategoryNewsId(id);
+                categoryNewsService.deleteCategory(optional.get());
+                redir.addFlashAttribute("success","Xóa thể loại thành công");
+            }
+
         }catch (Exception e){
             redir.addFlashAttribute("error","Xoá thể loại thất bại");
         }
@@ -173,8 +174,7 @@ public class NewsController {
     @GetMapping("/list-news")
     public String listNews(Model model,Principal principal,Pageable pageable,
                            String categoryId,
-                           String title,
-                           HttpServletRequest request){
+                           String title){
 
         getInfoUser(model,principal);
 
@@ -356,19 +356,25 @@ public class NewsController {
     }
 
     // delete news
-    @GetMapping("/delete-news/{id}")
+    @GetMapping("/delete-news")
     public String deleteNews(Model model, RedirectAttributes redir,
                              Principal principal,
-                             @PathVariable(value = "id") Integer id){
+                             @RequestParam(value = "id") Integer id,
+                             @RequestParam(value = "status") Integer status){
         getInfoUser(model,principal);
         try {
-            newsService.deleteNews(id);
-            redir.addFlashAttribute("success","Xóa tin tức thành công");
-            return "redirect:/news/list-news";
+            if(status==1){
+                newsService.disableNews(id);
+                redir.addFlashAttribute("success"," Disable tin tức thành công");
+            }else {
+                Optional<News> optionalNews= newsService.findByNewsId(id);
+                newsService.deleteNews(optionalNews.get());
+                redir.addFlashAttribute("success","Xóa tin tức thành công");
+            }
         }catch (Exception e){
             redir.addFlashAttribute("error","Xóa tin tức thất bại");
-            return "redirect:/news/list-news";
         }
+        return "redirect:/news/list-news";
     }
 
     @GetMapping("/update-new-status")

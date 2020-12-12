@@ -10,7 +10,8 @@ import java.util.Optional;
 public interface ClassroomService {
     void createClass(Classroom classroom);
     Classroom updateClass(Classroom classroom);
-    void deleteClass(Integer classId);
+    void disableClass(Integer classId);
+    void deleteClass(Classroom classroom);
     Optional<Classroom> findById(Integer id);
     Classroom findByClassName(String name);
     Classroom findByClassCode(String code);

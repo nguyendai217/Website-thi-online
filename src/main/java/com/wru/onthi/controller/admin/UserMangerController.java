@@ -269,14 +269,23 @@ public class UserMangerController {
         return "redirect:/admin/user/list-user";
     }
 
-    @GetMapping("/user/delete/{id}")
-    public String deleteUser(Model model,RedirectAttributes redirectAttributes, Principal principal,@PathVariable(value = "id") Integer id){
+    @GetMapping("/user/delete")
+    public String deleteUser(Model model,RedirectAttributes redirectAttributes,
+                             Principal principal,
+                             @RequestParam(value = "id") Integer id,
+                             @RequestParam(value = "status") Integer status){
         getInfoUser(model,principal);
         try {
-            userService.deleteUser(id);
-            redirectAttributes.addFlashAttribute("success","Xóa user thành công.");
+            if(status==1){
+                userService.disableUser(id);
+                redirectAttributes.addFlashAttribute("success","User đã được disable thành công.");
+            }else {
+                Optional<User> optionalUser= userService.findById(id);
+                userService.deleteUser(optionalUser.get());
+                redirectAttributes.addFlashAttribute("success","Xóa user thành công.");
+            }
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("error","Delete user thất bại");
+            redirectAttributes.addFlashAttribute("error","Xóa user thất bại");
         }
         return "redirect:/admin/user/list-user";
     }

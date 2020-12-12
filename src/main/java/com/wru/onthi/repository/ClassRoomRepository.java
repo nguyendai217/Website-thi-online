@@ -35,7 +35,7 @@ public interface ClassRoomRepository extends JpaRepository<Classroom,Integer> {
     @Modifying
     @Transactional
     @Query("update Classroom cl set cl.status=0 where cl.id =:classId")
-    void deleteClass(@Param("classId") Integer classId);
+    void disableClass(@Param("classId") Integer classId);
 
     @Modifying
     @Transactional

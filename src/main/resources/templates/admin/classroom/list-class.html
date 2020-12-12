@@ -103,7 +103,7 @@
                                         </td>
                                         <td>
                                             <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/class/delete-class/{classId}(classId=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/class/delete-class(classId=${row.id},status= ${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>

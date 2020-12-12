@@ -28,10 +28,10 @@ public class Subject {
     @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
-    @OneToMany(mappedBy = "exam_subject")
+    @OneToMany(mappedBy = "exam_subject",cascade = CascadeType.ALL)
     private List<Exam> exams;
 
-    @OneToMany(mappedBy = "question_subject")
+    @OneToMany(mappedBy = "question_subject",cascade = CascadeType.ALL)
     private List<Question> lisQuestion;
 
     public List<Question> getLisQuestion() {

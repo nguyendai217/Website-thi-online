@@ -47,4 +47,10 @@ th,td{
 	height: 50px;
 	border-radius: 50%;
 }
+.span-vld{
+	color: red;
+}
+.hide {
+	display: none;
+}
 

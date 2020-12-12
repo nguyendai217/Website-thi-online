@@ -119,6 +119,10 @@ function showPreview(fileImage){
 }
 
 
+// validate form //
+
+
+
 
 
 

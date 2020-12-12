@@ -51,3 +51,25 @@ function showPreview(fileImage){
     }
     render.readAsDataURL(file);
 }
+
+// validate form
+
+// add class
+$('#btnAddClass').click(function (){
+    var classCode= $('#classCode').val();
+    var className= $('#className').val();
+    if(classCode == null || classCode == "" || classCode == undefined){
+        $('#vld-classCode').removeClass("hide");
+        return false;
+    }else {
+        $('#vld-classCode').addClass("hide");
+    }
+
+    if(className == null || className == ""){
+        $('#vld-className').removeClass("hide");
+        return false
+    }else {
+        $('#vld-className').addClass("hide");
+    }
+    return true;
+})

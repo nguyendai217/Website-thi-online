@@ -31,7 +31,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     @Modifying
     @Transactional
     @Query("update Exam ex set ex.status=0 where ex.id =:examId")
-    void deleteExam(@Param("examId") Integer examId);
+    void disableExam(@Param("examId") Integer examId);
 
     @Modifying
     @Transactional

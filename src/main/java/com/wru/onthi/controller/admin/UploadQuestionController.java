@@ -268,6 +268,4 @@ public class UploadQuestionController {
             model.addAttribute("email", email);
         }
     }
-
-
 }

@@ -200,7 +200,7 @@ public class SubjectManagerController {
             }else if(status==0){
                 subjectService.updateStatus(id,1);
             }
-            redr.addFlashAttribute("success","Updpate trạng thái thành công");
+            redr.addFlashAttribute("success","Update trạng thái thành công");
         }catch (Exception e){
             redr.addFlashAttribute("error","Update trạng thái thất bại");
         }

@@ -34,7 +34,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
     @Query("update User u set u.status=0 where u.id=:userId")
-    void deleteUser(Integer userId);
+    void disableUser(Integer userId);
 
     @Modifying
     @Transactional

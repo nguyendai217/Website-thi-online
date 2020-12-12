@@ -128,7 +128,7 @@
                                         </td>
                                         <td>
                                             <a th:href="@{/lesson/update-lesson/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/lesson/delete-lesson/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/lesson/delete-lesson(id=${row.id},status=${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>

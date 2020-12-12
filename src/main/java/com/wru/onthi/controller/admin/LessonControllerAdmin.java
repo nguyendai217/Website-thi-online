@@ -219,13 +219,21 @@ public class LessonControllerAdmin {
 
     }
 
-    @GetMapping("/delete-lesson/{id}")
-    public String deleteLesson(Model model, Principal principal, RedirectAttributes redr,
-                               @PathVariable("id") Integer id){
+    @GetMapping("/delete-lesson")
+    public String deleteLesson(Model model, Principal principal,
+                               RedirectAttributes redr,
+                               @RequestParam("id") Integer id,
+                               @RequestParam("status") Integer status){
         getInfoUser(model,principal);
         try {
-            lessonService.deleteLesson(id);
-            redr.addFlashAttribute("success","Xóa bài học thành công");
+            if(status==1){
+                lessonService.disableLesson(id);
+                redr.addFlashAttribute("success","Disable bài học thành công");
+            }else {
+                Optional<Lesson> optionalLesson= lessonService.findByLessonId(id);
+                lessonService.deleteLesson(optionalLesson.get());
+                redr.addFlashAttribute("success","Xóa bài học thành công");
+            }
         }catch (Exception e){
             redr.addFlashAttribute("error","Xóa bài học thất bại");
         }

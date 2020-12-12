@@ -1,6 +1,5 @@
 package com.wru.onthi.controller.admin;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 

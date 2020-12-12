@@ -195,18 +195,26 @@ public class ExamControllerAdmin {
         return codeExam;
     }
 
-    @GetMapping("/delete-exam/{examId}")
-    public String deleteExam(Model model, Principal principal,@PathVariable("examId") Integer examId,RedirectAttributes redr){
+    @GetMapping("/delete-exam")
+    public String deleteExam(Model model, Principal principal,
+                             @RequestParam("examId") Integer examId,
+                             @RequestParam("status") Integer status,
+                             RedirectAttributes redr){
         getInfoUser(model,principal);
         try {
-            examService.deleteExam(examId);
-            redr.addFlashAttribute("success","Xóa đề thi thành công");
-            return "redirect:/exam/list-exam";
+            if(status==1){
+                examService.disableExam(examId);
+                redr.addFlashAttribute("success","Disable đề thi thành công");
+            }else {
+                Optional<Exam> optionalExam= examService.findByExamId(examId);
+                examService.deleteExam(optionalExam.get());
+                redr.addFlashAttribute("success","Xóa đề thi thành công");
+            }
         }catch (Exception e){
             e.printStackTrace();
             redr.addFlashAttribute("error","Xóa đề thi thất bại");
-            return "redirect:/exam/list-exam";
         }
+        return "redirect:/exam/list-exam";
     }
 
     @GetMapping("/update-status")

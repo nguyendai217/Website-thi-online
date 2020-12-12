@@ -42,7 +42,7 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     @Modifying
     @Transactional
     @Query("update Lesson ls set ls.status=0 where ls.id =:id")
-    void deleteLesson(@Param("id") Integer id);
+    void disableLesson(@Param("id") Integer id);
 
     @Modifying
     @Transactional
