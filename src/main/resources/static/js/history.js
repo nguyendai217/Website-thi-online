@@ -37,28 +37,27 @@ $('.btn-next').click(function (e) {
 
 
 function renderListQuestion(listAnser) {
-console.log(result_detail);
+    console.log(result_detail);
     let stringListQuest = "";
-	let countAnsCorrect = 0;
+    let countAnsCorrect = 0;
     let disabledAnswer = finishTest == true ? 'disabled' : '';
-    listAnser.forEach((v, k) => {
+    listAnser.forEach((v, k) => { // danh sách câu hỏi
         let showQuestion = 'hide';
         if (((currentPage - 1) * limitPage) <= k && ((currentPage) * limitPage) > k ) {
             showQuestion = '';
         }
 
         stringListQuest += `<div class='item-question ${showQuestion}' data-key="${k}"><div class='title'><b><span class='question-no'>${k + 1}</span>${v.content}</b></div><div class='content'>`;
-        stringListQuest += `<div class='content-ans' style='display:none'><input ${v.yourAns !== null ? 'checked' : ''}  type='radio' class='radio-check' exam-id='${id_test}' name='test[${k}]' id='' value='0' title=''></div>`;
-        v.listAns.forEach((va, ka) => {
+        v.listAns.forEach((va, ka) => { // danh sách các câu trả lời
             let _classAns = '';
             if (result_detail[k] == (ka + 1)) { // nếu trả lời sai
-                _classAns = "result-ans-err";
+                _classAns = "test-ans-err";
             }
-            
-            if (v.ansCorrect == (ka + 1)) {
-            	_classAns = "result-ans-result";
+
+            if (v.ansCorrect == (ka + 1)) { // lấy ra giá trị đúng của câu hỏi
+                _classAns = "test-ans-result";
                 if (v.ansCorrect == result_detail[k]) { // Nếu trả lời đúng
-                    _classAns = "result-ans-success";
+                    _classAns = "test-ans-success";
                     countAnsCorrect++;
                 }
             }
@@ -69,6 +68,6 @@ console.log(result_detail);
         stringListQuest += '</div></div>';
     });
 
-	$('.result-test-data').html(countAnsCorrect + " câu / tổng số " + listAnser.length + " câu")
+    $('.result-test-data').html(countAnsCorrect + " câu / trên tổng số " + listAnser.length + " câu")
     $('.list-question').html(stringListQuest)
 }

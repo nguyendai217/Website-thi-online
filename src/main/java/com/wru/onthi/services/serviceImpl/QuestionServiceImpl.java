@@ -81,10 +81,12 @@ public class QuestionServiceImpl implements QuestionService {
             listAns.add((String) record[2]);
             listAns.add((String) record[3]);
             listAns.add((String) record[4]);
-            questionModel.setAnsCorrect((history ? ((String) record[5]) : null ));
+            questionModel.setAnsCorrect((history == true ? ((String) record[5]) : null ));
             questionModel.setListAns(listAns);
             listQuestion.add(questionModel);
         }
+
+        int xxxx = 1;
         return listQuestion;
     }
 

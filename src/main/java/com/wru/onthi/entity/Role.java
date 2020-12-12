@@ -14,6 +14,8 @@ public class Role {
     private Integer id;
     @Column(name = "name")
     private String role;
+    @Column(name = "description")
+    private String description;
 
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "roles")
     private List<User> users;
@@ -34,6 +36,14 @@ public class Role {
         this.role = role;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<User> getUsers() {
         return users;
     }
@@ -41,4 +51,5 @@ public class Role {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
 }

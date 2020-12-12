@@ -39,9 +39,5 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     @Modifying
     @Transactional
     @Query("update Subject u set u.status =:status where u.id=:id")
-    void updateStatus(@Param("id") Integer id,
-                      @Param("status") Integer status);
-
-
-
+    void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
 }

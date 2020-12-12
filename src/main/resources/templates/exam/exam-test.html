@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
-    <title>Lịch sử</title>
+    <title>Thi Online</title>
     <div th:replace="fragments/init_lib :: header"></div>
-    <link rel="stylesheet" th:href="@{/css/main2.css}"/>
 </head>
 
 <body>
@@ -18,46 +17,17 @@
   type="hidden" 
   th:name="${_csrf.parameterName}" 
   th:value="${_csrf.token}" />
-    <div class="container exam-test history-test">
+    <div class="container exam-test">
         <section class="container">
-            <h1 class="big-title">Kết quả</h1>
-			<div class="content content-infor row">
-			    <div class="col-12 col-md-6">
-                    <div class="content-ans row">
-                        <div class="col-4">Số điểm</div>
-                        <div class="col-8" th:text="${resultData.score}"></div>
-                    </div>
-                    <div class="content-ans row">
-                        <div class="col-4">Kết quả làm bài</div>
-                        <div class="col-8 result-test-data">xxx</div>
-                    </div>
-                    <div class="content-ans row">
-                        <div class="col-4">Thời gian làm bài</div>
-                        <div class="col-8" th:text="${exam.timeOut + ' Phút'}">surbaban</div>
-                    </div>
-                    <div class="content-ans row">
-                        <div class="col-4">Bài thi</div>
-                        <div class="col-8" th:text="${exam.title}">internet</div>
-                    </div>
-                </div>
-			    <div class="col-12 col-md-6">
-                    <div class="content-ans row">
-                        <div class="col-4">Màu xanh da trời</div>
-                        <div class="col-8" style="color: #0069d9">Câu trả lời đúng của câu hỏi</div>
-                    </div>
-                    <div class="content-ans row">
-                        <div class="col-4">Màu xanh lá cây</div>
-                        <div class="col-8" style="color: #28a745">Câu trả lời đúng</div>
-                    </div>
-                    <div class="content-ans row">
-                        <div class="col-4">Màu đỏ</div>
-                        <div class="col-8" style="color: #dc3545">Câu trả lời sai</div>
-                    </div>
-                </div>
+            <div id="timer">
+                <span><i class="fa fa-clock-o"></i></span>
+                <span id="hours">00</span> :
+                <span id="minutes">00</span> :
+                <span id="seconds">00</span>
             </div>
         </section>
         <section class="main-exam container">
-            <h2 style="text-align: center;font-size: 20px">Bài thi : môn toán</h2>
+            <h2 style="text-align: center;font-size: 20px">Bài thi : môn <span th:text="${subjectName}"></span></h2>
             <div class="exam-content">
                 <div class="list-question">
                     <div class="item-question">
@@ -91,6 +61,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <a class="btn-pre btn btn-primary">Câu hỏi trước</a>
+                    <a class="btn-finish btn btn-success">Hoàn Thành Bài Thi</a>
                     <a class="btn-next btn btn-primary">Câu hỏi tiếp theo</a>
                 </div>
             </div>
@@ -101,9 +72,7 @@
 <div th:replace="fragments/init_lib :: script"></div>
 <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script>
-
-	var result_detail = [[${resultDetail}]];
-	var exam_id = [[${examId}]];
+    var exam_id = [[${examId}]];
 	var test_id = [[${testId}]];
     var exam_data = '[[${dataExam}]]';
     var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
@@ -126,6 +95,6 @@
     });
 
 </script>
-<script type="text/javascript" th:src="@{/js/history.js}"></script>
+<script type="text/javascript" th:src="@{/js/exam.js}"></script>
 </body>
 </html>

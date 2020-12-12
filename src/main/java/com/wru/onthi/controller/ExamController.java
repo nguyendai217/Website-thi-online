@@ -102,6 +102,9 @@ public class ExamController {
         Exam examDetail = examOptional.get();
         Exam exam= optionalExam.get();
         Date dateTest = new Date();
+        Subject subject= exam.getExam_subject();
+        String subjectName= subject.getName();
+        model.addAttribute("subjectName",subjectName);
         model.addAttribute("exam",exam);
         model.addAttribute("examId",examId);
         model.addAttribute("timeOut",exam.getTimeOut());
@@ -130,7 +133,7 @@ public class ExamController {
         examService.updateExam(exam);
         model.addAttribute("dataExam",result);
         model.addAttribute("testId",test.getId());
-        return "exam/exam-test2";
+        return "exam/exam-test";
     }
 
     @RequestMapping(path = "/kiemtra-process-result", method = RequestMethod.POST)
@@ -205,10 +208,12 @@ public class ExamController {
         Result result =  resultOptional.get();
         Exam exam = result.getExam();
         getDefault(model,principal);
-        List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId(),false);
+        List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId(),true);
         Gson gson= new Gson();
         String dateJson = gson.toJson(questionModels);
 
+        Subject subject= exam.getExam_subject();
+        String subjectName= subject.getName();
         model.addAttribute("dataExam", dateJson);
         model.addAttribute("resultDetail", result.getDetail());
         model.addAttribute("resultData", result);
@@ -216,6 +221,7 @@ public class ExamController {
         model.addAttribute("testId",result.getId());
         model.addAttribute("examId",exam.getId());
         model.addAttribute("timeOut",exam.getTimeOut());
+        model.addAttribute("subjectName",subjectName);
 
         return "exam/history-test";
     }

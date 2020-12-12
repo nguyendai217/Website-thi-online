@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
-    <title>Liên hệ</title>
+    <title>Thông tin đề thi</title>
     <div th:replace="fragments/init_lib :: header"></div>
 </head>
 
@@ -21,7 +21,7 @@
                     <label>Thời gian:</label><span th:text="${exam.timeOut} +' '+ phút"></span><br>
                     <label>Số câu hỏi:</label><span th:text="${exam.totalQuestion}  +' '+ câu"></span><br>
                     <label>Đã thi:</label><span th:text="${exam.views} "></span><br>
-                    <label>Thời gian tạo:</label><span th:text="${#dates.format(exam.createDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                    <label>Thời gian tạo: </label><span th:text="${#dates.format(exam.createDate, 'dd/MM/yyyy HH:mm')}"></span><br>
                     <label>Nội dung thi:</label><span th:text="${exam.content}"></span>
                     <div class="start-exam">
                         <a class="btn btn-success" id="btnStart" th:href="@{/kiemtra(examId=${examId})}">Bắt đầu</a>
