@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Admin Home</title>
+    <title>Danh sách tin tức</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
 
@@ -117,7 +117,7 @@
                                         <td>
                                             <a th:href="@{/news/detail-news/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                             <a th:href="@{/news/update-news/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/news/delete-news/{id}(id=${row.id})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/news/delete-news(id=${row.id},status=${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>

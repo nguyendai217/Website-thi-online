@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Quản lí bài thi</title>
+    <title>Quản lí đề thi</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
 
@@ -43,7 +43,7 @@
                             <form th:action="@{/exam/list-exam}" method="get">
                                 <div class="row">
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                                        <label>Mã bài thi</label>
+                                        <label>Mã đề thi</label>
                                         <div>
                                             <input class="form-control" name="codeExam" type="text">
                                         </div>
@@ -132,7 +132,7 @@
                                             <a th:href="@{/question/list-question-by-exam(examId=${row.id})}" class="btn btn-success" title="Danh sách câu hỏi"><i class="fa fa-question-circle-o"></i></a>
                                             <a th:href="@{/exam/detail-exam/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
                                             <a th:href="@{/exam/update-exam/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/exam/delete-exam(id=${row.id},status=${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                            <a th:href="@{/exam/delete-exam(examId=${row.id},status=${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>
