@@ -98,8 +98,8 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId) {
-        return lessonRepository.getListLessonByClassAndSubject(classId,subjectId) ;
+    public Page<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId,Pageable pageable) {
+        return lessonRepository.getListLessonByClassAndSubject(classId,subjectId,pageable) ;
     }
 
     @Override

@@ -21,10 +21,10 @@ public class Classroom {
     @Column(name = "status")
     private Integer status;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "classrooms")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "classrooms",cascade = CascadeType.ALL)
     private List<Subject> subjects;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "school_id")
     private School school;
 

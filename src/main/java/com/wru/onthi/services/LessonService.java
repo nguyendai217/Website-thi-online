@@ -20,7 +20,7 @@ public interface LessonService {
     List<LessonNew> getLessonNew();
     List<Lesson> getListLessonOrderById();
     List<Lesson> getListLessonOrderByViews();
-    List<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId);
+    Page<Lesson> getListLessonByClassAndSubject(Integer classId, Integer subjectId,Pageable pageable);
     Lesson getContentLesson(Integer lessonId);
     Page<Lesson> searchLesson(String lessonName,String subjectId,String classId,Pageable pageable);
     void updateStatus(Integer id, Integer status);

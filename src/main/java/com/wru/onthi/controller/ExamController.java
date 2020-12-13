@@ -71,7 +71,8 @@ public class ExamController {
     //get list exam by subject
 
     @GetMapping("/kiemtra/list-exam")
-    public String listExam(Model model,Principal principal,@RequestParam("subjectId") Integer subjectId,
+    public String listExam(Model model,Principal principal,
+                           @RequestParam("subjectId") Integer subjectId,
                            @RequestParam("classId") Integer classId){
         getDefault(model,principal);
         List<Exam> listExam= examService.getListExamBySubjectAndClass(subjectId,classId);

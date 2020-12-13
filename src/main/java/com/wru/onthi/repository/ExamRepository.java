@@ -40,4 +40,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
 
     @Query("SELECT u from Exam  u order by u.id desc ")
     List<Exam> getlistExamNew();
+
+    @Query("select e from Exam e where e.exam_classroom.id=:classId ")
+    List<Exam> getlistExamByClass(@Param("classId") Integer classId);
 }

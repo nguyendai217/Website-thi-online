@@ -55,7 +55,7 @@ function renderListQuestion(listAnser) {
             }
 
             if (v.ansCorrect == (ka + 1)) { // lấy ra giá trị đúng của câu hỏi
-                _classAns = "test-ans-result";
+                _classAns = "test-ans-success";
                 if (v.ansCorrect == result_detail[k]) { // Nếu trả lời đúng
                     _classAns = "test-ans-success";
                     countAnsCorrect++;

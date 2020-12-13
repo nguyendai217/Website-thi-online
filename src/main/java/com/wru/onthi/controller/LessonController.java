@@ -4,10 +4,12 @@ import com.wru.onthi.entity.*;
 import com.wru.onthi.repository.ExamRepository;
 import com.wru.onthi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -33,16 +35,24 @@ public class LessonController {
     @GetMapping("/baihoc")
     public String getListLesson(Model model,
                                 @RequestParam("class_id") Integer class_id,
-                                @RequestParam("subject_id") Integer subject_id){
+                                @RequestParam("subject_id") Integer subject_id, Pageable pageable){
         genDefault(model);
 
         Optional<Classroom> optional = classroomService.findById(class_id);
         Classroom classroom= optional.get();
         Optional<Subject> optionalSubject=subjectService.findBySubjectId(subject_id);
         Subject subject= optionalSubject.get();
-        List<Lesson> listLessons= lessonService.getListLessonByClassAndSubject(class_id,subject_id);
-        if(listLessons.size()>0){
-            model.addAttribute("listLessonByClass",listLessons);
+        int pageNumber = pageable.getPageNumber();
+        int pageSize=8;
+        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
+        Page<Lesson> listLessons= lessonService.getListLessonByClassAndSubject(class_id,subject_id,pageItem);
+        if(listLessons.getSize()>0){
+//            model.addAttribute("listLessonByClass",listLessons);
+            model.addAttribute("pageInfo", listLessons);
+            model.addAttribute("listSize",listLessons.getTotalElements());
+            String path= "/baihoc?class_id="+class_id+"&subject_id="+subject_id;
+            model.addAttribute("path",path);
         } else {
             model.addAttribute("emptyLesson","listEmpty");
         }
@@ -55,10 +65,16 @@ public class LessonController {
        genDefault(model);
        Lesson lesson= lessonService.getContentLesson(lessonId);
 
+       Classroom classroom= lesson.getClassroom();
+       Integer classId = classroom.getId();
+
        // tang views khi click vao hoc
        Integer views= lesson.getViews();
        lesson.setViews(views+1);
        lessonService.updateLesson(lesson);
+
+       List<Exam> listExamByClass= examService.getlistExamByClass(classId).subList(0,4);
+       model.addAttribute("exam", listExamByClass);
        model.addAttribute("lessonContent",lesson);
        return "lesson/content_lesson";
     }

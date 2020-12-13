@@ -1218,3 +1218,8 @@ button.btn-showMenu {
     padding-top: 10px;
     margin-left: 20px;
 }
+
+.pagging-list-lesson{
+    width: 36%;
+    margin: 0px auto;
+}

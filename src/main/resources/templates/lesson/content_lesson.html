@@ -45,63 +45,35 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-success" href="#">Bài học trước</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-success" href="#">Bài học tiếp theo</a>
+                            </div>
+                        </div>
                         <div class="comment-lesson">
                             <h3>Bình luận</h3>
                         </div>
-                        <!-- test-list -->
-<!--                        <div class="class-sectionTitle">-->
-<!--                            <span>Danh sách đề thi mới</span>-->
-<!--                        </div>-->
-<!--                        <div class="test-list">-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right2.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                        </div>-->
+                        <div class="class-sectionTitle">
+                            <span>Danh sách đề thi</span>
+                        </div>
+                        <div class="test-list" >
+                            <a th:each="item:${exam}" th:href="@{/kiemtra/info(examId=${item.id})}">
+                                <div class="test-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/subject/{image}(image=${item.exam_subject.image})}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h6 class="title">Mã đề thi: <span th:text="${item.codeExam}"></span> <br>
+                                            Môn học: <span th:text="${item.exam_subject.name}"></span></h6>
+                                        <p class="description" th:text="${item.title}">
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div th:replace="fragments/sidebar :: content"></div>

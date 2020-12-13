@@ -19,7 +19,7 @@ public class Subject {
     @Column(name = "status")
     private Integer status;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "subject_class",joinColumns = {
             @JoinColumn(name = "subject_id",nullable = false)},
             inverseJoinColumns ={@JoinColumn(name = "class_id",nullable = false)})

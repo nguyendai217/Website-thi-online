@@ -26,7 +26,7 @@ public class Result {
     @JoinColumn(name = "user_id")
     private User userResult;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "exam_id")
     private Exam exam;
 

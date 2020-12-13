@@ -26,15 +26,41 @@
                             <div class="subject-title">
                                 <h3>Môn học: <span th:text="${subjectName}"></span></h3>
                             </div>
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listLessonByClass)}"
-                                 th:each="item:${listLessonByClass}">
+                            <div class="knowledge-item" th:if="${not #strings.isEmpty(pageInfo)}"
+                                 th:each="item:${pageInfo}">
                                 <p th:text="${item.lessonName}"></p>
                                 <a th:href="@{/noidungbaihoc(lessonId=${item.id})}">Học ngay</a>
                             </div>
                             <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
                                 <h3>Xin lỗi, môn học này chưa có bài học, vui lòng quay lại sau.</h3>
                             </div>
+                            <div class="pagging-list-lesson" >
+                                <input th:value="${listSize}" hidden id="pagging-ls" >
+                                <ul class="pagination ">
+                                    <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                        <a class="page-link" th:href="@{|${path}&page=${pageInfo.number}|}">&laquo;</a>
+                                    </li>
+
+                                    <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 2), (pageInfo.number + 3))}" >
+                                        <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                                            class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                            <a
+                                                    th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                    class="page-link"
+                                                    th:href="@{|${path}&page=${itemPage}|}"
+                                                    th:text="${itemPage}"
+                                            >1</a>
+                                            <span th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</span>
+                                        </li>
+                                    </th:block>
+
+                                    <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                        <a class="page-link" th:href="@{|${path}&page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+
                         <!-- test-list -->
 <!--                        <div class="class-sectionTitle">-->
 <!--                            <span>Danh sách đề thi mới</span>-->
@@ -106,6 +132,11 @@
     }else {
         $('#div-account').addClass('d-none');
         $('#link-login').removeClass('d-none');
+    }
+
+    var listsize= $('#pagging-ls').val();
+    if(listsize>=6){
+        $('.pagging-list-lesson').addClass("hide");
     }
 
     $(document).ready(function (){

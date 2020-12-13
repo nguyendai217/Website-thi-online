@@ -90,4 +90,9 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> getListExamNew() {
         return examRepository.getlistExamNew();
     }
+
+    @Override
+    public List<Exam> getlistExamByClass(Integer classId) {
+        return examRepository.getlistExamByClass(classId);
+    }
 }
