@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -114,15 +115,22 @@ public class LessonControllerAdmin {
     @RequestMapping(value = "/add-lesson",method = RequestMethod.POST)
     public String addLessonPost(Model model,Principal principal,
                                 HttpServletRequest request,
-                                RedirectAttributes redir){
+                                RedirectAttributes redir,
+                                @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
         getInfoUser(model,principal);
 
         String lessonName = request.getParameter("lessonName");
+        String description= request.getParameter("description");
         Integer classId= Integer.valueOf(request.getParameter("classId"));
         Integer subjectId=Integer.valueOf(request.getParameter("subjectId"));
         String content= request.getParameter("content");
-
+        String imgname= null;
+        if(multipartFile != null){
+            UploadImageController uploadImageController= new UploadImageController();
+            imgname= uploadImageController.getImageName(multipartFile);
+            uploadImageController.uploadImage(multipartFile,imgname,foldeUpload,"lesson");
+        }
         Optional<Subject> optional= subjectService.findBySubjectId(subjectId);
         Optional<Classroom> optionalClass= classroomService.findById(classId);
         Lesson lesson= new Lesson();
@@ -132,6 +140,8 @@ public class LessonControllerAdmin {
         lesson.setSubject(optional.get());
         lesson.setViews(0);
         lesson.setStatus(1);
+        lesson.setImage(imgname);
+        lesson.setDescription(description);
         lesson.setCreateBy(principal.getName());
         lesson.setClassroom(optionalClass.get());
         try {
@@ -263,6 +273,8 @@ public class LessonControllerAdmin {
         }
         return "redirect:/lesson/list-lesson";
     }
+
+
 
     // get info user login
     private void getInfoUser(Model model,Principal principal){

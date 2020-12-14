@@ -31,11 +31,14 @@
                         </div>
                     </div>
                     <br>
-                    <form th:action="@{/lesson/add-lesson}" method="post">
+                    <form th:action="@{/lesson/add-lesson}" method="post" enctype="multipart/form-data">
                         <div class="col-md-3 border-right">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <span class="font-weight-bold mt-2">Hình đại diện </span>
-                                <input type="file" class="mt-3" style="overflow: hidden"/>
+                                <input type="file" name="image" id="fileImage" style="overflow: hidden"/>
+                                <div class="col-md-12 col-sm-12 mt-3">
+                                    <img id="imgPreview" style="width: 150px;height: 150px">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-9 border-right">
@@ -49,27 +52,37 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12">
                                         <label class="labels">Tiêu đề bài học</label>
-                                        <input type="text" class="form-control"  name="lessonName" >
+                                        <input type="text" class="form-control"  name="lessonName" id="lessonName" >
+                                        <span id="vld-lessonName" class="span-vld hide"> Tên bài học không được để trống </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="labels">Mô tả bài học</label>
+                                        <input type="text" class="form-control"  name="description"  id="descriptionLesson">
+                                        <span id="vld-descriptionLesson" class="span-vld hide"> Mô tả bài học không được để trống </span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6">
                                         <label>Môn học</label>
-                                        <select class="form-control" name="subjectId">
+                                        <select class="form-control" name="subjectId" id="subjectId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listSubject}"
                                                     th:value="${item.id}" th:text="${item.name}">
                                             </option>
                                         </select>
+                                        <span id="vld-subjectId" class="span-vld hide"> Vui lòng chọn môn học </span>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Lớp học</label>
-                                        <select class="form-control" name="classId">
+                                        <select class="form-control" name="classId" id="classId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listClass}"
                                                     th:value="${item.id}" th:text="${item.classname}">
                                             </option>
                                         </select>
+                                        <span id="vld-classId" class="span-vld hide"> Vui lòng chọn lớp học </span>
                                     </div>
                                 </div>
 
@@ -79,6 +92,7 @@
                                     <br>
                                     <textarea type="text" name="content" id="content"  class="form-control" rows="10" cols="55"></textarea>
                                     </div>
+                                    <span id="vld-content" class="span-vld hide"> Nội dung bài học không được để trống </span>
                                 </div>
                                 <div class="text-center mt-3">
                                     <button class="btn btn-success" id="btnAddLesson" type="submit">Thêm bài học</button>
@@ -102,6 +116,11 @@
         $('#lessonManager').addClass("active");
          CKEDITOR.replace('content')
     });
+
+    $('#btnAddLesson').click(function (){
+      var title= $('')
+    });
+
 </script>
 </body>
 </html>

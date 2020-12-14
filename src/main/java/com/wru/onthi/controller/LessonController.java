@@ -73,7 +73,7 @@ public class LessonController {
        lesson.setViews(views+1);
        lessonService.updateLesson(lesson);
 
-       List<Exam> listExamByClass= examService.getlistExamByClass(classId).subList(0,4);
+       List<Exam> listExamByClass= examService.getlistExamByClass(classId).subList(0,1);
        model.addAttribute("exam", listExamByClass);
        model.addAttribute("lessonContent",lesson);
        return "lesson/content_lesson";

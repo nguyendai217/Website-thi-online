@@ -88,7 +88,7 @@
                                         <td th:text="${iterStat.count}"></td>
                                         <td><img id="img-result" th:src="@{/image/user/{image}(image=${row.userResult.image})}"></td>
                                         <td th:text="${row.userResult.username}"></td>
-                                        <td th:text="${row.exam.codeExam}"></td>
+                                        <td th:text="${row.exam_result.codeExam}"></td>
                                         <td th:text="${row.score}"></td>
                                         <td th:text="${#dates.format(row.createdAt, 'dd-MM-yyyy HH:mm:ss')}"></td>
                                         <td>

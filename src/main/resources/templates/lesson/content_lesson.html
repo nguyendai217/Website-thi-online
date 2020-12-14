@@ -55,6 +55,9 @@
                         </div>
                         <div class="comment-lesson">
                             <h3>Bình luận</h3>
+                            <button class="btn btn-success" id="cmt-loadmore">Load more</button>
+
+                            
                         </div>
                         <div class="class-sectionTitle">
                             <span>Danh sách đề thi</span>
@@ -99,6 +102,14 @@
             alert("Đăng xuất thành công.");
         }
     });
+
+    xxx(123);  // vừa vào call luôn
+    function xxx(a=111){
+      console.log(a);
+    }
+    $('#cmt-loadmore').click(function (){
+        xxx()
+    })
 </script>
 </body>
 

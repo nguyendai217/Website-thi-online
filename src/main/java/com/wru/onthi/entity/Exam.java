@@ -36,7 +36,7 @@ public class Exam {
     @JoinColumn(name = "subject_id")
     private Subject exam_subject;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id")
     private Classroom exam_classroom;
 
@@ -58,7 +58,16 @@ public class Exam {
     @OneToMany(mappedBy = "examQuestion",cascade = CascadeType.ALL)
     private List<ExamQuestion> listExamQuestion;
 
+    @OneToMany(mappedBy = "exam_result",cascade = CascadeType.ALL)
+    private List<Result> listResult;
 
+    public List<Result> getListResult() {
+        return listResult;
+    }
+
+    public void setListResult(List<Result> listResult) {
+        this.listResult = listResult;
+    }
 
     public Integer getId() {
         return id;

@@ -42,7 +42,7 @@
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Mã lớp học</label>
                                             <input type="text" class="form-control" name="classCode" id="classCode">
-                                            <span id="vld-classCode" class="span-vld hide"  >Mã code không được để trống </span>
+                                            <span id="vld-classCode" class="span-vld hide">Mã code không được để trống </span>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Tên lớp học</label>
@@ -95,23 +95,6 @@
 <div th:replace="admin/init_admin :: script"></div>
 <script>
     $('#classManager').addClass("active");
-
-    $(document).ready(function () {
-        $('#fileImage').change(function() {
-            showPreview(this);
-        });
-
-        $('#error').delay(5000).fadeOut(1000);
-    });
-    function showPreview(fileImage){
-        file = fileImage.files[0];
-        render = new FileReader();
-
-        render.onload = function(e) {
-            $('#imgPreview').attr('src',e.target.result);
-        }
-        render.readAsDataURL(file);
-    }
 
 </script>
 </body>

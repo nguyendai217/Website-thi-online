@@ -124,7 +124,7 @@ public class ExamController {
         test.setCreatedAt(dateTest);
         test.setStatus(0);
         test.setUserResult(user);
-        test.setExam(examDetail);
+        test.setExam_result(examDetail);
         resultService.save(test);
         List<QuestionModel> questionModels= questionService.getListQuestion(examId,false);
         Gson gson= new Gson();
@@ -207,7 +207,7 @@ public class ExamController {
     public String getHistory(Model model,Principal principal, @RequestParam("testId") Integer testId){
         Optional<Result> resultOptional =  resultService.findById(testId);
         Result result =  resultOptional.get();
-        Exam exam = result.getExam();
+        Exam exam = result.getExam_result();
         getDefault(model,principal);
         List<QuestionModel> questionModels= questionService.getListQuestion(exam.getId(),true);
         Gson gson= new Gson();

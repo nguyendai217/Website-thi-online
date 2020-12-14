@@ -42,10 +42,12 @@
                                         <div class="col-md-12">
                                             <label class="labels">Mã lớp học</label>
                                             <input type="text" class="form-control" name="classCode" th:value="${cl.code}" >
+                                            <span id="vld-classCode" class="span-vld hide">Mã code không được để trống </span>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="labels">Tên lớp học</label>
                                             <input type="text" class="form-control" name="className" th:value="${cl.classname}" >
+                                            <span id="vld-className" class="span-vld hide">Tên lớp học không được để trống </span>
                                         </div>
                                         <div class="col-md-12">
                                             <br>

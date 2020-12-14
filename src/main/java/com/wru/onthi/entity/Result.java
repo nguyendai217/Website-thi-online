@@ -26,9 +26,9 @@ public class Result {
     @JoinColumn(name = "user_id")
     private User userResult;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
-    private Exam exam;
+    private Exam exam_result;
 
     @Column(name = "status")
     private Integer status;
@@ -60,12 +60,12 @@ public class Result {
         this.userResult = userResult;
     }
 
-    public Exam getExam() {
-        return exam;
+    public Exam getExam_result() {
+        return exam_result;
     }
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
+    public void setExam_result(Exam exam_result) {
+        this.exam_result = exam_result;
     }
 
     public String getDetail() {

@@ -42,47 +42,54 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12 col-sm-12">
                                         <label class="labels">Tiêu đề </label>
-                                        <input type="text" class="form-control" name="title">
+                                        <input type="text" class="form-control" name="title" id="titleExam">
+                                        <span id="vld-titleExam" class="span-vld hide">Tiêu đề bài thi không được để trống </span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6 col-sm-12 ">
                                         <label>Môn học</label>
-                                        <select class="form-control" name="subjectId">
+                                        <select class="form-control" name="subjectId" id="subjectId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listSubject}"
                                                     th:value="${item.id}" th:text="${item.name}">
                                             </option>
                                         </select>
+                                        <span id="vld-subjectId" class="span-vld hide">Vui lòng chọn môn học.</span>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <label>Lớp</label>
-                                        <select class="form-control" name="classId">
+                                        <select class="form-control" name="classId" id="classId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listClass}"
                                                     th:value="${item.id}" th:text="${item.classname}">
                                             </option>
                                         </select>
+                                        <span id="vld-classId" class="span-vld hide">Vui lòng chọn lớp học.</span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6 col-sm-12">
                                         <label class="labels">Số câu hỏi</label>
-                                        <input type="number" class="form-control" name="totalQuestion"  >
+                                        <input type="number" class="form-control" name="totalQuestion" id="totalQuestionExam"  >
+                                        <span id="vld-totalQuestionExam" class="span-vld hide">Số câu hỏi không được để trống </span>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <label class="labels">Thời gian (phút)</label>
-                                        <input type="number" class="form-control" name="timeOut" >
+                                        <input type="number" class="form-control" name="timeOut" id="timeoutExam" >
+                                        <span id="vld-timeoutExam" class="span-vld hide">Thời gian bài thi không được để trống </span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-12 col-sm-12">
                                         <label class="labels">Nội dung</label>
-                                        <textarea type="text" class="form-control" name="content" cols="7" rows="5"></textarea>
+                                        <textarea type="text" class="form-control" name="content" id="contentExam" cols="7" rows="5"></textarea>
+                                        <span id="vld-contentExam" class="span-vld hide">Nội dung bài thi không được để trống </span>
+
                                     </div>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button class="btn btn-success" type="submit">Thêm đề thi</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddExam">Thêm đề thi</button>
                                     <a class="btn btn-danger" th:href="@{/exam/list-exam}">Bỏ qua</a>
                                 </div>
                             </div>
@@ -102,6 +109,7 @@
     $(document).ready(function () {
         $('#examManager').addClass("active");
     });
+
 </script>
 </body>
 </html>

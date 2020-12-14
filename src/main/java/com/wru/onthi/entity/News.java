@@ -2,6 +2,7 @@ package com.wru.onthi.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "news")
@@ -51,6 +52,17 @@ public class News {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userNews;
+
+    @OneToMany(mappedBy = "newsComment",cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Integer getId() {
         return id;

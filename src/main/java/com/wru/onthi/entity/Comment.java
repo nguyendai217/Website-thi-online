@@ -24,6 +24,18 @@ public class Comment {
     @JoinColumn(name = "lesson_id")
     private Lesson lessonComment;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "news_id")
+    private News newsComment;
+
+    public News getNewsComment() {
+        return newsComment;
+    }
+
+    public void setNewsComment(News newsComment) {
+        this.newsComment = newsComment;
+    }
+
     public Integer getId() {
         return id;
     }

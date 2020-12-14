@@ -73,3 +73,50 @@ $('#btnAddClass').click(function (){
     }
     return true;
 })
+
+// validate add exam
+$('#btnAddExam').click(function (){
+    var title= $('#titleExam').val();
+    var totalQuestion= $('#totalQuestionExam').val();
+    var timeoutExam= $('#timeoutExam').val();
+    var contentExam= $('#contentExam').val();
+    var subjectId= $('#subjectId').val();
+    var classId= $('#classId').val();
+    if(title==''){
+        $('#vld-titleExam').removeClass('hide');
+        return false
+    }else {
+        $('#vld-titleExam').addClass('hide');
+    }
+    if(subjectId==""){
+        $('#vld-subjectId').removeClass('hide');
+        return false
+    }else {
+        $('#vld-subjectId').addClass('hide');
+    }
+    if(classId==""){
+        $('#vld-classId').removeClass('hide');
+        return false
+    }else {
+        $('#vld-classId').addClass('hide');
+    }
+    if(totalQuestion=='' || totalQuestion== null){
+        $('#vld-totalQuestionExam').removeClass('hide');
+        return false
+    }else {
+        $('#vld-totalQuestionExam').addClass('hide');
+    }
+    if(timeoutExam =='' || timeoutExam == null){
+        $('#vld-timeoutExam').removeClass('hide');
+        return false
+    }else {
+        $('#vld-timeoutExam').addClass('hide');
+    }
+    if(contentExam== '' || contentExam== null){
+        $('#vld-contentExam').removeClass('hide');
+        return false
+    }else {
+        $('#vld-contentExam').addClass('hide');
+    }
+    return true;
+});

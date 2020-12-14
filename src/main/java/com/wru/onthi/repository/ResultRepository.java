@@ -25,7 +25,7 @@ public interface ResultRepository extends JpaRepository<Result,Integer> {
 
 	@Query(value = "select r from Result r " +
 			"where r.userResult.username like :username " +
-			"or r.exam.codeExam like :examCode ")
+			"or r.exam_result.codeExam like :examCode ")
 	Page<Result> searchResultExam(String username, String examCode, Pageable pageable);
 
 	@Query(value = "select r from Result r  order by r.score desc")
