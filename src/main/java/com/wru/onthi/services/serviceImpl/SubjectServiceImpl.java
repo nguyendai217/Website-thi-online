@@ -71,4 +71,9 @@ public class SubjectServiceImpl implements SubjectService {
     public void updateStatus(Integer id, Integer status) {
         subjectRepo.updateStatus(id,status);
     }
+
+    @Override
+    public long countSubject() {
+        return subjectRepo.count();
+    }
 }

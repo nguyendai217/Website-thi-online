@@ -152,6 +152,11 @@ public class ProfileController {
         return "redirect:/user/profile";
     }
 
+    @GetMapping("/info/exam-user")
+    public String infoUserExam(Model model,Principal principal){
+        return "info_exam_user";
+    }
+
 
 
 }

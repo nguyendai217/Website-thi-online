@@ -1,8 +1,9 @@
 package com.wru.onthi.controller.admin;
 
 import com.google.common.base.Strings;
+import com.wru.onthi.entity.Subject;
 import com.wru.onthi.entity.User;
-import com.wru.onthi.services.UserService;
+import com.wru.onthi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,24 @@ public class HomeControllerAdmin {
     UserService userService;
 
     @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    ExamService examService;
+
+    @Autowired
+    SubjectService subjectService;
+
+    @Autowired
+    LessonService lessonService;
+
+    @Autowired
+    NewsService newsService;
+
+    @Autowired
+    ResultService resultService;
+
+    @Autowired
     BCryptPasswordEncoder encoder;
 
     @Value("${folder.upload}")
@@ -50,6 +69,22 @@ public class HomeControllerAdmin {
             model.addAttribute("email", email);
         }
 
+        Long totalUser= userService.getCountUser();
+        Long totalExam= examService.countExam();
+        Long totalSubject= subjectService.countSubject();
+        Long totalResult= resultService.countResult();
+        Long totalNews= newsService.countNews();
+        Long totalLesson = lessonService.countLesson();
+        Long totalQuestion= questionService.countQuestion();
+
+
+        model.addAttribute("user",totalUser);
+        model.addAttribute("exam",totalExam);
+        model.addAttribute("subject",totalSubject);
+        model.addAttribute("result",totalResult);
+        model.addAttribute("news",totalNews);
+        model.addAttribute("lesson",totalLesson);
+        model.addAttribute("question",totalQuestion);
         return "admin/home";
     }
 

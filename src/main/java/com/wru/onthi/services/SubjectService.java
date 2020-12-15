@@ -20,4 +20,5 @@ public interface SubjectService {
     Subject findBySubjectCode(String code);
     List<Subject> getListSubjectByClass(Integer id);
     void updateStatus(Integer id, Integer status);
+    long countSubject();
 }

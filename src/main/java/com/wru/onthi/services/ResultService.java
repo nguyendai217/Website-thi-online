@@ -16,4 +16,5 @@ public interface ResultService {
     Page<Result> searchResultExam(String username, String examCode, Pageable pageable);
     void deleteResult(Result result);
     List<Result> getResultScoreDESC();
+    long countResult();
 }

@@ -95,4 +95,9 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> getlistExamByClass(Integer classId) {
         return examRepository.getlistExamByClass(classId);
     }
+
+    @Override
+    public long countExam() {
+        return examRepository.count();
+    }
 }

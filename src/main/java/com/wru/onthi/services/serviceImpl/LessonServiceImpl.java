@@ -130,4 +130,9 @@ public class LessonServiceImpl implements LessonService {
     public List<Lesson> getListLessonByClass(Integer classId) {
         return lessonRepository.getListLessonByClass(classId);
     }
+
+    @Override
+    public long countLesson() {
+        return lessonRepository.count();
+    }
 }

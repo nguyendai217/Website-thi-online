@@ -52,4 +52,9 @@ public class ResultServiceImpl implements ResultService  {
 	public List<Result> getResultScoreDESC() {
 		return resultRepository.getListScoreDESC();
 	}
+
+	@Override
+	public long countResult() {
+		return resultRepository.count();
+	}
 }

@@ -76,4 +76,9 @@ public class NewsServiceImpl implements NewsService {
         }
         return newsRepository.searchNews(title,category,pageable);
     }
+
+    @Override
+    public long countNews() {
+        return newsRepository.count();
+    }
 }

@@ -25,4 +25,5 @@ public interface LessonService {
     Page<Lesson> searchLesson(String lessonName,String subjectId,String classId,Pageable pageable);
     void updateStatus(Integer id, Integer status);
     List<Lesson> getListLessonByClass(Integer classId);
+    long countLesson();
 }

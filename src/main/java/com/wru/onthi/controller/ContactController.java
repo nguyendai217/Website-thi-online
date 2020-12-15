@@ -35,7 +35,11 @@ public class ContactController {
     }
 
     @PostMapping("/contact/send")
-    public String submitContact(HttpServletRequest  request){
+    public String submitContact(Model model,HttpServletRequest  request){
+        List<Classroom> listClass = classroomService.getAllClassroom();
+        if(!listClass.isEmpty()){
+            model.addAttribute("listClass",listClass);
+        }
         String fullname= request.getParameter("fullname");
         String email= request.getParameter("email");
         String phone= request.getParameter("phone");

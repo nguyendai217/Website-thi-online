@@ -42,10 +42,10 @@
                     <li id="userManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a th:href="@{/admin/user/list-user}"><i class="fa fa-users" ></i> Quản lý user</a>
                     </li>
-                    <li id="classManager">
+                    <li id="classManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a th:href="@{/class/list-class}"><i class="fa fa-university"></i> Quản lý lớp học</a>
                     </li>
-                    <li id="subjectManager">
+                    <li id="subjectManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a th:href="@{/subject/list-subject}"><i class="fa fa-file-text-o"></i> Quản lý môn học</a>
                     </li>
                     <li id="lessonManager">

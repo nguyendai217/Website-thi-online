@@ -19,4 +19,5 @@ public interface NewsService {
     List<News> getListNewsOrderByTime();
     List<News> getNewsStudy();
     Page<News> searchNews(String title,String category, Pageable pageable);
+    long countNews();
 }

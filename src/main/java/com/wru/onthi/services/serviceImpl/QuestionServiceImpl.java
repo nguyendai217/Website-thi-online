@@ -85,8 +85,6 @@ public class QuestionServiceImpl implements QuestionService {
             questionModel.setListAns(listAns);
             listQuestion.add(questionModel);
         }
-
-        int xxxx = 1;
         return listQuestion;
     }
 
@@ -108,5 +106,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getListQuestionBySubjectAndClass(Integer subjectId, Integer classId) {
         return questionRepository.getListQuestionBySubjectAndClass(subjectId,classId);
+    }
+
+    @Override
+    public long countQuestion() {
+        return questionRepository.count();
     }
 }

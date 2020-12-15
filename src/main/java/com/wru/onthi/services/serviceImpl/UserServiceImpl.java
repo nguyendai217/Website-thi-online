@@ -77,5 +77,10 @@ public class UserServiceImpl implements UserService {
         userRepository.updateStatus(userId,status);
     }
 
+    @Override
+    public long getCountUser() {
+        return userRepository.count();
+    }
+
 
 }

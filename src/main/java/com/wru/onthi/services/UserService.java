@@ -20,4 +20,5 @@ public interface UserService {
     User findByEmail(String email);
     User findByUsername(String username);
     void updateStatus(Integer userId, Integer status);
+    long getCountUser();
 }
