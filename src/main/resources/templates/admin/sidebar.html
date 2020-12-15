@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <div th:fragment="content" th:remove="tag">
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -30,7 +31,7 @@
                     <li id="homeManager">
                         <a  th:href="@{/admin/home}"><i class="fa fa-home" ></i> Home</a>
                     </li>
-                    <li id="chartManager">
+                    <li id="chartManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a><i class="fa fa-bar-chart"></i> Thống kê<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li id="chart-user"><a th:href="@{/thongke/thongke-user}"><i class="fa fa-user"></i> Thống kê user</a></li>
@@ -38,36 +39,36 @@
                             <li id="chart-exam"><a th:href="@{/thongke/thongke-exam}"><i class="fa fa-file-text-o"></i> Thống kê bài thi</a></li>
                         </ul>
                     </li>
-                    <li id="userManager">
-                        <a th:href="@{/admin/user/list-user}"><i class="fa fa-users" ></i> Quản lí user</a>
+                    <li id="userManager" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a th:href="@{/admin/user/list-user}"><i class="fa fa-users" ></i> Quản lý user</a>
                     </li>
                     <li id="classManager">
-                        <a th:href="@{/class/list-class}"><i class="fa fa-university"></i> Quản lí lớp học</a>
+                        <a th:href="@{/class/list-class}"><i class="fa fa-university"></i> Quản lý lớp học</a>
                     </li>
                     <li id="subjectManager">
-                        <a th:href="@{/subject/list-subject}"><i class="fa fa-file-text-o"></i> Quản lí môn học</a>
+                        <a th:href="@{/subject/list-subject}"><i class="fa fa-file-text-o"></i> Quản lý môn học</a>
                     </li>
                     <li id="lessonManager">
-                        <a th:href="@{/lesson/list-lesson}"><i class="fa fa-file-text"></i> Quản lí bài học</a>
+                        <a th:href="@{/lesson/list-lesson}"><i class="fa fa-file-text"></i> Quản lý bài học</a>
                     </li>
                     <li id="examManager">
-                        <a th:href="@{/exam/list-exam}"><i class="fa fa-file-pdf-o"></i> Quản lí đề thi</a>
+                        <a th:href="@{/exam/list-exam}"><i class="fa fa-file-pdf-o"></i> Quản lý đề thi</a>
                     </li>
                     <li id="questionManager">
-                        <a th:href="@{/question/search-question}"><i class="fa fa-question-circle-o"></i> Quản lí câu hỏi</a>
+                        <a th:href="@{/question/search-question}"><i class="fa fa-question-circle-o"></i> Quản lý câu hỏi</a>
                     </li>
-                    <li id="newsManager"  >
-                        <a><i class="fa fa-newspaper-o"></i> Quản lí tin tức <span class="fa fa-chevron-down"></span></a>
+                    <li id="newsManager">
+                        <a><i class="fa fa-newspaper-o"></i> Quản lý tin tức <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li ><a th:href="@{/news/list-news}"><i class="fa fa-newspaper-o"></i> Quản lí tin tức</a></li>
-                            <li id="newsCategoryManager"><a th:href="@{/news/list-category}"><i class="fa fa-tumblr"></i> Quản lí thể loại</a></li>
+                            <li ><a th:href="@{/news/list-news}"><i class="fa fa-newspaper-o"></i> Quản lý tin tức</a></li>
+                            <li id="newsCategoryManager"><a th:href="@{/news/list-category}"><i class="fa fa-tumblr"></i> Quản lý thể loại</a></li>
                         </ul>
                     </li>
                     <li id="resultManager">
-                        <a th:href="@{/result/list-result}"><i class="fa fa-wpforms"></i> Quản lí kết quả thi</a>
+                        <a th:href="@{/result/list-result}"><i class="fa fa-wpforms"></i> Quản lý kết quả thi</a>
                     </li>
                     <li id="commentManager">
-                        <a th:href="@{/comment/list-comment}"><i class="fa fa-comments"></i> Quản lí comment</a>
+                        <a th:href="@{/comment/list-comment}"><i class="fa fa-comments"></i> Quản lý comment</a>
                     </li>
                 </ul>
             </div>

@@ -21,6 +21,97 @@
 //     })
 // })
 
+var acc =$('#account').val();
+if(acc != null || acc != undefined){
+    $('#div-account').removeClass('d-none');
+    $('#link-login').addClass('d-none');
+}else {
+    $('#div-account').addClass('d-none');
+    $('#link-login').removeClass('d-none');
+}
+
+$(document).ready(function () {
+    // var logout = $('#msg-logout').val();
+    // if (logout != null) {
+    //     alert("Đăng xuất thành công.");
+    // }
+
+    $('#btnSendContact').click(function (){
+        var name = $('#form-name').val();
+        var phone= $('#form-phone').val();
+        var email= $('#form-email').val();
+        var mess= $('#form-message').val();
+
+        if(name==""){
+            $('#err-form-name').removeClass("hide");
+            $('#form-name').focus();
+            return false;
+        }else {
+            $('#err-form-name').addClass("hide");
+        }
+
+        if(email==""){
+            $('#err-form-email').removeClass("hide");
+            $('#form-email').focus();
+            return false;
+        }else {
+            $('#err-form-email').addClass("hide");
+        }
+
+        if(phone==""){
+            $('#err-form-phone').removeClass("hide");
+            $('#form-phone').focus();
+            return false;
+        }else {
+            $('#err-form-phone').addClass("hide");
+        }
+
+        if(mess==""){
+            $('#err-form-message').removeClass("hide");
+            $('#form-message').focus();
+            return false;
+        }else {
+            $('#err-form-message').addClass("hide");
+        }
+        return true;
+    });
+
+// update image profile user
+    $("#btnUpdateImage").click(function (){
+        var image= $('#fileImage').val();
+        if(image=="" || image == null){
+            $('#exampleModal').modal('show');
+            return false;
+        }else {
+            return true;
+        }
+    });
+
+//validate form change pass
+    $("#btnSubmit").click(function (){
+        var pass =$('#pass').val()
+        var pass1= $("#pass1").val();
+        var pass2= $("#pass2").val();
+        if(pass== null || pass == ''){
+            $('#err-pass').removeClass("hide");
+            return false;
+        }else {
+            $('#err-pass').addClass("hide");
+        }
+        if(pass1== null|| pass1==""){
+            $('#err-pass-new').removeClass("hide");
+            return false;
+        }else {
+            $('#err-pass-new').addClass("hide");
+        }
+        if(pass1 != pass2){
+            $('#err').removeClass("hide");
+            return false;
+        }
+        return true;
+    })
+})
+
 $(document).ready(function () {
     const btnMenu = $('.btn-showMenu');
     const menuMobile = $('.lg-menu');
@@ -92,8 +183,6 @@ $(document).ready(function () {
         nextArrow: `<button type="button" class="next-arrow arrow--big"><i class="fa fa-chevron-right"></i></button>`,
     });
 
-
-
     menuItem.attr("hasSubMenu", "true").click(function (e) {
         $(this).toggleClass("show",500)
 
@@ -108,6 +197,7 @@ $(document).ready(function () {
     });
 });
 
+
 function showPreview(fileImage){
     file = fileImage.files[0];
     render = new FileReader();
@@ -117,9 +207,14 @@ function showPreview(fileImage){
     }
     render.readAsDataURL(file);
 }
+$('#success').delay(5000).fadeOut(1000);
+$('#error').delay(5000).fadeOut(1000);
 
 
-// validate form //
+
+
+// validate form contact //
+
 
 
 

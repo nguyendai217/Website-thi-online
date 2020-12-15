@@ -42,35 +42,28 @@
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Mã lớp học</label>
                                             <input type="text" class="form-control" name="classCode" id="classCode">
-                                            <span id="vld-classCode" class="span-vld hide">Mã code không được để trống </span>
+                                            <span id="vld-classCode" class="span-vld hide">Mã lớp học không được để trống </span>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Tên lớp học</label>
                                             <input type="text" class="form-control" name="className" id="className" >
-                                            <span id="vld-className" class="span-vld hide"  >Tên lớp không được để trống </span>
+                                            <span id="vld-className" class="span-vld hide" >Tên lớp học không được để trống </span>
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <label class="labels">Cấp bậc</label>
-                                            <select class="form-control" name="schoolId">
+                                            <select class="form-control" name="schoolId" id="schoolId">
                                                 <option value="">Tùy chọn</option>
                                                 <option th:each="item : ${listSchool}"
                                                         th:value="${item.id}" th:text="${item.schoolname}">
                                                 </option>
                                             </select>
-                                        </div>
-                                        <div class="col-md-12 mt-2">
-                                            <label class="labels">Trạng thái</label>
-                                            <select class="form-control" name="status">
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
-                                            </select>
+                                            <span id="vld-schoolId" class="span-vld hide" >Vui lòng chọn cấp bậc </span>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6 col-sm-12">
                                         <div class="col-md-12 col-sm-12">
                                             <label class="label">Hình ảnh lớp học</label>
-                                            <input type="file" name="image" id="fileImage" >
+                                            <input type="file" name="image" id="fileImage" style="overflow:hidden;" >
                                         </div>
                                         <div class="col-md-12 col-sm-12 mt-3">
                                             <img id="imgPreview" style="width: 150px;height: 150px">

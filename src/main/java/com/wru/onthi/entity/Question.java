@@ -1,5 +1,6 @@
 package com.wru.onthi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.catalina.LifecycleState;
 import org.springframework.stereotype.Controller;
 
@@ -32,6 +33,7 @@ public class Question {
     @Column(name = "ans_correct")
     private String ansCorrect;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "questionExam",cascade = CascadeType.ALL)
     private List<ExamQuestion> listQuestionExam;
 

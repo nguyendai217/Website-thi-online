@@ -1,5 +1,7 @@
 package com.wru.onthi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +57,11 @@ public class Exam {
     @Column(name = "status")
     private Integer status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "examQuestion",cascade = CascadeType.ALL)
     private List<ExamQuestion> listExamQuestion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "exam_result",cascade = CascadeType.ALL)
     private List<Result> listResult;
 

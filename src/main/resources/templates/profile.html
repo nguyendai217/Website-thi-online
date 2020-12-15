@@ -19,11 +19,26 @@
 <main class="home">
     <div class="container">
         <div class="row mt-4">
-
             <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <form th:action="@{/profile}" method="post"  >
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <form method="post" th:action="@{/profile/update-image-user}" enctype="multipart/form-data">
+                            <input type="text" name="userId" th:value="${us.id}" hidden>
+                            <h4 class="mb-5">Update hình ảnh</h4>
+                            <input type="file" name="image" id="fileImage" style="overflow: hidden"/>
+                            <div class="col-md-12 col-sm-12 mt-3">
+                                <img id="imgPreview" style="width: 63%;" th:src="@{/image/user/{image}(image=${us.image})}">
+                            </div>
+                            <input type="submit" value="Cập nhật ảnh" id="btnUpdateImage" class="btn btn-success mt-3">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 border-right">
+                <div class="">
+                    <form th:action="@{/profile/update-user}" method="post"  >
+                        <div class="d-flex justify-content-center align-items-center mb-3">
                             <h4 class="text-right">Thông tin tài khoản</h4>
                         </div>
                         <div class="bg-danger" id="error"
@@ -35,73 +50,92 @@
                         <input type="text" hidden="true" name="userId" th:value="${us.id}">
 
                         <div class="row mt-3">
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Username</label>
                                 <input type="text" class="form-control" name="username" th:value="${us.username}" readonly>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2" >
                                 <label class="labels">Fullname</label>
                                 <input type="text" class="form-control" name="fullname"  th:value="${us.fullname}" >
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Email</label>
                                 <input type="text" class="form-control" name="email" th:value="${us.email}" readonly >
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Số điện thoại</label>
                                 <input type="text" class="form-control" name="phone" th:value="${us.phone}" >
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Địa chỉ</label>
                                 <input type="text" class="form-control" name="address" th:value="${us.address}" >
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Giới tính</label>
-                                <select class="p-2" name="gender" >
+                                <select class="form-control" name="gender" >
                                     <option value="" th:selected="${us.gender==null}">Tùy chọn</option>
                                     <option value="1" th:selected="${us.gender==1}">Nam</option>
                                     <option value="0" th:selected="${us.gender==0}">Nữ</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
+                            <div class="col-md-12 mt-2">
                                 <label class="labels">Sinh nhật</label>
                                 <input id="datepicker" class="form-control" name="birthday" th:value="${#dates.format(us.birthday, 'dd-MM-yyy')}" />
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
+
+                        <div class="mt-3 text-center">
                             <button class="btn btn-success" type="submit">Lưu thông tin</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <form th:action="@{/profile/changepass}" method="post">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center">
+            <div class="col-md-3">
+                <form th:action="@{/profile/changepassword-user}" method="post">
+                    <div class="">
+                        <div class="d-flex justify-content-center align-items-center">
                             <h4 class="text-right">Thay đổi mật khẩu</h4>
                         </div>
                         <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-2">
                             <label class="labels">Nhập mật khẩu cũ</label>
-                            <input type="password" class="form-control"  name="password_old" >
+                            <input type="password" class="form-control"  name="password_old" id="pass" >
+                            <span id="err-pass" class="span-vld hide"> Vui lòng nhập mật khẩu cũ. </span>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-2">
                             <label class="labels">Nhập mật khẩu mới</label>
                             <input type="password" class="form-control"  name="password1" id="pass1">
+                            <span id="err-pass-new" class="span-vld hide"> Vui lòng nhập mật khẩu mới. </span>
                         </div>
-                        <div class="col-md-12">
-                            <label class="labels">Nhập lại mật khẩu mới</label>
+                        <div class="col-md-12 mt-2">
+                            <span class="labels">Nhập lại mật khẩu mới</span>
                             <input type="password" class="form-control"  name="password2" id="pass2" >
-                            <p class="hidden" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
+                            <span id="err" class="span-vld hide"> Mật khẩu không trùng khớp. </span>
                         </div>
                         <br>
-                        <div class="col-md-12">
-                            <input type="submit" id="btnSubmit" value="Thay đổi password" class="btn btn-success mt-3 ml-5">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" id="btnSubmit" value="Thay đổi mật khẩu" class="btn btn-success">
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1"
+         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="exampleModalLabel">Thông báo ! </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"><h3>Vui lòng chọn hình ảnh để update.</h3></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -109,20 +143,11 @@
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
 <script>
-    var acc =$('#account').val();
-    if(acc != null || acc != undefined){
-        $('#div-account').removeClass('d-none');
-        $('#link-login').addClass('d-none');
-    }else {
-        $('#div-account').addClass('d-none');
-        $('#link-login').removeClass('d-none');
-    }
 
-    $(document).ready(function (){
-        var logout= $('#msg-logout').val();
-        if(logout != null){
-            alert("Đăng xuất thành công.");
-        }
+    $('#datepicker').datepicker({
+        iconsLibrary: 'fontawesome',
+        uiLibrary: 'bootstrap4',
+        format: 'dd-mm-yyyy'
     });
 </script>
 </body>

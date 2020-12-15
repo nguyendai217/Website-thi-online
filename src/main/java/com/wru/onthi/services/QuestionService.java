@@ -21,4 +21,5 @@ public interface QuestionService {
     Page<Question> getPageQuestionByExamId(Integer examId, Pageable pageable);
     Page<Question> getListAllQuestion(Pageable pageable);
     Page<Question> getPageQuestionBySubjectAndClass(Integer subjectId,Integer classId, Pageable pageable);
+    List<Question> getListQuestionBySubjectAndClass(Integer subjectId,Integer classId);
 }

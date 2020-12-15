@@ -186,6 +186,7 @@ button.btn-showMenu {
 }
 
 .menu-left li:hover {
+
     background-color: var(--secondary-color);
 }
 
@@ -205,6 +206,7 @@ button.btn-showMenu {
 
 .menu-left li:hover ul {
     opacity: 1;
+    transition: 0.5s;
     z-index: 101;
 }
 
@@ -224,9 +226,9 @@ button.btn-showMenu {
     position: absolute;
     background-color: var(--primary-color);
     width: 500px;
-    padding: 10px;
+    padding: 5px;
     margin: 0;
-    top: 110%;
+    top: 120%;
     left: 0;
     display: flex;
     flex-wrap: wrap;
@@ -270,7 +272,7 @@ button.btn-showMenu {
     font-weight: bold;
     color: var(--secondary-color);
 }
-.btn-login i:hover, .btn-login a:hover ,.btn-logout:hover{
+.btn-login:hover, .btn-login a:hover ,.btn-logout:hover{
     color: #47d444;
 }
 
@@ -516,9 +518,9 @@ button.btn-showMenu {
 
 .study-listChemistry, .news-list, .test-list {
     height: 258px;
-    padding: 10px;
+    padding: 5px;
     margin-top: 10px;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     box-shadow: 1px 0px 10px -1px #000000;
 }
 
@@ -529,7 +531,7 @@ button.btn-showMenu {
     z-index: 1;
     color: var(--white);
     width: 100%;
-    height: 34%;
+    height: 32%;
     overflow: hidden;
     transition: 1s ease-in-out;
     margin-bottom: 4px;
@@ -644,7 +646,7 @@ button.btn-showMenu {
 /*-----------------new -----------------*/
 
 .news .news-left .news-list, .news .news-right .news-list {
-    height: 490px;
+    height: 477px;
 }
 
 .news .news-left .news-list .news-listItem {
@@ -870,10 +872,10 @@ button.btn-showMenu {
 }
 
 .test-list {
-    height: 500px;
+    height: auto;
 }
 .test-list .test-listItem {
-    max-height: 115px;
+    height: 110px;
 }
 .test-list .test-listItem .img img{
     width: 85%;
@@ -1222,4 +1224,7 @@ button.btn-showMenu {
 .pagging-list-lesson{
     width: 36%;
     margin: 0px auto;
+}
+.span-vld{
+    color: red;
 }

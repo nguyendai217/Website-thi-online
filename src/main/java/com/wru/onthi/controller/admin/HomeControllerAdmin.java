@@ -4,9 +4,11 @@ import com.google.common.base.Strings;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,9 @@ public class HomeControllerAdmin {
 
     @Autowired
     BCryptPasswordEncoder encoder;
+
+    @Value("${folder.upload}")
+    String foldeUpload;
 
     @GetMapping("/admin/home")
     public String homeAdmin(Model model, Principal principal){
@@ -138,41 +143,23 @@ public class HomeControllerAdmin {
     @PostMapping("/profile/updateImage")
     public String updateImage(@RequestParam("fileImage") MultipartFile multipartFile,
                               @RequestParam("userId") Integer id,RedirectAttributes redir) {
-        Date date= new Date();
-        long time= date.getTime();
-        String strName= String.valueOf(time);
-        String flName = multipartFile.getOriginalFilename();
-        String[] flPath = flName.split("[.]");
-        String flExtension = flPath[flPath.length - 1];
-        String imgname= strName +"."+flExtension;
-
+        String imgname= null;
+        UploadImageController uploadImageController= new UploadImageController();
+        if(multipartFile != null){
+            imgname= uploadImageController.getImageName(multipartFile);
+        }
         try {
             Optional<User> optional= userService.findById(id);
             User user= optional.get();
             user.setImage(imgname);
             userService.updateUser(user);
-            UploadImage(multipartFile,imgname);
+            uploadImageController.uploadImage(multipartFile,imgname,foldeUpload,"user");
             redir.addFlashAttribute("success","Thay đổi ảnh thành công.");
         } catch (IOException e) {
             e.printStackTrace();
             redir.addFlashAttribute("success","Thay đổi ảnh thất bại.");
         }
         return "redirect:/profile";
-    }
-
-    private void UploadImage(MultipartFile multipartFile, String fileImage) throws IOException {
-        String uploadDir="src/main/resources/static/image/user/";
-        Path uploadpath= Paths.get(uploadDir);
-        if(! Files.exists(uploadpath)){
-            Files.createDirectories(uploadpath);
-        }
-        try(InputStream inputStream= multipartFile.getInputStream()) {
-            Path filePath= uploadpath.resolve(fileImage);
-            System.out.print(filePath.toString());
-            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
-        }catch (IOException e){
-            throw new IOException("Could not upload file"+ fileImage);
-        }
     }
 
     // get info user login

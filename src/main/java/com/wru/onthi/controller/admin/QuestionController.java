@@ -1,8 +1,14 @@
 package com.wru.onthi.controller.admin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.wru.onthi.entity.*;
 import com.wru.onthi.services.*;
+import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -19,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -437,5 +445,72 @@ public class QuestionController {
         }
         String path="redirect:/question/list-question-by-subject-class?subjectId="+subjectId+"&classId="+classId;
         return path;
+    }
+
+    @GetMapping("/add-question-from-db")
+    public String addQuestionFromDB(Model model,Principal principal,
+                                    @RequestParam("examId") Integer examId) {
+        getInfoUser(model,principal);
+        Optional<Exam> optionalExam= examService.findByExamId(examId);
+        Exam exam= optionalExam.get();
+        Integer subjectId= exam.getExam_subject().getId();
+        Integer classId= exam.getExam_classroom().getId();
+        List<Question> ListQuestionBySubjectAndClass= questionService.getListQuestionBySubjectAndClass(subjectId,classId);
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        AdapterClass adapterClass= new AdapterClass();
+        Gson gson = gsonBuilder.registerTypeAdapter(Question.class,adapterClass).create();
+        String jsonArray=gson.toJson(ListQuestionBySubjectAndClass);
+        model.addAttribute("data",jsonArray);
+        model.addAttribute("examId",examId);
+
+        return "admin/question/add-question-from-db";
+    }
+
+    @RequestMapping(value = "/insert-question-to-exam",method = RequestMethod.POST)
+    public @ResponseBody String addQuestionToExam(@RequestParam("examId") String examId,
+                                   @RequestParam("array_data") String data) throws JsonProcessingException {
+        //arr question id
+        int[] questionId = new ObjectMapper().readValue(data, int[].class);
+
+        List<Integer> listQuestionIdRequest= new ArrayList<>();
+        for(int i=0; i<questionId.length;i++){
+            listQuestionIdRequest.add(questionId[i]);
+        }
+        Optional<Exam> optionalExam= examService.findByExamId(Integer.valueOf(examId));
+        Exam exam= optionalExam.get();
+        List<ExamQuestion> listExamQuestion= examQuestionService.getListExamQuestionByExamId(Integer.valueOf(examId));
+
+        List<Integer> exq= new ArrayList<>();// luu id question exist
+        List<Integer> eqExist= new ArrayList<>();
+        if(listExamQuestion.size()>0){
+            // get list id question exxit
+            for(int i = 0; i < listExamQuestion.size();i++){
+                exq.add(listExamQuestion.get(i).getQuestionExam().getId());
+                Collections.sort(exq);
+            }
+            for(Integer i : listQuestionIdRequest){
+                if(exq.contains(i)){
+                    eqExist.add(i);
+                }
+                else {
+                    ExamQuestion examQuestion= new ExamQuestion();
+                    examQuestion.setExamQuestion(exam);
+                    Optional<Question> optionalQuestion = questionService.findById(i);
+                    examQuestion.setQuestionExam(optionalQuestion.get());
+                    examQuestionService.createExamQuestion(examQuestion);
+                }
+            }
+        }else {
+            for(Integer i : listQuestionIdRequest){
+                ExamQuestion examQuestion= new ExamQuestion();
+                examQuestion.setExamQuestion(exam);
+                Optional<Question> optionalQuestion = questionService.findById(i);
+                examQuestion.setQuestionExam(optionalQuestion.get());
+                examQuestionService.createExamQuestion(examQuestion);
+            }
+        }
+
+        return "OK";
     }
 }

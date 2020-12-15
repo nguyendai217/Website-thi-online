@@ -41,8 +41,9 @@
                                         <img th:src="@{/image/lesson/{image}(image=${item.image})}" alt="">
                                     </div>
                                     <div class="content">
-                                        <h6 class="title">Tên bài học: <span th:text="${item.lessonName}"></span> <br>
-                                            Môn học: <span th:text="${item.subject.name}"></span></h6>
+                                        <h6 class="title">Môn học: <span th:text="${item.subject.name}"></span><br>
+                                            <span th:text="${item.classroom.classname}" ></span><br>
+                                            Tên bài học: <span th:text="${item.lessonName}"></span> </h6>
                                         <p class="description" th:text="${item.description}">
                                         </p>
                                     </div>
@@ -59,23 +60,6 @@
 </main>
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
-<script>
-    var acc =$('#account').val();
-    if(acc != null || acc != undefined){
-        $('#div-account').removeClass('d-none');
-        $('#link-login').addClass('d-none');
-    }else {
-        $('#div-account').addClass('d-none');
-        $('#link-login').removeClass('d-none');
-    }
-
-    $(document).ready(function (){
-        var logout= $('#msg-logout').val();
-        if(logout != null){
-            alert("Đăng xuất thành công.");
-        }
-    });
-</script>
 </body>
 
 </html>

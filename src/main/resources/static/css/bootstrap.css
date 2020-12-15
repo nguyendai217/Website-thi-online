@@ -3295,6 +3295,8 @@ tbody.collapse.show {
 
 .dropdown-menu.show {
   display: block;
+  top:5px;
+  left: -6px;
 }
 
 .dropdown-header {

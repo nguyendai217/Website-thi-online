@@ -51,24 +51,27 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12">
                                         <label class="labels">Tiêu đề</label>
-                                        <input type="text" class="form-control" name="title" >
+                                        <input type="text" class="form-control" name="title" id="titleNews" >
+                                        <span id="vld-titleNews" class="span-vld hide"> Tiêu đề tin tức không được để trống </span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-12">
                                         <label class="labels">Description</label>
-                                        <textarea type="text" class="form-control" name="description" rows="2" ></textarea>
+                                        <input type="text" class="form-control" name="description" id="descriptionNews">
+                                        <span id="vld-descriptionNews" class="span-vld hide"> Mô tả tin tức không được để trống </span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6">
                                         <label>Thể loại</label>
-                                        <select class="form-control" name="categoryId">
+                                        <select class="form-control" name="categoryId" id="categoryId">
                                             <option value="">Tùy chọn</option>
                                             <option th:each="item : ${listCategory}"
                                                     th:value="${item.id}" th:text="${item.categoryName}">
                                             </option>
                                         </select>
+                                        <span id="vld-categoryId" class="span-vld hide">Vui lòng chọn thể loại tin tức</span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="labels">Tags</label>
@@ -84,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button class="btn btn-success" type="submit">Thêm tin tức</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddNews">Thêm tin tức</button>
                                     <a th:href="@{/news/list-news}" class="btn btn-danger">Hủy bỏ</a>
                                 </div>
                             </div>
@@ -107,6 +110,8 @@
     $(document).ready(function (){
      CKEDITOR.replace('content')
     })
+
+
 </script>
 </body>
 </html>

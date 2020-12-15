@@ -336,7 +336,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 }
 
 input[type="text"], input[type="password"], input[type="file"], input[type="email"], textarea, select {
-    width: 300px;
+    /*width: 300px;*/
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;

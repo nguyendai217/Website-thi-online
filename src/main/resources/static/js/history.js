@@ -19,6 +19,7 @@ renderListQuestion(listAnser);
 // Pre câu hỏi
 $('.btn-pre').click(function (e) {
 	e.preventDefault();
+    $("html, body").animate({ scrollTop: 400 }, 600);
     if (currentPage <= 1) return;
     currentPage--;
     renderListQuestion(listAnser);
@@ -28,6 +29,7 @@ $('.btn-pre').click(function (e) {
 // Next câu hỏi
 $('.btn-next').click(function (e) {
 	e.preventDefault();
+    $("html, body").animate({ scrollTop: 400 }, 600);
     if (currentPage >= Math.ceil(json.length / limitPage)) return;
     currentPage++;
     renderListQuestion(listAnser);

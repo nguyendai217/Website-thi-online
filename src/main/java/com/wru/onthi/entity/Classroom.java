@@ -1,5 +1,6 @@
 package com.wru.onthi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
@@ -28,12 +29,15 @@ public class Classroom {
     @JoinColumn(name = "school_id")
     private School school;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "classroom",cascade = CascadeType.ALL)
     private List<Lesson> listLessons;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "exam_classroom",cascade = CascadeType.ALL)
     private List<Exam> listExam;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question_classroom",cascade = CascadeType.ALL)
     private List<Question> listQuestion;
 

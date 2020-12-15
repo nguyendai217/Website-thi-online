@@ -34,4 +34,9 @@ public interface QuestionRepository extends JpaRepository<Question,Integer> {
             "where q.question_subject.id= ?1 " +
             "and q.question_classroom.id= ?2")
     Page<Question> getPageQuestionBySubjectAndClass(Integer subjectId, Integer classId, Pageable pageable);
+
+    @Query(value = "select q from Question q " +
+            "where q.question_subject.id= ?1 " +
+            "and q.question_classroom.id= ?2")
+    List<Question> getListQuestionBySubjectAndClass(Integer subjectId, Integer classId);
 }

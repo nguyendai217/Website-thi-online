@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Thêm câu hỏi</title>
+    <div th:replace="admin/init_admin :: header"></div>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css}">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3><small>Thêm mới câu hỏi cho đề thi</small></h3>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row alert alert-danger" id="errorProcess" style="color: white; display: none;"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+
+<!--                            <h6>Mã đề thi: <span th:text="${exam.codeExam}"></span></h6>-->
+<!--                            <h6>Môn học : <span th:text="${exam.exam_subject.name}"></span></h6>-->
+<!--                            <h6>Lớp : <span th:text="${exam.exam_classroom.classname}"></span></h6>-->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="height: 555px;">
+                    <div class="col-md-12 table-responsive">
+                        <table class="display table table-bordered" id="example"></table>
+                        <div class="d-flex justify-content-center mt-2">
+                            <a class="btn btn-success" href="#" id="btnAddQuestionToExam">Thêm câu hỏi</a>
+                            <a class="btn btn-danger" th:href="@{'/question/list-question-by-exam?examId='+${examId}}" >Hủy bỏ</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- page content -->
+    </div>
+</div>
+<div class="modal fade" id="removeModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeModalCenterTitle">Thêm câu hỏi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Bạn có muốn thêm các câu hỏi vào đề thi ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Hủy bỏ</button>
+                <a href="" class="btn btn-success" id="delRef"><i class="fa fa-check"></i> Đồng ý</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<!--<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js}"></script>-->
+<!--    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />-->
+<script th:src="@{https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js}"></script>
+<script>
+    // DataTable data set used
+    var data= '[[${data}]]';
+    var examId= [[${examId}]];
+    var dataSet = JSON.parse(data.replace(/&quot;/g,'"'));
+
+    $(document).ready(function () {
+        var arr=[];
+        $.fn.dataTable.Api.register('sum()', function () {
+            var dtData = this;
+            var total = [];
+            $.each(dtData, function (i, it) {
+                if (it.isChecked) {
+                    // var a = parseFloat(it.salary.replace("$", "").replace(",", ""));
+                    // total += a;
+                    console.log(it.id)
+                    total.push(it.id);
+                    console.log(total)
+                    arr=total;
+                }
+            });
+        });
+
+        $('#btnAddQuestionToExam').on('click', function(event) {
+            event.preventDefault();
+            if(arr==""){
+                alert("Vui lòng chọn câu hỏi để thêm vào đề thi");
+                return false;
+            }
+            $('#removeModalCenter #delRef').click(function (){
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                console.log("json: ",arr);
+                $.ajax({
+                    type: "POST",
+                    url: "/question/insert-question-to-exam",
+                    data:{
+                        examId: examId,
+                        array_data : JSON.stringify(arr),
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        if(response=="OK"){
+                            window.location.href = './question/list-question-by-exam?examId='+examId;
+                        }
+                        console.log("response: ",response)
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                });
+            });
+            $('#removeModalCenter').modal();
+
+        });
+
+        $.each(dataSet, function (i, it) { it.isChecked = false; });
+        var dtapi = $('#example').DataTable({
+            data: dataSet,
+            pageLength: 10,
+            // We have the option of invalidating and redrawing the table on each checkox change or
+            // as I did, use the drawCallback to set the checkbox to match the row data
+            "drawCallback": function (settings) {
+                // not important on first draw so not worried about dtapi being defined on table initialization
+                if (dtapi) {
+                    var visibleRows = $("td.cbcell").closest("tr");
+                    visibleRows.each(function (i, item) {
+                        $("td.cbcell input", item).prop("checked", dtapi.rows(item).data()[0].isChecked);
+                    });
+                }
+            },
+            // this is the default but note that the drawCallback will not be called on each page change if set to true.
+            "deferRender": false,
+            "columnDefs": [],
+            "order": [1],
+            "columns": [
+                {
+                    "data": "isChecked",
+                    // adding the class name just to make finding the checkbox cells eaiser
+                    "class": "cbcell",
+                    "orderable": false,
+                    // Put the checkbox in the title bar
+                    "title": "<input type='checkbox' />",
+                    // puts the checkbox in each row
+                    "render": function (dataItem) {
+                        if (dataItem)
+                            return "<input checked type='checkbox'/>";
+                        else
+                            return "<input type='checkbox'/>";
+                    }
+                },
+                // rest of the columns
+                { data: "id", title: "ID" },
+                { data: "content", title: "Câu hỏi" },
+                { data: "ans_a", title: "Đáp án A" },
+                { data: "ans_b", title: "Đáp án B" },
+                { data: "ans_c", title: "Đáp án C" },
+                { data: "ans_d", title: "Đáp án D" }
+            ]
+        });
+
+        // This is the event handler for the check all checkbox
+        $("th input[type=checkbox]").on("click", function () {
+            var isChecked = this.checked;
+            var ld = $('#example').DataTable().rows().data();
+            $.each(ld, function (i, item) {
+                item.isChecked = isChecked;
+            });
+            $(".cbcell input").prop("checked", isChecked);
+            dtapi.data().sum();
+        });
+
+        // event handler for individual rows
+        $("#example").on("click", "td input[type=checkbox]", function () {
+            var isChecked = this.checked;
+
+            // set the data item associated with the row to match the checkbox
+            var dtRow = dtapi.rows($(this).closest("tr"));
+            dtRow.data()[0].isChecked = isChecked;
+
+            // determine if the over all checkbox should be checked or unchecked
+            if (!isChecked) {
+                // if one is unchecked, then checkall cannot be checked
+                $("th input[type=checkbox]").prop("checked", false);
+            }
+            else {
+                $("th input[type=checkbox]").prop("checked", true);
+                $.each(dtapi.data(), function (i, item) {
+                    if (!item.isChecked) {
+                        $("th input[type=checkbox]").prop("checked", false);
+                        return false;
+                    }
+                });
+            }
+            dtapi.data().sum();
+        });
+    });
+</script>
+</body>
+</html>

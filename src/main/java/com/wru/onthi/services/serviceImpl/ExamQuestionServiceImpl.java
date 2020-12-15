@@ -6,6 +6,8 @@ import com.wru.onthi.services.ExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Autowired
@@ -19,5 +21,10 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Override
     public void removeQuestionFromExam(Integer questionId, Integer examId) {
         examQuestionRepo.removeQuestionFromExam(questionId,examId);
+    }
+
+    @Override
+    public List<ExamQuestion> getListExamQuestionByExamId(Integer examId) {
+        return examQuestionRepo.listExamQuestionByExamId(examId);
     }
 }

@@ -60,6 +60,7 @@ if (checkTestFinished(endTime) === false) {
     // Pre câu hỏi
     $('.btn-pre').click(function (e) {
 		e.preventDefault();
+        $("html, body").animate({ scrollTop: 180 }, 600);
         if (currentPage <= 1) return;
         currentPage--;
         renderListQuestion(listAnser);
@@ -69,6 +70,7 @@ if (checkTestFinished(endTime) === false) {
     // Next câu hỏi
     $('.btn-next').click(function (e) {
 		e.preventDefault();
+        $("html, body").animate({ scrollTop: 180 }, 600);
         if (currentPage >= Math.ceil(json.length / limitPage)) return;
         currentPage++;
         renderListQuestion(listAnser);

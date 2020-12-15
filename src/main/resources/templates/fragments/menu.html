@@ -22,18 +22,22 @@
                 </div>
                 <div class="col-md-4 col-12">
                     <div class="menu-right">
-                        <button class="btn-login" id="link-login">
-                            <i class="fa fa-user"></i><a th:href="@{/login}"> Đăng nhập</a>
-                        </button>
+                        <a class=" btn-login" id="link-login" th:href="@{/login}">
+                            <i class="fa fa-user"></i> ĐĂNG NHẬP
+                        </a>
                         <div class="dropdown d-none" id="div-account" sec:authorize="isAuthenticated()">
-                            <button class="dropdown-toggle btn-login"
+                            <a class="dropdown-toggle btn-login"
                                     type="button" id="account" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false" sec:authentication="principal.username">
-                            </button>
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                                [[${#request.userPrincipal.principal.username}]]
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" id="adminManager" th:href="@{/admin/home}">Quản lí</a>
-                                <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
-                                <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
+
+                                <a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" class="dropdown-item" id="adminManager" th:href="@{/admin/home}"><i class="fa fa-cogs"></i> Quản lí</a>
+                                <a class="dropdown-item" th:href="@{/user/profile}"><i class="fa fa-user-circle-o"></i> Profile</a>
+                                <a class="dropdown-item" th:href="@{/info/exam-user}"><i class="fa fa-check-square-o"></i> Kết quả thi</a>
+                                <a class="dropdown-item" th:href="@{/logout}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                             </div>
                         </div>
                         <div th:if="${param.logout}" id="msg-logout"></div>

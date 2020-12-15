@@ -13,8 +13,8 @@
     <form class="form-signin" th:action="@{/login}" method="post">
         <h3 class="mb-4" style="text-align: center"> Đăng nhập</h3>
         <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button" ><a th:href="@{/oauth2/authorization/google}"><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</a> </button>
-            <button class="btn google-btn social-btn" type="button"><a th:href="@{/logindd}"><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</a></button>
+            <button class="btn facebook-btn social-btn" type="button" ><a ><i class="fa fa-facebook-f"></i> Đăng nhập Facebook</a> </button>
+            <button class="btn google-btn social-btn" type="button"><a th:href="@{/oauth2/authorization/google}"><i class="fa fa-google-plus-official"></i> Đăng nhập Google+</a></button>
         </div>
         <p style="text-align:center">  OR  </p>
         <div align="center" th:if="${param.error}">

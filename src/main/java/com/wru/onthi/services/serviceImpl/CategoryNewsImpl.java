@@ -49,7 +49,7 @@ public class CategoryNewsImpl implements CategoryNewsService {
 
     @Override
     public List<CategoryNews> getlistCategoryNews() {
-        return categoryNewsRepository.findAll();
+        return categoryNewsRepository.getListCategory();
     }
 
     @Override

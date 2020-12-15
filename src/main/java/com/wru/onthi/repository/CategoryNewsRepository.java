@@ -1,6 +1,7 @@
 package com.wru.onthi.repository;
 
 import com.wru.onthi.entity.CategoryNews;
+import org.apache.catalina.LifecycleState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface CategoryNewsRepository extends JpaRepository<CategoryNews, Integer> {
@@ -26,5 +28,8 @@ public interface CategoryNewsRepository extends JpaRepository<CategoryNews, Inte
     @Transactional
     @Query("update CategoryNews ct set ct.status=:status where ct.id=:id")
     void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    @Query("select c from CategoryNews c where c.status=1")
+    List<CategoryNews> getListCategory();
 
 }

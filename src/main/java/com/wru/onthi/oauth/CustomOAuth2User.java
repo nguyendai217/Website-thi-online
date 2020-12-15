@@ -29,7 +29,12 @@ public class CustomOAuth2User implements OAuth2User {
         return oAuth2User.getAttribute("name");
     }
 
-    public String getUserName(){
+    @Override
+    public <A> A getAttribute(String name) {
+        return null;
+    }
+
+    public String getusername(){
         return oAuth2User.getAttribute("name");
     }
 }

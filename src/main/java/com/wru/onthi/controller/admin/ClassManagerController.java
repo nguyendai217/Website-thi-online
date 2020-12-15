@@ -87,7 +87,6 @@ public class ClassManagerController {
     public String addSubjectPost(Model model, Principal principal, RedirectAttributes redir,
                                  @RequestParam("classCode") String classcode,
                                  @RequestParam("className") String classname,
-                                 @RequestParam("status") Integer status,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
         getInfoUser(model,principal);
         if(!Strings.isNullOrEmpty(classcode) && !Strings.isNullOrEmpty(classname)){
@@ -100,7 +99,7 @@ public class ClassManagerController {
                 classroom.setCode(classcode);
                 classroom.setClassname(classname);
                 classroom.setImage(fileImage);
-                classroom.setStatus(status);
+                classroom.setStatus(1);
                 try {
                     classroomService.createClass(classroom);
                     UploadImage(multipartFile,fileImage);

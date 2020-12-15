@@ -18,7 +18,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
     @Query(value = "SELECT * FROM subject ",nativeQuery = true)
     Page<Subject> findAllSubject(Pageable pageable);
-
     Subject findByCode(String code);
 
     @Query(value = "SELECT * FROM subject sb WHERE (sb.name LIKE %:subject%) " +
@@ -28,7 +27,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     @Query(value = "SELECT sb.* FROM subject sb ,classroom cl, subject_class sl " +
             "where sb.id= sl.subject_id " +
             "and sl.class_id= cl.id " +
-            "and cl.id=?1 ",nativeQuery = true)
+            "and cl.id=?1 and sb.status=1 ",nativeQuery = true)
     List<Subject> getListSubjectByClass(Integer id);
 
     @Modifying

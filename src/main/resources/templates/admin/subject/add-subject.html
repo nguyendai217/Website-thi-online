@@ -40,19 +40,20 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="col-md-12">
                                             <label class="labels">Mã môn học</label>
-                                            <input type="text" class="form-control" name="codeSubject" >
+                                            <input type="text" class="form-control" name="codeSubject" id="code-Subject" >
+                                            <span id="vld-code-Subject" class="span-vld hide">Mã môn học không được để trống.</span>
                                         </div>
                                         <div class="col-md-12">
                                             <br>
                                             <label class="labels">Tên môn học</label>
-                                            <input type="text" class="form-control" name="nameSubject">
+                                            <input type="text" class="form-control" name="nameSubject" id="nameSubject">
+                                            <span id="vld-nameSubject" class="span-vld hide">Tên môn học không được để trống.</span>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12 ">
                                         <div class="col-md-12 col-sm-12">
                                             <label class="label">Hình ảnh môn học</label>
-                                            <input type="file" name="image" id="fileImage"
-                                                   accept="image/jpeg, image/png, image/jpg" >
+                                            <input type="file" name="image" id="fileImage" accept="image/jpeg, image/png, image/jpg" >
                                         </div>
                                         <div class="col-md-12 col-sm-12 mt-3">
                                             <img id="imgPreview" style="width: 150px;height: 150px">
@@ -60,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-success" type="submit">Thêm môn học</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddSubject">Thêm môn học</button>
                                     <a th:href="@{/subject/list-subject}" class="btn btn-danger">Hủy bỏ</a>
                                 </div>
                             </form>
@@ -76,25 +77,7 @@
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $('#userManager').addClass("active");
-   
-    $(document).ready(function () {
-        $('#fileImage').change(function() {
-            showPreview(this);
-        });
-
-        $('#error').delay(5000).fadeOut(1000);
-    });
-    function showPreview(fileImage){
-         file = fileImage.files[0];
-         render = new FileReader();
-
-        render.onload = function(e) {
-            $('#imgPreview').attr('src',e.target.result);
-        }
-        render.readAsDataURL(file);
-    }
-
+    $('#subjectManager').addClass("active");
 </script>
 </body>
 </html>

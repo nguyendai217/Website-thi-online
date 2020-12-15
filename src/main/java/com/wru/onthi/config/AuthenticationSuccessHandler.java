@@ -22,7 +22,7 @@ public class AuthenticationSuccessHandler implements
             } else if ("USER".equals(auth.getAuthority())) {
                 httpServletResponse.sendRedirect("/");
             } else if ("MANAGER".equals(auth.getAuthority())) {
-                httpServletResponse.sendRedirect("/manager/home");
+                httpServletResponse.sendRedirect("/admin/home");
             }
         }
     }

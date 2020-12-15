@@ -104,4 +104,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Page<Question> getPageQuestionBySubjectAndClass(Integer subjectId, Integer classId, Pageable pageable) {
         return questionRepository.getPageQuestionBySubjectAndClass(subjectId,classId,pageable) ;
     }
+
+    @Override
+    public List<Question> getListQuestionBySubjectAndClass(Integer subjectId, Integer classId) {
+        return questionRepository.getListQuestionBySubjectAndClass(subjectId,classId);
+    }
 }
