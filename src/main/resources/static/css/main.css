@@ -527,7 +527,7 @@ button.btn-showMenu {
 .study-chemistryItem, .news-listItem, .test-listItem {
     display: flex;
     position: relative;
-    background: #186958;
+    background: #3e747d;
     z-index: 1;
     color: var(--white);
     width: 100%;
@@ -914,7 +914,7 @@ button.btn-showMenu {
     transition: 0.5s ease-in-out;
 }
 .sidebar-content ul li a:hover{
-    color: #dd4636;
+    color: #47dd36;
 }
 
 /*-------------------Subject knowledge-----------------*/
@@ -1227,4 +1227,25 @@ button.btn-showMenu {
 }
 .span-vld{
     color: red;
+}
+
+.card-body{
+    padding: 0px !important;
+    margin-bottom: 16px;
+}
+.card{
+    text-align: center !important;
+}
+.card-body a{
+    background: cadetblue;
+    border: 1px solid;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 7px;
+    margin: 2px;
+    color: white;
+    border-radius: 5px;
+}
+.card-body a:hover{
+    color: #52f518;
 }

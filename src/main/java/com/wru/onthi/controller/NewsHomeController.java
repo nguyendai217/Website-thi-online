@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Neg;
 import com.wru.onthi.entity.CategoryNews;
 import com.wru.onthi.entity.Classroom;
 import com.wru.onthi.entity.News;
+import com.wru.onthi.services.CategoryNewsService;
 import com.wru.onthi.services.ClassroomService;
 import com.wru.onthi.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,17 @@ public class NewsHomeController {
     NewsService newsService;
     @Autowired
     ClassroomService classroomService;
+    @Autowired
+    CategoryNewsService categoryNewsService;
 
     @GetMapping("/tintuc/list-news")
     public String getListNews(Model model, Principal principal, Pageable pageable){
 
+        List<News> getNewsOrderByViews= newsService.getListNewsOrderByViews().subList(0,5);
+        model.addAttribute("newshot",getNewsOrderByViews);
+
+        List<CategoryNews> listCategory= categoryNewsService.getlistCategoryNews();
+        model.addAttribute("category",listCategory);
         List<Classroom> listClass = classroomService.getAllClassroom();
         if(!listClass.isEmpty()){
             model.addAttribute("listClass",listClass);

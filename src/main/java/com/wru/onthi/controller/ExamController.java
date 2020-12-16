@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,15 +46,6 @@ public class ExamController {
     @Autowired
     UserService userService;
 
-
-    @GetMapping("/kiemtra/list-class")
-    public String getAllClass(Model model, Principal principal){
-        getDefault(model,principal);
-        //get ListClass
-        List<Classroom> listClass= classroomService.getAllClassroom();
-        model.addAttribute("listClass",listClass);
-        return "exam/list-class";
-    }
 
     @GetMapping("/lophoc/list-class")
     public String getClassBySubject(Model model, Principal principal, @RequestParam("subjectId") Integer subjectId){
@@ -189,16 +181,35 @@ public class ExamController {
         model.addAttribute("listnewStudy",listnewStudy);
     }
 
-    @GetMapping("/kiemtra/class/")
+    @GetMapping("/kiemtra/list-class")
+    public String getAllClass(Model model, Principal principal){
+        getDefault(model,principal);
+        //get ListClass
+        List<Classroom> listClass= classroomService.getAllClassroom();
+        model.addAttribute("listClassEx",listClass);
+        return "exam/list-class";
+    }
+
+    @GetMapping("/kiemtra/class/list-exam")
     public String getListExamByClass(Model model,Principal principal,@RequestParam("classId") Integer classId,
                                      Pageable pageable){
         getDefault(model,principal);
         int pageNumber = pageable.getPageNumber();
-        int pageSize= 5;
+        int pageSize= 8;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
         Pageable pageItem = PageRequest.of(pageNumber, pageSize);
         Page<Exam> pageExam = examService.getListExamByClass(classId,pageItem);
-        model.addAttribute("listExam",pageExam);
+        if(pageExam.getSize()>0){
+            model.addAttribute("pageInfo",pageExam);
+            model.addAttribute("listSize",pageExam.getTotalElements());
+            String path= "/kiemtra/class/list-exam?classId="+classId;
+            model.addAttribute("path",path);
+        }else {
+            model.addAttribute("emptyExam","empty");
+        }
+
+        List<Lesson> lessonByClass= lessonService.getListLessonByClass(classId).subList(0,4);
+        model.addAttribute("lesson", lessonByClass);
 
         return "exam/exam-by-class";
     }
@@ -225,5 +236,26 @@ public class ExamController {
         model.addAttribute("subjectName",subjectName);
 
         return "exam/history-test";
+    }
+
+    @GetMapping("/info/exam-user")
+    public String infoUserExam(Model model, Principal principal, Pageable pageable){
+        String name = principal.getName();
+        User user= userService.findUserByName(name);
+        Integer userId= user.getId();
+        int pageNumber = pageable.getPageNumber();
+        int pageSize=6;
+        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Page<Result> pageResult= resultService.getListResultExamByUserId(userId,pageItem);
+        if(pageResult.getSize()>0){
+            model.addAttribute("pageInfo", pageResult);
+            model.addAttribute("listSize",pageResult.getTotalElements());
+            String path= "/info/exam-user";
+            model.addAttribute("path",path);
+        } else {
+            model.addAttribute("emptyExam","listEmpty");
+        }
+        return "info_exam_user";
     }
 }

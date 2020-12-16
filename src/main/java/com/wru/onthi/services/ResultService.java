@@ -17,4 +17,5 @@ public interface ResultService {
     void deleteResult(Result result);
     List<Result> getResultScoreDESC();
     long countResult();
+    Page<Result> getListResultExamByUserId(Integer userId, Pageable pageable);
 }

@@ -3,28 +3,6 @@
 <head>
     <title>Bài thi</title>
     <div th:replace="fragments/init_lib :: header"></div>
-    <style>
-        .card-body{
-            padding: 0px !important;
-            margin-bottom: 16px;
-        }
-        .card{
-            text-align: center !important;
-        }
-        .card-body a{
-            background: cadetblue;
-            border: 1px solid;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 7px;
-            margin: 2px;
-            color: white;
-            border-radius: 5px;
-        }
-        .card-body a:hover{
-            color: #52f518;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
@@ -36,71 +14,43 @@
                 <h4>Danh sách các bài đã thi</h4>
             </div>
             <div class="row col-md-12  d-flex justify-content-center">
-                <div class="col-md-2 col-6 p-2">
+                <div class="col-md-3 col-6 p-2" th:each="item: ${pageInfo}">
                     <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
+                        <img class="card-img-top" th:src="@{/image/subject/{image}(image=${item.exam_result.exam_subject.image})}" alt="Card image cap">
                         <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
+                            <h3 class="card-title">Mã Đề: <span th:text="${item.exam_result.codeExam}"></span></h3>
+                            <h3 class="card-title">Số điểm: <span th:text="${item.score}"></span></h3>
+                            <a th:href="@{'/history?testId='+${item.id}}" class="">Xem lại</a>
+                            <a th:href="@{'/kiemtra/info?examId='+${item.exam_result.id}}" class="">Làm lại</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 col-6 p-2">
-                    <div class="card" >
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 p-2">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 p-2">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 p-2">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 p-2">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/toan.jpg}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: TIENGANH005</h3>
-                            <h3 class="card-title">Số điểm: 0.5</h3>
-                            <a th:href="@{#}" class="">Xem lại</a>
-                            <a th:href="@{#}" class="">Làm lại</a>
-                        </div>
-                    </div>
+            </div>
+            <div class="row col-md-12  d-flex justify-content-center"></div>
+                <div class="pagging-list-lesson" >
+                    <input th:value="${listSize}" hidden id="pagging-ls" >
+                    <ul class="pagination ">
+                        <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                            <a class="page-link" th:href="@{|${path}?page=${pageInfo.number}|}">&laquo;</a>
+                        </li>
+
+                        <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 2), (pageInfo.number + 3))}" >
+                            <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                                class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                <a
+                                        th:if="${itemPage} != ${pageInfo.number + 1}"
+                                        class="page-link"
+                                        th:href="@{|${path}?page=${itemPage}|}"
+                                        th:text="${itemPage}"
+                                >1</a>
+                                <span th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</span>
+                            </li>
+                        </th:block>
+
+                        <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                            <a class="page-link" th:href="@{|${path}?page=${pageInfo.number + 2}|}">&raquo;</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

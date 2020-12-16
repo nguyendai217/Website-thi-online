@@ -81,4 +81,9 @@ public class NewsServiceImpl implements NewsService {
     public long countNews() {
         return newsRepository.count();
     }
+
+    @Override
+    public List<News> getListNewsOrderByViews() {
+        return newsRepository.getListNewsOrderByViews();
+    }
 }

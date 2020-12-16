@@ -3,6 +3,15 @@
 <head>
     <title>Bài học</title>
     <div th:replace="fragments/init_lib :: header"></div>
+    <style>
+        .prev-next a{
+            margin-top: 30px;
+            padding: 8px;
+            border: 1px solid;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
@@ -34,7 +43,7 @@
                                 <div class="footer_lesson">
                                     <div class="row">
                                         <div class="col-md-6 col-6 view">
-                                            <p>Số lượt xem:<i class="fa fa-eye" aria-hidden="true"></i><span th:text="${lessonContent.views}"></span></p>
+                                            <p>Số lượt xem: <i class="fa fa-eye" aria-hidden="true"></i><span th:text="${lessonContent.views}"></span></p>
                                         </div>
                                         <div class="col-md-6 col-6 share">
                                             <p>Chia sẻ ngay</p>
@@ -44,15 +53,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a class="btn btn-success" href="#">Bài học trước</a>
+
+                            <div class="row">
+                                <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
+                                    <a class="" th:href="@{#}"><i class="fa fa-angle-double-left"></i> Bài học trước</a>
+                                </div>
+                                <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
+                                    <a class="" th:href="@{#}">Bài học tiếp theo <i class="fa fa-angle-double-right"></i></a>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <a class="btn btn-success" href="#">Bài học tiếp theo</a>
-                            </div>
                         </div>
+
                         <div class="comment-lesson">
                             <h3>Bình luận</h3>
                             <button class="btn btn-success" id="cmt-loadmore">Load more</button>

@@ -73,8 +73,9 @@
     }
 
     $('#btnStart').on('click', function(event) {
-        event.preventDefault();
+        //
         if((acc== null) || (acc== undefined)){
+            event.preventDefault();
             var href = $('#btnAccept').attr('href');
             $('#exampleModal #btnAccept').attr('href', href);
             $('#exampleModal').modal();

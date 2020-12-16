@@ -100,7 +100,6 @@
                                             <th>STT</th>
                                             <th>Ảnh</th>
                                             <th>Username</th>
-                                            <th>Họ và tên</th>
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
                                             <th>Giới tính</th>
@@ -113,7 +112,6 @@
                                             <td th:text="${iterStat.count}"></td>
                                             <td><img id="img_user" th:src="@{/image/user/{image}(image=${row.image})}"></td>
                                             <td th:text="${row.username}"></td>
-                                            <td th:text="${row.fullname}"></td>
                                             <td th:text="${row.email}"></td>
                                             <td th:text="${row.phone}"></td>
                                             <td th:if="${row.gender == null}">NULL</td>

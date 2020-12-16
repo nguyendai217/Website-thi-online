@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6">
-                                        <label class="labels">Username</label>
+                                        <label class="labels">Username (viết liền không dấu và kí tự thường)</label>
                                         <input type="text" class="form-control" name="username" id="usernameUser" th:value="${us}">
                                         <span id="vld-username" class="span-vld hide">Username không được để trống.</span>
                                     </div>
@@ -61,7 +61,7 @@
                                     <div class="col-md-6">
                                         <label class="labels">Email</label>
                                         <input type="text" class="form-control" name="email" id="emailUser" th:value="${emailAdd}">
-                                        <span id="vld-email" class="span-vld hide">Email không được để trống.</span>
+                                        <span id="vld-email" class="span-vld hide">Email không được để trống hoẵ sai định dạng.</span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="labels">Password</label>
@@ -72,7 +72,8 @@
                                 <div class="row mt-2">
                                     <div class="col-md-6">
                                         <label class="labels">Số điện thoại</label>
-                                        <input type="number" class="form-control" name="phone" th:value="${ph}" >
+                                        <input type="text" class="form-control" name="phone" id="phoneUser" th:value="${ph}" >
+                                        <span id="vld-phone" class="span-vld hide">Số điện thoại sai định dạng.</span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="labels">Địa chỉ</label>
@@ -129,8 +130,6 @@
             format: 'dd-mm-yyyy'
         });
     });
-
-
 
 </script>
 </body>

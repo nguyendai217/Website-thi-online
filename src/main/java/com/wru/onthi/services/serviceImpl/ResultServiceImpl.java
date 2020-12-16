@@ -57,4 +57,9 @@ public class ResultServiceImpl implements ResultService  {
 	public long countResult() {
 		return resultRepository.count();
 	}
+
+	@Override
+	public Page<Result> getListResultExamByUserId(Integer userId, Pageable pageable) {
+		return resultRepository.getListResultByUserId(userId,pageable);
+	}
 }

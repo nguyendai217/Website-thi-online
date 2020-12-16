@@ -3,11 +3,17 @@ package com.wru.onthi.controller;
 import com.google.common.base.Strings;
 import com.wru.onthi.controller.admin.UploadImageController;
 import com.wru.onthi.entity.Classroom;
+import com.wru.onthi.entity.ExamQuestion;
+import com.wru.onthi.entity.Result;
 import com.wru.onthi.entity.User;
 import com.wru.onthi.services.ClassroomService;
+import com.wru.onthi.services.ExamQuestionService;
+import com.wru.onthi.services.ResultService;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +42,9 @@ public class ProfileController {
 
     @Value("${folder.upload}")
     private String folderUpload;
+
+    @Autowired
+    ResultService resultService;
 
     @Autowired
     BCryptPasswordEncoder encoder;
@@ -150,11 +159,6 @@ public class ProfileController {
             }
         }
         return "redirect:/user/profile";
-    }
-
-    @GetMapping("/info/exam-user")
-    public String infoUserExam(Model model,Principal principal){
-        return "info_exam_user";
     }
 
 

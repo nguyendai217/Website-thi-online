@@ -34,4 +34,7 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
     @Transactional
     @Query("update News n set n.status=:status where n.id=:id")
     void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    @Query("select e from News e where e.status=1 order by e.views desc ")
+    List<News> getListNewsOrderByViews();
 }

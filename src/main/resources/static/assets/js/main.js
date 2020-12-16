@@ -217,7 +217,15 @@ $('#btnAddUser').click(function (){
     var username= $('#usernameUser').val();
     var pass= $('#passwordUser').val();
     var role= $('#roleUser').val();
-
+    var phoneUser= $('#phoneUser').val();
+    function isPhoneNumber(phone) {
+        var regex= /^0[0-9]{8}$/;
+        if(regex.test(phone)){
+            return true;
+        }else {
+            return false;
+        }
+    }
     if(username==""){
         $('#vld-username').removeClass('hide');
         $('#usernameUser').focus();
@@ -226,13 +234,29 @@ $('#btnAddUser').click(function (){
         $('#vld-username').addClass('hide');
     }
 
-    if(email==''){
+    var regEmail=/\S+@\S+\.\S+/;
+    if(email=='' || regEmail.test(email)== false){
         $('#vld-email').removeClass('hide');
         $('#emailUser').focus();
         return false;
     }else {
         $('#vld-email').addClass('hide');
     }
+
+    if(phoneUser != ""){
+        var rgx= /((09|03|07|08|05)+([0-9]{8})\b)/g;
+         if(phoneUser.length != 10 || rgx.test(phoneUser)== false){
+             $('#vld-phone').removeClass('hide');
+             $('#phoneUser').focus();
+             return false;
+         }else{
+             $('#vld-phone').addClass('hide');
+         }
+    }else {
+        $('#vld-phone').addClass('hide');
+    }
+
+
     if(pass==""){
         $('#vld-pass').removeClass('hide');
         $('#passwordUser').focus();

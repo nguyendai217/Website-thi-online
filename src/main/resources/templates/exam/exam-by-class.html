@@ -22,69 +22,58 @@
                             <span>Danh sách bài thi</span>
                         </div>
                         <div class="list-knowledge">
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(listExam)}"
-                                 th:each="item:${listExam}">
+                            <div class="knowledge-item" th:if="${not #strings.isEmpty(pageInfo)}"
+                                 th:each="item:${pageInfo}">
                                 <p th:text="${item.title}"></p>
                                 <a th:href="@{/kiemtra/info(examId=${item.id})}">Kiểm tra</a>
                             </div>
-                            <div class="knowledge-item" th:if="${not #strings.isEmpty(emptyLesson)}">
-                                <h3>Xin lỗi, môn học này chưa có bài thi, vui lòng quay lại sau.</h3>
+
+                            <div class="pagging-list-lesson" >
+                                <input th:value="${listSize}" hidden id="pagging-ls" >
+                                <ul class="pagination ">
+                                    <li class="page-item" th:if="${pageInfo.number + 1} != 1">
+                                        <a class="page-link" th:href="@{|${path}&page=${pageInfo.number}|}">&laquo;</a>
+                                    </li>
+
+                                    <th:block  th:each=" itemPage : ${#numbers.sequence((pageInfo.number - 2), (pageInfo.number + 3))}" >
+                                        <li th:classappend="${itemPage} == ${pageInfo.number + 1} ? 'active' : ''"
+                                            class="page-item" th:if="${itemPage} > 0 AND ${itemPage} <= ${pageInfo.totalPages}">
+                                            <a
+                                                    th:if="${itemPage} != ${pageInfo.number + 1}"
+                                                    class="page-link"
+                                                    th:href="@{|${path}&page=${itemPage}|}"
+                                                    th:text="${itemPage}"
+                                            >1</a>
+                                            <span th:unless="${itemPage} != ${pageInfo.number + 1}" th:text="${itemPage}" class="page-link">1</span>
+                                        </li>
+                                    </th:block>
+
+                                    <li class="page-item" th:if="${pageInfo.number + 1} != ${pageInfo.totalPages}">
+                                        <a class="page-link" th:href="@{|${path}&page=${pageInfo.number + 2}|}">&raquo;</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <!-- test-list -->
-<!--                        <div class="class-sectionTitle">-->
-<!--                            <span>Danh sách đề thi mới</span>-->
-<!--                        </div>-->
-<!--                        <div class="test-list">-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right2.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                        </div>-->
+
+                        <div class="class-sectionTitle">
+                            <span>Danh sách bài học</span>
+                        </div>
+                        <div class="test-list" >
+                            <a th:each="item:${lesson}" th:href="@{/noidungbaihoc/(lessonId=${item.id})}">
+                                <div class="test-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/lesson/{image}(image=${item.image})}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h6 class="title">Môn học: <span th:text="${item.subject.name}"></span><br>
+                                            <span th:text="${item.classroom.classname}" ></span><br>
+                                            Tên bài học: <span th:text="${item.lessonName}"></span> </h6>
+                                        <p class="description" th:text="${item.description}">
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div th:replace="fragments/sidebar :: content"></div>

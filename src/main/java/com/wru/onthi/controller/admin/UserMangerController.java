@@ -120,11 +120,13 @@ public class UserMangerController {
         String birthday = request.getParameter("birthday");
         Integer role =Integer.valueOf(request.getParameter("role"));
 
-        String imgname= "default_avatar.png";
-        if(multipartFile != null){
+        String imgname= null;
+        if(!multipartFile.isEmpty()){
             UploadImageController uploadImageController= new UploadImageController();
             imgname= uploadImageController.getImageName(multipartFile);
             uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"user");
+        }else {
+            imgname="default_avatar.png";
         }
 
         //check email is exist

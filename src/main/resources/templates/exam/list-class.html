@@ -22,66 +22,12 @@
                             <span>Danh sách lớp học</span>
                         </div>
                         <div class="list-subject">
-                            <a th:href="@{/kiemtra/list-exam(subjectId=${subjectId},classId=${item.id})}" th:each="item:${listClass}">
+                            <a th:href="@{/kiemtra/class/list-exam(classId=${item.id})}" th:each="item:${listClassEx}">
                                 <div class="subject-item">
                                     <img th:src="@{/image/classroom/{image}(image=${item.image})}">
                                 </div>
                             </a>
                         </div>
-                        <!-- test-list -->
-<!--                        <div class="class-sectionTitle">-->
-<!--                            <span>Danh sách đề thi mới</span>-->
-<!--                        </div>-->
-<!--                        <div class="test-list">-->
-<!--                            <a href="#">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right1.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                            <a href="">-->
-<!--                                <div class="test-listItem">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="./images/img-right2.png" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="content">-->
-<!--                                        <h3 class="title">-->
-<!--                                            Khóa học 1-->
-<!--                                        </h3>-->
-<!--                                        <p class="description">-->
-<!--                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,-->
-<!--                                            itaque!-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </a>-->
-<!--                        </div>-->
                     </div>
                 </div>
                 <div th:replace="fragments/sidebar::content"></div>

@@ -3,6 +3,20 @@
 <head>
     <title>Tin tức</title>
     <div th:replace="fragments/init_lib :: header"></div>
+    <style>
+        .slider-news{
+            max-height: 350px;
+            margin-bottom: 10px;
+        }
+        .slider-news .banner-sliderItem{
+            height: 350px;
+        }
+        .slider-news .banner-sliderItem img{
+            height: auto;
+            width: 100%;
+
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
@@ -12,6 +26,24 @@
         <!-- class content-->
         <section class="subject-knowledgeContent">
             <div class="row">
+                <div class="col-md-12">
+                    <div class="banner-slider slider-news">
+                        <div class="banner-sliderItem">
+                            <img th:src="@{/image/slider.png}" alt="">
+                            <h3>alsksncdjoscnassssssssssssssssssssssssssssssiiiiiii</h3>
+                        </div>
+                        <div class="banner-sliderItem">
+                            <img th:src="@{/image/slider1.png}" alt="">
+                        </div>
+                        <div class="banner-sliderItem">
+                            <img th:src="@{/image/slider2.png}" alt="">
+                        </div>
+                        <div class="banner-sliderItem">
+                            <img th:src="@{/image/slider3.png}" alt="">
+                        </div>
+
+                    </div>
+                </div>
                 <div class="col-md-8 col-12">
                     <div class="subject-knowledgeLeft">
                         <div class="class-sectionTitle">
@@ -61,7 +93,33 @@
                         </div>
                     </div>
                 </div>
-                <div th:replace="fragments/sidebar :: content"></div>
+                <div class="col-md-4 col-12">
+                    <div class="class-right">
+                        <div class="class-sectionTitle">
+                            <span>Thể loại</span>
+                        </div>
+                        <div class="sidebar-content">
+                            <ul>
+                                <li class="list-item" th:each="item:${category}">
+                                    <a th:href="@{/tintuc/list-news/{category}(category= ${item.id})}" th:text="${item.categoryName}"></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="class-sectionTitle">
+                            <span>Tin tức xem nhiều</span>
+                        </div>
+                        <div class="sidebar-content">
+                            <ul>
+                                <li class="list-item" th:each="item:${newshot}">
+                                    <a th:href="@{/tintuc(newsId=${item.id})}" th:text="${item.title}"></a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
         </section>
 
