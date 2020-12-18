@@ -97,6 +97,11 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    public List<Exam> getlistExamOrdedByIDDesc() {
+        return examRepository.getlistExamOrderByIdDesc();
+    }
+
+    @Override
     public long countExam() {
         return examRepository.count();
     }

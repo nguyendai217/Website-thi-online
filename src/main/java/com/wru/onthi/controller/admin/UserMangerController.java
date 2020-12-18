@@ -245,7 +245,8 @@ public class UserMangerController {
         user.setRoles(roles);
         userService.updateUser(user);
         redir.addFlashAttribute("success","Update user thành công.");
-        return "redirect:/admin/user/list-user";
+        String path="redirect:/admin/user/update/"+id;
+        return path;
     }
 
     @GetMapping("/user/update-status")
@@ -312,12 +313,31 @@ public class UserMangerController {
             userService.updateUser(user);
             uploadImageController.uploadImage(multipartFile,imgname,folderUpload,"user");
             redr.addFlashAttribute("success","Update hình ảnh thành công");
-            return "redirect:/admin/user/list-user";
         }catch (Exception e){
             e.printStackTrace();
             redr.addFlashAttribute("error","update hình ảnh thất bại");
-            return "redirect:/admin/user/list-user";
         }
+        String path="redirect:/admin/user/update/"+userId;
+        return path;
+    }
+
+    @PostMapping("/user/resetpassword")
+    public String resetPassword(Model model,Principal principal,@RequestParam("userId") Integer userId,RedirectAttributes red){
+        getInfoUser(model,principal);
+        User user= userService.findById(userId).get();
+        try {
+            String newPass="123";
+            user.setPassword(encoderPass.encode(newPass));
+            userService.updateUser(user);
+            red.addFlashAttribute("success","Reset password thành công");
+        }
+        catch (Exception e){
+            red.addFlashAttribute("error","Reset password thất bại");
+        }
+        String path="redirect:/admin/user/update/"+userId;
+        return path;
+
+
     }
 
     // get info user login

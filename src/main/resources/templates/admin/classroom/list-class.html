@@ -102,8 +102,21 @@
                                             <a th:href="@{/class/update-status(classId=${row.id},status= ${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable">Disable</a>
                                         </td>
                                         <td>
-                                            <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                            <a th:href="@{/class/delete-class(classId=${row.id},status= ${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+<!--                                            <i class="fa fa-share"></i>-->
+<!--                                            <a th:href="@{/class/update-class/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>-->
+<!--                                            <a th:href="@{/class/delete-class(classId=${row.id},status= ${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+-->
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" th:href="@{/class/update-class/{id}(id=${row.id})}"><i class="fa fa-edit" ></i> Cập nhật</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" th:href="@{/class/delete-class(classId=${row.id},status= ${row.status})}" id="confirmDelete"> <i class="fa fa-trash-o"></i> Xóa</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -126,7 +139,7 @@
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $("#classManager").addClass("active");
+    $("#classManager a").addClass("active");
 </script>
 </body>
 </html>

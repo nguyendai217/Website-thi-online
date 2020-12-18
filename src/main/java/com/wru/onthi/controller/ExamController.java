@@ -187,6 +187,8 @@ public class ExamController {
         //get ListClass
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClassEx",listClass);
+        List<Exam> listExam= examService.getListExamNew().subList(0,4);
+        model.addAttribute("listExam",listExam);
         return "exam/list-class";
     }
 

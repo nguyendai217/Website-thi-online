@@ -104,8 +104,17 @@
                                             <a th:href="@{/subject/update-status(id=${row.id},status=${row.status})}" id="confirmActive" class="btn btn-secondary" title="Disable">Disable</a>
                                         </td>
                                         <td>
-                                            <a th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit btn btn-success" ></i></a>
-                                            <a th:href="@{/subject/delete/{id}/{status}(id=${row.id},status=${row.status})}" id="confirmDelete"><i  class="fa fa-trash-o btn btn-danger"></i></a>
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" th:href="@{/subject/update/{id}(id=${row.id})}"><i class="fa fa-edit" ></i> Cập nhật</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" th:href="@{/subject/delete/{id}/{status}(id=${row.id},status=${row.status})}" id="confirmDelete"> <i class="fa fa-trash-o"></i> Xóa</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>

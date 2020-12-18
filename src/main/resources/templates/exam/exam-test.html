@@ -67,7 +67,7 @@
             </div>
         </section>
     </div>
-    <div class="modal fade" id="examEnd" tabindex="-1"
+    <div class="modal fade" id="exampleModal" tabindex="-1"
          role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -88,7 +88,7 @@
 </main>
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
-<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<!--<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>-->
 <script>
     var exam_id = [[${examId}]];
 	var test_id = [[${testId}]];
@@ -110,6 +110,18 @@
         if(logout != null){
             alert("Đăng xuất thành công.");
         }
+
+        // $(".btn-finish").click(function (){
+        //     $('#exampleModal').modal();
+        //     if($('#btnEnd').click(function (){
+        //         console.log("btn yes");
+        //         $('#exampleModal').modal('hide');
+        //         return false;
+        //     }));
+        //     else{
+        //         return false;
+        //     }
+        // })
     });
 
 </script>

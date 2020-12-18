@@ -37,7 +37,7 @@
                                 <div class="col-md-12 col-sm-12 mt-3">
                                     <img id="imgPreview" style="width: 150px;height: 150px" th:src="@{/image/user/{image}(image=${user.image})}">
                                 </div>
-                                <input type="submit" value="Cập nhật ảnh" class="btn btn-success mt-3">
+                                <input type="submit" value="Cập nhật ảnh" id="btnUpdateImage" class="btn btn-success mt-3">
                             </form>
                         </div>
                     </div>
@@ -46,6 +46,9 @@
                             <form th:action="@{/admin/user/update-user}" method="post"  >
                                 <div class="align-items-center mb-4">
                                     <h4 class="text-xl-center">Thông tin tài khoản</h4>
+                                </div>
+                                <div class="bg-success" id="success"
+                                     th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
                                 </div>
                                 <div class="bg-danger" id="error"
                                      th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
@@ -106,7 +109,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <form th:action="@{admin/user/resetpassword}" method="post">
+                        <form th:action="@{/admin/user/resetpassword}" method="post">
+                            <input type="text" hidden="true" name="userId" th:value="${user.id}"/>
                             <div class="p-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h4 class="text-right">Reset mật khẩu</h4>
@@ -129,32 +133,45 @@
         <!-- page content -->
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">Thông báo ! </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"><h6>Vui lòng chọn hình ảnh để update.</h6></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $('#error').delay(5000).fadeOut(1000);
     $('#userManager').addClass("active");
     $(document).ready(function () {
-        $('#fileImage').change(function() {
-            showPreview(this);
-        });
-
         $('#datepicker').datepicker({
             iconsLibrary: 'fontawesome',
             uiLibrary: 'bootstrap4',
             format: 'dd-mm-yyyy'
         });
     });
-    function showPreview(fileImage){
-        file = fileImage.files[0];
-        render = new FileReader();
-
-        render.onload = function(e) {
-            $('#imgPreview').attr('src',e.target.result);
+    // update image profile user
+    $("#btnUpdateImage").click(function (){
+        var image= $('#fileImage').val();
+        if(image=="" || image == null){
+            $('#exampleModal').modal('show');
+            return false;
+        }else {
+            return true;
         }
-        render.readAsDataURL(file);
-    }
+    });
 </script>
 </body>
 </html>

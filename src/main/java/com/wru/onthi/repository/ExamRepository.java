@@ -19,6 +19,9 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     @Query("SELECT u from Exam  u where u.status=1 order by u.views desc ")
     List<Exam> getlistExamOrderByViews();
 
+    @Query("SELECT u from Exam  u where u.status=1 order by u.id desc ")
+    List<Exam> getlistExamOrderByIdDesc();
+
     @Query(value = "select * from exam where subject_id=?1 and class_id=?2 and status= 1",nativeQuery = true)
     List<Exam> getListExamBySubjectAndClass(Integer subjectId,Integer classId);
 

@@ -135,4 +135,13 @@ public class LessonServiceImpl implements LessonService {
     public long countLesson() {
         return lessonRepository.count();
     }
+
+    @Override
+    public List<Lesson> getlessonNextOrPrev(Integer classId, Integer subjectId, Integer lessonId, Boolean next) {
+        if (next== true) {
+            return lessonRepository.getLessonNext(classId,subjectId,lessonId);
+        }else {
+            return lessonRepository.getLessonPrev(classId,subjectId,lessonId);
+        }
+    }
 }

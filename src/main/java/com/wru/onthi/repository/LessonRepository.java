@@ -53,4 +53,10 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
 
     @Query("SELECT ls from Lesson ls where ls.classroom.id=:classId and ls.status=1 order by ls.views desc ")
     List<Lesson> getListLessonByClass(Integer classId);
+
+    @Query(value = "select * from lesson where class_id= ?1 and subject_id = ?2 and id > ?3  ORDER BY id asc LIMIT 1",nativeQuery = true)
+    List<Lesson> getLessonNext(Integer classId, Integer subjectId, Integer lessonId);
+
+    @Query(value = "select * from lesson where class_id= ?1 and subject_id = ?2 and id < ?3  ORDER BY id desc LIMIT 1",nativeQuery = true)
+    List<Lesson> getLessonPrev(Integer classId, Integer subjectId, Integer lessonId);
 }

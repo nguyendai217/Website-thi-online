@@ -3,20 +3,6 @@
 <head>
     <title>Tin tức</title>
     <div th:replace="fragments/init_lib :: header"></div>
-    <style>
-        .slider-news{
-            max-height: 350px;
-            margin-bottom: 10px;
-        }
-        .slider-news .banner-sliderItem{
-            height: 350px;
-        }
-        .slider-news .banner-sliderItem img{
-            height: auto;
-            width: 100%;
-
-        }
-    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
@@ -26,24 +12,6 @@
         <!-- class content-->
         <section class="subject-knowledgeContent">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="banner-slider slider-news">
-                        <div class="banner-sliderItem">
-                            <img th:src="@{/image/slider.png}" alt="">
-                            <h3>alsksncdjoscnassssssssssssssssssssssssssssssiiiiiii</h3>
-                        </div>
-                        <div class="banner-sliderItem">
-                            <img th:src="@{/image/slider1.png}" alt="">
-                        </div>
-                        <div class="banner-sliderItem">
-                            <img th:src="@{/image/slider2.png}" alt="">
-                        </div>
-                        <div class="banner-sliderItem">
-                            <img th:src="@{/image/slider3.png}" alt="">
-                        </div>
-
-                    </div>
-                </div>
                 <div class="col-md-8 col-12">
                     <div class="subject-knowledgeLeft">
                         <div class="class-sectionTitle">
@@ -54,7 +22,7 @@
                                 <a th:href="@{/tintuc(newsId=${item.id})}">
                                     <div class="newItem__content">
                                         <div class="img">
-                                            <img th:src="@{'/image/news/'+${item.image}}" alt="">
+                                            <img th:src="@{/image/news/{image}(image=${item.image})}" alt="">
                                         </div>
                                         <div class="newsItem__description">
                                             <h3 class="newsItem__title--content" th:text="${item.title}"></h3>

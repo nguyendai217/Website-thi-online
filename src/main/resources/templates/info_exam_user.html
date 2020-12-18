@@ -8,26 +8,26 @@
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
 <main class="home">
-    <div class="container d-flex justify-content-center">
-        <div class="row">
-            <div class="col-md-12  d-flex justify-content-center">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 d-flex justify-content-center">
                 <h4>Danh sách các bài đã thi</h4>
             </div>
-            <div class="row col-md-12  d-flex justify-content-center">
-                <div class="col-md-3 col-6 p-2" th:each="item: ${pageInfo}">
-                    <div class="card">
-                        <img class="card-img-top" th:src="@{/image/subject/{image}(image=${item.exam_result.exam_subject.image})}" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Mã Đề: <span th:text="${item.exam_result.codeExam}"></span></h3>
-                            <h3 class="card-title">Số điểm: <span th:text="${item.score}"></span></h3>
-                            <a th:href="@{'/history?testId='+${item.id}}" class="">Xem lại</a>
-                            <a th:href="@{'/kiemtra/info?examId='+${item.exam_result.id}}" class="">Làm lại</a>
-                        </div>
+        </div>
+        <div class="row col-md-12  d-flex justify-content-center">
+            <div class="col-md-2 col-6 p-2" th:each="item: ${pageInfo}">
+                <div class="card">
+                    <img class="card-img-top" th:src="@{/image/subject/{image}(image=${item.exam_result.exam_subject.image})}" alt="Card image cap">
+                    <div class="card-body">
+                        <h3 class="card-title">Mã Đề: <span th:text="${item.exam_result.codeExam}"></span></h3>
+                        <h3 class="card-title">Số điểm: <span th:text="${item.score}"></span></h3>
+                        <a th:href="@{'/history?testId='+${item.id}}" class="">Xem lại</a>
+                        <a th:href="@{'/kiemtra/info?examId='+${item.exam_result.id}}" class="">Làm lại</a>
                     </div>
                 </div>
             </div>
-            <div class="row col-md-12  d-flex justify-content-center"></div>
-                <div class="pagging-list-lesson" >
+            <div class="row col-md-12 ">
+                <div class="pagging-list-lesson d-flex justify-content-center" >
                     <input th:value="${listSize}" hidden id="pagging-ls" >
                     <ul class="pagination ">
                         <li class="page-item" th:if="${pageInfo.number + 1} != 1">
@@ -54,6 +54,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </main>
 <div th:replace="fragments/footer :: content"></div>

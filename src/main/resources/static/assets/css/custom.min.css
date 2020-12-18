@@ -56,4 +56,7 @@ th,td{
 #fileImage{
 	overflow: hidden;
 }
+.dropdown-divider{
+	margin: 0px !important;
+}
 

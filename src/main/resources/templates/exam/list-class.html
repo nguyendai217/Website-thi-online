@@ -28,6 +28,27 @@
                                 </div>
                             </a>
                         </div>
+
+                        <div class="class-sectionTitle">
+                            <span>Danh sách đề thi mới</span>
+                        </div>
+                        <div class="test-list" >
+                            <a th:each="item:${listExam}" th:href="@{/kiemtra/info(examId=${item.id})}">
+                                <div class="test-listItem">
+                                    <div class="img">
+                                        <img th:src="@{/image/subject/{image}(image=${item.getExam_subject().image})}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h6 class="title">Mã đề thi: <span th:text="${item.codeExam}"></span> <br>
+                                            Môn học: <span th:text="${item.exam_subject.name}"></span> - <span th:text="${item.exam_classroom.classname}"></span></h6>
+                                        <span> Thời gian: <span th:text="${item.timeOut}"> </span> phút</span><br>
+                                        <p class="description" th:text="${item.title}">
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
                 <div th:replace="fragments/sidebar::content"></div>

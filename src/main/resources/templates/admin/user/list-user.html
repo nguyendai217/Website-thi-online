@@ -100,6 +100,7 @@
                                             <th>STT</th>
                                             <th>Ảnh</th>
                                             <th>Username</th>
+                                            <th>Fullname</th>
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
                                             <th>Giới tính</th>
@@ -112,6 +113,7 @@
                                             <td th:text="${iterStat.count}"></td>
                                             <td><img id="img_user" th:src="@{/image/user/{image}(image=${row.image})}"></td>
                                             <td th:text="${row.username}"></td>
+                                            <td th:text="${row.fullname}"></td>
                                             <td th:text="${row.email}"></td>
                                             <td th:text="${row.phone}"></td>
                                             <td th:if="${row.gender == null}">NULL</td>
@@ -126,9 +128,20 @@
                                                    class="btn btn-secondary" title="Disable" id="confirmActive"><i class="fa fa-minus"></i></a>
                                             </td>
                                             <td>
-                                                <a th:href="@{/admin/user/detail/{id}(id=${row.id})}" class="btn btn-info" title="Chi tiết"><i class="fa fa-info-circle" ></i></a>
-                                                <a th:href="@{/admin/user/update/{id}(id=${row.id})}" class="btn btn-success" title="Chỉnh Sửa"><i class="fa fa-edit" ></i></a>
-                                                <a th:href="@{/admin/user/delete(id=${row.id},status=${row.status})}" class="btn btn-danger" id="confirmDelete" title="Xóa" ><i class="fa fa-trash-o"></i></a>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-success dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-cog"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a  class="dropdown-item" th:href="@{/admin/user/detail/{id}(id=${row.id})}" ><i class="fa fa-info-circle" ></i> Chi tiết</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" th:href="@{/admin/user/update/{id}(id=${row.id})}"><i class="fa fa-edit" ></i> Cập nhật</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" th:href="@{/admin/user/delete(id=${row.id},status=${row.status})}" id="confirmDelete"> <i class="fa fa-trash-o"></i> Xóa</a>
+                                                    </div>
+                                                </div>
+
                                             </td>
                                         </tr>
                                         </tbody>

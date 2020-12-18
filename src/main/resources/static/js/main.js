@@ -195,6 +195,9 @@ $(document).ready(function () {
     $('#fileImage').change(function() {
         showPreview(this);
     });
+
+    $('#success').delay(5000).fadeOut(1000);
+    $('#error').delay(5000).fadeOut(1000);
 });
 
 
@@ -207,8 +210,7 @@ function showPreview(fileImage){
     }
     render.readAsDataURL(file);
 }
-$('#success').delay(5000).fadeOut(1000);
-$('#error').delay(5000).fadeOut(1000);
+
 
 
 

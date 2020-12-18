@@ -3,11 +3,13 @@
 <head>
     <title>Home</title>
     <div th:replace="fragments/init_lib :: header"></div>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
 </head>
 
 <body>
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
+
 <main class="home">
     <div class="container">
         <!-- banner -->

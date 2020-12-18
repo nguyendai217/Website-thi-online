@@ -77,6 +77,7 @@ if (checkTestFinished(endTime) === false) {
         checkUpdateApi = false;
     });
 
+    $(document).ready(function (){
     $('.btn-finish').click(function (e) {
 		e.preventDefault();
         let arrRes = [];
@@ -88,6 +89,16 @@ if (checkTestFinished(endTime) === false) {
 
         let confirmFinish = confirm('Bạn chắc chắn muốn kết thúc bài thi?');
         if (confirmFinish === false) return;
+        // $('#exampleModal').modal('show');
+        // if($('#btnEnd').click(function (){
+        //     console.log("btn yes");
+        //     $('#exampleModal').modal('hide');
+        //     return true;
+        // }));
+        // else{
+        //     return false;
+        // }
+
         var token = $('#csrfToken').val();
 		var header = $('#csrfHeader').val();
 
@@ -114,6 +125,8 @@ if (checkTestFinished(endTime) === false) {
         $("#seconds").html("00");
         localStorage.removeItem("test-" + id_test + "-time")
         localStorage.removeItem("test-" + id_test);
+    });
+
     });
 }
 

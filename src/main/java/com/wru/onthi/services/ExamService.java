@@ -23,5 +23,6 @@ public interface ExamService {
     void updateStatus(Integer examId, Integer status);
     List<Exam> getListExamNew();
     List<Exam> getlistExamByClass(Integer classId);
+    List<Exam> getlistExamOrdedByIDDesc();
     long countExam();
 }

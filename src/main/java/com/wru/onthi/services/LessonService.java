@@ -26,4 +26,5 @@ public interface LessonService {
     void updateStatus(Integer id, Integer status);
     List<Lesson> getListLessonByClass(Integer classId);
     long countLesson();
+    List<Lesson> getlessonNextOrPrev(Integer classId, Integer subjectId, Integer lessonId, Boolean next);
 }
