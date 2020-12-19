@@ -1,5 +1,6 @@
 package com.wru.onthi.services;
 
+import com.wru.onthi.entity.AuthenticationProvider;
 import com.wru.onthi.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,6 @@ public interface UserService {
     User findByUsername(String username);
     void updateStatus(Integer userId, Integer status);
     long getCountUser();
+
+    void createUserOAuth2(String email, String name, AuthenticationProvider provider);
 }

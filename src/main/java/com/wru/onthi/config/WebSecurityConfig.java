@@ -1,6 +1,7 @@
 package com.wru.onthi.config;
 
 import com.wru.onthi.oauth.CustomOAuth2UserService;
+import com.wru.onthi.oauth.OAuth2LoginSuccessHandler;
 import com.wru.onthi.services.serviceImpl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //login
                 .and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")
                 .successHandler(authSuccessHandler).and().oauth2Login().loginPage("/login")
-                .userInfoEndpoint().userService(oAuth2UserService).and()
+                .userInfoEndpoint().userService(oAuth2UserService).and().successHandler(oAuth2LoginSuccessHandler)
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/?logout=true").invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID").permitAll()
@@ -92,4 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomOAuth2UserService oAuth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 }

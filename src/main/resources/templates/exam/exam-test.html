@@ -96,20 +96,7 @@
     var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
     var timeOut= [[${timeOut}]];
 
-    var acc =$('#account').val();
-    if(acc != null || acc != undefined){
-        $('#div-account').removeClass('d-none');
-        $('#link-login').addClass('d-none');
-    }else {
-        $('#div-account').addClass('d-none');
-        $('#link-login').removeClass('d-none');
-    }
-
     $(document).ready(function (){
-        var logout= $('#msg-logout').val();
-        if(logout != null){
-            alert("Đăng xuất thành công.");
-        }
 
         // $(".btn-finish").click(function (){
         //     $('#exampleModal').modal();

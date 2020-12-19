@@ -25,15 +25,14 @@
                         <a class=" btn-login" id="link-login" th:href="@{/login}">
                             <i class="fa fa-user"></i> ĐĂNG NHẬP
                         </a>
-                        <div class="dropdown d-none" id="div-account" sec:authorize="isAuthenticated()">
-                            <a class="dropdown-toggle btn-login"
-                                    type="button" id="account" data-toggle="dropdown"
+                        <div class="dropdown" id="div-account" sec:authorize="isAuthenticated()">
+                            <a class="dropdown-toggle btn-login" id="dropdownMenuButton"
+                                    type="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i>
-                                [[${#request.userPrincipal.principal.username}]]
+                                [[${#request.userPrincipal.principal.fullname}]]
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
                                 <a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" class="dropdown-item" id="adminManager" th:href="@{/admin/home}"><i class="fa fa-cogs"></i> Quản lí</a>
                                 <a class="dropdown-item" th:href="@{/user/profile}"><i class="fa fa-user-circle-o"></i> Profile</a>
                                 <a class="dropdown-item" th:href="@{/info/exam-user}"><i class="fa fa-check-square-o"></i> Kết quả thi</a>

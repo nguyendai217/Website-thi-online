@@ -56,22 +56,6 @@
 <div th:replace="fragments/init_lib :: script"></div>
 <script type="text/javascript" th:src="@{/js/exam.js}"></script>
 <script>
-    $(document).ready(function (){
-        var logout= $('#msg-logout').val();
-        if(logout != null){
-            alert("Đăng xuất thành công.");
-        }
-    });
-
-    var acc =$('#account').val();
-    if(acc != null || acc != undefined){
-        $('#div-account').removeClass('d-none');
-        $('#link-login').addClass('d-none');
-    }else {
-        $('#div-account').addClass('d-none');
-        $('#link-login').removeClass('d-none');
-    }
-
     $('#btnStart').on('click', function(event) {
         //
         if((acc== null) || (acc== undefined)){

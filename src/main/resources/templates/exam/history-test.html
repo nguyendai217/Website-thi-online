@@ -94,29 +94,12 @@
 <div th:replace="fragments/init_lib :: script"></div>
 <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script>
-
 	var result_detail = [[${resultDetail}]];
 	var exam_id = [[${examId}]];
 	var test_id = [[${testId}]];
     var exam_data = '[[${dataExam}]]';
     var _dataJson = JSON.parse(exam_data.replace(/&quot;/g,'"'));
     var timeOut= [[${timeOut}]];
-
-    var acc =$('#account').val();
-    if(acc != null || acc != undefined){
-        $('#div-account').removeClass('d-none');
-        $('#link-login').addClass('d-none');
-    }else {
-        $('#div-account').addClass('d-none');
-        $('#link-login').removeClass('d-none');
-    }
-
-    $(document).ready(function (){
-        var logout= $('#msg-logout').val();
-        if(logout != null){
-            alert("Đăng xuất thành công.");
-        }
-    });
 
 </script>
 <script type="text/javascript" th:src="@{/js/history.js}"></script>

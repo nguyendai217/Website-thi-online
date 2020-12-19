@@ -21,7 +21,7 @@
 //     })
 // })
 
-var acc =$('#account').val();
+var acc =$('#dropdownMenuButton').val();
 if(acc != null || acc != undefined){
     $('#div-account').removeClass('d-none');
     $('#link-login').addClass('d-none');

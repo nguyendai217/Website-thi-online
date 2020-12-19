@@ -64,4 +64,11 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getEmail(){
+        return user.getEmail();
+    }
+    public String getFullname(){
+        return user.getFullname();
+    }
 }

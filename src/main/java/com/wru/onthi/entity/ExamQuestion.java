@@ -17,9 +17,7 @@ public class ExamQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="question_id" )
     private Question questionExam;
-//
-//    @Column(name = "order")
-//    private String order;
+
 
     public Integer getId() {
         return id;
@@ -44,12 +42,4 @@ public class ExamQuestion {
     public void setQuestionExam(Question questionExam) {
         this.questionExam = questionExam;
     }
-//
-//    public String getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(String order) {
-//        this.order = order;
-//    }
 }

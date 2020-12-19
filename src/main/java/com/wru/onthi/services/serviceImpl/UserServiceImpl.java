@@ -1,6 +1,9 @@
 package com.wru.onthi.services.serviceImpl;
 
+import com.wru.onthi.entity.AuthenticationProvider;
+import com.wru.onthi.entity.Role;
 import com.wru.onthi.entity.User;
+import com.wru.onthi.repository.RoleRepository;
 import com.wru.onthi.repository.UserRepository;
 import com.wru.onthi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +12,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public void createUser(User user) {
@@ -80,6 +87,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public long getCountUser() {
         return userRepository.count();
+    }
+
+    @Override
+    public void createUserOAuth2(String email, String name, AuthenticationProvider provider) {
+        User user = new User();
+        user.setStatus(1);
+        user.setFullname(name);
+        user.setEmail(email);
+        user.setUsername(email);
+        user.setAuthProvider(provider);
+        Role role = roleRepository.findByRole("USER");
+        user.setRoles(Arrays.asList(role));
+
+        userRepository.save(user);
     }
 
 
