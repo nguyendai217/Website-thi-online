@@ -45,8 +45,6 @@ public class ResultExamController {
         if((username== null || username =="") && (examCode== null || examCode=="")){
             resultList =resultService.getListResultExam(pageItem);
         }else {
-//            String us= "%" + username + "%";
-//            String ex= "%"+ examCode +"%";
             resultList= resultService.searchResultExam(username,examCode,pageItem);
             model.addAttribute("us",username);
             model.addAttribute("ec",examCode);

@@ -38,7 +38,6 @@ public class SubjectManagerController {
     @Autowired
     SubjectService subjectService;
 
-
     @Value("${folder.upload}")
     private String folderUpload;
 

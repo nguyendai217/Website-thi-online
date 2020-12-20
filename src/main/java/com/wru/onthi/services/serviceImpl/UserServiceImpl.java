@@ -11,8 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,12 +91,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUserOAuth2(String email, String name, AuthenticationProvider provider) {
+    public void createUserOAuth2(String email, String fullname,String username, AuthenticationProvider provider) {
         User user = new User();
         user.setStatus(1);
-        user.setFullname(name);
+        user.setFullname(fullname);
         user.setEmail(email);
-        user.setUsername(email);
+        user.setUsername(username);
+        user.setCreateDate(new Date());
+        user.setImage("default_avatar.png");
         user.setAuthProvider(provider);
         Role role = roleRepository.findByRole("USER");
         user.setRoles(Arrays.asList(role));
@@ -103,5 +106,20 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void updateUserOauth(String email, String fullname,String username, AuthenticationProvider provider) {
+        User user= userRepository.findByEmailAndProvider(email,provider.toString());
+        user.setUsername(username);
+        user.setFullname(fullname);
+        user.setStatus(1);
+        user.setUpdateDate(new Date());
+        user.setImage("default_avatar.png");
+        user.setAuthProvider(provider);
+        userRepository.save(user);
+    }
 
+    @Override
+    public User findByEmailAndProvider(String email, String provider) {
+        return userRepository.findByEmailAndProvider(email,provider);
+    }
 }

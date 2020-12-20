@@ -10,6 +10,8 @@
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
 <main>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <div class="container">
         <div class="row" id="post">
             <div class="col-12 col-md-8 main-content">
@@ -99,54 +101,32 @@
 <!--                </div>-->
 
                 <!-- Comment -->
-                <div>
-                    <h2>Bình luận</h2>
-                    <form class="needs-validation" novalidate>
-                        <div class="form-row">
-                            <div class="col-md-12 mb-12">
-                                <textarea type="text" class="form-control" id="comment" placeholder="Bình Luận" rows="4"
-                                          value="Mark" required></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Kiểm tra lại Bình luận của bạn
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-12">
-                                <input type="text" class="form-control" id="nameValidate" placeholder="Tên *" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Tên không được bỏ trống
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-12">
-                                <input type="text" class="form-control" placeholder="Email *"
-                                       required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Kiểm tra lại Email của bạn!
+                <div class="comment-lesson">
+                    <h3>Bình luận</h3>
+                    <div class="list-comment">
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-success load-more-comment">Load more</button>
+                    </div>
+
+                    <div class="comment-add" sec:authorize="isAuthenticated()">
+                        <form class="needs-validation" novalidate>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-12">
+                                    <textarea type="text" class="form-control" id="comment" placeholder="Bình Luận" rows="8" value="Mark" required></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Kiểm tra lại Bình luận của bạn
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                <label class="form-check-label" for="invalidCheck">
-                                    Lưu tên, email và trang web của tôi trong trình duyệt này cho lần tiếp theo tôi nhận
-                                    xét.
-                                </label>
-                                <div class="invalid-feedback">
-                                    Bạn xác nhận trước khi bình luận
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Gửi Bình Luận</button>
-                    </form>
+                            <button class="btn btn-primary" id="send-comment" type="submit">Gửi Bình Luận</button>
+                        </form>
+                    </div>
+
                 </div>
             </div>
             <div class="col-12 col-md-4 main-sliderbar">
@@ -378,70 +358,146 @@
     </div>
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script>
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var page = 1; // trang
+    var perPage = 5; // số lượng bình luận trên 1 trang
+    var loadMore = true; // check xem có load thêm không
+    var addComented = 0;
+    var newsId = '[[${news.id}]]';
+    let timeComment = null;
 
-<!--<script>-->
-<!--    // // valudate data-->
-<!--    (function() {-->
-<!--      'use strict';-->
-<!--      window.addEventListener('load', function() {-->
-<!--        // Fetch all the forms we want to apply custom Bootstrap validation styles to-->
-<!--        var forms = document.getElementsByClassName('needs-validation');-->
-<!--        // Loop over them and prevent submission-->
-<!--        var validation = Array.prototype.filter.call(forms, function(form) {-->
-<!--          form.addEventListener('submit', function(event) {-->
-<!--            if (form.checkValidity() === false) {-->
-<!--              event.preventDefault();-->
-<!--              event.stopPropagation();-->
-<!--            }-->
-<!--            form.classList.add('was-validated');-->
-<!--          }, false);-->
-<!--        });-->
-<!--      }, false);-->
-<!--    })();-->
+    loadComment(null, newsId);
+    $('.load-more-comment').click(() => {
+        loadComment(null, newsId);
+    })
 
-<!--    var listComment = '[{"title": "Tieu de","content": "Noi dung","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt","rep_comment": [{"title": "Tiee de 1","content": "Noi dung 1","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"},{"title": "Tiee de 2","content": "Noi dung 2","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"},{"title": "Tiee de 3","content": "Noi dung 3","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"}]},{"title": "Tiee de","content": "Noi dung","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt","rep_comment": [{"title": "Tiee de 1","content": "Noi dung 1","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"},{"title": "Tiee de 2","content": "Noi dung 2","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"},{"title": "Tiee de 3","content": "Noi dung 3","avatar": "https://image.flaticon.com/icons/png/512/147/147144.png","comment_time": "12/11/2020","author": "Giapnt"}]}]';-->
-<!--    listComment = JSON.parse(listComment);-->
-<!--    console.log(listComment);-->
-<!--    var rdCMT = renderCMT(listComment);-->
-<!--    $('.list-comment').html (rdCMT)-->
+    $('#send-comment').click((e) => {
+        e.preventDefault();
+        let content = $('#comment').val();
+        if (content.length === 0 || content === "") {
+            alert("Nội dung bình luận không được bỏ trống");
+            return;
+        }
 
-<!--    function renderCMT(listComment, isChild = false) {-->
-<!--        var resStr = '';-->
+        addComment(content, null, newsId);
+    })
 
-<!--        console.log("listComment", listComment);-->
-<!--        listComment.forEach((v, k) => {-->
-<!--            resStr += `-->
-<!--                <div class="item-comment">-->
-<!--                    <div class="comment-image"><img src="${v.avatar}" alt=""></div>-->
-<!--                    <div class="comment-main-content">-->
-<!--                        <div class="comment-infor">-->
-<!--                            <div class="comment-infor-author">-->
-<!--                                <a href="#">${v.author}</a>-->
-<!--                            </div>-->
-<!--                            <div class="comment-infor-time">${v.comment_time}</div>-->
-<!--                        </div>-->
-<!--                        <div class="comment-content">${v.content}</div>`-->
+    /**
+     * hàm load comments
+     * @param lissonId id của bài học
+     * @param newsId id bài viết
+     * @returns {Promise<void>}
+     */
+    async function loadComment(lissonId = null, newsId = null) {
+        await $.ajax({
+            type: "get",
+            url: '[[@{/comment/get-comment}]]', // ajax gọi comment
+            data: {
+                lissonId: lissonId,
+                newsId: newsId,
+                perPage: perPage,
+                page: page
+            },
+            dataType: "json",
+            success: function (response) {
+                let rdCMT = renderCMT(response.listComment);
+                let oldCmT = $('.list-comment').html();
+                $('.list-comment').html(oldCmT + rdCMT);
+                if ((response.page * response.perPage) > response.totalComent) {
+                    loadMore = false;
+                }
 
+                ++page;
+            }
+        });
 
-<!--                if (isChild === false && v.rep_comment.length > 0 ) {-->
-<!--                    resStr += '<div class="rep-comment">';-->
-<!--                    resStr += renderCMT(v.rep_comment, true);-->
-<!--                    resStr += '</div>';-->
-<!--                }-->
+        if (loadMore === false) {
+            $('.load-more-comment').hide();
+        }
 
+    }
 
-<!--                resStr += '</div><div class="clear"></div></div>';-->
-<!--                // resStr += '</div>';-->
-<!--        });-->
+    /**
+     * Hàm này dùng để render ra string HTML
+     * @param listComment danh sách comment
+     * @returns {string} kết quả
+     */
+    function renderCMT(listComment) {
+        var resStr = '';
+        let countCheck = 0;
 
+        // compareTimeComment()
 
+        listComment.forEach((v, k) => {
+            ++countCheck;
+            if (countCheck > addComented) {
+                let _url ="image/user";
+                addComented = 0;
+                resStr += `
+                <div class="item-comment">
+                    <div class="comment-image"><img src="${_url}/${v.userImage}" alt=""></div>
+                    <div class="comment-main-content">
+                        <div class="comment-infor">
+                            <div class="comment-infor-author">
+                                <a href="#">${v.userName}</a>
+                            </div>
+                            <div class="comment-infor-time">${v.timeComment}</div>
+                        </div>
+                        <div class="comment-content">${v.contentComment}</div>`
 
-<!--        // resStr += "</div>"-->
+                resStr += '</div><div class="clear"></div></div>';
+            }
 
-<!--        return resStr;-->
-<!--    }-->
+            // resStr += '</div>';
+        });
 
-<!--</script>-->
+        return resStr;
+    }
+
+    function addComment(content, lissonId = null, newsId = null) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '[[@{/comment/add-comment}]]', // ajax gọi comment
+            cache: false,
+            data: {
+                lessonId: lissonId,
+                newsId: newsId,
+                content: content
+            },
+            success: function (response) {
+                let rdCMT = renderCMT([response.commentInfor]);
+                let oldCmT = $('.list-comment').html();
+                $('.list-comment').html(rdCMT + oldCmT);
+                $('#comment').val("");
+                ++addComented;
+
+                if(addComented >= perPage) {
+                    ++perPage;
+                    addComented = 0;
+                }
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        });
+    }
+
+    // anti spam
+    // Lấy thời hiện tại - trừ thời gian bình luận
+    // Nesu thời gian bình luận lớn hơn số giây cho phép thì cho qua và cập nhập lại thời gian bình luận
+    // Nếu không thì xuất ra thông báo "Bạn gửi bình luận quá nhanh vui lòng đợi sau ... Giây"
+    function compareTimeComment(toDate, secondsCompare){
+        // Lấy thời gian hiện tại
+        let fromDate = new Date();
+        toDate = new Date(toDate.toLocaleString());
+        toDate.setSeconds(toDate.getSeconds() + secondsCompare);
+        return fromDate.getTime() < toDate.getTime() ? false : true;
+    }
+</script>
 </main>
 </body>
 </html>

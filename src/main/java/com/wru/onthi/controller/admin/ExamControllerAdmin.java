@@ -41,9 +41,7 @@ public class ExamControllerAdmin {
     @GetMapping("/list-exam")
     public String getListExam(Model model, Principal principal,Pageable pageable,String codeExam ,String subjectId,String classId){
         getInfoUser(model,principal);
-//        String codeExam = request.getParameter("codeExam");
-//        String subjectId= request.getParameter("subjectId");
-//        String classId= request.getParameter("classId");
+
         //get AllClassroom
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",listClass);

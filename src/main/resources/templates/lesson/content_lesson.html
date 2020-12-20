@@ -10,14 +10,16 @@
             border: 1px solid;
             font-weight: bold;
             border-radius: 3px;
-            color: #477d86;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/css/main2.css}"/>
 </head>
 <body>
 <div th:replace="fragments/header :: content"></div>
 <div th:replace="fragments/menu :: content"></div>
 <main class="subject-knowledge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <div class="container">
         <!-- banner -->
         <div class="banner class-banner">
@@ -49,27 +51,47 @@
                                         <div class="col-md-6 col-6 share">
                                             <p>Chia sẻ ngay</p>
                                             <a href="#"><i  class="fa fa-facebook "></i> Facebook</a>
+                                            <a href="#"><i class="fa fa-google" style="background-color: #9c3328"></i> Google</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="text" hidden="true" id="prev" th:value="${lessonPrev}"/>
-                            <input type="text" hidden="true" id="next" th:value="${lessonNext}"/>
                             <div class="row">
                                 <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
-                                    <a class="btnPrev" th:href="@{/noidungbaihoc(lessonId=${lessonPrev})}"><i class="fa fa-angle-double-left"></i> Bài học trước</a>
+                                    <a class="" th:href="@{#}"><i class="fa fa-angle-double-left"></i> Bài học trước</a>
                                 </div>
                                 <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
-                                    <a class="btnNext" th:href="@{/noidungbaihoc(lessonId=${lessonNext})}">Bài học tiếp theo <i class="fa fa-angle-double-right"></i></a>
+                                    <a class="" th:href="@{#}">Bài học tiếp theo <i class="fa fa-angle-double-right"></i></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="comment-lesson">
                             <h3>Bình luận</h3>
-                            <button class="btn btn-success" id="cmt-loadmore">Load more</button>
+                            <div class="list-comment">
+                            </div>
 
+                            <div class="row">
+                                <button class="btn btn-success load-more-comment">Load more</button>
+                            </div>
+
+                            <div class="comment-add" sec:authorize="isAuthenticated()">
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-12 mb-12">
+                                            <textarea type="text" class="form-control" id="comment" placeholder="Bình Luận" rows="8" value="Mark" required></textarea>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Kiểm tra lại Bình luận của bạn
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="send-comment" type="submit">Gửi Bình Luận</button>
+                                </form>
+                            </div>
 
                         </div>
                         <div class="class-sectionTitle">
@@ -99,27 +121,168 @@
 </main>
 <div th:replace="fragments/footer :: content"></div>
 <div th:replace="fragments/init_lib :: script"></div>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script>
-    $(document).ready(function (){
-        var prev= $('#prev').val();
-        var next= $('#next').val();
-        if(prev ==-1){
-            $('.btnPrev').removeAttr('href');
-        }
+</script>
+<script>
+    // // valudate data
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    /* ============================================== */
 
-        if(next ==-1){
-            $('.btnNext').removeAttr('href');
-        }
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var page = 1; // trang
+    var perPage = 5; // số lượng bình luận trên 1 trang
+    var loadMore = true; // check xem có load thêm không
+    var addComented = 0;
+    var lessonId = '[[${lessonContent.id}]]';
+    let timeComment = null;
 
-    });
-
-    xxx(123);  // vừa vào call luôn
-    function xxx(a=111){
-      console.log(a);
-    }
-    $('#cmt-loadmore').click(function (){
-        xxx()
+    loadComment(lessonId);
+    $('.load-more-comment').click(() => {
+        loadComment(lessonId);
     })
+
+    $('#send-comment').click((e) => {
+        e.preventDefault();
+        let content = $('#comment').val();
+        if (content.length === 0 || content === "") {
+            alert("Nội dung bình luận không được bỏ trống");
+            return;
+        }
+
+        addComment(content, lessonId);
+    })
+
+    /**
+     * hàm load comments
+     * @param lessonId id của bài học
+     * @param newsID id bài viết
+     * @returns {Promise<void>}
+     */
+    async function loadComment(lessonId = null, newsID = null) {
+        await $.ajax({
+            type: "get",
+            url: '[[@{/comment/get-comment}]]', // ajax gọi comment
+            data: {
+                lessonId: lessonId,
+                newsID: newsID,
+                perPage: perPage,
+                page: page
+            },
+            dataType: "json",
+            success: function (response) {
+                let rdCMT = renderCMT(response.listComment);
+                let oldCmT = $('.list-comment').html();
+                $('.list-comment').html(oldCmT + rdCMT);
+                if ((response.page * response.perPage) > response.totalComent) {
+                    loadMore = false;
+                }
+
+                ++page;
+            }
+        });
+
+        if (loadMore === false) {
+            $('.load-more-comment').hide();
+        }
+
+    }
+
+    /**
+     * Hàm này dùng để render ra string HTML
+     * @param listComment danh sách comment
+     * @returns {string} kết quả
+     */
+    function renderCMT(listComment) {
+        var resStr = '';
+        let countCheck = 0;
+
+        // compareTimeComment()
+        
+        listComment.forEach((v, k) => {
+            ++countCheck;
+            if (countCheck > addComented) {
+                let _url ="image/user";
+                addComented = 0;
+                resStr += `
+                <div class="item-comment">
+                    <div class="comment-image"><img src="${_url}/${v.userImage}" alt=""></div>
+                    <div class="comment-main-content">
+                        <div class="comment-infor">
+                            <div class="comment-infor-author">
+                                <a href="#">${v.userName}</a>
+                            </div>
+                            <div class="comment-infor-time">${v.timeComment}</div>
+                        </div>
+                        <div class="comment-content">${v.contentComment}</div>`
+
+                resStr += '</div><div class="clear"></div></div>';
+            }
+
+            // resStr += '</div>';
+        });
+
+        return resStr;
+    }
+
+    function addComment(content, lessonId = null, newsID = null) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '[[@{/comment/add-comment}]]', // ajax gọi comment
+            cache: false,
+            data: {
+                lessonId: lessonId,
+                newsId: newsID,
+                content: content
+            },
+            success: function (response) {
+                let rdCMT = renderCMT([response.commentInfor]);
+                let oldCmT = $('.list-comment').html();
+                $('.list-comment').html(rdCMT + oldCmT);
+                $('#comment').val("");
+                ++addComented;
+
+                if(addComented >= perPage) {
+                    ++perPage;
+                    addComented = 0;
+                }
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        });
+    }
+
+    // anti spam
+    // Lấy thời hiện tại - trừ thời gian bình luận
+    // Nesu thời gian bình luận lớn hơn số giây cho phép thì cho qua và cập nhập lại thời gian bình luận
+    // Nếu không thì xuất ra thông báo "Bạn gửi bình luận quá nhanh vui lòng đợi sau ... Giây"
+    function compareTimeComment(toDate, secondsCompare){
+        // Lấy thời gian hiện tại
+        let fromDate = new Date();
+        toDate = new Date(toDate.toLocaleString());
+        toDate.setSeconds(toDate.getSeconds() + secondsCompare);
+        return fromDate.getTime() < toDate.getTime() ? false : true;
+    }
+
 </script>
 </body>
 

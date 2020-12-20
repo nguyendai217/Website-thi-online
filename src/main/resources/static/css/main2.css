@@ -145,7 +145,7 @@
     margin-top: 4px;
 }
 #post .main-sliderbar {
-
+    margin-top: 30px;
 }
 #post .main-sliderbar .posts-common,
 #post .main-sliderbar .posts-prominent {
@@ -243,15 +243,15 @@
     padding: 10px;
     width: 15%;
 }
-.list-comment .item-comment .comment-image{
-    width: 30%;
-    height: 30%;
-}
 
 .list-comment .item-comment .comment-main-content {
     float: left;
     padding: 10px;
     width: 85%;
+}
+
+.list-comment .item-comment .comment-main-content .comment-content{
+    margin-top: 15px;
 }
 
 .list-comment .item-comment .comment-infor > div {
@@ -268,6 +268,29 @@
     float: right;
     padding: 10px;
     width: 850%;
+}
+
+.comment-add .form-row > div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.comment-add .form-row > textarea {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.comment-add .form-row {
+    margin-top: 15px;
+}
+
+.comment-add .form-check .form-check-label {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.load-more-comment {
+    margin: 0 auto;
 }
 
 /* .history-test .content-infor {

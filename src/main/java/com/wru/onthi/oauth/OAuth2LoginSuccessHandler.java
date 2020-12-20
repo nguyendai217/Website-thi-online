@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -27,24 +28,29 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             throws IOException, ServletException {
 
         CustomOAuth2User oAuth2User= (CustomOAuth2User) authentication.getPrincipal();
+        String provider = oAuth2User.getProvider();
 
         String email = oAuth2User.getEmail();
-        String name= oAuth2User.getName();
-        String username= oAuth2User.getusername();
+        String fullname= oAuth2User.getFullname();
+        String username= oAuth2User.getName();
 
-        User user= userService.findByEmail(email);
+        User user = userService.findByEmailAndProvider(email,provider.toUpperCase());
 
-        if(user== null){
-            userService.createUserOAuth2(email,name, AuthenticationProvider.GOOGLE);
+        System.out.println("provider :" + provider);
+
+        if(provider.toUpperCase().equals("FACEBOOK")){
+            if(user== null){
+                userService.createUserOAuth2(email,fullname,username, AuthenticationProvider.FACEBOOK);
+            }else {
+                userService.updateUserOauth(email,fullname, username, AuthenticationProvider.FACEBOOK);
+            }
         }else {
-            userService.updateUser(user);
-
+            if(user== null){
+                userService.createUserOAuth2(email,fullname, username,AuthenticationProvider.GOOGLE);
+            }else {
+                userService.updateUserOauth(email, fullname,username, AuthenticationProvider.GOOGLE);
+            }
         }
-
-
-//        System.out.println("username :"+ username);
-//        System.out.println("email :"+ email);
-//        System.out.println("name :"+ name);
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -46,7 +46,7 @@ a{
 
 #logreg-forms .social-login{
     width:390px;
-    margin:0 auto;
+    margin: 0 auto;
     margin-bottom: 14px;
 }
 #logreg-forms .social-btn{
@@ -59,9 +59,10 @@ a{
 #logreg-forms a{
     display: block;
     color: white;
+    text-decoration: none;
 }
 #logreg-forms a:hover{
-    color: #92bdef;
+    color: #0e94a2;
 }
 
 #logreg-form .lines{

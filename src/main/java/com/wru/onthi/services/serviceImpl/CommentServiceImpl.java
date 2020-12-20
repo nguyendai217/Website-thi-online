@@ -13,8 +13,21 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     CommentRepo commentRepo;
+
     @Override
-    public List<Comment> getListComment(Integer lessonId, Integer newsId) {
-        return commentRepo.getListComment(lessonId,newsId);
+    public List<Comment> getListComment(Integer lessonId, Integer newsId, Integer limit, Integer ofset) {
+        return commentRepo.getListComment(lessonId, newsId, limit, ofset);
     }
+
+    @Override
+    public Long getTotalComment(Integer lessonId, Integer newsId) {
+        return commentRepo.TotalComment(lessonId, newsId);
+    }
+
+    @Override
+    public void save(Comment comment) {
+        commentRepo.save(comment);
+    }
+
+
 }

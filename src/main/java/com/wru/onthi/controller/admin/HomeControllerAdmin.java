@@ -180,7 +180,7 @@ public class HomeControllerAdmin {
                               @RequestParam("userId") Integer id,RedirectAttributes redir) {
         String imgname= null;
         UploadImageController uploadImageController= new UploadImageController();
-        if(multipartFile != null){
+        if(!multipartFile.isEmpty()){
             imgname= uploadImageController.getImageName(multipartFile);
         }
         try {

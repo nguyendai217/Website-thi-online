@@ -57,7 +57,7 @@
 <script type="text/javascript" th:src="@{/js/exam.js}"></script>
 <script>
     $('#btnStart').on('click', function(event) {
-        //
+        var acc =$('#dropdownMenuButton').val();
         if((acc== null) || (acc== undefined)){
             event.preventDefault();
             var href = $('#btnAccept').attr('href');

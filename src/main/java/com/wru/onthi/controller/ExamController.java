@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,8 +78,12 @@ public class ExamController {
     }
 
     @GetMapping("/kiemtra/info")
-    public String infoExam(Model model,Principal principal, @RequestParam("examId") Integer examId){
+    public String infoExam(Model model, Principal principal, @RequestParam("examId") Integer examId){
         getDefault(model,principal);
+
+        String name= principal.getName();
+
+
         Optional<Exam> optionalExam= examService.findByExamId(examId);
         Exam exam= optionalExam.get();
         model.addAttribute("exam",exam);

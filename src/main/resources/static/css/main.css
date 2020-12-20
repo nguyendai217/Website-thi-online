@@ -925,6 +925,7 @@ button.btn-showMenu {
     padding: 1rem;
     margin: 1rem 0;
     overflow-y: auto;
+    border-radius: 5px;
 }
 
 .knowledge-item {
@@ -1214,6 +1215,8 @@ button.btn-showMenu {
     width: 100%;
     margin-bottom: 10px;
     box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 5px;
 }
 .comment-lesson h3{
     font-size: 20px;

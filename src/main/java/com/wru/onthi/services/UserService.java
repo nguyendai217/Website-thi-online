@@ -22,6 +22,7 @@ public interface UserService {
     User findByUsername(String username);
     void updateStatus(Integer userId, Integer status);
     long getCountUser();
-
-    void createUserOAuth2(String email, String name, AuthenticationProvider provider);
+    void createUserOAuth2(String email,String fullname, String username, AuthenticationProvider provider);
+    void updateUserOauth(String email, String fullname,String username, AuthenticationProvider provider);
+    User findByEmailAndProvider(String email,String provider);
 }

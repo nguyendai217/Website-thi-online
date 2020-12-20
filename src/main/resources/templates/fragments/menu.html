@@ -31,6 +31,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i>
                                 [[${#request.userPrincipal.principal.fullname}]]
+                                <input hidden th:value="${#request.userPrincipal.principal.username}">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" class="dropdown-item" id="adminManager" th:href="@{/admin/home}"><i class="fa fa-cogs"></i> Quản lí</a>

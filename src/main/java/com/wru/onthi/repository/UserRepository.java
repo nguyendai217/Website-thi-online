@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -41,6 +42,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("update User u set u.status =:status where u.id=:userId")
     void updateStatus(@Param("userId") Integer userId,@Param("status") Integer status);
 
-
-
+    @Query(value = "select * from user u where u.email = ?1 and u.auth_provider = ?2 limit 1 offset 0",nativeQuery = true)
+    User findByEmailAndProvider(String email, String provider);
 }
