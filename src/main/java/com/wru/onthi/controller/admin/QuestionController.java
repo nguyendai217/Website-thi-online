@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
@@ -468,9 +469,12 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/insert-question-to-exam",method = RequestMethod.POST)
-    public @ResponseBody String addQuestionToExam(@RequestParam("examId") String examId,
+    public @ResponseBody String addQuestionToExam(
+            HttpServletResponse httpResponse,
+            @RequestParam("examId") String examId,
                                    @RequestParam("array_data") String data) throws JsonProcessingException {
         //arr question id
+        httpResponse.setStatus(HttpServletResponse.SC_OK);
         int[] questionId = new ObjectMapper().readValue(data, int[].class);
 
         List<Integer> listQuestionIdRequest= new ArrayList<>();
@@ -511,6 +515,7 @@ public class QuestionController {
             }
         }
 
-        return "OK";
+        String ok = "[\"OK\"]";
+        return ok;
     }
 }

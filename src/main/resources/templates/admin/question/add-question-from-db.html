@@ -101,13 +101,14 @@
             });
         });
 
-        $('#btnAddQuestionToExam').on('click', function(event) {
+        $('#btnAddQuestionToExam').click(function(event) {
             event.preventDefault();
             if(arr==""){
                 alert("Vui lòng chọn câu hỏi để thêm vào đề thi");
                 return false;
             }
-            $('#removeModalCenter #delRef').click(function (){
+            $('#removeModalCenter #delRef').click(function (e){
+                e.preventDefault();
                 var token = $("meta[name='_csrf']").attr("content");
                 var header = $("meta[name='_csrf_header']").attr("content");
                 console.log("json: ",arr);
@@ -120,14 +121,19 @@
                     },
                     dataType: "json",
                     success: function (response) {
-                        if(response=="OK"){
-                            window.location.href = './question/list-question-by-exam?examId='+examId;
+
+                        console.log("response: ",response)
+                        if(response[0] == "OK"){
+                            window.location.href = '../question/list-question-by-exam?examId='+examId;
                         }
                         console.log("response: ",response)
                     },
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },
+                })
+                .done(function(res) {
+                    console.log("success");
                 });
             });
             $('#removeModalCenter').modal();
