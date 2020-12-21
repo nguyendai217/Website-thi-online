@@ -1,9 +1,9 @@
 // Khởi tạo dữ liệu
-var id_test = test_id; // cái này là id bài thi
-var currentPage = 1; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
-var limitPage = 5; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
-var checkUpdateApi = true; // cái này để check khi next nhiều trang mà không thay đổi câu hỏi thì k có hiện tượng call Api update nhiều lần
-var finishTest = false; // kết thúc bài thi
+var id_test = test_id;
+var currentPage = 1;
+var limitPage = 5;
+var checkUpdateApi = true;
+var finishTest = false;
 
 // json câu hỏi
 const json = _dataJson;

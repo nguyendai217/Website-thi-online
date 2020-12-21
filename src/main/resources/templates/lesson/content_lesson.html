@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Bài học</title>
     <div th:replace="fragments/init_lib :: header"></div>
@@ -125,31 +126,12 @@
 <script>
 </script>
 <script>
-    // // valudate data
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-    /* ============================================== */
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    var page = 1; // trang
-    var perPage = 5; // số lượng bình luận trên 1 trang
-    var loadMore = true; // check xem có load thêm không
+    var page = 1;
+    var perPage = 5;
+    var loadMore = true;
     var addComented = 0;
     var lessonId = '[[${lessonContent.id}]]';
     let timeComment = null;
@@ -170,12 +152,6 @@
         addComment(content, lessonId);
     })
 
-    /**
-     * hàm load comments
-     * @param lessonId id của bài học
-     * @param newsID id bài viết
-     * @returns {Promise<void>}
-     */
     async function loadComment(lessonId = null, newsID = null) {
         await $.ajax({
             type: "get",
@@ -205,17 +181,10 @@
 
     }
 
-    /**
-     * Hàm này dùng để render ra string HTML
-     * @param listComment danh sách comment
-     * @returns {string} kết quả
-     */
     function renderCMT(listComment) {
         var resStr = '';
         let countCheck = 0;
 
-        // compareTimeComment()
-        
         listComment.forEach((v, k) => {
             ++countCheck;
             if (countCheck > addComented) {
@@ -270,19 +239,6 @@
             }
         });
     }
-
-    // anti spam
-    // Lấy thời hiện tại - trừ thời gian bình luận
-    // Nesu thời gian bình luận lớn hơn số giây cho phép thì cho qua và cập nhập lại thời gian bình luận
-    // Nếu không thì xuất ra thông báo "Bạn gửi bình luận quá nhanh vui lòng đợi sau ... Giây"
-    function compareTimeComment(toDate, secondsCompare){
-        // Lấy thời gian hiện tại
-        let fromDate = new Date();
-        toDate = new Date(toDate.toLocaleString());
-        toDate.setSeconds(toDate.getSeconds() + secondsCompare);
-        return fromDate.getTime() < toDate.getTime() ? false : true;
-    }
-
 </script>
 </body>
 

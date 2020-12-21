@@ -1,9 +1,9 @@
 // Khởi tạo dữ liệu
-var id_test = test_id; // cái này là id bài thi
-var currentPage = 1; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
-var limitPage = 5; // page hiện tại bộ đề chia theo các câu ví dụ (5 câu 1)
-var checkUpdateApi = true; // cái này để check khi next nhiều trang mà không thay đổi câu hỏi thì k có hiện tượng call Api update nhiều lần
-var finishTest = false; // kết thúc bài thi
+var id_test = test_id;
+var currentPage = 1;
+var limitPage = 5;
+var checkUpdateApi = true;
+var finishTest = false;
 
 // json câu hỏi
 const json = _dataJson;
@@ -31,12 +31,7 @@ endTime = endTime.setMinutes(endTime.getMinutes() + limitTime);
 if (checkTestFinished(endTime) === false) {
     finishTest = true;
     renderListQuestion(listAnser);
-    // Kiểm tra bài thi đã hoàn thành
-    // Nếu hoàn thành thì move về trang lịch sử
-    // window.local = .....
 } else {
-    /* khởi tạo bài thi */
-    // render câu hỏi
     renderListQuestion(listAnser);
     var _countDown = setInterval(() => {
         let funcCountDown = countDownTime(endTime);
@@ -89,15 +84,6 @@ if (checkTestFinished(endTime) === false) {
 
         let confirmFinish = confirm('Bạn chắc chắn muốn kết thúc bài thi?');
         if (confirmFinish === false) return;
-        // $('#exampleModal').modal('show');
-        // if($('#btnEnd').click(function (){
-        //     console.log("btn yes");
-        //     $('#exampleModal').modal('hide');
-        //     return true;
-        // }));
-        // else{
-        //     return false;
-        // }
 
         var token = $('#csrfToken').val();
 		var header = $('#csrfHeader').val();

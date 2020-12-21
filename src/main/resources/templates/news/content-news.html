@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Tin tức</title>
     <div th:replace="fragments/init_lib :: header"></div>
@@ -59,48 +60,6 @@
                         <a href="#">Bí kíp học tập</a>
                     </div>
                 </div>
-                <!-- List comment -->
-<!--                <div class="list-comment">-->
-
-<!--                    <div class="item-comment">-->
-<!--                        <div class="comment-image">-->
-<!--                            <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">-->
-<!--                        </div>-->
-<!--                        <div class="comment-main-content">-->
-<!--                            <div class="comment-infor">-->
-<!--                                <div class="comment-infor-author"><a href="#">Nguyen van A</a></div>-->
-<!--                                <div class="comment-infor-time">12/11/2020</div>-->
-<!--                            </div>-->
-<!--                            <div class="comment-content">-->
-<!--                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit facilis-->
-<!--                                incidunt obcaecati sed, cupiditate architecto ullam, in nostrum aspernatur voluptate-->
-<!--                                esse deleniti ea aperiam quas repudiandae hic! Illum.-->
-<!--                            </div>-->
-<!--                            <div class="rep-comment">-->
-<!--                                <div class="item-comment">-->
-<!--                                    <div class="comment-image">-->
-<!--                                        <img th:src="@{https://image.flaticon.com/icons/png/512/147/147144.png}" alt="">-->
-<!--                                    </div>-->
-<!--                                    <div class="comment-main-content">-->
-<!--                                        <div class="comment-infor">-->
-<!--                                            <div class="comment-infor-author"><a href="#">Nguyen van B</a></div>-->
-<!--                                            <div class="comment-infor-time">12/11/2020</div>-->
-<!--                                        </div>-->
-<!--                                        <div class="comment-content">-->
-<!--                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illo odit-->
-<!--                                            facilis incidunt obcaecati sed, cupiditate architecto ullam, in nostrum-->
-<!--                                            aspernatur voluptate esse deleniti ea aperiam quas repudiandae hic! Illum.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="clear"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <!-- Comment -->
                 <div class="comment-lesson">
                     <h3>Bình luận</h3>
                     <div class="list-comment">
@@ -132,7 +91,7 @@
             <div class="col-12 col-md-4 main-sliderbar">
                 <div class="posts-common">
                     <div class="posts-title">
-                        <span>Bài viết nổi bật</span>
+                        <span>Bài viết mới</span>
                     </div>
                     <div class="list-item">
                         <div class="item-child">
@@ -362,9 +321,9 @@
 <script>
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    var page = 1; // trang
-    var perPage = 5; // số lượng bình luận trên 1 trang
-    var loadMore = true; // check xem có load thêm không
+    var page = 1;
+    var perPage = 5;
+    var loadMore = true;
     var addComented = 0;
     var newsId = '[[${news.id}]]';
     let timeComment = null;
@@ -385,12 +344,6 @@
         addComment(content, null, newsId);
     })
 
-    /**
-     * hàm load comments
-     * @param lissonId id của bài học
-     * @param newsId id bài viết
-     * @returns {Promise<void>}
-     */
     async function loadComment(lissonId = null, newsId = null) {
         await $.ajax({
             type: "get",
@@ -409,7 +362,6 @@
                 if ((response.page * response.perPage) > response.totalComent) {
                     loadMore = false;
                 }
-
                 ++page;
             }
         });
@@ -420,17 +372,9 @@
 
     }
 
-    /**
-     * Hàm này dùng để render ra string HTML
-     * @param listComment danh sách comment
-     * @returns {string} kết quả
-     */
     function renderCMT(listComment) {
         var resStr = '';
         let countCheck = 0;
-
-        // compareTimeComment()
-
         listComment.forEach((v, k) => {
             ++countCheck;
             if (countCheck > addComented) {
@@ -450,8 +394,6 @@
 
                 resStr += '</div><div class="clear"></div></div>';
             }
-
-            // resStr += '</div>';
         });
 
         return resStr;
@@ -484,18 +426,6 @@
                 xhr.setRequestHeader(header, token);
             }
         });
-    }
-
-    // anti spam
-    // Lấy thời hiện tại - trừ thời gian bình luận
-    // Nesu thời gian bình luận lớn hơn số giây cho phép thì cho qua và cập nhập lại thời gian bình luận
-    // Nếu không thì xuất ra thông báo "Bạn gửi bình luận quá nhanh vui lòng đợi sau ... Giây"
-    function compareTimeComment(toDate, secondsCompare){
-        // Lấy thời gian hiện tại
-        let fromDate = new Date();
-        toDate = new Date(toDate.toLocaleString());
-        toDate.setSeconds(toDate.getSeconds() + secondsCompare);
-        return fromDate.getTime() < toDate.getTime() ? false : true;
     }
 </script>
 </main>
