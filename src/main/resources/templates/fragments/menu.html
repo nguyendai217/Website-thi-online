@@ -46,10 +46,12 @@
             </div>
         </nav>
         <nav class="lg-menu d-lg-none">
-            <div class="searchBox">
-                <input type="text" placeholder="Mời bạn nhập thông tin...">
-                <button class="btn-search"><i class="fa fa-search"></i></button>
-            </div>
+            <form th:action="@{/search}" method="get">
+                <div class="searchBox">
+                    <input type="text" placeholder="Search..">
+                    <button class="btn-search"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
             <ul>
                 <button class="btn-showMenu d-lg-none">
                     <i class="fa fa-bars"></i>

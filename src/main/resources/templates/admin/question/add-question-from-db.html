@@ -79,6 +79,7 @@
 <!--    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />-->
 <script th:src="@{https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js}"></script>
 <script>
+    $("#examManager").addClass("active");
     // DataTable data set used
     var data= '[[${data}]]';
     var examId= [[${examId}]];
@@ -143,7 +144,7 @@
         $.each(dataSet, function (i, it) { it.isChecked = false; });
         var dtapi = $('#example').DataTable({
             data: dataSet,
-            pageLength: 10,
+            pageLength: 7,
             // We have the option of invalidating and redrawing the table on each checkox change or
             // as I did, use the drawCallback to set the checkbox to match the row data
             "drawCallback": function (settings) {
@@ -221,6 +222,7 @@
             dtapi.data().sum();
         });
     });
+
 </script>
 </body>
 </html>

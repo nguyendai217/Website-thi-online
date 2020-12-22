@@ -2,7 +2,7 @@ server:
   port: 8080
 
 folder:
-  upload: D:/upload/
+  upload: /home/nguyendai2171998/upload/
 
 spring:
   thymeleaf:
@@ -16,12 +16,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/database_onthi?serverTimezone=Asia/Ho_Chi_Minh&useUnicode=yes&characterEncoding=UTF-8
     username: root
-    password: Ankdai9x
+    password: Ankdai9x@
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-
 
   mail:
     host: smtp.gmail.com

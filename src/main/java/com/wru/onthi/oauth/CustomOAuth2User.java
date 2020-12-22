@@ -60,10 +60,11 @@ public class CustomOAuth2User implements OAuth2User {
     @Override
     public String getName() {
         String email= oAuth2User.getAttribute("email");
-        CustomOAuth2UserService customOAuth2UserService= new CustomOAuth2UserService();
-        String provider= this.provider;
-        String username= customOAuth2UserService.getUserName(email,this.provider.toUpperCase());
-        return username;
+//        CustomOAuth2UserService customOAuth2UserService= new CustomOAuth2UserService();
+//        String provider= this.provider;
+//        String username= customOAuth2UserService.getUserName(email,this.provider.toUpperCase());
+//        return username;
+        return email;
     }
 
     public String getUsername(){

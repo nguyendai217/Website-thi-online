@@ -51,19 +51,20 @@
                                         </div>
                                         <div class="col-md-6 col-6 share">
                                             <p>Chia sẻ ngay</p>
-                                            <a href="#"><i  class="fa fa-facebook "></i> Facebook</a>
-                                            <a href="#"><i class="fa fa-google" style="background-color: #9c3328"></i> Google</a>
+                                            <a th:href="@{https://www.facebook.com/sharer.php?u=luyenthi365.info}" target="_blank"><i  class="fa fa-facebook "></i> Facebook</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <input type="text" hidden="true" id="prev" th:value="${lessonPrev}"/>
+                            <input type="text" hidden="true" id="next" th:value="${lessonNext}"/>
                             <div class="row">
                                 <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
-                                    <a class="" th:href="@{#}"><i class="fa fa-angle-double-left"></i> Bài học trước</a>
+                                    <a class="btnPrev" th:href="@{/noidungbaihoc(lessonId=${lessonPrev})}"><i class="fa fa-angle-double-left"></i> Bài học trước</a>
                                 </div>
                                 <div class="col-md-6 col-6 d-flex justify-content-center prev-next">
-                                    <a class="" th:href="@{#}">Bài học tiếp theo <i class="fa fa-angle-double-right"></i></a>
+                                    <a class="btnNext" th:href="@{/noidungbaihoc(lessonId=${lessonNext})}">Bài học tiếp theo <i class="fa fa-angle-double-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +75,7 @@
                             </div>
 
                             <div class="row">
-                                <button class="btn btn-success load-more-comment">Load more</button>
+                                <button class="btn btn-success load-more-comment">Xem thêm</button>
                             </div>
 
                             <div class="comment-add" sec:authorize="isAuthenticated()">
@@ -126,6 +127,16 @@
 <script>
 </script>
 <script>
+
+    var prev= $('#prev').val();
+    var next= $('#next').val();
+    if(prev ==-1){
+        $('.btnPrev').removeAttr('href');
+    }
+
+    if(next ==-1){
+        $('.btnNext').removeAttr('href');
+    }
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");

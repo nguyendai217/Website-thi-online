@@ -80,10 +80,6 @@ public class ExamController {
     @GetMapping("/kiemtra/info")
     public String infoExam(Model model, Principal principal, @RequestParam("examId") Integer examId){
         getDefault(model,principal);
-
-        String name= principal.getName();
-
-
         Optional<Exam> optionalExam= examService.findByExamId(examId);
         Exam exam= optionalExam.get();
         model.addAttribute("exam",exam);
