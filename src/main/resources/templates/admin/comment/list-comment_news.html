@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Quản lý comment</title>
+    <div th:replace="admin/init_admin :: header"></div>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:replace="admin/sidebar :: content"></div>
+        <div th:replace="admin/header :: content"></div>
+
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3> <small>Danh sách bình luận</small></h3>
+                    </div>
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h5>Tùy chọn tìm kiếm</h5>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <form th:action="@{/comment-manager/list-comment-news}" method="get">
+                                <div class="row">
+                                    <div class="col-lg-5 col-sm-12 col-xs-3">
+                                        <label>Tin tức</label>
+                                        <select class="form-control" name="newsId">
+                                            <option value="">Tùy chọn</option>
+                                            <option th:each="item : ${news}"
+                                                    th:value="${item.id}" th:text="${item.title}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12  col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-success col-md-12" id="success"
+                             th:if="${not #strings.isEmpty(success)}" th:text="${success}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="bg-danger col-md-12" id="error"
+                             th:if="${not #strings.isEmpty(error)}" th:text="${error}" style="color: white;padding: 10px">
+                        </div>
+                        <div class="tile-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="sampleTable">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Nội dung bình luận</th>
+                                        <th>Thời gian</th>
+                                        <th>Tin tức</th>
+                                        <th>Người bình luận</th>
+                                        <th>Tùy chọn</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${pageInfo.content != null}">
+                                    <tr th:each=" row,iterStat: ${pageInfo.content}">
+                                        <td th:text="${iterStat.count}"></td>
+                                        <td th:text="${row.contentComment}"></td>
+                                        <td th:text="${row.timeComment}"></td>
+                                        <td th:text="${row.newsComment.title}"></td>
+                                        <td th:text="${row.userComment.username}"></td>
+                                        <td>
+                                            <a id="confirmDelete" th:href="@{/comment-manager/remove-comment/{commentId}/{action}(commentId=${row.id},action=0)}" title="Xóa bỏ">
+                                                <i class="fa fa-trash-o btn btn-danger"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div th:replace="admin/pagging::content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/modal_confirm::content"></div>
+<div th:replace="admin/footer :: content"></div>
+</div>
+<div th:replace="admin/init_admin :: script"></div>
+<script>
+    $(document).ready(function () {
+        $('#commentManager').addClass("active");
+    });
+</script>
+</body>
+</html>

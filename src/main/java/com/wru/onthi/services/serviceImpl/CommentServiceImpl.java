@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service
@@ -27,25 +28,38 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment findByCommentId(Integer commentId) {
+        return commentRepo.findById(commentId).get();
+    }
+
+    @Override
     public void save(Comment comment) {
         commentRepo.save(comment);
     }
 
     @Override
-    public Page<Comment> pageComment(Pageable pageable) {
-        return commentRepo.findAll(pageable);
+    public void deleteComment(Comment comment) {
+        commentRepo.delete(comment);
     }
 
     @Override
-    public Page<Comment> searchComment(String lessonId, String newsId, Pageable pageable) {
-        if(lessonId==""){
-            lessonId= null;
-        }
-        if(newsId==""){
-            newsId= null;
-        }
-        return null;
+    public Page<Comment> pageCommentByLesson(Pageable pageable) {
+        return commentRepo.pageCommentByLesson(pageable);
     }
 
+    @Override
+    public Page<Comment> searchCommentLesson(Integer lessonId, Pageable pageable) {
+        return commentRepo.searchCommentLesson(lessonId,pageable);
+    }
+
+    @Override
+    public Page<Comment> pageCommentByNews(Pageable pageable) {
+        return commentRepo.pageCommentByNews(pageable);
+    }
+
+    @Override
+    public Page<Comment> searchCommentNews(Integer newsId, Pageable pageable) {
+        return commentRepo.searchCommentNews(newsId,pageable);
+    }
 
 }

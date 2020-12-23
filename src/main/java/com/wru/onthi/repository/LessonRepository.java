@@ -1,5 +1,6 @@
 package com.wru.onthi.repository;
 
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
 import com.wru.onthi.entity.Lesson;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,4 +60,7 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
 
     @Query(value = "select * from lesson where class_id= ?1 and subject_id = ?2 and id < ?3  ORDER BY id desc LIMIT 1",nativeQuery = true)
     List<Lesson> getLessonPrev(Integer classId, Integer subjectId, Integer lessonId);
+
+    @Query(value = "select distinct ls from Comment cm, Lesson ls where cm.lessonComment.id= ls.id")
+    List<Lesson> getListLessonDistinct();
 }

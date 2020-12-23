@@ -68,7 +68,11 @@
                         <a th:href="@{/result/list-result}"><i class="fa fa-wpforms"></i> Quản lý kết quả thi</a>
                     </li>
                     <li id="commentManager">
-                        <a th:href="@{/comment/list-comment}"><i class="fa fa-comments"></i> Quản lý comment</a>
+                        <a><i class="fa fa-comments"></i> Quản lý comment <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li ><a th:href="@{/comment-manager/list-comment-lesson}"><i class="fa fa-file-word-o"></i> Comment bài học</a></li>
+                            <li ><a th:href="@{/comment-manager/list-comment-news}"><i class="fa fa-newspaper-o"></i> Comment tin tức </a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Service
 public class LessonServiceImpl implements LessonService {
+
     @Autowired
     LessonRepository lessonRepository;
 
@@ -143,5 +144,10 @@ public class LessonServiceImpl implements LessonService {
         }else {
             return lessonRepository.getLessonPrev(classId,subjectId,lessonId);
         }
+    }
+
+    @Override
+    public List<Lesson> getListLessonDistinct() {
+        return lessonRepository.getListLessonDistinct();
     }
 }

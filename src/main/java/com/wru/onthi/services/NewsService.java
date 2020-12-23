@@ -21,4 +21,5 @@ public interface NewsService {
     Page<News> searchNews(String title,String category, Pageable pageable);
     long countNews();
     List<News> getListNewsOrderByViews();
+    List<News> getListNewsDistinct();
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Quản lý comment</title>
+    <title>Bình luận bài học</title>
     <div th:replace="admin/init_admin :: header"></div>
 </head>
 
@@ -18,9 +18,8 @@
                     <div class="title_left">
                         <h3> <small>Danh sách bình luận</small></h3>
                     </div>
-
                     <div class="title_right">
-                        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search for...">
                                 <span class="input-group-btn">
@@ -38,27 +37,18 @@
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <form th:action="@{/lesson/list-lesson}" method="get">
+                            <form th:action="@{/comment-manager/list-comment-lesson}" method="get">
                                 <div class="row">
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-5 col-sm-12 col-xs-3">
                                         <label>Bài học</label>
-                                        <select class="form-control" name="subjectId">
+                                        <select class="form-control" name="lessonId">
                                             <option value="">Tùy chọn</option>
-                                            <option th:each="item : ${listSubject}"
-                                                    th:value="${item.id}" th:text="${item.name}">
+                                            <option th:each="item : ${lesson}"
+                                                    th:value="${item.id}" th:text="${item.lessonName}">
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
-                                        <label>Tin tức</label>
-                                        <select class="form-control" name="classId">
-                                            <option value="">Tùy chọn</option>
-                                            <option th:each="item : ${listClass}"
-                                                    th:value="${item.id}" th:text="${item.classname}">
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-3">
+                                    <div class="col-lg-2 col-sm-12 col-xs-3">
                                         <label>&nbsp;</label>
                                         <div>
                                             <button type="submit" id="btnSearch" class="btn btn-success">Tìm kiếm
@@ -89,7 +79,6 @@
                                         <th>Nội dung bình luận</th>
                                         <th>Thời gian</th>
                                         <th>Bài học</th>
-                                        <th>Tin tức</th>
                                         <th>Người bình luận</th>
                                         <th>Tùy chọn</th>
                                     </tr>
@@ -97,21 +86,14 @@
                                     <tbody th:if="${pageInfo.content != null}">
                                     <tr th:each=" row,iterStat: ${pageInfo.content}">
                                         <td th:text="${iterStat.count}"></td>
-                                        <td><img id="img-lesson" th:src="@{/image/lesson/{image}(image=${row.image})}"></td>
-                                        <td th:text="${#strings.substring(row.lessonName,0,20)+'...'}"></td>
-                                        <td th:text="${row.views}"></td>
-                                        <td th:text="${row.subject.name}"></td>
-                                        <td th:text="${row.classroom.classname}"></td>
-                                        <td th:if="${row.status==1}">
-                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"
-                                               id="confirmDisable"class="btn btn-success" title="Active"><i class="fa fa-check"></i></a>
-                                        </td>
-                                        <td th:if="${row.status==0}">
-                                            <a th:href="@{/lesson/update-status(id=${row.id},status=${row.status})}"
-                                               id="confirmActive" class="btn btn-secondary" title="Disable"><i class="fa fa-times"></i></a>
-                                        </td>
+                                        <td th:text="${row.contentComment}"></td>
+                                        <td th:text="${row.timeComment}"></td>
+                                        <td th:text="${row.lessonComment.lessonName}"></td>
+                                        <td th:text="${row.userComment.username}"></td>
                                         <td>
-                                            <a id="removeComment" th:href="@{/question/remove-question-from-exam/{questionId}/{examId}(questionId=${row.id},examId=${examId})}" title="Loại bỏ"><i  class="fa fa-times btn btn-danger"></i></a>
+                                            <a id="confirmDelete" th:href="@{/comment-manager/remove-comment/{commentId}/{action}(commentId=${row.id},action=1)}" title="Xóa bỏ">
+                                                <i  class="fa fa-trash-o btn btn-danger"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                     </tbody>

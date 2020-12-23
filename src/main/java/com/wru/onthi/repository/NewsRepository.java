@@ -1,5 +1,7 @@
 package com.wru.onthi.repository;
 
+import com.wru.onthi.entity.Comment;
+import com.wru.onthi.entity.Lesson;
 import com.wru.onthi.entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,4 +39,7 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
 
     @Query("select e from News e where e.status=1 order by e.views desc ")
     List<News> getListNewsOrderByViews();
+
+    @Query(value = "select distinct n from Comment cm, News n where cm.newsComment.id= n.id")
+    List<News> getListNewsDistinct();
 }

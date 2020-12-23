@@ -27,4 +27,5 @@ public interface LessonService {
     List<Lesson> getListLessonByClass(Integer classId);
     long countLesson();
     List<Lesson> getlessonNextOrPrev(Integer classId, Integer subjectId, Integer lessonId, Boolean next);
+    List<Lesson> getListLessonDistinct();
 }
