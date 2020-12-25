@@ -38,8 +38,11 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer> {
     @Query(value = "select ls from Lesson ls where ls.id = :lessonId and ls.status = 1", nativeQuery = false)
     Lesson getContentLesson(Integer lessonId);
 
-    @Query(value = "select  * from lesson where lessonname like %:lessonName% " +
-            "or subject_id like %:subjectId% or class_id like %:classId% ",nativeQuery = true)
+//    @Query(value = "select  * from lesson where (lessonname like %:lessonName% " +
+//            "or subject_id =:subjectId or class_id  =: classId ",nativeQuery = true)
+    @Query(value = "select  * from lesson where (:lessonName IS NULL or lessonname like %:lessonName% ) " +
+            "and (:subjectId IS NULL OR subject_id = :subjectId) " +
+            "and (:classId IS NULL OR class_id  = :classId)",nativeQuery = true)
     Page<Lesson>searchLesson(String lessonName, String subjectId, String classId, Pageable pageable);
 
     @Modifying

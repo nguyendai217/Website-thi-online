@@ -42,7 +42,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-1">
                                         <label class="labels">Nội dung câu hỏi</label>
-                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" ></textarea>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="5" id="contentQs" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
@@ -74,8 +74,9 @@
                                         </select>
                                     </div>
                                 </div>
+                                <span class="span-vld hide" id="ErroVld">Vui lòng nhập đầy đủ thông tin</span>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-success" type="submit">Thêm câu hỏi</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddQuestionByExam">Thêm câu hỏi</button>
                                     <a class="btn btn-danger" th:href="@{'/question/list-question-by-exam?examId='+${exId}}" >Hủy bỏ</a>
                                 </div>
                             </form>
@@ -135,10 +136,16 @@
 <script>
     $('#error').delay(5000).fadeOut(1000);
     $('#examManager').addClass("active");
-
-    // $('#idProcess').click(function (){
-    //   console.log(" test click ")
-    // });
+    $('#btnAddQuestionByExam').click(function (){
+        var content= $('#contentQs').val();
+        if(content == ""){
+            $('#ErroVld').removeClass('hide');
+            return false;
+        }else {
+            $('#ErroVld').addClass('hide');
+        }
+        return true;
+    })
     var idProgress = "#modalProcess .modal-dialog .progress .progress-bar";
     $(document).ready(function() {
         $("#idProcess").click(function () {

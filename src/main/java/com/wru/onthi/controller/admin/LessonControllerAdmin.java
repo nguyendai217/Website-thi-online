@@ -49,6 +49,10 @@ public class LessonControllerAdmin {
                                String subjectId, String classId,Pageable pageable){
         getInfoUser(model,principal);
 
+        if (subjectId == "") subjectId = null;
+        if (lessonName == "") lessonName = null;
+        if (classId == "") classId = null;
+
         //get AllClassroom
         List<Classroom> listClass= classroomService.getAllClassroom();
         model.addAttribute("listClass",listClass);

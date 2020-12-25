@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <label class="labels">Nội dung câu hỏi</label>
-                                        <textarea type="text" class="form-control" name="content" cols="10" rows="3" ></textarea>
+                                        <textarea type="text" class="form-control" name="content" cols="10" rows="3" id="contentQuestion" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mt-3">
@@ -77,8 +77,9 @@
                                         </select>
                                     </div>
                                 </div>
+                                <span class="span-vld hide" id="vldAddQuestion">Vui lòng nhập đầy đủ thông tin</span>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-success" type="submit">Thêm câu hỏi</button>
+                                    <button class="btn btn-success" type="submit" id="btnAddQuestiontoExam">Thêm câu hỏi</button>
                                     <a class="btn btn-danger" th:href="@{'/question/list-question-by-subject-class?subjectId='+${subjectId}+'&classId='+${classId}}" >Hủy bỏ</a>
                                 </div>
                             </form>
@@ -132,9 +133,16 @@
     $('#error').delay(5000).fadeOut(1000);
     $('#questionManager').addClass("active");
 
-    // $('#idProcess').click(function (){
-    //   console.log("xxx")
-    // });
+    $('#btnAddQuestiontoExam').click(function (){
+        var content= $('#contentQuestion').val();
+        if(content== ""){
+            $('#vldAddQuestion').removeClass('hide');
+            return false;
+        }else {
+            $('#vldAddQuestion').addClass('hide');
+        }
+        return true;
+    })
     var idProgress = "#modalProcess .modal-dialog .progress .progress-bar";
     $(document).ready(function() {
         $("#idProcess").click(function () {

@@ -25,7 +25,10 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     @Query(value = "select * from exam where subject_id=?1 and class_id=?2 and status= 1",nativeQuery = true)
     List<Exam> getListExamBySubjectAndClass(Integer subjectId,Integer classId);
 
-    @Query(value = "select  * from exam where code_exam like %:examCode% or subject_id like %:subjectId% or class_id like %:classId%",nativeQuery = true)
+    //@Query(value = "select  * from exam where code_exam like %:examCode% or subject_id like %:subjectId% or class_id like %:classId%",nativeQuery = true)
+    @Query(value = "select  * from exam where (:examCode IS NULL or code_exam like %:examCode% ) " +
+            "and (:subjectId IS NULL OR subject_id = :subjectId) " +
+            "and (:classId IS NULL OR class_id  = :classId)",nativeQuery = true)
     Page<Exam> searchExam(@Param("examCode") String examCode,@Param("subjectId") String subjectId,@Param("classId") String classId, Pageable pageable);
 
     @Query(value = "select e from Exam e where e.exam_classroom.id =:classId and e.status=1 ")

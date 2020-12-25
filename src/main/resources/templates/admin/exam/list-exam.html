@@ -137,8 +137,6 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" th:href="@{/question/list-question-by-exam(examId=${row.id})}" ><i class="fa fa-question-circle-o"></i> List câu hỏi</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" th:href="@{/exam/detail-exam/{id}(id=${row.id})}" ><i class="fa fa-info-circle"></i> Chi tiết</a>
-                                                    <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" th:href="@{/exam/update-exam/{id}(id=${row.id})}"><i class="fa fa-edit" ></i> Cập nhật</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" th:href="@{/exam/delete-exam(examId=${row.id},status=${row.status})}" id="confirmDelete"> <i class="fa fa-trash-o"></i> Xóa</a>
