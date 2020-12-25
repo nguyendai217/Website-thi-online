@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/kiemtra/**","/contact/**","/lesson","/user/profile","/hoctap/**","/comment/**","/info/**").permitAll()
                 .antMatchers("/home/**","/history/**","/question/**")
                 .hasAnyAuthority("USER","ADMIN","MANAGER")
-                .antMatchers("/admin/**","/profile","/lesson/**",
+                .antMatchers("/admin/**","/profile/**","/lesson/**",
                         "/exam/**","/download/**","/thongke/**","/result/**","/comment-manager/**")
                 .hasAnyAuthority("ADMIN","MANAGER")
                 .anyRequest().authenticated()

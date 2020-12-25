@@ -28,17 +28,10 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                    <li id="homeManager">
+                    <li id="homeManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a  th:href="@{/admin/home}"><i class="fa fa-home" ></i> Home</a>
                     </li>
-                    <li id="chartManager" sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a><i class="fa fa-bar-chart"></i> Thống kê<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li id="chart-user"><a th:href="@{/thongke/thongke-user}"><i class="fa fa-user"></i> Thống kê user</a></li>
-                            <li id="chart-score"><a th:href="@{/thongke/thongke-diem}"><i class="fa fa-check-square-o"></i> Thống kê điểm</a></li>
-                            <li id="chart-exam"><a th:href="@{/thongke/thongke-exam}"><i class="fa fa-file-text-o"></i> Thống kê bài thi</a></li>
-                        </ul>
-                    </li>
+
                     <li id="userManager" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a th:href="@{/admin/user/list-user}"><i class="fa fa-users" ></i> Quản lý user</a>
                     </li>

@@ -144,12 +144,13 @@ public class HomeControllerAdmin {
 
     @PostMapping("/profile/changepass")
     public String changePass(Model model, Principal principal,
+                             @RequestParam(value = "userId") Integer userId,
                              @RequestParam(value = "password_old") String oldPassword,
                              @RequestParam(value = "password1") String pass,
                              @RequestParam(value = "password2") String pass2){
         getInfoUser(model,principal);
         String username= principal.getName();
-        User user = userService.findUserByName(username);
+        User user = userService.findById(userId).get();
         if(!Strings.isNullOrEmpty(pass) && !Strings.isNullOrEmpty(pass2)){
             if(pass.equals(pass2)){
                 String userPass= user.getPassword();

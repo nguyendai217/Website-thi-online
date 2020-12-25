@@ -51,9 +51,11 @@
         <input type="text" id="user-name" class="form-control" placeholder="Họ và tên" name="fullname" required="" autofocus="">
         <input type="email" id="user-email" class="form-control" placeholder="Email" name="email" required autofocus="">
         <input type="password" id="user-pass" class="form-control" placeholder="Password" name="password" required autofocus="">
-        <input type="text" id="" class="form-control" placeholder="Số điện thoại" name="phone" required autofocus="">
-        <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
-        <a href="#" class="mt-2" id="cancel_signup" style="color: #005cbf"><i class="fa fa-angle-left"></i>Trở lại</a>
+        <span class="span-vld hide" id="vld-passRegister">Mật khẩu phải lớn hơn 5 ký tự</span>
+        <input type="text" id="phoneRegister" class="form-control" placeholder="Số điện thoại" name="phone" required autofocus="">
+        <span class="span-vld hide" id="vld-phoneRegister">Số điện thoại không đúng định dạng</span>
+        <button id="btnSubmitRegister" class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i> Đăng kí</button>
+        <a href="#" class="mt-2" id="cancel_signup" style="color: #005cbf"><i class="fa fa-angle-left"></i> Trở lại</a>
     </form>
     <br>
 </div>

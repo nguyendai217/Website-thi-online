@@ -3,14 +3,6 @@
 <head>
     <title>Admin Profile</title>
     <div th:replace="admin/init_admin :: header"></div>
-    <style>
-        .hidden{
-            display: none;
-        }
-        .show{
-            display: block;
-        }
-    </style>
 </head>
 
 <body class="nav-md">
@@ -42,8 +34,8 @@
                             <form method="POST" th:action="@{/profile/updateImage}" enctype="multipart/form-data">
                                 <input type="text" hidden="true" name="userId" th:value="${us.id}">
                                 <img class="mt-5" id="imgPreview" style="width: 40%;height: 50%" th:src="@{/image/user/{image}(image=${us.image})}" >
-                                <input type="file" name="fileImage" class="ml-5 pl-5 mt-3" />
-                                <input type="submit" value="Thay đổi ảnh" class="btn btn-success mt-3">
+                                <input type="file" name="fileImage" class="mt-3" style="overflow: hidden" />
+                                <input type="submit" id="btnUpdateImageProfile" value="Thay đổi ảnh" class="btn btn-success mt-3">
                             </form>
                         </div>
                     </div>
@@ -110,7 +102,8 @@
                     </div>
                     <div class="col-md-4">
                         <form th:action="@{/profile/changepass}" method="post">
-                            <div class="p-3 py-5">
+                            <input type="text" class="hide"  th:value="${us.id}" name="userId"  >
+                            <div class="p-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h4 class="text-right">Thay đổi mật khẩu</h4>
                                 </div>
@@ -126,11 +119,11 @@
                                 <div class="col-md-12">
                                     <label class="labels">Nhập lại mật khẩu mới</label>
                                     <input type="password" class="form-control"  name="password2" id="pass2" >
-                                    <p class="hidden" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
+                                    <p class="hide" style="color: red" id="err">Mật khẩu không trùng khớp.</p>
                                 </div>
                                 <br>
                                 <div class="col-md-12">
-                                    <input type="submit" id="btnSubmit" value="Thay đổi password" class="btn btn-success mt-3 ml-5">
+                                    <input type="submit" id="btnSubmitProfile" value="Thay đổi password" class="btn btn-success mt-3 ml-5">
                                 </div>
                             </div>
                         </form>
@@ -141,30 +134,27 @@
         <!-- page content -->
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">Thông báo ! </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"><h6>Vui lòng chọn hình ảnh để update.</h6></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="admin/footer :: content"></div>
 </div>
 <div th:replace="admin/init_admin :: script"></div>
 <script>
-    $('#success').delay(5000).fadeOut(1000);
-    $('#error').delay(5000).fadeOut(1000);
-    $('#userManager').addClass("active");
-    $(document).ready(function () {
-        $('#fileImage').change(function() {
-            showPreview(this);
-        });
-
-        $('#error').delay(5000).fadeOut(1000);
-    });
-    function showPreview(fileImage){
-        file = fileImage.files[0];
-        render = new FileReader();
-
-        render.onload = function(e) {
-            $('#imgPreview').attr('src',e.target.result);
-        }
-        render.readAsDataURL(file);
-    }
-
     $(document).ready(function () {
         $("#userManager").addClass("active");
         $('#error').delay(5000).fadeOut(1000);
@@ -177,18 +167,29 @@
         });
     });
 
-    $("#btnSubmit").click(function (){
+    $("#btnSubmitProfile").click(function (){
         var pass1= $("#pass1").val();
         var pass2= $("#pass2").val();
         if(pass1=== pass2){
-            $('#err').addClass("hidden");
+            $('#err').addClass("hide");
             return true;
         }
         else {
-            $('#err').removeClass("hidden");
+            $('#err').removeClass("hide");
             return false;
         }
+        return true;
     })
+    // update image profile user
+    $("#btnUpdateImageProfile").click(function (){
+        var image= $('#fileImage').val();
+        if(image=="" || image == null){
+            $('#exampleModal').modal('show');
+            return false;
+        }else {
+            return true;
+        }
+    });
 </script>
 </body>
 </html>

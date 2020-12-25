@@ -186,7 +186,7 @@ public class NewsController {
         int pageNumber = pageable.getPageNumber();
         int pageSize=5;
         pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
-        Pageable pageItem = PageRequest.of(pageNumber, pageSize);
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize,Sort.by("id").descending());
         Page<News> pageNews= null;
         if((categoryId== null || categoryId=="") && (title== null || title=="")){
             pageNews = newsService.getAllNews(pageItem);

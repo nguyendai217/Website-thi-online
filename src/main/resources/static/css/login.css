@@ -8,6 +8,12 @@ body{
 a{
     text-decoration: none;
 }
+.hide{
+    display: none;
+}
+.span-vld{
+    color: red;
+}
 .logo-login{
     width: 180px;
     height: 110px;
