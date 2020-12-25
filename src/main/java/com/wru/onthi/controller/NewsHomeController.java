@@ -65,18 +65,39 @@ public class NewsHomeController {
         if (!listClass.isEmpty()) {
             model.addAttribute("listClass", listClass);
         }
+
         // update view
         news.setViews(view + 1);
         newsService.updateNews(news);
 
+        List<News> getNewsOrderByViews = newsService.getListNewsOrderByViews().subList(0, 5);
+        model.addAttribute("newshot", getNewsOrderByViews);
+        List<News> getNewsOrderById = newsService.getListNewsOrderById().subList(0, 5);
+        model.addAttribute("newById", getNewsOrderById);
         model.addAttribute("news", news);
         return "news/content-news";
     }
 
     @GetMapping("/tintuc/list-news/{category}")
     public String getNewsByCcategory(@PathVariable("category") Integer category,
-                                     Model model, Principal principal){
+                                     Model model, Principal principal,Pageable pageable){
+        List<News> getNewsOrderByViews = newsService.getListNewsOrderByViews().subList(0, 5);
+        model.addAttribute("newshot", getNewsOrderByViews);
 
-        return "";
+        List<CategoryNews> listCategory = categoryNewsService.getlistCategoryNews();
+        model.addAttribute("category", listCategory);
+        List<Classroom> listClass = classroomService.getAllClassroom();
+        if (!listClass.isEmpty()) {
+            model.addAttribute("listClass", listClass);
+        }
+
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = 5;
+        pageNumber = (pageNumber < 1 ? 1 : pageNumber) - 1;
+        Pageable pageItem = PageRequest.of(pageNumber, pageSize, Sort.by("id").descending());
+        Page<News> pageNews = newsService.getAllNews(pageItem);
+        model.addAttribute("pageInfo", pageNews);
+        model.addAttribute("path", "/tintuc/list-news");
+        return "news/list-news";
     }
 }

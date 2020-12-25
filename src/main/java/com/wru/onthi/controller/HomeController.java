@@ -53,7 +53,7 @@ public class HomeController {
         model.addAttribute("listClassTHPT",listClassTHPT);
 
         // get list-exam
-        List<Exam> listExam= examService.getListExam().subList(0,3);
+        List<Exam> listExam= examService.getListExamOrderByViews().subList(0,3);
         if(!listExam.isEmpty()){
             model.addAttribute("listExam",listExam);
         }

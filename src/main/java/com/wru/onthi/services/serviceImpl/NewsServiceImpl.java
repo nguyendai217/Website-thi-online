@@ -88,6 +88,16 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public List<News> getListNewsOrderById() {
+        return newsRepository.getListNewsOrderById();
+    }
+
+    @Override
+    public List<News> getListNewsByCategory() {
+        return null;
+    }
+
+    @Override
     public List<News> getListNewsDistinct() {
         return newsRepository.getListNewsDistinct();
     }

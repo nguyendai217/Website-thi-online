@@ -91,72 +91,53 @@
             <div class="col-12 col-md-4 main-sliderbar">
                 <div class="posts-common">
                     <div class="posts-title">
+                        <span>Bài viết xem nhiều</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-child" th:each="item:${newshot}">
+                            <div class="item-image">
+                                <a th:href="@{/tintuc(newsId=${item.id})}" class="td-image-wrap">
+                                    <div class="entry-thumb">
+                                        <img th:src="@{/image/news/{image}(image=${item.image})}">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item-details">
+                                <h3 class="entry-title td-module-title">
+                                    <a th:href="@{/tintuc(newsId=${item.id})}" rel="bookmark" th:text="${item.title}"></a>
+                                </h3>
+                                <div class="td-module-meta-info">
+                                    <span class="td-post-date">
+                                    <time class="entry-date updated td-module-date"
+                                          datetime="2020-08-01T07:52:59+00:00" ><span th:text="${item.insertDate}"></span></time>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posts-prominent">
+                    <div class="posts-title">
                         <span>Bài viết mới</span>
                     </div>
                     <div class="list-item">
-                        <div class="item-child">
+                        <div class="item-child" th:each="item:${newById}">
                             <div class="item-image">
-                                <a href="#" class="td-image-wrap">
+                                <a th:href="@{/tintuc(newsId=${item.id})}" class="td-image-wrap">
                                     <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
+                                        <img th:src="@{/image/news/{image}(image=${item.image})}">
                                     </div>
                                 </a>
                             </div>
                             <div class="item-details">
                                 <h3 class="entry-title td-module-title">
-                                    <a href="#" rel="bookmark">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
+                                    <a th:href="@{/tintuc(newsId=${item.id})}" rel="bookmark" th:text="${item.title}"></a>
                                 </h3>
                                 <div class="td-module-meta-info">
                                     <span class="td-post-date">
                                     <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
+                                          datetime="2020-08-01T07:52:59+00:00" ><span th:text="${item.insertDate}"></span></time>
                                 </span>
                                 </div>
                             </div>
@@ -164,154 +145,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="posts-prominent">
-                    <div class="posts-title">
-                        <span>Bài viết nổi bật</span>
-                    </div>
-                    <div class="list-item">
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
 
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="posts-prominent">
-                    <div class="posts-title">
-                        <span>Bài viết nổi bật</span>
-                    </div>
-                    <div class="list-item">
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="item-child">
-                            <div class="item-image">
-                                <a href="#" class="td-image-wrap">
-                                    <div class="entry-thumb">
-                                        <img th:src="@{/image/news/img-right1.png}">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="item-details">
-                                <h3 class="entry-title td-module-title">
-                                    <a href="#">Khai phá
-                                        dữ liệu dựa vào data lake và 1 số thuật toán khai phá</a>
-                                </h3>
-                                <div class="td-module-meta-info">
-                                    <span class="td-post-date">
-                                    <time class="entry-date updated td-module-date"
-                                          datetime="2020-08-01T07:52:59+00:00">1 Tháng Tám, 2020</time>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -39,6 +39,8 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
 
     @Query("select e from News e where e.status=1 order by e.views desc ")
     List<News> getListNewsOrderByViews();
+    @Query("select e from News e where e.status=1 order by e.id desc ")
+    List<News> getListNewsOrderById();
 
     @Query(value = "select distinct n from Comment cm, News n where cm.newsComment.id= n.id")
     List<News> getListNewsDistinct();
